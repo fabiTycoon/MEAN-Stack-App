@@ -1,0 +1,19 @@
+// THEME COLORS
+$primary-color: #b71c1c;
+$primary-color-lighten: lighten( $primary-color, 5% );
+
+$secondary-color: #43a047;
+$secondary-color-darken: darken( $secondary-color, 5% );
+$secondary-color-lighten: lighten( $secondary-color, 5% ); 
+
+$tertiary-color: #757575 ;
+$tertiary-color-lighten: lighten( $tertiary-color, 5% );
+
+.menu-bar {
+  $background: $primary-color;
+  $color: #ffffff;
+}
+
+.action-item {
+  color: white;
+}
