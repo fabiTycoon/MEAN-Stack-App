@@ -12,7 +12,7 @@ gulp.task('sass', function() {
 
 // Watch Files For Changes
 gulp.task('watch', function() {
-    gulp.watch('scss/*.scss', ['sass']);
+    gulp.watch('app/*.scss', ['sass']);
 });
 
 // Default Task

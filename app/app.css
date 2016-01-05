@@ -1,11 +1,18 @@
 .action-item {
   color: white; }
 
-#gallery-img {
-  width: 200em; }
-
 .push {
-  height: 25px; }
+  height: 100px; }
 
 .parallax-container {
-  height: 300px; }
+  height: 200px; }
+
+.secondary-image {
+  max-width: 75%;
+  height: auto; }
+
+.about-subtext {
+  font-style: italic; }
+
+#gallery-img {
+  width: 200em; }

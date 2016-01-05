@@ -23,11 +23,16 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 // MAIN VIEW COMPONENTS:
 
 .push {
-  height: 200em;
+  height: 100px;
 }
 
- .parallax-container {
+.parallax-container {
   height: 200px;
+}
+
+.secondary-image {
+  max-width: 75%;
+  height: auto;
 }
 
 .about-subtext {
