@@ -6,8 +6,12 @@ angular.module('myApp', [
   'myApp.view1',
   'myApp.view2',
   'myApp.mainView',
+  'myApp.bookingView',
   'myApp.version'
 ]).
 config(['$routeProvider', function($routeProvider) {
+
   $routeProvider.otherwise({redirectTo: '/main'});
+  //add additional routes
+
 }]);
