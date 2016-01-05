@@ -9,6 +9,8 @@ $secondary-color-lighten: lighten( $secondary-color, 5% );
 $tertiary-color: #757575 ;
 $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 
+// NAV COMPONENTS:
+
 .menu-bar {
   $background: $primary-color;
   $color: #ffffff;
@@ -18,14 +20,22 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   color: white;
 }
 
-#gallery-img {
-  width: 200em;
-}
+// MAIN VIEW COMPONENTS:
 
 .push {
   height: 200em;
 }
 
  .parallax-container {
-      height: 400em;
-    }
+  height: 200px;
+}
+
+.about-subtext {
+  font-style: italic; 
+}
+
+// GALLERY PAGE COMPONENTS:
+
+#gallery-img {
+  width: 200em;
+}
