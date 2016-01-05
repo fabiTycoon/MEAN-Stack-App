@@ -10,5 +10,9 @@ angular.module('myApp.mainView', ['ngRoute'])
 }])
 
 .controller('MainViewCtrl', [function() {
+
+   $(document).ready(function(){
+      $('.parallax').parallax();
+    });
   
 }]);
