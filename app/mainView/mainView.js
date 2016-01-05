@@ -15,4 +15,15 @@ angular.module('myApp.mainView', ['ngRoute'])
       $('.parallax').parallax();
     });
   
+}])
+
+.directive('footer', [function(){
+  return  {
+  restrict: 'E',
+  templateUrl: 'mainView/footer.html',
+  replace: true,
+  controller: 'MainViewCtrl'
+};
 }]);
+
+;
