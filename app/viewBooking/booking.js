@@ -30,12 +30,15 @@ angular.module('myApp.bookingView', ['ngRoute'])
 
 .controller('BookingViewCtrl', ['scope', function($scope) {
 
+  var currDate = Date.now();
+
   $scope.owner = {
     first: '',
     last: '',
     phone: '',
     email: '',
-    dates: []
+    checkIn: '',
+    checkOut: ''
   }
   $scope.currentPets = [];
   $scope.currentPet = {
