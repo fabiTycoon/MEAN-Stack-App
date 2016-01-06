@@ -1,18 +1,32 @@
 .action-item {
   color: white; }
 
+#social-icon {
+  height: 50px;
+  width: 50px; }
+  #social-icon:hover {
+    opacity: 0.5;
+    color: #3b8e3f; }
+
 .push {
   height: 25px; }
 
 .parallax-container {
   height: 200px; }
 
-.secondary-image {
-  max-width: 75%;
-  height: auto; }
+.splash-img {
+  opacity: 0.75; }
+
+#splash-text {
+  text-transform: uppercase; }
 
 .about-subtext {
   font-style: italic; }
+
+.map {
+  width: 600px;
+  height: 450px;
+  frameborder: 0px; }
 
 #gallery-img {
   width: 200em; }

@@ -15,6 +15,7 @@ angular.module('myApp.mainView', ['ngRoute'])
       $('.parallax').parallax();
     });
   
+
 }])
 
 .directive('footer', [function(){
