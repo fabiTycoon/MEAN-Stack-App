@@ -41,7 +41,6 @@ angular.module('myApp.bookingView', ['ngRoute'])
   $scope.currentPet = {
     species: '',
     name: ''
-
   }
 
 
