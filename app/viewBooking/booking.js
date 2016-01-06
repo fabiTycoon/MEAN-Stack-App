@@ -49,4 +49,5 @@ angular.module('myApp.bookingView', ['ngRoute'])
 
   $scope.speciesSelected = false;
 
+
 }]);
