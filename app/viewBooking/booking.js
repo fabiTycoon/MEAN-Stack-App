@@ -32,6 +32,7 @@ angular.module('myApp.bookingView', ['ngRoute'])
 
   var currDate = Date.now();
 
+
   $scope.owner = {
     first: '',
     last: '',
@@ -46,5 +47,6 @@ angular.module('myApp.bookingView', ['ngRoute'])
     name: ''
   }
 
+  $scope.speciesSelected = false;
 
 }]);
