@@ -9,7 +9,8 @@ angular.module('myApp', [
   'myApp.mainView',
   'myApp.bookingView',
   'myApp.version',
-  'ngMessages'
+  'ngMessages',
+  'ngMaterial'
 ]).
 config(['$routeProvider', function($routeProvider) {
 
