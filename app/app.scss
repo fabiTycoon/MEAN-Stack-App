@@ -53,7 +53,7 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 
 .map {
   position: relative;
-  padding-bottom: 25%; // This is the aspect ratio
+  height: 300px;
   overflow: hidden;
 }
 
