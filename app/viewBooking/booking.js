@@ -25,8 +25,7 @@ angular.module('myApp.bookingView', ['ngRoute'])
 }])
 
 .controller('BookingViewCtrl', [function() {
-  
-  $scope.currentPets = [];
+
   $scope.owner = {
     first: '',
     last: '',
@@ -34,6 +33,7 @@ angular.module('myApp.bookingView', ['ngRoute'])
     email: '',
     dates: []
   }
+  $scope.currentPets = [];
   $scope.currentPet = {
     species: '',
     name: ''
