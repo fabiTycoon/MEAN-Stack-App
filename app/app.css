@@ -4,9 +4,9 @@
 #social-icon {
   height: 50px;
   width: 50px;
-  fill: #00bfa5; }
+  fill: #f5f5f5; }
   #social-icon:hover {
-    fill: #00a68f; }
+    fill: gainsboro; }
 
 .push {
   height: 25px; }
