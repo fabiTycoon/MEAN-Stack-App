@@ -3,10 +3,10 @@
 
 #social-icon {
   height: 50px;
-  width: 50px; }
+  width: 50px;
+  fill: #00bfa5; }
   #social-icon:hover {
-    opacity: 0.5;
-    color: #3b8e3f; }
+    fill: #00a68f; }
 
 .push {
   height: 25px; }
