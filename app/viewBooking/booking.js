@@ -7,6 +7,10 @@ angular.module('myApp.bookingView', ['ngRoute'])
     templateUrl: 'viewBooking/booking.html',
     controller: 'BookingViewCtrl'
   });
+  $routeProvider.when('/addPet', {
+    templateUrl: 'viewBooking/addPet.html',
+    controller: 'BookingViewCtrl'
+  });
   $routeProvider.when('/bookDog', {
     templateUrl: 'viewBooking/bookDog.html',
     controller: 'BookingViewCtrl'
@@ -24,7 +28,7 @@ angular.module('myApp.bookingView', ['ngRoute'])
 
 }])
 
-.controller('BookingViewCtrl', [function() {
+.controller('BookingViewCtrl', ['scope', function($scope) {
 
   $scope.owner = {
     first: '',
