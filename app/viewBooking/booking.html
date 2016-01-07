@@ -1,5 +1,5 @@
 <div class="container">
-  <h3>Book a Stay With Us!</h3>
+  <h4>Book a Stay With Us</h4>
 
   <div class="row">
    <div class="col s12 m10 offset-m1">
@@ -21,7 +21,7 @@
             
               <div class="input-field col s6">
                 <p style="white-space: nowrap;">
-                  <input id="phone" type="text" ng-model="owner.phArea" style="width: 2em;"> - <input id="phone" type="text" ng-model="owner.ph1" style="width: 2em;"> - <input id="phone" type="text" ng-model="owner.ph2" style="width: 3em;">
+                  <input id="phone" type="text" ng-model="owner.phArea" style="width: 2em;" length="3"> - <input id="phone" type="text" ng-model="owner.ph1" style="width: 2em;" length="3"> - <input id="phone" type="text" ng-model="owner.ph2" style="width: 3em;" length="4">
                   <label class="active" for="phone">Phone</label>
                 </p>
               </div>  
@@ -30,10 +30,21 @@
                 <input id="email" type="email">
                 <label class="active" for="email">Email</label>
               </div>
+
+              <div class="row">
+                <div class="input-field col s6" ng-blur="setDate()">
+                  <input id="check-in" class="datepicker" type="date" ng-model="checkInDate" min="currentDate">
+                  <label class="active" for="check-in">Check-In Date</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="check-out" class="datepicker" type="date" ng-model="checkOutDate" min="checkInDate">
+                  <label class="active" for="check-out">Check-Out Date</label>
+                </div>
+              </div>
         
           </form>
         </div>
-       </div>
+      </div>
 
        <div class="card-action">
          <a href="#/">Go Back</a>

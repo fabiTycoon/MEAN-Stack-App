@@ -10,7 +10,7 @@ angular.module('myApp', [
   'myApp.bookingView',
   'myApp.version',
   'ngMessages',
-  'ngMaterial'
+  //'ngMaterial'
 ]).
 config(['$routeProvider', function($routeProvider) {
 

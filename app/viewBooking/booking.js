@@ -30,24 +30,39 @@ angular.module('myApp.bookingView', ['ngRoute'])
 
 .controller('BookingViewCtrl', ['scope', function($scope) {
 
-  var currDate = Date.now();
+  $scope.currentDate = Date.now();
 
-
+  //Form Values:
   $scope.owner = {
     first: '',
     last: '',
     phone: '',
     email: '',
-    checkIn: '',
-    checkOut: ''
+    checkInDate: '',
+    checkOutDate: ''
   }
+
   $scope.currentPets = [];
+
   $scope.currentPet = {
     species: '',
     name: ''
   }
 
-  $scope.speciesSelected = false;
+  //Controls Add a Pet View display
+  $scope.dogSelected = false;
+  $scope.catSelected = false;
 
+  var speciesSelector = function () {
+    
+  }
 
+  var init = function () {
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15, // Creates a dropdown of 15 years to control year
+    });
+  }
+
+  init();
 }]);
