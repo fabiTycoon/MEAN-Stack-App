@@ -11,11 +11,14 @@ angular.module('myApp.mainView', ['ngRoute'])
 
 .controller('MainViewCtrl', [function() {
 
-   $(document).ready(function(){
-      $('.parallax').parallax();
-    });
-  
 
+  var init = function () {
+    $(document).ready(function(){
+      $('.parallax').parallax();    
+    });
+  };
+  
+  init();
 }])
 
 .directive('footer', [function(){
@@ -26,5 +29,4 @@ angular.module('myApp.mainView', ['ngRoute'])
   controller: 'MainViewCtrl'
 };
 }]);
-
 ;
