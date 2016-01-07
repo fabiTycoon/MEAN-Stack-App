@@ -1,27 +1,27 @@
 <div class="push"></div>
 <div class="container">
   <div class="collection">
-    <a href="#/" class="collection-item">Go Back<i id="about-icon" class="material-icons right-align">highlight_off</i>
+    <a href="#/" class="collection-item">Go Back<i id="about-icon" class="right-align material-icons">highlight_off</i>
 </a>
-    <a href="#!" class="collection-item active" ng-click="selFacil()">Our Facility</a>
-    <a ng-click="selTeam()" class="collection-item">Our Team</a>
-    <a ng-click="selFaq()" class="collection-item">FAQ</a>
-    <a ng-click="selContact()" class="collection-item">Contact Us</a>
+    <a href="#!" class="collection-item active" ng-click="selector('facil')">Our Facility</a>
+    <a ng-click="selector('team')" class="collection-item">Our Team</a>
+    <a ng-click="selector('faq')" class="collection-item">FAQ</a>
+    <a ng-click="selector('contact')" class="collection-item">Contact Us</a>
   </div>
 
-  <div class="facil-text" ng-if="facilSel">
+  <div class="facil-text" ng-if="select.facil">
     <h4 id="about-facil">About Our Facility:</h4>
     <hr>
     <p>A healthy, safe, and comfortable home away from home for your pet</p>
   </div>
 
-  <div class="team-text" ng-if="teamSel">
+  <div class="team-text" ng-if="select.team">
     <h4 id="about-team">About Our Team:</h4>
     <hr>
     <p>A healthy, safe, and comfortable home away from home for your pet</p>
   </div>
 
-  <div class="faq-text" ng-if="faqSel">
+  <div class="faq-text" ng-if="select.faq">
     <h4 id="about-facil">Frequently Asked Questions:</h4>
     <hr>
     <h5>What vaccines are required to stay at Holliston Meadows?</h5>
@@ -30,14 +30,19 @@
     <h5>What will my dog do while staying at Holliston Meadows?</h5>
     <p>We offer a variety of activities for your dog, individually tailored to his or her needs. Every dog that stays with us is fed twice a day and always has fresh, filtered water. All dogs are taken out 5 times a day individually. The first time they're let out is around 6am and the last time is usually after 7pm. Every cage is cleaned daily, with fresh bedding.</p>
   </div>
-  <div class="contact-text" ng-if="contactSel">
+  <div class="contact-text" ng-if="select.contact">
     <h4 id="about-facil">Contact Us:</h4>
     <hr>
     <p>A healthy, safe, and comfortable home away from home for your pet</p>
   </div>
 
-
 </div>
+<div class="push"></div>
+<div class="push"></div>
+<div class="push"></div>
+<div class="push"></div>
+<div class="push"></div>
+<footer></footer>
 
 
 
