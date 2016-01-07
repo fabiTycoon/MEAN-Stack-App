@@ -23,12 +23,7 @@
         </div>
 
         <!--Add a Dog View-->
-
-
-
-        <!--Add a Cat View-->
-
-        <div class="row">
+        <div class="row" ng-if="dogSelected">
           <form class="col s12">
             <div class="row">
               <div class="input-field col s6">
@@ -37,16 +32,30 @@
               </div>
               <div class="input-field col s6">
                 <input id="last_name" type="text" ng-model="owner.last">
-                <label class="active" for="last_name">Last Name</label>
+                <label class="active" for="last_name">Breed</label>
               </div>
             </div>
-        
-
-
-
-
           </form>
         </div>
+
+
+        <!--Add a Cat View-->
+
+        <div class="row" ng-if="catSelected">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="first_name" type="text" ng-model="owner.first">
+                <label class="active" for="first_name">Name</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="last_name" type="text" ng-model="owner.last">
+                <label class="active" for="last_name">Breed</label>
+              </div>
+            </div>
+          </form>
+        </div>
+
        </div>
 
        <div class="card-action">
