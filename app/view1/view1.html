@@ -1,12 +1,12 @@
 <div class="push"></div>
 <div class="container">
   <div class="collection">
-    <a href="#/" class="collection-item">Go Back<i id="about-icon" class="right-align material-icons">highlight_off</i>
+    <a href="#/" class="collection-item">Go Back<i id="about-icon" class=" material-icons right">highlight_off</i>
 </a>
-    <a href="#!" class="collection-item active" ng-click="selector('facil')">Our Facility</a>
-    <a ng-click="selector('team')" class="collection-item">Our Team</a>
-    <a ng-click="selector('faq')" class="collection-item">FAQ</a>
-    <a ng-click="selector('contact')" class="collection-item">Contact Us</a>
+    <a href="#!" class="collection-item active" id="facil" ng-click="selector('facil')">Our Facility</a>
+    <a ng-click="selector('team')" class="collection-item" id="team">Our Team</a>
+    <a ng-click="selector('faq')" class="collection-item" id="faq">FAQ</a>
+    <a ng-click="selector('contact')" class="collection-item" id="contact">Contact Us</a>
   </div>
 
   <div class="facil-text" ng-if="select.facil">

@@ -19,6 +19,16 @@ angular.module('myApp.view1', ['ngRoute'])
   }
 
   $scope.selector = function (selectorKey) {
+
+    var activeItemPrev = $('.collection-item active');
+    activeItemPrev.removeClass('.collection-item active')
+    activeItemPrev.addClass('.collection-item')
+
+    var activeSelector = '#' + selectorKey;
+    var activeItemCurr = $(activeSelector);
+    activeItemCurr.removeClass('.collection-item');
+    activeItemPrev.addClass('.collection-item active')
+
     for (var key in $scope.select) {
       $scope.select[key] = false;
     }
