@@ -53,8 +53,12 @@ angular.module('myApp.bookingView', ['ngRoute'])
   $scope.dogSelected = false;
   $scope.catSelected = false;
 
-  var speciesSelector = function () {
-    
+  $scope.speciesSelector = function (species) {
+    if (species === 'dog') {
+      $scope.currentPet[species] = 'dog';
+    } else if (species === 'cat') {
+      $scope.currentPet[species] = 'cat';
+    }
   }
 
   var init = function () {
