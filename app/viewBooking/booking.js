@@ -31,6 +31,9 @@ angular.module('myApp.bookingView', ['ngRoute'])
 .controller('BookingViewCtrl', ['scope', function($scope) {
 
   $scope.currentDate = Date.now();
+  $scope.states = [
+    'MA', 'RI', 'NH', 'VT', 'ME', 'NY'
+  ];
 
   //Form Values:
   $scope.owner = {
@@ -38,6 +41,10 @@ angular.module('myApp.bookingView', ['ngRoute'])
     last: '',
     phone: '',
     email: '',
+    street: '',
+    city: '',
+    state: '',
+    zip: '',
     checkInDate: '',
     checkOutDate: '',
     checkInTime: '',
