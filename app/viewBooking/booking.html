@@ -25,7 +25,7 @@
             </div>            
               <div class="input-field col s6">
                 <p style="white-space: nowrap;">
-                  <input id="phone" type="text" ng-model="owner.phArea" style="width: 2em;" length="3"> - <input id="phone" type="text" ng-model="owner.ph1" style="width: 2em;" length="3"> - <input id="phone" type="text" ng-model="owner.ph2" style="width: 3em;" length="4">
+                  <input id="phone" type="text" ng-model="owner.phArea" style="width: 2em;" maxlength="3"> - <input id="phone" type="text" ng-model="owner.ph1" style="width: 2em;" maxlength="3"> - <input id="phone" type="text" ng-model="owner.ph2" style="width: 3em;" maxlength="4">
                   <label class="active" for="phone">Phone</label>
                 </p>
               </div>  
@@ -46,13 +46,12 @@
                 </div>
                 <div class="input-field col s2">
                   <select>
-                    <option value="" disabled selected>Choose your option</option>
-                      <option ng-repeat="state in states" value="states[state]">{{states[state]}}</option>
+                    <option ng-repeat="state in states" value="state">{{state}}</option>
                   </select>
                   <label class="active" for="state">State</label>
                 </div>
                 <div class="input-field col s2">
-                  <input id="zip" type="text" ng-model="owner.zip">
+                  <input id="zip" type="text" ng-model="owner.zip" maxlength="5">
                   <label class="active" for="zip">Zip Code</label>
                 </div>
               </div>
