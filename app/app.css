@@ -18,7 +18,9 @@
   opacity: 0.75; }
 
 #splash-text {
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  transform: translateY(-9em) !important;
+  height: 0px; }
 
 .about-subtext {
   font-style: italic; }

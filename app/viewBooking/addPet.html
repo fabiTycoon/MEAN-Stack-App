@@ -1,5 +1,22 @@
+<div class="push"></div>
 <div class="container">
-  <h4>Add Pets to Your Reservation</h4>
+  <div class="row">
+    <div class="col s9 offset-s1">
+      <h4>Add Pets to Your Reservation</h4>
+    </div>
+  </div>
+
+  <div class="row" ng-if="currentPets.length > 0">
+    <div class="col s6 offset-s6">
+      <ul class="collection with-header">
+        <li class="collection-header"><h4>First Names</h4></li>
+        <li class="collection-item" ng-repeat="pet in currentPets">
+          <div>{{pet.name}}<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div>
+        </li>
+     </ul>
+      <!--Display list of pets added w/buttons to remove/edit-->
+    </div>
+  </div>
 
   <div class="row">
    <div class="col s12 m10 offset-m1">
@@ -12,18 +29,34 @@
           </div>
         </div>
         <div class="row">
-          <div class="col s6">
+          <div class="col s5">
             <input name="speciesButtons" type="radio" id="dogSelect" ng-select="speciesSelector('dog')"/>
             <label for="dogSelect">Dog</label>
           </div>
-          <div class="col s6">
+          <div class="col s5">
             <input name="speciesButtons" type="radio" id="catSelect" ng-select="speciesSelector('cat')"/>
             <label for="catSelect">Cat</label>
           </div>
+          <div class="col s2">
+            <input name="speciesButtons" type="radio" id="otherSelect" ng-select="speciesSelector('other')"/>
+            <label for="otherSelect">Other</label>
+          </div>
         </div>
 
-        <!--Add a Dog View-->
-        <div class="row" ng-if="dogSelected">
+        <!--Add Other View-->
+        <div class="row" ng-if="otherSelected === true">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="other-type" type="text" ng-model="currentPet.species">
+                <label class="active" for="last_name" placeholder="Enter species">Please describe:</label>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!--Add a Dog/Cat View-->
+        <div class="row" ng-if="dogSelected === true">
           <form class="col s12">
             <div class="row">
               <div class="input-field col s6">
@@ -38,23 +71,6 @@
           </form>
         </div>
 
-
-        <!--Add a Cat View-->
-
-        <div class="row" ng-if="catSelected">
-          <form class="col s12">
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="first_name" type="text" ng-model="owner.first">
-                <label class="active" for="first_name">Name</label>
-              </div>
-              <div class="input-field col s6">
-                <input id="last_name" type="text" ng-model="owner.last">
-                <label class="active" for="last_name">Breed</label>
-              </div>
-            </div>
-          </form>
-        </div>
 
        </div>
 

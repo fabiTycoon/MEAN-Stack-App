@@ -39,7 +39,10 @@ angular.module('myApp.bookingView', ['ngRoute'])
     phone: '',
     email: '',
     checkInDate: '',
-    checkOutDate: ''
+    checkOutDate: '',
+    checkInTime: '',
+    checkOutTime: '',
+
   }
 
   $scope.currentPets = [];
@@ -52,6 +55,7 @@ angular.module('myApp.bookingView', ['ngRoute'])
   //Controls Add a Pet View display
   $scope.dogSelected = false;
   $scope.catSelected = false;
+  $scope.otherSelected = false;
 
   $scope.speciesSelector = function (species) {
     if (species === 'dog') {
