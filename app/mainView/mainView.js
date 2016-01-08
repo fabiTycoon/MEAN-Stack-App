@@ -23,10 +23,10 @@ angular.module('myApp.mainView', ['ngRoute'])
 
 .directive('footer', [function(){
   return  {
-  restrict: 'E',
-  templateUrl: 'mainView/footer.html',
-  replace: true,
-  controller: 'MainViewCtrl'
-};
+    restrict: 'E',
+    templateUrl: 'mainView/footer.html',
+    replace: true,
+    controller: 'MainViewCtrl'
+  }
 }]);
 ;

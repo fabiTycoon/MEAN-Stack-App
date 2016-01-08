@@ -49,14 +49,14 @@ angular.module('myApp.bookingView', ['ngRoute'])
     checkOutDate: '',
     checkInTime: '',
     checkOutTime: '',
-  }
+  };
 
   $scope.currentPets = [];
 
   $scope.currentPet = {
     species: '',
     name: ''
-  }
+  };
 
   //Controls Add a Pet View display
   $scope.dogSelected = false;
@@ -66,10 +66,20 @@ angular.module('myApp.bookingView', ['ngRoute'])
   $scope.speciesSelector = function (species) {
     if (species === 'dog') {
       $scope.currentPet[species] = 'dog';
+      $scope.dogSelected = true;
+      $scope.catSelected = false;
+      $scope.otherSelected = false;
     } else if (species === 'cat') {
       $scope.currentPet[species] = 'cat';
+      $scope.dogSelected = false;
+      $scope.catSelected = true;
+      $scope.otherSelected = false;
+    } else if (species === 'other') {
+      $scope.dogSelected = false;
+      $scope.catSelected = false;
+      $scope.otherSelected = true;
     }
-  }
+  };
 
   var init = function () {
     $('.datepicker').pickadate({
