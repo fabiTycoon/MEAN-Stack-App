@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col s9 offset-s1">
-      <h4>Book a Stay or Daycare Playdate With Us</h4>
+      <h4>Book a Stay With Us</h4>
     </div>
   </div>
 
@@ -45,10 +45,15 @@
                   <label class="active" for="city">City</label>
                 </div>
                 <div class="input-field col s2">
-                  <select>
-                    <option ng-repeat="state in states" value="state">{{state}}</option>
+                  <select id="state">
+                    <option value="1">MA</option>
+                    <option value="2">RI</option>
+                    <option value="3">CT</option>
+                    <option value="3">NH</option>
+                    <option value="3">ME</option>
+                    <option value="3">NY</option>
                   </select>
-                  <label class="active" for="state">State</label>
+                  <label  for="state">State</label>
                 </div>
                 <div class="input-field col s2">
                   <input id="zip" type="text" ng-model="owner.zip" maxlength="5">

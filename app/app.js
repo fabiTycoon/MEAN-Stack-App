@@ -8,6 +8,7 @@ angular.module('myApp', [
   'myApp.view2',
   'myApp.mainView',
   'myApp.bookingView',
+  'myApp.addPetView',
   'myApp.version',
   'ngMessages'
 ]).
