@@ -28,5 +28,30 @@ angular.module('myApp.viewMain', ['ngRoute'])
     replace: true,
     controller: 'MainCtrl'
   }
+}]) 
+
+.directive('dogIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewMain/dog.html',
+    replace: true,
+  }
+}])
+
+.directive('catIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewMain/kennel.html',
+    replace: true,
+  }
+}])
+
+.directive('kennelIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewMain/kennel.html',
+    replace: true,
+  }
 }]);
+
 ;
