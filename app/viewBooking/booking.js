@@ -40,4 +40,27 @@ angular.module('myApp.bookingView', ['ngRoute'])
   };
 
   init();
+}])
+
+.factory('AddUser', ['$http', function  ($http){
+
+  var create = function(data) {
+    console.log('data:', data);
+    return $http.post('/api/users/', data);
+  };
+
+  var edit = function(userId, data) {
+    return $http.put('/api/users/' + userId, data);
+  };
+
+  var del = function(userId) {
+    return $http.delete('/api/users/' + userId);
+  };
+
+  return {
+    create: create,
+    edit: edit,
+    del: del
+  };
+
 }]);
