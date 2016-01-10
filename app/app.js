@@ -6,7 +6,7 @@ angular.module('myApp', [
   'ngMessages',
   'myApp.viewAbout',
   'myApp.view2',
-  'myApp.mainView',
+  'myApp.viewMain',
   'myApp.bookingView',
   'myApp.addPetView',
   'myApp.version',

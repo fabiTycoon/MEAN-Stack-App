@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('myApp.mainView', ['ngRoute'])
+angular.module('myApp.viewMain', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/main', {
-    templateUrl: 'mainView/mainView.html',
-    controller: 'MainViewCtrl'
+    templateUrl: 'viewMain/viewMain.html',
+    controller: 'MainCtrl'
   });
 }])
 
-.controller('MainViewCtrl', [function() {
+.controller('MainCtrl', [function() {
 
 
   var init = function () {
@@ -24,9 +24,9 @@ angular.module('myApp.mainView', ['ngRoute'])
 .directive('footer', [function(){
   return  {
     restrict: 'E',
-    templateUrl: 'mainView/footer.html',
+    templateUrl: 'viewMain/footer.html',
     replace: true,
-    controller: 'MainViewCtrl'
+    controller: 'MainCtrl'
   }
 }]);
 ;
