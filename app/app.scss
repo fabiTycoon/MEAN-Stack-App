@@ -18,6 +18,10 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   $color: #ffffff;
 }
 
+.brand-logo {
+  font-family: 'Sanchez', serif;
+}
+
 .action-item {
   color: white;
 }

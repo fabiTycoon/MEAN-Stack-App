@@ -5,7 +5,7 @@ angular.module('myApp', [
   'ngRoute',
   'ngMessages',
   'myApp.viewAbout',
-  'myApp.view2',
+  'myApp.viewGallery',
   'myApp.viewMain',
   'myApp.bookingView',
   'myApp.addPetView',
