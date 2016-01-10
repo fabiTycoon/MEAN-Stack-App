@@ -4,7 +4,7 @@
 angular.module('myApp', [
   'ngRoute',
   'ngMessages',
-  'myApp.view1',
+  'myApp.viewAbout',
   'myApp.view2',
   'myApp.mainView',
   'myApp.bookingView',
