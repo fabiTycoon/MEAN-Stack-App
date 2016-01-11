@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('myApp.bookingView', ['ngRoute'])
+angular.module('myApp.viewAddUser', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/book', {
-    templateUrl: 'viewBooking/booking.html',
-    controller: 'BookingViewCtrl',
+    templateUrl: 'viewBooking/addUser.html',
+    controller: 'AddUserCtrl',
   });
 }])
 
-.controller('BookingViewCtrl', ['$scope', function($scope) {
+.controller('AddUserCtrl', ['$scope', function($scope) {
 
   $scope.currentDate = Date.now();
   //Form Values:

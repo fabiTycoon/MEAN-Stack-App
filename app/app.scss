@@ -42,10 +42,6 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   height: 2.5em;
   width: 2.5em;
   fill: $tertiary-color;
-  &:hover {
-    //opacity: 0.75;
-    fill: $tertiary-color-darken;
-  }
 }
 
 // MAIN VIEW COMPONENTS:
@@ -59,12 +55,14 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 }
 
 .splash-img {
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 #splash-text {
+  font-family: 'Sanchez', serif;
+  color: black;
   text-transform: uppercase;
-  transform: translateY(-9em) !important;
+  transform: translateY(-10.5em) !important;
   height: 0px;
 }
 

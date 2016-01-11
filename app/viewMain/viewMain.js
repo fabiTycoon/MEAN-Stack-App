@@ -41,7 +41,7 @@ angular.module('myApp.viewMain', ['ngRoute'])
 .directive('catIcon', [function(){
   return  {
     restrict: 'E',
-    templateUrl: 'viewMain/kennel.html',
+    templateUrl: 'viewMain/cat.html',
     replace: true,
   }
 }])
