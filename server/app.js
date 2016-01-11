@@ -1,12 +1,28 @@
 var express = require('express');
 var app = express();
+var router = express.Router();
 var bodyParser = require('body-parser');
 
 var port = process.env.PORT || 8080; 
+
 var assetFolder = Path.resolve(__dirname, '../app/');
+router.use(express.static(assetFolder));
+
 
 // parse application/json 
 app.use(bodyParser.json());
+
+// Mount our main router
+app.use('/', router);
+
+//Start the server
+app.listen(port, function() {
+    console.log('Listening on port %d in mode %s', port, app.get('env'));
+  });
+} else {
+  // We're in test mode; make this file importable instead.
+  module.exports = router;
+}
 
 
 //Define API endpoints for users, pets, and reservations:
