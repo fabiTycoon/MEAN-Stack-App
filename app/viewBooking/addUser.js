@@ -24,13 +24,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     zip: ''
   };
 
-  $scope.newReservation = {
-    checkInDate: '',
-    checkOutDate: '',
-    checkInTime: '',
-    checkOutTime: ''
-  }
-
   var init = function () {
     $('select').material_select();    
     $('.datepicker').pickadate({
