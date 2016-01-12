@@ -7,7 +7,7 @@ $secondary-color-darken: darken( $secondary-color, 5% );
 $secondary-color-lighten: lighten( $secondary-color, 5% ); 
 
 $tertiary-color: #f5f5f5;
-$tertiary-color-darken: darken( $tertiary-color, 10% );
+$tertiary-color-darken: darken( $tertiary-color, 20% );
 $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 
 // THEME FONTS:
@@ -88,4 +88,11 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 
 #gallery-img {
   width: 200em;
+}
+
+// BOOKING VIEW COMPONENTS:
+
+.redirect-text {
+  color: $tertiary-color-darken;
+  font-size: 1em;
 }

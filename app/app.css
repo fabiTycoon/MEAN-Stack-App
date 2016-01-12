@@ -9,7 +9,7 @@
   width: 3.5em;
   fill: #f5f5f5; }
   #social-icon:hover {
-    fill: gainsboro; }
+    fill: #c2c2c2; }
 
 .pet-icon svg {
   height: 2.5em;
@@ -48,3 +48,7 @@
 
 #gallery-img {
   width: 200em; }
+
+.redirect-text {
+  color: #c2c2c2;
+  font-size: 1em; }

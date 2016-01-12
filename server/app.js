@@ -19,9 +19,6 @@ app.use('/', router);
 app.listen(port, function() {
     console.log('Listening on port %d in mode %s', port, app.get('env'));
   });
-} else {
-  // We're in test mode; make this file importable instead.
-  module.exports = router;
 }
 
 
@@ -40,6 +37,7 @@ app.post('/user', function (req, res) {
 
 
 
+// Default endpoint:
 
 app.get('/*', function (req, res) {
   res.sendFile(assetFolder + '/index.html');

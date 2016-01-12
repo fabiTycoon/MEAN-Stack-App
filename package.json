@@ -24,9 +24,7 @@
     "shelljs": "^0.2.6"
   },
   "scripts": {
-    "postinstall": "bower install",
-    "prestart": "npm install",
-    "start": "http-server -a localhost -p 8000 -c-1",
+    "start": "./node_modules/.bin/nodemon server/app.js --ignore client/ --ignore node_modules/",
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js  --single-run",
@@ -41,6 +39,7 @@
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
     "gulp": "^3.9.0",
+    "nodemon": "^1.8.1",
     "passport": "^0.3.2"
   }
 }
