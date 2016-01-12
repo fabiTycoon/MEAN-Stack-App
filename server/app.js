@@ -21,6 +21,12 @@ app.listen(port, function() {
     console.log('Listening on port %d in mode %s', port, app.get('env'));
   });
 
+// SERVE APPLICATION FILES:
+
+router.get('/js/angular-messages.js', function (req, res) {
+  res.sendFile(Path.resolve('./node_modules/angular-messages/angular-messages.js'));
+});
+
 /*
 //Define API endpoints for users, pets, and reservations:
 
@@ -33,6 +39,10 @@ app.post('/user', function (req, res) {
   //create a new user
   res.send()
 });*/
+
+
+
+
 
 
 
