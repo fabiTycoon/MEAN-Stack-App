@@ -23,9 +23,6 @@ app.listen(port, function() {
 
 // SERVE APPLICATION FILES:
 
-router.get('/js/angular-messages.js', function (req, res) {
-  res.sendFile(Path.resolve('./node_modules/angular-messages/angular-messages.js'));
-});
 
 /*
 //Define API endpoints for users, pets, and reservations:
