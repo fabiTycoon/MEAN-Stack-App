@@ -11,24 +11,23 @@
      <div class="card">
        <div class="card-content ">
          <span class="card-title">Your Requested Dates:</span>
-              <div class="row">
-                <div class="input-field col s6" ng-blur="setDate()">
-                  <input id="check-in" class="datepicker" type="date" ng-model="newReservation.checkInDate" min="currentDate">
-                  <label class="active" for="check-in">Check-In Date</label>
-                </div>
-                <div class="input-field col s6">
-                  <input id="check-out" class="datepicker" type="date" ng-model="newReservation.checkOutDate" min="checkInDate">
-                  <label class="active" for="check-out">Check-Out Date</label>
-                </div>
+            <div class="row">
+              <div class="input-field col s6" ng-blur="setDate()">
+                <input id="check-in" class="datepicker" type="date" ng-model="newReservation.checkInDate" min="currentDate">
+                <label class="active" for="check-in">Check-In Date</label>
               </div>
-          </form>
+              <div class="input-field col s6">
+                <input id="check-out" class="datepicker" type="date" ng-model="newReservation.checkOutDate" min="checkInDate">
+                <label class="active" for="check-out">Check-Out Date</label>
+              </div>
+            </div>
+        </div>
+        <div class="card-action">
+         <a href="#/addUser">Go Back</a>
+         <a href="#/addPet">Next</a>
         </div>
       </div>
 
-       <div class="card-action">
-         <a href="#/addUser">Go Back</a>
-         <a href="#/addPet">Next</a>
-       </div>
      </div>
    </div>
  </div>
