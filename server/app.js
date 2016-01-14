@@ -6,7 +6,7 @@ var app = express();
 var router = express.Router();
 
 var port = process.env.PORT || 8080; 
-var assetFolder = Path.resolve(__dirname, '../app/');
+var assetFolder = Path.resolve(__dirname, '../');
 
 router.use(express.static(assetFolder));
 
