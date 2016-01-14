@@ -24,8 +24,12 @@
        <div class="card-content ">
          <span class="card-title">Your Pet's Info:</span>
         <div class="row">
-          <div class="align-left col s6">
+          <div class="col s6 left align">
             <label>My Pet is a:</label>
+          </div>
+          <div class="col s1 offset-s5 ">
+            <dog-icon ng-if="dogSelected === true" id="pet-icon"></dog-icon>
+            <cat-icon ng-if="catSelected === true" id="pet-icon"></cat-icon>
           </div>
         </div>
         <div class="row">

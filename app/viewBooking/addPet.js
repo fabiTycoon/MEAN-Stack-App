@@ -24,7 +24,6 @@ angular.module('myApp.addPetView', ['ngRoute'])
   $scope.otherSelected = false;
 
   $scope.speciesSelector = function (species) {
-    console.log("speciesSel called, species val is", species);
 
     if (species === 'dog') {
       $scope.currentPet[species] = 'dog';
@@ -36,6 +35,7 @@ angular.module('myApp.addPetView', ['ngRoute'])
       $scope.dogSelected = false;
       $scope.catSelected = true;
       $scope.otherSelected = false;
+      
     } else if (species === 'other') {
       $scope.dogSelected = false;
       $scope.catSelected = false;

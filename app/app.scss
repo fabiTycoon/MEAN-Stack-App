@@ -96,3 +96,7 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   color: $tertiary-color-darken;
   font-size: 1em;
 }
+
+#pet-icon {
+  fill: $secondary-color !important;
+}
