@@ -14,6 +14,7 @@ angular.module('myApp.viewAddBooking', ['ngRoute'])
   
 
   $scope.newReservation = {
+    service: '',
     checkInDate: '',
     checkOutDate: '',
     checkInTimeHr: '',
@@ -23,6 +24,13 @@ angular.module('myApp.viewAddBooking', ['ngRoute'])
     checkOutTimeMin: '',
     checkOutTimeDp: ''
   };
+
+  $scope.serviceSel = function (service) {
+    if (service === 'boarding') {
+      $scope.newReservation.service = service;
+    } else if (service === 'daycare')
+      $scope.newReservation.service = service;
+  }
 
   var init = function () {
     $('.datepicker').pickadate({

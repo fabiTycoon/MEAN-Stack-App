@@ -27,19 +27,21 @@
           <div class="col s6 left align">
             <label>My Pet is a:</label>
           </div>
-          <div class="col s1 offset-s5 ">
-            <dog-icon ng-if="dogSelected === true" id="pet-icon"></dog-icon>
-            <cat-icon ng-if="catSelected === true" id="pet-icon"></cat-icon>
-          </div>
+          
+            
+            
+
         </div>
         <div class="row">
           <div class="col s5">
             <input name="speciesButtons" type="radio" id="dogSelect" ng-click="speciesSelector('dog')"/>
             <label for="dogSelect">Dog</label>
+            <dog-icon ng-if="dogSelected === true" id="form-icon"></dog-icon>
           </div>
           <div class="col s5">
             <input name="speciesButtons" type="radio" id="catSelect" ng-click="speciesSelector('cat')"/>
             <label for="catSelect">Cat</label>
+            <cat-icon ng-if="catSelected === true" id="form-icon"></cat-icon>
           </div>
           <div class="col s2">
             <input name="speciesButtons" type="radio" id="otherSelect" ng-click="speciesSelector('other')"/>
@@ -79,8 +81,8 @@
        </div>
 
        <div class="card-action">
-         <a href="#/book">Go Back</a>
-         <a href="#/addPet">Next</a>
+         <a href="#/addBooking">Go Back</a>
+         <a href="#/">Next</a>
        </div>
      </div>
    </div>

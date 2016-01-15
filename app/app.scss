@@ -44,6 +44,12 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   fill: $tertiary-color;
 }
 
+.form-icon svg {
+  height: 2.5em;
+  width: 2.5em;
+  fill: $primary-color !important;
+}
+
 // MAIN VIEW COMPONENTS:
 
 .push {
