@@ -11,7 +11,8 @@ angular.module('myApp', [
   'myApp.viewAddBooking',
   'myApp.addPetView',
   'myApp.version',
-  'ngMessages'
+  'ngMessages',
+  'ngSanitize',
 ]).
 config(['$routeProvider', function($routeProvider) {
 
