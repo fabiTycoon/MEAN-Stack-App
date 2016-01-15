@@ -12,6 +12,7 @@
        <div class="card-content ">
          <span class="card-title">Your Requested Dates:</span>
             <div class="row">
+              <!-- USE SOMETHING OTHER THAN NG-BLUR -->
               <div class="input-field col s6" ng-blur="setDate()">
                 <input id="check-in" class="datepicker" type="date" ng-model="newReservation.checkInDate" min="currentDate">
                 <label class="active" for="check-in">Check-In Date</label>
@@ -20,6 +21,72 @@
                 <input id="check-out" class="datepicker" type="date" ng-model="newReservation.checkOutDate" min="checkInDate">
                 <label class="active" for="check-out">Check-Out Date</label>
               </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s2">
+              <label class="active" for="check-in-time">Approx. Check-In Time</label>
+                <select ng-model="newReservation.checkInTimeHr">
+                  <option>12</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                  <option>10</option>
+                  <option>11</option>
+                </select>
+              </div>
+              <div class="input-field col s2">
+                 <select ng-model="newReservation.checkInTimeMin">
+                  <option>00</option>
+                  <option>15</option>
+                  <option>30</option>
+                  <option>45</option>
+                </select>
+              </div>
+              <div class="input-field col s2">
+                <select ng-model="newReservation.checkInTimeDp">
+                  <option>PM</option>
+                  <option>AM</option>
+                </select>
+              </div>
+              <div class="input-field col s2">
+              <label class="active" for="check-in-time">Approx. Check-Out Time</label>
+                <select ng-model="newReservation.checkOutTimeHr">
+                  <option>12</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                  <option>10</option>
+                  <option>11</option>
+                </select>
+              </div>
+              <div class="input-field col s2">
+                 <select ng-model="newReservation.checkOutTimeMin">
+                  <option>00</option>
+                  <option>15</option>
+                  <option>30</option>
+                  <option>45</option>
+                </select>
+              </div>
+              <div class="input-field col s2">
+                <select ng-model="newReservation.checkOutTimeDp">
+                  <option>PM</option>
+                  <option>AM</option>
+                </select>
+              </div>
+
+
             </div>
         </div>
         <div class="card-action">
@@ -31,8 +98,4 @@
      </div>
    </div>
  </div>
-
-
-
-
 </div>
