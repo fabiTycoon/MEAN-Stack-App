@@ -44,13 +44,6 @@ app.post('/user', function (req, res) {
 
 
 
-
-// Default endpoint:
-
-app.get('/*', function (req, res) {
-  res.sendFile(assetFolder + '/index.html');
-});
-
 // Connect to database:
 
 app.get('/db', function (req, res){
@@ -66,4 +59,11 @@ app.get('/db', function (req, res){
     });
   });
 });
+
+// Default endpoint:
+
+app.get('/*', function (req, res) {
+  res.sendFile(assetFolder + '/index.html');
+});
+
 
