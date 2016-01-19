@@ -1,14 +1,14 @@
 'use strict';
 
-describe('myApp.viewAddUser module', function() {
+describe('myApp.viewAbout module', function() {
 
-  beforeEach(module('myApp.viewAddUser'));
+  beforeEach(module('myApp.viewAbout'));
 
-  describe('viewAddUser controller', function(){
+  describe('viewAbout controller', function(){
 
     it('should ....', inject(function($controller) {
-      var AddUserCtrl = $controller('AddUserCtrl');
-      expect(AddUserCtrl).toBeDefined();
+      var ViewAboutCtrl = $controller('ViewAboutCtrl');
+      expect(ViewAboutCtrl).toBeDefined();
     }));
 
   });
