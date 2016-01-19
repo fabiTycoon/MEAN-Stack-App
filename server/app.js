@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var Path = require('path');
+var pg = require('pg');
 
 var app = express();
 var router = express.Router();
@@ -49,3 +50,20 @@ app.post('/user', function (req, res) {
 app.get('/*', function (req, res) {
   res.sendFile(assetFolder + '/index.html');
 });
+
+// Connect to database:
+
+app.get('/db', function (req, res){
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    //for now, just return dummy data when we access via /db
+    client.query('SELECT * FROM test_table', function(err, result) {
+      done();
+      if (err)
+        { console.error(err); response.send("Error " + err);
+      } else { 
+        response.render('pages/db', {results: result.rows}); 
+      }
+    });
+  });
+});
+
