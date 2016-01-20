@@ -1,13 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var Path = require('path');
-var pg = require('pg');
-
-var app = express();
-var router = express.Router();
 
 var port = process.env.PORT || 8080; 
 var assetFolder = Path.resolve(__dirname, '../app/');
+
+var app = express();
+var router = express.Router();
 
 router.use(express.static(assetFolder));
 
@@ -21,6 +20,9 @@ app.use('/', router);
 app.listen(port, function() {
     console.log('Listening on port %d in mode %s', port, app.get('env'));
   });
+
+//Connect to the database
+client.connect();
 
 // SERVE APPLICATION FILES:
 
@@ -36,29 +38,20 @@ app.get('/user', function (req, res) {
 app.post('/user', function (req, res) {
   //create a new user
   res.send()
-});*/
-
-
-
-
-
-
-
-// Connect to database:
-
-app.get('/db', function (req, res){
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    //for now, just return dummy data when we access via /db
-    client.query('SELECT * FROM test_table', function(err, result) {
-      done();
-      if (err)
-        { console.error(err); response.send("Error " + err);
-      } else { 
-        response.render('pages/db', {results: result.rows}); 
-      }
-    });
-  });
 });
+
+app.put('/user', function (req, res) {
+  //update user info
+  res.send();
+})
+
+app.delete('/user', function (req, res) {
+  //delete a user
+  res.send();
+})
+
+*/
+
 
 // Default endpoint:
 
