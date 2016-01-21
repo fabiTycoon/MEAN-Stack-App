@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var Path = require('path');
 var db = require('./lib/db');
+var Users = require('./models/users');
 //var pg = require('pg');
 
 var port = process.env.PORT || 8080; 
@@ -23,18 +24,14 @@ app.listen(port, function() {
     console.log('Listening on port %d in mode %s', port, app.get('env'));
   });
 
-//Connect to the datab//ase
-//pg.connect();
-
 // SERVE APPLICATION FILES:
-
-
 
 //Define API endpoints for users, pets, and reservations:
 
 //User:
 router.get('/user', function (req, res) {
   //call database with db.functionName();
+
 
 });
 
@@ -52,9 +49,6 @@ router.delete('/user', function (req, res) {
   //delete a user
   res.send();
 })
-
-
-
 
 // Default endpoint:
 

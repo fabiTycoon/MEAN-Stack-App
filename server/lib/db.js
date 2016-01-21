@@ -1,14 +1,14 @@
 var pg = require('pg');
+var bPromise = require('bluebird');
 
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/holliston_dev';
 var client = new pg.Client(connectionString);
 
-
-//CREATE TABLE FUNCTIONS:
+//CREATE TABLE QUERY FUNCTIONS:
 var createUsersTable = function () {
   client.connect();
 
-  var query = client.query('CREATE TABLE "Users" ( ' +
+  var query = client.query('CREATE TABLE IF NOT EXISTS "Users" ( ' +
     '"id" bigint NOT NULL UNIQUE, ' +
     '"first" char NOT NULL, ' +
     '"last" char NOT NULL, ' +
@@ -30,7 +30,7 @@ var createUsersTable = function () {
 var createPetsTable = function () {
   client.connect();
 
-  var query = client.query('CREATE TABLE "Pets" ( ' +
+  var query = client.query('CREATE TABLE IF NOT EXISTS "Pets" ( ' +
     '"id" bigint NOT NULL,' +
     '"name" char NOT NULL,' +
     '"breed" char,' +
@@ -58,7 +58,7 @@ var createPetsTable = function () {
 var createReservationsTable = function () {
   client.connect();
 
-  var query = client.query('CREATE TABLE "Resevations" ( ' +
+  var query = client.query('CREATE TABLE IF NOT EXISTS "Resevations" ( ' +
       '"id" bigint NOT NULL,'+
       '"service" char NOT NULL,'+
       '"checkIn" DATE NOT NULL,'+
@@ -74,11 +74,5 @@ var createReservationsTable = function () {
     client.end();
   });
 }
-
-
-
-
-
-
 
 module.exports = 'db';

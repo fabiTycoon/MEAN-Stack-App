@@ -12,6 +12,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 .controller('AddUserCtrl', ['$scope', function($scope) {
 
   $scope.currentDate = Date.now();
+
   //Form Values:
   $scope.newOwner = {
     first: '',
@@ -23,6 +24,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     state: '',
     zip: '',
     hospital: ''
+  };
+
+  var createUser = function () {
+
+    AddUser.create(data);
   };
 
   var init = function () {
