@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var Path = require('path');
+var db = require('./lib/db');
+//var pg = require('pg');
 
 var port = process.env.PORT || 8080; 
 var assetFolder = Path.resolve(__dirname, '../app/');
@@ -21,36 +23,37 @@ app.listen(port, function() {
     console.log('Listening on port %d in mode %s', port, app.get('env'));
   });
 
-//Connect to the database
-client.connect();
+//Connect to the datab//ase
+//pg.connect();
 
 // SERVE APPLICATION FILES:
 
 
-/*
+
 //Define API endpoints for users, pets, and reservations:
 
 //User:
-app.get('/user', function (req, res) {
-  res.send()
+router.get('/user', function (req, res) {
+  //call database with db.functionName();
+
 });
 
-app.post('/user', function (req, res) {
+router.post('/user', function (req, res) {
   //create a new user
   res.send()
 });
 
-app.put('/user', function (req, res) {
+router.put('/user', function (req, res) {
   //update user info
   res.send();
 })
 
-app.delete('/user', function (req, res) {
+router.delete('/user', function (req, res) {
   //delete a user
   res.send();
 })
 
-*/
+
 
 
 // Default endpoint:

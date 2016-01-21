@@ -21,7 +21,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     street: '',
     city: '',
     state: '',
-    zip: ''
+    zip: '',
+    hospital: ''
   };
 
   var init = function () {

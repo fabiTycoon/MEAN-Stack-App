@@ -13,9 +13,16 @@ angular.module('myApp.addPetView', ['ngRoute'])
 
   $scope.currentPets = [];
 
+
+  //bind owner here, or elsewhere?  wait until sessions is implemented
   $scope.currentPet = {
     species: '',
-    name: ''
+    name: '',
+    breed: '',
+    owner: '',
+    neutered: false,
+    color: '',
+    age,
   };
 
   //Controls Add a Pet View display
