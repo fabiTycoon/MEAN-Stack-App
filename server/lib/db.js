@@ -23,6 +23,7 @@ var createUsersTable = function () {
   );
 
   query.on('end', function() { 
+    console.log("Created users table");
     client.end();
   });
 };
@@ -51,6 +52,7 @@ var createPetsTable = function () {
     'FOREIGN KEY (reservations) REFERENCES Reservations(id);'
   );
   query.on('end', function() { 
+    console.log("Created pets table");
     client.end();
   });
 }
@@ -71,6 +73,7 @@ var createReservationsTable = function () {
       'FOREIGN KEY (owner) REFERENCES Users(id);'
   );
   query.on('end', function() { 
+    console.log("Created reservations table");
     client.end();
   });
 }

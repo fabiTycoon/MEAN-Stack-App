@@ -37,6 +37,7 @@
     "angular": "^1.4.8",
     "angular-messages": "^1.4.8",
     "angular-route": "^1.4.8",
+    "bluebird": "^3.1.1",
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
     "gulp": "^3.9.0",
