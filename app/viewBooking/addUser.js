@@ -27,7 +27,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   var createUser = function () {
-
     AddUser.create(data);
   };
 
@@ -38,12 +37,16 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   init();
 }])
 
-.factory('AddUser', ['$http', function  ($http){
+.factory('User', ['$http', function  ($http){
 
   var create = function(data) {
     console.log('data:', data);
     return $http.post('/api/users/', data);
   };
+
+  var read = function(userId) {
+    return $http.get('/api/users/' + userId);
+  }
 
   var edit = function(userId, data) {
     return $http.put('/api/users/' + userId, data);
@@ -55,6 +58,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   return {
     create: create,
+    read: read,
     edit: edit,
     del: del
   };

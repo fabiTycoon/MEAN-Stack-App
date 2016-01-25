@@ -22,7 +22,7 @@ angular.module('myApp.addPetView', ['ngRoute'])
     owner: '',
     neutered: false,
     color: '',
-    age,
+    age: 0
   };
 
   //Controls Add a Pet View display
@@ -52,4 +52,30 @@ angular.module('myApp.addPetView', ['ngRoute'])
 
 }])
 
-;
+.factory('Pet', ['$http', function  ($http){
+
+  var create = function(data) {
+    console.log('data:', data);
+    return $http.post('/api/pets/', data);
+  };
+
+  var read = function(petId) {
+    return $http.get('/api/pets/' + petId);
+  }
+
+  var edit = function(petId, data) {
+    return $http.put('/api/pets/' + petId, data);
+  };
+
+  var del = function(petId) {
+    return $http.delete('/api/pets/' + petId);
+  };
+
+  return {
+    create: create,
+    read: read,
+    edit: edit,
+    del: del
+  };
+
+}]);

@@ -1,6 +1,7 @@
 var db = require('../lib/db');
 var pg = require('pg');
 var bPromise = require('bluebird');
+var bcrypt = bPromise.promisifyAll(require('bcrypt-nodejs'));
 
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/holliston_dev';
 var client = new pg.Client(connectionString);
@@ -37,7 +38,7 @@ Users.all = function (req, res) {
 
 // finds by email and then calls the callback
 Users.findByEmail = function (email, cb) {
-  var results = [];
+  var result = [];
 
   pg.connect(connectionString, function (err, client, done){
     // Handle connection errors
@@ -57,20 +58,20 @@ Users.findByEmail = function (email, cb) {
     ';'
     );
 
-  // Stream results back one row at a time
+  // Stream result back one row at a time
   query.on('row', function(row) {
-    results.push(row);
+    result.push(row);
   });
 
   query.on('end', function() { 
     client.end();
-    return res.json(results);
+    return res.json(result);
   });
 }
 
 // finds by id and then calls the callback
 Users.findById = function (id, cb) {
-  var results = [];
+  var result = [];
 
   pg.connect(connectionString, function (err, client, done){
     // Handle connection errors
@@ -78,7 +79,8 @@ Users.findById = function (id, cb) {
       done();
       console.log(err);
       return res.status(500).json({ 
-        success: false, data: err
+        success: false, 
+        data: err
       });
     };
   });
@@ -90,14 +92,14 @@ Users.findById = function (id, cb) {
     ';'
     );
 
-  // Stream results back one row at a time
+  // Stream result back one row at a time
   query.on('row', function(row) {
-    results.push(row);
+    result.push(row);
   });
 
   query.on('end', function() { 
     client.end();
-    return res.json(results);
+    return res.json(result);
   });
 };
 
@@ -105,6 +107,45 @@ Users.findById = function (id, cb) {
 // signs up a new user
 Users.signUp = function (attrs) {
 
+  var User = {
+    first: attrs.first,
+    last: attrs.last,
+    phone: attrs.phone,
+    email: attrs.email,
+    street: attrs.street,
+    city: attrs.city,
+    state: attrs.state,
+    zip: attrs.zip,
+    hospital: attrs.hopsital
+  };
+
+  pg.connect(connectionString, function (err, client, done) {
+    //unpack user atts & format into query for db
+    //query db, check if user already exists
+
+    if (this.findByEmail(User.email)) {
+
+    }
+
+    //validate user data
+    //if valid
+
+
+  });
+
+  if (err) {
+    done();
+    console.log(err);
+    return res.status(500).json({
+      success: false, 
+      data: err
+    });
+  };
+
+  query.on('end', function(){
+    client.end();
+    return res.json(result);
+  });
 };
 
 // generates hash async
