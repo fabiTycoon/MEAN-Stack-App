@@ -22,14 +22,25 @@ angular.module('myApp.viewAddBooking', ['ngRoute'])
     checkInTimeDp: '',
     checkOutTimeHr: '',
     checkOutTimeMin: '',
-    checkOutTimeDp: ''
+    checkOutTimeDp: '',
+    pickup: false
   };
 
+  $scope.pickupSelected = false;
+  $scope.dropoffSelected = false;
+
   $scope.serviceSel = function (service) {
-    if (service === 'boarding') {
-      $scope.newReservation.service = service;
-    } else if (service === 'daycare')
-      $scope.newReservation.service = service;
+    $scope.selectionMade = true;
+    $scope.newReservation.service = service;
+  }
+
+  $scope.transportSel = function (service) {
+    if (service === 'pickup') {
+      $scope.pickupSelected = true;
+      $scope.newReservation.pickup = true;
+    } else if (service === 'dropoff') {
+      $scope.dropoffSelected = true;
+    }
   }
 
   var init = function () {
