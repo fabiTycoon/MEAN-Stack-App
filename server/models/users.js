@@ -107,6 +107,7 @@ Users.findById = function (id, cb) {
 // signs up a new user
 Users.signUp = function (attrs) {
 
+  //unpack user atts & format into query for db
   var User = {
     first: attrs.first,
     last: attrs.last,
@@ -119,16 +120,25 @@ Users.signUp = function (attrs) {
     hospital: attrs.hopsital
   };
 
+  var result = [];
+
+  var query = client.query('INSERT INTO USERS' +
+    ''
+    );
+
   pg.connect(connectionString, function (err, client, done) {
-    //unpack user atts & format into query for db
     //query db, check if user already exists
 
     if (this.findByEmail(User.email)) {
+      //what will this return?
+
+
 
     }
 
     //validate user data
-    //if valid
+
+    //if valid, create a new user:
 
 
   });
@@ -142,6 +152,11 @@ Users.signUp = function (attrs) {
     });
   };
 
+  // Stream result back one row at a time
+  query.on('row', function(row) {
+    result.push(row);
+  });
+
   query.on('end', function(){
     client.end();
     return res.json(result);
@@ -150,12 +165,20 @@ Users.signUp = function (attrs) {
 
 // generates hash async
 Users.generateHash = function(password) {
-
+  // Use a work factor of 12 for hashing
+  return bcrypt.genSaltAsync(12)
+    .then(function(salt) {
+      return bcrypt.hashAsync(password, salt, null)
+      .then(function (passHash) {
+        console.log('Salt:', salt, 'Passhash:', passHash);
+        return passHash;
+      });
+    });
 };
 
 // checks password async with stored password
 Users.validPassword = function(enteredPassword, passwordHash) {
-  
+  return bcrypt.compareAsync(enteredPassword, passwordHash);
 };
 
 module.exports = Users;
