@@ -37,7 +37,7 @@ Users.all = function (req, res) {
 };
 
 // finds by email and then calls the callback
-Users.findByEmail = function (email, cb) {
+Users.findByEmail = function (email, req, res) {
   var result = [];
 
   pg.connect(connectionString, function (err, client, done){
@@ -58,7 +58,7 @@ Users.findByEmail = function (email, cb) {
     ';'
     );
 
-  // Stream result back one row at a time
+  // Stream result back
   query.on('row', function(row) {
     result.push(row);
   });
@@ -70,7 +70,7 @@ Users.findByEmail = function (email, cb) {
 }
 
 // finds by id and then calls the callback
-Users.findById = function (id, cb) {
+Users.findById = function (id, req, res) {
   var result = [];
 
   pg.connect(connectionString, function (err, client, done){
@@ -105,7 +105,7 @@ Users.findById = function (id, cb) {
 
 
 // signs up a new user
-Users.signUp = function (attrs) {
+Users.signUp = function (attrs, req, res) {
 
   //unpack user atts & format into query for db
   var User = {
@@ -122,24 +122,28 @@ Users.signUp = function (attrs) {
 
   var result = [];
 
-  var query = client.query('INSERT INTO USERS' +
-    ''
-    );
 
   pg.connect(connectionString, function (err, client, done) {
     //query db, check if user already exists
-
     if (this.findByEmail(User.email)) {
       //what will this return?
 
-
-
     }
 
-    //validate user data
-
-    //if valid, create a new user:
-
+    //if user doesn't exist, create new user:
+    var query = client.query('INSERT INTO USERS' +
+      '(first, last, phone, email, street, city, state, zip, hospital)' + 
+      'VALUES (' +
+        User.first + ', ' +
+        User.last + ', ' +
+        User.phone + ', ' +
+        User.email + ', ' +
+        User.street + ', ' +
+        User.city + ', ' +
+        User.state + ', ' +
+        User.zip + ', ' +
+        User.hospital + ');'
+      );
 
   });
 
@@ -159,12 +163,13 @@ Users.signUp = function (attrs) {
 
   query.on('end', function(){
     client.end();
+    console.log("Succesfully created user");
     return res.json(result);
   });
 };
 
 // generates hash async
-Users.generateHash = function(password) {
+Users.generateHash = function (password) {
   // Use a work factor of 12 for hashing
   return bcrypt.genSaltAsync(12)
     .then(function(salt) {

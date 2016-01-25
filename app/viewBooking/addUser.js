@@ -41,7 +41,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   var create = function(data) {
     console.log('data:', data);
-    return $http.post('/api/users/', data);
+    return $http.post('/api/signup/', data);
   };
 
   var read = function(userId) {

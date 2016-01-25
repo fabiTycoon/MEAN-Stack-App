@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var Path = require('path');
+var passport = require('passport');
+
 var db = require('./lib/db');
 var Users = require('./models/users');
 //var pg = require('pg');
@@ -35,9 +37,19 @@ router.get('/user', function (req, res) {
 
 });
 
-router.post('/user', function (req, res) {
-  //create a new user
-  res.send()
+// Creates new user
+router.post('/api/signup', function (req, res, next) {
+  passport.authenticate('local-signup', function (err, user, info) {
+    if (err) {
+      res.status(500).json({ signedUp: false, error: err, info: info });
+      return;
+    }
+    if (!user) {
+      res.status(401).json({ signedUp: false, info: info });
+      return;
+    }
+    res.status(201).json({ signedUp: true });
+  })(req, res, next);
 });
 
 router.put('/user', function (req, res) {

@@ -4,7 +4,7 @@ var bPromise = require('bluebird');
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/holliston_dev';
 var client = new pg.Client(connectionString);
 
-//CREATE TABLE QUERY FUNCTIONS:
+//SCHEMA FUNCTIONS:
 var createUsersTable = function () {
   client.connect();
 
