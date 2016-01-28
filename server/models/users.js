@@ -1,7 +1,6 @@
 var db = require('../lib/db');
 var pg = require('pg');
 var bPromise = require('bluebird');
-var nodemailer = require('nodemailer');
 var bcrypt = bPromise.promisifyAll(require('bcrypt-nodejs'));
 var password = require('../lib/password.js');
 var email = require('../lib/mailer.js');
@@ -88,9 +87,9 @@ Users.findById = function (id, req, res) {
     };
   });
 
-  var query = client.query('SELECT user.id' +
+  var query = client.query('SELECT user.id ' +
     'FROM users' + 
-    'WHERE user.id =' + 
+    ' WHERE user.id =' + 
     id +
     ';'
     );
@@ -139,7 +138,7 @@ Users.signUp = function (attrs, req, res) {
 
     var result = [];
 
-    var query = client.query('INSERT INTO USERS ' +
+    var query = client.query('INSERT INTO pets ' +
       '(first, last, phone, email, password, street, city, state, zip, hospital) ' + 
       'VALUES (' +
         User.first + ', ' +
