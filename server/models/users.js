@@ -134,9 +134,8 @@ Users.signUp = function (attrs, req, res) {
     var temp = password.newPassword(8);
     email.sendMessage(User.email, temp);
 
-    User.password = this.generateHash(temp).then(function(){
-      temp = null;
-    });
+    User.password = this.generateHash(temp);
+    temp = null;
 
     var result = [];
 
@@ -182,6 +181,13 @@ Users.resetPassword = function (email) {
   //find by email
   //generate new pass and email
   //update DB
+}
+
+Users.changePassword = function (email, password) {
+  //TO DO
+  //find by email
+  //check old password
+  //if valid, hash new password & send to db
 }
 
 // generates hash async

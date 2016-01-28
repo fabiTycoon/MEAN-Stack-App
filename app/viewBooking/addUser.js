@@ -9,7 +9,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   });
 }])
 
-.controller('AddUserCtrl', ['$scope', function($scope) {
+.controller('AddUserCtrl', ['$scope', 'User', function($scope, User) {
 
   $scope.currentDate = Date.now();
 
@@ -26,8 +26,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     hospital: ''
   };
 
-  var createUser = function () {
-    AddUser.create(data);
+  $scope.createUser = function (data) {
+    //User.create(data);
   };
 
   var init = function () {
