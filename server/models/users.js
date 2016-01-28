@@ -1,7 +1,10 @@
 var db = require('../lib/db');
 var pg = require('pg');
 var bPromise = require('bluebird');
+var nodemailer = require('nodemailer');
 var bcrypt = bPromise.promisifyAll(require('bcrypt-nodejs'));
+var password = require('../lib/password.js');
+var email = require('../lib/mailer.js');
 
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/holliston_dev';
 var client = new pg.Client(connectionString);
@@ -107,12 +110,13 @@ Users.findById = function (id, req, res) {
 // signs up a new user
 Users.signUp = function (attrs, req, res) {
 
-  //unpack user atts & format into query for db
+  //unpack user atts
   var User = {
     first: attrs.first,
     last: attrs.last,
     phone: attrs.phone,
     email: attrs.email,
+    password: null,
     street: attrs.street,
     city: attrs.city,
     state: attrs.state,
@@ -120,31 +124,36 @@ Users.signUp = function (attrs, req, res) {
     hospital: attrs.hopsital
   };
 
-  var result = [];
-
-
   pg.connect(connectionString, function (err, client, done) {
     //query db, check if user already exists
-    if (this.findByEmail(User.email)) {
-      //what will this return?
+    var userExists = this.findByEmail(User.email);
+    (userExists.length > 0) ? userExists = true: userExists = false;
 
-    }
+    //if user doesn't exist, create new user
+    //create temporary password & send to user:
+    var temp = password.newPassword(8);
+    email.sendMessage(User.email, temp);
 
-    //if user doesn't exist, create new user:
-    var query = client.query('INSERT INTO USERS' +
-      '(first, last, phone, email, street, city, state, zip, hospital)' + 
+    User.password = this.generateHash(temp).then(function(){
+      temp = null;
+    });
+
+    var result = [];
+
+    var query = client.query('INSERT INTO USERS ' +
+      '(first, last, phone, email, password, street, city, state, zip, hospital) ' + 
       'VALUES (' +
         User.first + ', ' +
         User.last + ', ' +
         User.phone + ', ' +
         User.email + ', ' +
+        User.password + ', ' +
         User.street + ', ' +
         User.city + ', ' +
         User.state + ', ' +
         User.zip + ', ' +
         User.hospital + ');'
       );
-
   });
 
   if (err) {
@@ -167,6 +176,13 @@ Users.signUp = function (attrs, req, res) {
     return res.json(result);
   });
 };
+
+Users.resetPassword = function (email) {
+  //TO DO
+  //find by email
+  //generate new pass and email
+  //update DB
+}
 
 // generates hash async
 Users.generateHash = function (password) {

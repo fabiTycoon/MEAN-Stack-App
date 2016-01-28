@@ -22,6 +22,7 @@ Schema.createUsersTable = function () {
     '"first" char NOT NULL, ' +
     '"last" char NOT NULL, ' +
     '"email" character varying NOT NULL, ' +
+    '"password" character varying NOT NULL, ' +
     '"phone" int NOT NULL, ' +
     '"street" character varying NOT NULL, ' +
     '"city" character NOT NULL, ' +
