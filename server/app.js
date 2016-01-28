@@ -63,7 +63,6 @@ router.delete('/user', function (req, res) {
 })
 
 // Default endpoint:
-
 app.get('/*', function (req, res) {
   res.sendFile(assetFolder + '/index.html');
 });
