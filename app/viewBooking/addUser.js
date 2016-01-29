@@ -27,7 +27,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.createUser = function (data) {
-    //User.create(data);
+    User.create(data);
   };
 
   var init = function () {

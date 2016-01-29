@@ -5,7 +5,6 @@ var passport = require('passport');
 
 var db = require('./lib/db');
 var Users = require('./models/users');
-//var pg = require('pg');
 
 var port = process.env.PORT || 8080; 
 var assetFolder = Path.resolve(__dirname, '../app/');
@@ -17,7 +16,6 @@ router.use(express.static(assetFolder));
 
 // parse application/json 
 app.use(bodyParser.json());
-
 // Mount our main router
 app.use('/', router);
 
@@ -30,15 +28,16 @@ app.listen(port, function() {
 
 //Define API endpoints for users, pets, and reservations:
 
-//User:
+//USER ENDPOINTS - TODO REFACTOR IN SEPERATE MODULE:
 router.get('/user', function (req, res) {
-  //call database with db.functionName();
 
 
 });
 
 // Creates new user
 router.post('/api/signup', function (req, res, next) {
+  console.log("reached signup endpoint, req object is", req);
+
   passport.authenticate('local-signup', function (err, user, info) {
     if (err) {
       res.status(500).json({ signedUp: false, error: err, info: info });
@@ -49,11 +48,14 @@ router.post('/api/signup', function (req, res, next) {
       return;
     }
     res.status(201).json({ signedUp: true });
+
+
   })(req, res, next);
 });
 
 router.put('/user', function (req, res) {
   //update user info
+
   res.send();
 })
 
