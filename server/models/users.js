@@ -14,7 +14,7 @@ var Users = {};
 Users.all = function (req, res) {
   var results = [];
 
-  pg.connect(connectionString, function (err, client, done){
+  client.connect(connectionString, function (err, client, done){
     // Handle connection errors
     if (err) {
       done();
@@ -42,7 +42,7 @@ Users.all = function (req, res) {
 Users.findByEmail = function (email, req, res) {
   var result = [];
 
-  pg.connect(connectionString, function (err, client, done){
+  client.connect(connectionString, function (err, client, done){
     // Handle connection errors
     if (err) {
       done();
@@ -75,7 +75,7 @@ Users.findByEmail = function (email, req, res) {
 Users.findById = function (id, req, res) {
   var result = [];
 
-  pg.connect(connectionString, function (err, client, done){
+  client.connect(connectionString, function (err, client, done){
     // Handle connection errors
     if (err) {
       done();
@@ -123,7 +123,7 @@ Users.signUp = function (attrs, req, res) {
     hospital: attrs.hopsital
   };
 
-  pg.connect(connectionString, function (err, client, done) {
+  client.connect(connectionString, function (err, client, done) {
     //query db, check if user already exists
     var userExists = this.findByEmail(User.email);
     (userExists.length > 0) ? userExists = true: userExists = false;
