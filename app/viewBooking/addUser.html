@@ -23,58 +23,67 @@
           <form class="col s12">
             <div class="row">
               <div class="input-field col s6">
-                <input id="first_name" type="text" ng-model="owner.first">
+                <input id="first_name" type="text" ng-model="newOwner.first">
                 <label class="active" for="first_name">First Name</label>
               </div>
               <div class="input-field col s6">
-                <input id="last_name" type="text" ng-model="owner.last">
+                <input id="last_name" type="text" ng-model="newOwner.last">
                 <label class="active" for="last_name">Last Name</label>
               </div>
             </div>            
               <div class="input-field col s6">
                 <p style="white-space: nowrap;">
-                  <input id="phone" type="text" ng-model="owner.phArea" style="width: 2em;" maxlength="3"> - <input id="phone" type="text" ng-model="owner.ph1" style="width: 2em;" maxlength="3"> - <input id="phone" type="text" ng-model="owner.ph2" style="width: 3em;" maxlength="4">
+                  <input id="phone" type="text" ng-model="phArea" style="width: 2em;" maxlength="3"> - <input id="phone" type="text" ng-model="ph1" style="width: 2em;" maxlength="3"> - <input id="phone" type="text" ng-model="ph2" style="width: 3em;" maxlength="4">
                   <label class="active" for="phone">Phone</label>
                 </p>
               </div>  
 
               <div class="input-field col s6">
-                <input id="email" type="email">
+                <input id="email" type="email" ng-model="newOwner.email">
                 <label class="active" for="email">Email</label>
               </div>
 
                <div class="row">
                 <div class="input-field col s4">
-                  <input id="street" type="text" ng-model="owner.street">
+                  <input id="street" type="text" ng-model="newOwner.street">
                   <label class="active" for="street">Street Address</label>
                 </div>
                 <div class="input-field col s4">
-                  <input id="city" type="text" ng-model="owner.city">
+                  <input id="city" type="text" ng-model="newOwner.city">
                   <label class="active" for="city">City</label>
                 </div>
+                <!--Need to bind select value to newOwner-->
                 <div class="input-field col s2">
-                  <select id="state">
-                    <option value="1">MA</option>
-                    <option value="2">RI</option>
-                    <option value="3">CT</option>
-                    <option value="3">NH</option>
-                    <option value="3">ME</option>
-                    <option value="3">NY</option>
+                  <select id="state-select">
+                    <option value="MA">MA</option>
+                    <option value="RI">RI</option>
+                    <option value="CT">CT</option>
+                    <option value="NH">NH</option>
+                    <option value="ME">ME</option>
+                    <option value="NY">NY</option>
+                    <option value="NJ">NJ</option>
                   </select>
                   <label  for="state">State</label>
                 </div>
                 <div class="input-field col s2">
-                  <input id="zip" type="text" ng-model="owner.zip" maxlength="5">
+                  <input id="zip" type="text" ng-model="newOwner.zip" maxlength="5">
                   <label class="active" for="zip">Zip Code</label>
                 </div>
               </div>
+
+              <div class="row">
+                <div class="col s10">
+                  <label class="active" for="hospital">Name of Your Animal Hospital</label>
+                  <input id="hospital" type="text" ng-model="newOwner.hospital">
+                </div>
+              </div> 
           </form>
         </div>
       </div>
 
        <div class="card-action">
          <a href="#/">Go Back</a>
-         <a href="#/addBooking" ng-click="createUser(newOwner)">Next</a>
+         <a href="#/addBooking" ng-click="signUp()">Next</a>
        </div>
      </div>
    </div>

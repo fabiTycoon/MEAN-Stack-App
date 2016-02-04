@@ -21,17 +21,40 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     email: '',
     street: '',
     city: '',
-    state: '',
+    state: 'MA',
     zip: '',
     hospital: ''
   };
+
+  $scope.phArea = '';
+  $scope.ph1 = '';
+  $scope.ph2 = '';
+
+  $scope.state = [];
+
+
+  $scope.phoneConcat = function () {
+    $scope.newOwner.phone = ($scope.phArea + $scope.ph1 + $scope.ph2);
+  }
 
   $scope.createUser = function (data) {
     User.create(data);
   };
 
+  $scope.signUp = function () {
+    $scope.phoneConcat();
+    $scope.createUser($scope.newOwner);
+  }
+
   var init = function () {
-    $('select').material_select();    
+    $('select').material_select(); 
+
+    $(document).ready(function(){
+      $('#state-select').on('change', function (){
+        var selectedValue = $(this).val();
+        $scope.newOwner.state = selectedValue;
+      });
+    });
   };
 
   init();
@@ -40,7 +63,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 .factory('User', ['$http', function  ($http){
 
   var create = function(data) {
-    console.log('data:', data);
+    console.log('user sign up factory called, data is:', data);
     return $http.post('/api/signup/', data);
   };
 
