@@ -8,28 +8,35 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Holliston Meadows Pet Resort</title>
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
   <!--<link rel="stylesheet" href="bower_components/angular-material/angular-material.css">-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-  <link href='https://fonts.googleapis.com/css?family=Sanchez' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Sanchez:400,400italic' rel='stylesheet' type='text/css'>
   <!--<link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">-->
   <link rel="stylesheet" href="app.css">
-  <!--<script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">-->
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 
   <nav>
    <div class="nav-wrapper red darken-1">
-    <a href="#" class="brand-logo">Holliston Meadows Pet Resort</a>
+   <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+    <a href="#" class="brand-logo hide-on-med-and-down">Holliston Meadows Pet Resort</a>
+    <a href="#" class="brand-logo align-center show-on-small-only">Holliston Meadows</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down red darken-4">
       <li class="action-item"><a href="#/book">BOOK NOW</a></li> 
       <li><a href="#/viewAbout">About</a></li>
       <li><a href="#/view2">Gallery</a></li>
     </ul>
+     <ul class="side-nav" id="mobile-menu">
+       <li class="action-item"><a href="#/book">BOOK NOW</a></li> 
+        <li><a href="#/viewAbout">About</a></li>
+        <li><a href="#/view2">Gallery</a></li>
+    </ul>
    </div>
-   </nav>
+  </nav>
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>

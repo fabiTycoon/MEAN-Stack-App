@@ -36,7 +36,22 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   }
 }
 
-// MISC COMPONENTS USED ACROSS VIEWS:
+// APP WIDE STYLES:
+
+.grow:hover {
+  -ms-transition: 1s;
+  -webkit-transition: 1s;
+  transition: 1s;
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+.grow {
+  -ms-transition: 1s;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
 
 .pet-icon svg {
   height: 2.5em;
@@ -60,15 +75,22 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   height: 200px;
 }
 
+video {
+  opacity: 0.85;
+  width: 100%;
+  height: auto;
+}
+
+
 .splash-img {
   opacity: 0.8;
 }
 
-#splash-text {
+.splash-text {
   font-family: 'Sanchez', serif;
   color: black;
   text-transform: uppercase;
-  transform: translateY(-10.5em) !important;
+  transform: translateY(-45em) !important;
   height: 0px;
 }
 
@@ -102,6 +124,11 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   color: $tertiary-color-darken;
   font-size: 1em;
 }
+
+.input-field option {
+  height: 0px;
+  width: 0px;
+} 
 
 #pet-icon {
   fill: $secondary-color;

@@ -14,7 +14,8 @@ angular.module('myApp.viewMain', ['ngRoute'])
 
   var init = function () {
     $(document).ready(function(){
-      $('.parallax').parallax();    
+      $('.parallax').parallax();
+      $(".button-collapse").sideNav();    
     });
   };
   

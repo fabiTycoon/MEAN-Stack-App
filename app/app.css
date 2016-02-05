@@ -11,6 +11,19 @@
   #social-icon:hover {
     fill: #c2c2c2; }
 
+.grow:hover {
+  -ms-transition: 1s;
+  -webkit-transition: 1s;
+  transition: 1s;
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05); }
+
+.grow {
+  -ms-transition: 1s;
+  -webkit-transition: 1s;
+  transition: 1s; }
+
 .pet-icon svg {
   height: 2.5em;
   width: 2.5em;
@@ -27,14 +40,19 @@
 .parallax-container {
   height: 200px; }
 
+video {
+  opacity: 0.85;
+  width: 100%;
+  height: auto; }
+
 .splash-img {
   opacity: 0.8; }
 
-#splash-text {
+.splash-text {
   font-family: 'Sanchez', serif;
   color: black;
   text-transform: uppercase;
-  transform: translateY(-10.5em) !important;
+  transform: translateY(-45em) !important;
   height: 0px; }
 
 .about-subtext {
@@ -57,6 +75,10 @@
 .redirect-text {
   color: #c2c2c2;
   font-size: 1em; }
+
+.input-field option {
+  height: 0px;
+  width: 0px; }
 
 #pet-icon {
   fill: #00bfa5; }
