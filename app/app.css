@@ -12,17 +12,20 @@
     fill: #c2c2c2; }
 
 .grow:hover {
-  -ms-transition: 1s;
-  -webkit-transition: 1s;
   transition: 1s;
+  -ms-transition: 1s;
+  -moz-transition: 1s;
+  -webkit-transition: 1s;
+  transform: scale(1.05);
   -webkit-transform: scale(1.05);
-  -ms-transform: scale(1.05);
-  transform: scale(1.05); }
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05); }
 
 .grow {
+  transition: 1s;
   -ms-transition: 1s;
-  -webkit-transition: 1s;
-  transition: 1s; }
+  -moz-transition: 0.5s;
+  -webkit-transition: 1s; }
 
 .pet-icon svg {
   height: 2.5em;
@@ -48,15 +51,34 @@ video {
 .splash-img {
   opacity: 0.8; }
 
-.splash-text {
-  font-family: 'Sanchez', serif;
-  color: black;
-  text-transform: uppercase;
-  transform: translateY(-45em) !important;
-  height: 0px; }
+.splash-cont {
+  position: absolute;
+  top: 5rem;
+  z-index: 1; }
 
-.about-subtext {
+.splash-cont #splash-main {
+  font-family: 'Sanchez', serif;
+  text-transform: uppercase; }
+
+.splash-cont #splash-tag {
+  font-family: 'Sanchez', serif; }
+
+.splash-cont #splash-since {
+  font-family: 'Sanchez', serif;
   font-style: italic; }
+
+#down-arrow {
+  transition: 0.5s;
+  -ms-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -webkit-transition: 0.5s; }
+
+#down-arrow:hover {
+  color: white;
+  transition: 0.5s;
+  -ms-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -webkit-transition: 0.5s; }
 
 .map {
   position: relative;
