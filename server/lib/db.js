@@ -10,11 +10,11 @@ var config = {
   //this url may or may not be incorrect
 };
 
-mongoose.connect(config.mongoUrl);
-
-mongoose.connection.on('error', function(err){
-  console.log('Mango problem', err)
-})
+mongoose.connect(config.mongoUrl, function(err){
+  if (err) {
+    console.log('ERRAR MANGO PROBLEMS:', err);
+  }
+});
 
 module.exports = mongoose;
 

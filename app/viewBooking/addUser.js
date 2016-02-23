@@ -64,7 +64,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   var create = function(data) {
     console.log('user sign up factory called, data is:', data);
-    return $http.post('/api/signup/', data);
+    return $http.post('/api/users/register/', data);
   };
 
   var read = function(userId) {

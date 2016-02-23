@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var passportLocalMongoose = require('passport-local-mongoose');
 
 var UserSchema = new Schema({
   first: String,
@@ -17,8 +18,11 @@ var UserSchema = new Schema({
   admin: Boolean
 });
 
-UserSchema.plugin(passportLocalMongoose); 
+var options = {
+  usernameField: 'email'
+}
 
+UserSchema.plugin(passportLocalMongoose, options); 
 
 var User = mongoose.model('User', UserSchema);
 

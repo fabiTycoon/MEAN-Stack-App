@@ -10,7 +10,6 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 //LOCAL MODULES:
-var db = require('./lib/db');
 var Users = require('./models/users');
 //var config = require('./lib/passport.js');
 var userRoutes = require('./routes/users.js');
@@ -45,8 +44,13 @@ app.use(passport.initialize());
 app.use(passport.session({ secret: 'In tigers and tabbies, the middle of the tongue is covered in backward-pointing spines, used for breaking off and gripping meat.' }));
 app.use(passport.session());
 
-passport.use(new LocalStrategy(Users.authenticate()));
+//Connect mongoose
+var db = require('./lib/db');
 
+//Configure passport-local to use users model for authentication
+passport.use(new LocalStrategy(Users.authenticate()));
+passport.serializeUser(Users.serializeUser());
+passport.deserializeUser(Users.deserializeUser());
 
 // Mount our main router & API routers
 app.use('/', router);
