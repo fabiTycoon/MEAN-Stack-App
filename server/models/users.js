@@ -14,7 +14,7 @@ var UserSchema = new Schema({
   zip: Number,
   hospital: String,
   created_at: {type: Date, default: Date.now},
-  updated_at: Date,
+  updated_at: {type: Date, default: Date.now},
   admin: Boolean
 });
 

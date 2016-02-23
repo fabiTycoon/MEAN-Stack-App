@@ -1,6 +1,6 @@
-var PasswordGenerator = {}
+var passwordGenerator = {};
 
-PasswordGenerator.newPassword = function (length) {
+passwordGenerator.newPassword = function (length) {
   var tempPassword = '';
   
   var randomString = function (stringLength, chars) {
@@ -14,7 +14,6 @@ PasswordGenerator.newPassword = function (length) {
 
   tempPassword = randomString(length, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
   return tempPassword;
-}
+};
 
-
-module.exports = PasswordGenerator;
+module.exports = passwordGenerator;

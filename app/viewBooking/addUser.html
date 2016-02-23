@@ -1,10 +1,5 @@
 <div class="push"></div>
 <div class="container">
-  <div class="row">
-    <div class="col s9 offset-s1">
-      <h4>Book a Stay With Us</h4>
-    </div>
-  </div>
 
   <div class="row">
     <div class="col s9 offset-s1">
@@ -77,6 +72,16 @@
                   <input id="hospital" type="text" ng-model="newOwner.hospital">
                 </div>
               </div> 
+              <div class="row">
+                <div class="col s6">
+                  <label class="active" for="password">Choose a password</label>
+                  <input id="password" type="password" ng-model="newOwner.password">
+                </div>
+                <div class="col s6">
+                  <label class="active" for="passwordConfirm">Confirm your password</label>
+                  <input id="passwordConfirm" type="password" ng-model="newOwner.passwordConfirm">
+                </div>
+              </div>
           </form>
         </div>
       </div>

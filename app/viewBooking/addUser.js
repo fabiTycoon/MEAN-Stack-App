@@ -23,7 +23,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     city: '',
     state: 'MA',
     zip: '',
-    hospital: ''
+    hospital: '',
+    password: '',
+    passwordConfirm: ''
   };
 
   $scope.phArea = '';
@@ -63,7 +65,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 .factory('User', ['$http', function  ($http){
 
   var create = function(data) {
-    console.log('user sign up factory called, data is:', data);
     return $http.post('/api/users/register/', data);
   };
 
