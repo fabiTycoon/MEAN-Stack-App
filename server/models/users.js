@@ -1,4 +1,4 @@
-var Mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
@@ -17,6 +17,9 @@ var UserSchema = new Schema({
   admin: Boolean
 });
 
-var User = Mongoose.model('User', UserSchema);
+UserSchema.plugin(passportLocalMongoose); 
+
+
+var User = mongoose.model('User', UserSchema);
 
 module.exports = User;

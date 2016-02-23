@@ -1,4 +1,4 @@
-var Mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ReservationSchema = new Schema({
@@ -11,6 +11,6 @@ var ReservationSchema = new Schema({
   pets: {type: Array, required: true}
 });
 
-var Reservation = Mongoose.model('Reservation', ReservationSchema);
+var Reservation = mongoose.model('Reservation', ReservationSchema);
 
 module.exports = Reservation;

@@ -5,15 +5,17 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
-var LocalStrategy = require('passport-local').Strategy;
-var uuid = require('node-uuid');
 var path = require('path');
 var passport = require('passport');
-var config = require('./lib/passport.js');
+var LocalStrategy = require('passport-local').Strategy;
 
 //LOCAL MODULES:
 var db = require('./lib/db');
 var Users = require('./models/users');
+//var config = require('./lib/passport.js');
+var userRoutes = require('./routes/users.js');
+var petRoutes = require('./routes/pets.js');
+var reservationRoutes = require('./routes/reservations.js');
 
 //PATHS:
 var port = process.env.PORT || 8080; 
@@ -33,77 +35,29 @@ app.use(morgan('dev'));
 // Parse incoming cookies
 app.use(cookieParser());
 app.use(require('express-session')({
-    secret: 'many cats on a keyboard',
+    secret: 'many cats on a keyboard typing away',
     resave: false,
     saveUninitialized: false
 }));
 
-
-// Mount our main router
-app.use('/', router);
-
 //set up passport for persistent sessions
-app.use(passport.session({ secret: 'In tigers and tabbies, the middle of the tongue is covered in backward-pointing spines, used for breaking off and gripping meat.' }));
 app.use(passport.initialize());
+app.use(passport.session({ secret: 'In tigers and tabbies, the middle of the tongue is covered in backward-pointing spines, used for breaking off and gripping meat.' }));
 app.use(passport.session());
+
+passport.use(new LocalStrategy(Users.authenticate()));
+
+
+// Mount our main router & API routers
+app.use('/', router);
+app.use('/api/users', userRoutes);
+app.use('/api/pets', petRoutes);
+app.use('/api/bookings', reservationRoutes);
 
 //Start the server
 app.listen(port, function() {
     console.log('Listening on port %d in mode %s', port, app.get('env'));
   });
-
-
-//USER ENDPOINTS - TODO REFACTOR IN SEPERATE MODULE:
-router.get('/user', function (req, res) {
-
-  /*var userEmail = req.body.email;
-  console.log("user's email is:", userEmail);
-  Users.findByEmail(userEmail)
-    .then(function(user){
-      if (!user) {
-        done(null, false, { message: 'Unable to locate an account with that e-mail address'});
-        return;
-      } else {
-        res.sendFile(user);
-      };
-    });*/
-
-});
-
-// Creates new user
-router.post('/api/signup', function (req, res, next) {
-  console.log("reached signup endpoint, req object is", req.body);
-
-  passport.authenticate('local-signup', function (err, user, info) {
-    if (err) {
-      res.status(500).json({ signedUp: false, error: err, info: info });
-      return;
-    }
-    if (!user) {
-      console.log("cannot find user", res, res.body);
-      res.status(401).json({ signedUp: false, info: info });
-      return;
-    }
-    res.status(201).json({ signedUp: true });
-
-
-  })(req, res, next);
-});
-
-router.put('/user', function (req, res) {
-  //update user info
-
-  res.send();
-})
-
-router.delete('/user', function (req, res) {
-  //delete a user
-  res.send();
-})
-
-//PET ENDPOINTS:
-
-//RESERVATION ENDPOINTS:
 
 //TERMINAL ENDPOINT:
 app.get('/*', function (req, res) {

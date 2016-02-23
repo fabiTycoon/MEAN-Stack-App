@@ -1,4 +1,4 @@
-var Mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var PetSchema = new Schema({
@@ -18,6 +18,6 @@ var PetSchema = new Schema({
   created_at: {type: Date, default: Date.now}
 });
 
-var Pet = Mongoose.model('Pet', PetSchema);
+var Pet = mongoose.model('Pet', PetSchema);
 
 module.exports = Pet;
