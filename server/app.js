@@ -1,10 +1,15 @@
 //NPM MODULES:
-var config = require('./lib/passport.js');
 var express = require('express');
+var session = require('express-session');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-var Path = require('path');
+var cookieParser = require('cookie-parser');
+var mongoose = require('mongoose');
+var LocalStrategy = require('passport-local').Strategy;
+var uuid = require('node-uuid');
+var path = require('path');
 var passport = require('passport');
+var config = require('./lib/passport.js');
 
 //LOCAL MODULES:
 var db = require('./lib/db');
@@ -12,22 +17,33 @@ var Users = require('./models/users');
 
 //PATHS:
 var port = process.env.PORT || 8080; 
-var assetFolder = Path.resolve(__dirname, '../app/');
+var assetFolder = path.resolve(__dirname, '../app/');
 
 //APPLICATION LOGIC:
 var app = express();
 var router = express.Router();
-
-router.use(express.static(assetFolder));
+//make sure to serve static files before session middleware:
+app.use(express.static(assetFolder));
 
 // parse application/json 
+app.use(bodyParser.urlencoded({ extended: true }) );
 app.use(bodyParser.json());
 //log requests to the console
 app.use(morgan('dev'));
+// Parse incoming cookies
+app.use(cookieParser());
+app.use(require('express-session')({
+    secret: 'many cats on a keyboard',
+    resave: false,
+    saveUninitialized: false
+}));
+
+
 // Mount our main router
 app.use('/', router);
 
 //set up passport for persistent sessions
+app.use(passport.session({ secret: 'In tigers and tabbies, the middle of the tongue is covered in backward-pointing spines, used for breaking off and gripping meat.' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -39,6 +55,18 @@ app.listen(port, function() {
 
 //USER ENDPOINTS - TODO REFACTOR IN SEPERATE MODULE:
 router.get('/user', function (req, res) {
+
+  /*var userEmail = req.body.email;
+  console.log("user's email is:", userEmail);
+  Users.findByEmail(userEmail)
+    .then(function(user){
+      if (!user) {
+        done(null, false, { message: 'Unable to locate an account with that e-mail address'});
+        return;
+      } else {
+        res.sendFile(user);
+      };
+    });*/
 
 });
 
@@ -52,6 +80,7 @@ router.post('/api/signup', function (req, res, next) {
       return;
     }
     if (!user) {
+      console.log("cannot find user", res, res.body);
       res.status(401).json({ signedUp: false, info: info });
       return;
     }
