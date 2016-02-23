@@ -9,12 +9,14 @@ angular.module('myApp', [
   'myApp.viewMain',
   'myApp.viewAddUser',
   'myApp.viewAddBooking',
+  'myApp.login',
   'myApp.addPetView',
   'myApp.version',
   'ngMessages',
   'ngSanitize',
 ]).
 config(['$routeProvider', function($routeProvider) {
+
 
   $routeProvider.otherwise({redirectTo: '/main'});
   //add additional routes

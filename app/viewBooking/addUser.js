@@ -64,6 +64,14 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
 .factory('User', ['$http', function  ($http){
 
+  var logIn = function(data) {
+    return $http.post('/api/users/login', data);
+  }
+
+  var logOut = function() {
+    return $http.post('/api/users/logout');
+  }
+
   var create = function(data) {
     return $http.post('/api/users/register/', data);
   };
@@ -81,6 +89,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   return {
+    logIn: logIn,
     create: create,
     read: read,
     edit: edit,

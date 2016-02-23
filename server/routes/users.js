@@ -46,20 +46,25 @@ router.post('/register', function(req, res) {
       res.send({
         message :'Error while registering user'
       });
+    } else {
+      passport.authenticate('local')(req, res, function(){
+        console.log('user registered!');
+        //not confident in this route
+        res.redirect('#/addBooking');
+      });
     }
-
-    console.log('user registered!');
-    //not confident in this route
-    res.redirect('#/addBooking');
   })
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res){
-  res.redirect('/');
+  //eventually, we'll want this to redirect to a user profile page
+    console.log('Sucesfully logged in');
+    res.redirect('/');
 });
 
 router.get('/logout', function(req, res){
   req.logout();
+  console.log('Sucesfully logged out');
   res.redirect('/');
 });
 
