@@ -3,7 +3,7 @@ var passport = require('passport');
 var Users = require('../models/users.js');
 var router = express.Router();
 
-//handler for calls to api/users
+//handlers for calls to api/users
 router.get('/', function(req, res) {
   
 });

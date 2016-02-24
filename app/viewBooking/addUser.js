@@ -69,7 +69,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   }
 
   var logOut = function() {
-    return $http.post('/api/users/logout');
+    return $http.get('/api/users/logout');
   }
 
   var create = function(data) {

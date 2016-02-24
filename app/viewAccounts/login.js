@@ -18,7 +18,7 @@ angular.module('myApp.login', ['ngRoute'])
 
   $scope.logIn = function (user) {
     return User.logIn(user);
-  };
+  }
 
   $scope.logOut = function () {
     return User.logOut();
