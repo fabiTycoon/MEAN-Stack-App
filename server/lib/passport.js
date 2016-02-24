@@ -1,4 +1,5 @@
 var passport = require('passport');
+var mongoose = require('mongoose');
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/users');
@@ -7,16 +8,7 @@ var User = require('../models/users');
 passport.serializeUser(function (user, done) {
   console.log('passport serializeUser:', user);
   done(null, { 
-    id: user.id, 
-    first: user.first, 
-    last: user.last, 
-    phone: user.phone, 
-    email: user.email,
-    street: user.street,
-    city: user.city,
-    state: user.state,
-    zip: user.zip,
-    hospital: user.hospital
+    id: user.id
   });
 });
 
@@ -51,13 +43,14 @@ passport.use('local-signup', new LocalStrategy(
     User.findByEmail(username)
     .then(function (user) {
       // User already exists, we dont want to sign up
+      console.log("User.findByEmail called, user is:", user);
       if (user) {
         //^^^ not sure about this
         done(null, false, { message: 'User already exists' });
         return;
       }
       // User doesnt exist, lets create a new one
-      // Hash the users supplied password
+      // Hash the password
       return User.generateHash(password);
     })
     // After hashing password, try to sign up

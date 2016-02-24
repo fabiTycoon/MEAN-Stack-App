@@ -1,21 +1,16 @@
-var db = require('../lib/db');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var Reservation = {};
+var ReservationSchema = new Schema({
+  service: {type: String, required: true},
+  checkIn: {type: Date, required: true},
+  checkOut: {type: Date, required: true},
+  checkInTime: {type: Date, required: true},
+  checkOutTime: {type: Date, required: true},
+  owner: {type: Array, required: true},
+  pets: {type: Array, required: true}
+});
 
-// finds by id and then calls the callback
-Reservation.findById = function(id, cb) {
-
-};
-
-// returns all reservations for a user and calls a callback
-Reservation.findByUser = function (user_id, cb) {
-  
-};
-
-
-// creates a new Reservation instance
-Reservation.create = function (attrs) {
-  
-};
+var Reservation = mongoose.model('Reservation', ReservationSchema);
 
 module.exports = Reservation;
