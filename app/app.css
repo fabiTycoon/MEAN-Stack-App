@@ -68,6 +68,7 @@ video {
   font-style: italic; }
 
 #down-arrow {
+  color: #151711;
   transition: 0.5s;
   -ms-transition: 0.5s;
   -moz-transition: 0.5s;
@@ -96,7 +97,9 @@ video {
 
 .redirect-text {
   color: #c2c2c2;
-  font-size: 1em; }
+  font-size: 1em;
+  margin-bottom: 0px;
+  margin-top: 0px; }
 
 .input-field option {
   height: 0px;

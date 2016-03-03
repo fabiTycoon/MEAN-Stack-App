@@ -109,6 +109,7 @@ video {
 }
 
 #down-arrow {
+  color: #151711;
   transition: 0.5s;
   -ms-transition: 0.5s;
   -moz-transition: 0.5s;
@@ -149,6 +150,8 @@ video {
 .redirect-text {
   color: $tertiary-color-darken;
   font-size: 1em;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 .input-field option {

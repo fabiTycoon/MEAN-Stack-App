@@ -24,7 +24,7 @@
         </div>
 
         <!--DAYCARE SPECIFIC FIELDS:-->
-        <div class="row" ng-if="newReservation.service === 'daycare' ">
+        <div class="row animated fadeInDown" ng-if="newReservation.service === 'daycare' ">
            <span class="card-title">Would You Like Us to Pick Up Your Pet?</span>
            <p id="transportInfo"><a href="">More information about transportation services</a></p>
            <!--Consider replacing the above text with a tooltip in addition to linking to the about page-->
@@ -43,7 +43,7 @@
 
 
         <!--BOARDING SPECIFIC FIELDS:-->
-        <div class="selectFields" id="checkInFieldBoarding" ng-if="newReservation.service === 'boarding' ">
+        <div class="selectFields animated fadeInDown" id="checkInFieldBoarding" ng-if="newReservation.service === 'boarding' ">
          <span class="card-title">Your Requested Dates:</span>
 
             <div class="row">
@@ -124,7 +124,7 @@
         </div>
 
         <!--DAYCARE SPECIFIC FIELDS:-->
-        <div class="selectFields" ng-if="newReservation.service === 'daycare' " id="checkInFieldDaycare">
+        <div class="selectFields animated fadeInDown" ng-if="newReservation.service === 'daycare' " id="checkInFieldDaycare">
          <span class="card-title">Your Requested Times:</span>
             <div class="row">
               <div class="input-field col s6" ngMouseup="setDate()">
@@ -200,7 +200,9 @@
               </div>
             </div>
           </div>
+          <!--END DAYCARE SPECIFIC FIELDS-->
         </div>
+
       <div class="card-action">
        <a href="#/book">Go Back</a>
        <a href="#/addPet">Next</a>

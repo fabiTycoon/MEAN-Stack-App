@@ -9,8 +9,7 @@ angular.module('myApp.viewMain', ['ngRoute'])
   });
 }])
 
-.controller('MainCtrl', [function() {
-
+.controller('MainCtrl', ['$scope', function($scope) {
 
   var init = function () {
     $(document).ready(function(){
@@ -30,6 +29,19 @@ angular.module('myApp.viewMain', ['ngRoute'])
     controller: 'MainCtrl'
   }
 }]) 
+
+.directive('scrollToItem', function() {                                                      
+  return {                                                                                 
+  restrict: 'A',                                                                       
+  scope: {                                                                             
+    scrollTo: "@"                                                                    
+  },                                                                                   
+  link: function(scope, $elm,attr) {                                                   
+    $elm.on('click', function() {                                                    
+      $('html,body').animate({scrollTop: $(scope.scrollTo).offset().top }, "slow");
+    });                                                                              
+  }                                                                                    
+}})   
 
 .directive('dogIcon', [function(){
   return  {
