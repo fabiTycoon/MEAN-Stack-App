@@ -45,7 +45,7 @@ router.post('/register', function(req, res) {
     if (err) {
       console.log('Registration error!', err);
       res.send({
-        message :'Error while registering user'
+        message: err
       });
     } else {
       passport.authenticate('local')(req, res, function(){

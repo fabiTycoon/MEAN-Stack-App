@@ -11,7 +11,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
 .controller('AddUserCtrl', ['$scope', 'User', function($scope, User) {
 
-  $scope.currentDate = Date.now();
+  $scope.registrationError = '';
 
   //Form Values:
   $scope.newOwner = {
@@ -32,20 +32,21 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.ph1 = '';
   $scope.ph2 = '';
 
-  $scope.state = [];
-
-
   $scope.phoneConcat = function () {
     $scope.newOwner.phone = ($scope.phArea + $scope.ph1 + $scope.ph2);
   }
 
   $scope.createUser = function (data) {
-    User.create(data);
+    User.create(data)
+      .then(function(){
+        $scope.registrationError = User.userMessage;
+        console.log("set regError!!!", $scope.registrationError);
+      });
   };
 
   $scope.signUp = function () {
     $scope.phoneConcat();
-    $scope.createUser($scope.newOwner);
+    return $scope.createUser($scope.newOwner)
   }
 
   var init = function () {
@@ -64,6 +65,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
 .factory('User', ['$http', function  ($http){
 
+  var userMessage = '';
+
   var logIn = function(data) {
     return $http.post('/api/users/login', data);
   }
@@ -74,7 +77,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   var create = function(data) {
     console.log("Called createUser factory, data is:", data);
-    return $http.post('/api/users/register/', data);
+    return $http.post('/api/users/register/', data).then(function successCallback(resp){
+      userMessage = resp.data.message;
+      console.log("registration success in factory, resp is", userMessage);
+    }), function errorCallback(resp) {
+      // TO DO: Server side error handling
+    };
   };
 
   var read = function(userId) {
@@ -90,6 +98,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   return {
+    userMessage: userMessage,
     logIn: logIn,
     create: create,
     read: read,

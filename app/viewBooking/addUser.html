@@ -84,6 +84,9 @@
                 </div>
               </div>
           </form>
+          <div ng-if="registrationError.length > 1">
+            <p class="error-text">{{registrationError}}</p>
+          </div>
         </div>
       </div>
 
