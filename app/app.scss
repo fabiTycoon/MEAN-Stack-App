@@ -39,14 +39,14 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 // APP WIDE STYLES:
 
 .grow:hover {
-  transition: 1s;
     -ms-transition: 1s;
     -moz-transition: 1s;
     -webkit-transition: 1s;
-  transform: scale(1.05);
+  transition: 1s;
     -webkit-transform: scale(1.05);
     -moz-transform: scale(1.05);
     -ms-transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .grow {
@@ -108,7 +108,17 @@ video {
   font-style: italic;
 }
 
+#scroll-box {
+  border: 5px solid black;
+}
+
 #down-arrow {
+    -webkit-transform: translateY(-1em);
+    -moz-transform: translateY(-1em);
+    -ms-transform: translateY(-1em);
+  transform: translateY(-1em);
+}
+.scroll-btn a {
   color: #151711;
   transition: 0.5s;
   -ms-transition: 0.5s;
@@ -116,12 +126,17 @@ video {
   -webkit-transition: 0.5s;
 }
 
-#down-arrow:hover {
+.scroll-btn a:hover {
   color: white;
   transition: 0.5s;
   -ms-transition: 0.5s;
   -moz-transition: 0.5s;
   -webkit-transition: 0.5s;
+}
+
+.scroll-btn {
+  min-height: 50px;
+  overflow: visible;
 }
 
 .map {
