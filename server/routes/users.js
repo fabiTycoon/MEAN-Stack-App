@@ -4,7 +4,7 @@ var Users = require('../models/users.js');
 var router = express.Router();
 
 //handlers for calls to api/users
-router.get('/', function(req, res) {
+/*router.get('/', function(req, res) {
   
 });
 
@@ -14,7 +14,7 @@ router.put('/', function(req, res) {
 
 router.delete('/', function(req, res) {
   
-});
+});*/
 
 router.post('/register', function(req, res) {
 
@@ -27,6 +27,7 @@ router.post('/register', function(req, res) {
     return;
   }
 
+  //Passport local mongoose takes care of hashing etc;
   Users.register(new Users({
     email: req.body.email,
     password: req.body.password,
@@ -49,17 +50,36 @@ router.post('/register', function(req, res) {
     } else {
       passport.authenticate('local')(req, res, function(){
         console.log('user registered!');
-        //not confident in this route
         res.redirect('#/addBooking');
       });
     }
   })
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res){
+router.post('/login', passport.authenticate('local'), function(err, user, info){
+  if (err) {
+    return next(err);
+  }
+  if (!user) {
+    return res.status(401).json({
+      err: info
+    });
+  }
+
+  req.logIn(user, function(err) {
+    if (err) {
+      return res.status(500).json({
+        err: 'Could not log in user'
+      });
+    }
+    res.status(200).json({
+      status: 'Login successful'
+    });
+  });
+
+  console.log('Sucesfully logged in, user is:', user);
   //eventually, we'll want this to redirect to a user profile page
-    console.log('Sucesfully logged in');
-    res.redirect('/');
+  res.redirect('/');
 });
 
 router.get('/logout', function(req, res){

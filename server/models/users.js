@@ -7,7 +7,7 @@ var UserSchema = new Schema({
   last: String,
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
-  phone: {type: Number, required: true},
+  phone: {type: String, required: true},
   street: String,
   city: String,
   state: String,
@@ -15,12 +15,12 @@ var UserSchema = new Schema({
   hospital: String,
   created_at: {type: Date, default: Date.now},
   updated_at: {type: Date, default: Date.now},
-  admin: Boolean
+  admin: {type: Boolean, default: false}
 });
 
 var options = {
   usernameField: 'email'
-}
+};
 
 UserSchema.plugin(passportLocalMongoose, options); 
 

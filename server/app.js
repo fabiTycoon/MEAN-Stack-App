@@ -9,13 +9,6 @@ var path = require('path');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-//LOCAL MODULES:
-var Users = require('./models/users');
-//var config = require('./lib/passport.js');
-var userRoutes = require('./routes/users.js');
-var petRoutes = require('./routes/pets.js');
-var reservationRoutes = require('./routes/reservations.js');
-
 //PATHS:
 var port = process.env.PORT || 8080; 
 var assetFolder = path.resolve(__dirname, '../app/');
@@ -44,8 +37,14 @@ app.use(passport.initialize());
 app.use(passport.session({ secret: 'In tigers and tabbies, the middle of the tongue is covered in backward-pointing spines, used for breaking off and gripping meat.' }));
 app.use(passport.session());
 
-//Connect mongoose
+//Connect mongoose & load passport settings
 var db = require('./lib/db');
+//var config = require('./lib/passport.js');
+
+var Users = require('./models/users');
+var userRoutes = require('./routes/users.js');
+var petRoutes = require('./routes/pets.js');
+var reservationRoutes = require('./routes/reservations.js');
 
 //Configure passport-local to use users model for authentication
 passport.use(new LocalStrategy(Users.authenticate()));

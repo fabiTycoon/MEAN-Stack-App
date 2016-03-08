@@ -73,6 +73,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   }
 
   var create = function(data) {
+    console.log("Called createUser factory, data is:", data);
     return $http.post('/api/users/register/', data);
   };
 
