@@ -68,6 +68,10 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   fill: $primary-color !important;
 }
 
+.error-text {
+  color: #E53935;
+}
+
 // MAIN VIEW COMPONENTS:
 
 .push {
@@ -108,16 +112,6 @@ video {
   font-style: italic;
 }
 
-#scroll-box {
-  border: 5px solid black;
-}
-
-#down-arrow {
-    -webkit-transform: translateY(-1em);
-    -moz-transform: translateY(-1em);
-    -ms-transform: translateY(-1em);
-  transform: translateY(-1em);
-}
 .scroll-btn a {
   color: #151711;
   transition: 0.5s;

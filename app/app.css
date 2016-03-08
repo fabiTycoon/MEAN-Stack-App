@@ -37,6 +37,9 @@
   width: 2.5em;
   fill: #c62828 !important; }
 
+.error-text {
+  color: #E53935; }
+
 .push {
   height: 25px; }
 
@@ -66,15 +69,6 @@ video {
 .splash-cont #splash-since {
   font-family: 'Sanchez', serif;
   font-style: italic; }
-
-#scroll-box {
-  border: 5px solid black; }
-
-#down-arrow {
-  -webkit-transform: translateY(-1em);
-  -moz-transform: translateY(-1em);
-  -ms-transform: translateY(-1em);
-  transform: translateY(-1em); }
 
 .scroll-btn a {
   color: #151711;
