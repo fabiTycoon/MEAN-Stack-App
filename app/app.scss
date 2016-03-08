@@ -68,8 +68,8 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   fill: $primary-color !important;
 }
 
-.error-text {
-  color: #E53935;
+.error-text p {
+  color: #E53935 !important;
 }
 
 // MAIN VIEW COMPONENTS:

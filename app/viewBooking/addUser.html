@@ -9,12 +9,15 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" id="registration-form-container" ng-if="refresh === false">
    <div class="col s12 m10 offset-m1">
      <div class="card">
-       <div class="card-content ">
+       <div class="card-content">
         <span class="card-title"><h4>BOOK YOUR STAY</h4></span>
          <span class="card-title">Your Info:</span>
+         <div ng-if="$root.registrationError" class="error-text">
+           <p>Error: {{$root.registrationError.message}}</p>
+         </div>
         <div class="row">
           <form class="col s12">
             <div class="row">
@@ -84,9 +87,6 @@
                 </div>
               </div>
           </form>
-          <div ng-if="registrationError.length > 1">
-            <p class="error-text">{{registrationError}}</p>
-          </div>
         </div>
       </div>
 

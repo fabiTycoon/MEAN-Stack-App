@@ -9,9 +9,16 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   });
 }])
 
-.controller('AddUserCtrl', ['$scope', 'User', function($scope, User) {
+.controller('AddUserCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User) {
 
-  $scope.registrationError = '';
+  $rootScope.registrationError = ''
+  $scope.refresh = false;
+
+  $rootScope.$on('registrationError', function(){
+    $('#registration-form-container').addClass('animated shake')
+    $scope.refresh = true;
+    $scope.refresh = false;
+  });
 
   //Form Values:
   $scope.newOwner = {
@@ -37,11 +44,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   }
 
   $scope.createUser = function (data) {
-    User.create(data)
-      .then(function(){
-        $scope.registrationError = User.userMessage;
-        console.log("set regError!!!", $scope.registrationError);
-      });
+    User.create(data);
   };
 
   $scope.signUp = function () {
@@ -63,9 +66,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   init();
 }])
 
-.factory('User', ['$http', function  ($http){
+.factory('User', ['$http', '$rootScope', function  ($http, $rootScope){
 
-  var userMessage = '';
+  var registrationError = '';
 
   var logIn = function(data) {
     return $http.post('/api/users/login', data);
@@ -78,8 +81,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   var create = function(data) {
     console.log("Called createUser factory, data is:", data);
     return $http.post('/api/users/register/', data).then(function successCallback(resp){
-      userMessage = resp.data.message;
-      console.log("registration success in factory, resp is", userMessage);
+      $rootScope.registrationError = resp.data.message;
+      $rootScope.$broadcast('registrationError');
     }), function errorCallback(resp) {
       // TO DO: Server side error handling
     };
@@ -98,7 +101,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   return {
-    userMessage: userMessage,
+    registrationError: registrationError,
     logIn: logIn,
     create: create,
     read: read,

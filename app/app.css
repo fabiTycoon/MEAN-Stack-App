@@ -37,8 +37,8 @@
   width: 2.5em;
   fill: #c62828 !important; }
 
-.error-text {
-  color: #E53935; }
+.error-text p {
+  color: #E53935 !important; }
 
 .push {
   height: 25px; }
