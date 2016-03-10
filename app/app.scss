@@ -146,15 +146,18 @@ video {
   style: "border:0";
 }
 
+//LOGIN PAGE:
+.error-box {
+  height: 100px;
+}
 
-
-// GALLERY PAGE COMPONENTS:
+// GALLERY PAGE:
 
 #gallery-img {
   width: 200em;
 }
 
-// BOOKING VIEW COMPONENTS:
+// BOOKING VIEW:
 
 .redirect-text {
   color: $tertiary-color-darken;

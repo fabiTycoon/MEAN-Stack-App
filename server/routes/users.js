@@ -1,10 +1,10 @@
 var express = require('express');
 var passport = require('passport');
-var Users = require('../models/users.js');
+var User = require('../models/users.js');
 var router = express.Router();
 
 //handlers for calls to api/users
-/*router.get('/', function(req, res) {
+/*router.get('/users/', function(req, res) {
   
 });
 
@@ -18,8 +18,9 @@ router.delete('/', function(req, res) {
 
 router.post('/register', function(req, res) {
 
+  var username = req.body.email
   console.log("registering user");
-  console.log("user is", req.body.email);
+  console.log("user is", username);
 
   if (req.body.password !== req.body.passwordConfirm) {
     console.log('error, passwords do not match');
@@ -28,8 +29,8 @@ router.post('/register', function(req, res) {
   }
 
   //Passport local mongoose takes care of hashing etc;
-  Users.register(new Users({
-    email: req.body.email,
+  User.register(new User({
+    email: username,
     password: req.body.password,
     first: req.body.first,
     last: req.body.last,
@@ -50,6 +51,7 @@ router.post('/register', function(req, res) {
     } else {
       passport.authenticate('local')(req, res, function(){
         console.log('user registered!');
+        req.login(username)
         res.redirect('#/addBooking');
       });
     }
@@ -57,9 +59,9 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res){
-  console.log("logging in...")
+  console.log("logging in...", req, res)
 
-  var user = req.body.email
+  var user = req.body.username
   var password = req.body.password
   
   //user should be a call to DB fn findByEmail 
@@ -75,8 +77,9 @@ router.post('/login', passport.authenticate('local'), function(req, res){
   res.redirect('/');
 });
 
-router.get('/logout', function(req, res){
-  req.logout();
+router.post('/logout', function(req, res){
+  var user = req.body.username
+  req.logout(user);
   console.log('Sucesfully logged out');
   res.redirect('/');
 });

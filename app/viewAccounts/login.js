@@ -1,15 +1,18 @@
 'use strict';
 
-angular.module('myApp.login', ['ngRoute'])
+angular.module('myApp.viewLogin', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/login', {
     templateUrl: 'viewAccounts/login.html',
-    controller: 'LoginCtrl'
+    controller: 'viewLoginCtrl'
   });
 }])
 
-.controller('LoginCtrl', [ '$scope', 'User', function($scope, User) {
+.controller('viewLoginCtrl', [ '$scope', '$http', function($scope, $http) {
+
+  $scope.loginError = false;
+  $scope.loginErrorMessage = '';
 
   $scope.user = {
     username: '',
@@ -17,11 +20,11 @@ angular.module('myApp.login', ['ngRoute'])
   };
 
   $scope.logIn = function (user) {
-    return User.logIn(user);
-  }
+    return $http.post('/login', user);
+  };
 
-  $scope.logOut = function () {
-    return User.logOut();
+  $scope.logOut = function (user) {
+    return $http.post('/logout', user.username);
   };
 
 }]);

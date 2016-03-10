@@ -10,6 +10,7 @@ angular.module('myApp', [
   'myApp.viewAddUser',
   'myApp.viewAddBooking',
   'myApp.addPetView',
+  'myApp.viewLogin',
   'myApp.version',
   'ngMessages',
   'ngSanitize',
