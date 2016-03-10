@@ -27,6 +27,7 @@ angular.module('myApp.viewLogin', ['ngRoute'])
   });
 
   $scope.logIn = function () {
+    $scope.loginErrorMessage = '';
     return $http.post('api/users/login', $scope.user)
       .then(function successCallback(req, res){
         console.log("req is:", req)
