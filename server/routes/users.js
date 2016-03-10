@@ -72,8 +72,9 @@ router.post('/login', passport.authenticate('local'), function(req, res){
   }
 
 
-  console.log('Sucesfully logged in, user is:', user);
+  console.log('Sucesfully logged in:', user);
   //eventually, we'll want this to redirect to a user profile page
+  //i.e. res.redirect('/users/' + req.body.user.username)
   res.redirect('/');
 });
 

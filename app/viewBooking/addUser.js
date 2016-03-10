@@ -20,6 +20,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.refresh = false;
   });
 
+  //Status bool to hide potentially confusing header if redirected from login
+  $scope.loginRedir = false;
+
   //Form Values:
   $scope.newOwner = {
     first: '',
@@ -48,6 +51,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.signUp = function () {
+    $scope.registrationError = '';
     $scope.phoneConcat();
     return $scope.createUser($scope.newOwner)
   }
@@ -66,6 +70,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   init();
 }])
 
+//TO DO: REFACTOR IN SEPERATE MODULE:
 .factory('User', ['$http', '$rootScope', function  ($http, $rootScope){
 
   var registrationError = '';
@@ -74,18 +79,19 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     return $http.post('/api/users/login', data);
   }
 
-  var logOut = function() {
-    return $http.get('/api/users/logout');
+  var logOut = function(data) {
+    return $http.get('/api/users/logout', data);
   }
 
   var create = function(data) {
     console.log("Called createUser factory, data is:", data);
-    return $http.post('/api/users/register/', data).then(function successCallback(resp){
-      $rootScope.registrationError = resp.data.message;
-      $rootScope.$broadcast('registrationError');
-    }), function errorCallback(resp) {
-      // TO DO: Server side error handling
-    };
+    return $http.post('/api/users/register/', data)
+      .then(function successCallback(resp){
+        $rootScope.registrationError = resp.data.message;
+        $rootScope.$broadcast('registrationError');
+      }), function errorCallback(resp) {
+        // TO DO: Server side error handling
+      };
   };
 
   var read = function(userId) {

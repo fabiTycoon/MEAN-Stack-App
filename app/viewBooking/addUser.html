@@ -1,7 +1,7 @@
 <div class="push"></div>
 <div class="container">
 
-  <div class="row">
+  <div class="row" ng-if="loginRedir == false">
     <div class="col s9 offset-s1">
       <p class="redirect-text">
         Already stayed with us? <br> Please <a href="#/login">sign in</a> to retrieve you &amp; your pet's information!
@@ -13,7 +13,8 @@
    <div class="col s12 m10 offset-m1">
      <div class="card">
        <div class="card-content">
-        <span class="card-title"><h4>BOOK YOUR STAY</h4></span>
+        <span class="card-title" ng-if="loginRedir == false"><h4>BOOK YOUR STAY</h4></span>
+        <span class="card-title" ng-if="loginRedir"><h4>REGISTER</h4></span>
          <span class="card-title">Your Info:</span>
          <div ng-if="$root.registrationError" class="error-text">
            <p>Error: {{$root.registrationError.message}}</p>
