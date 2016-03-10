@@ -56,26 +56,19 @@ router.post('/register', function(req, res) {
   })
 });
 
-router.post('/login', passport.authenticate('local'), function(err, user, info){
-  if (err) {
-    return next(err);
-  }
+router.post('/login', passport.authenticate('local'), function(req, res){
+  console.log("logging in...")
+
+  var user = req.body.email
+  var password = req.body.password
+  
+  //user should be a call to DB fn findByEmail 
   if (!user) {
     return res.status(401).json({
-      err: info
+      err: 'Cannot find an account for that e-mail address'
     });
   }
 
-  req.logIn(user, function(err) {
-    if (err) {
-      return res.status(500).json({
-        err: 'Could not log in user'
-      });
-    }
-    res.status(200).json({
-      status: 'Login successful'
-    });
-  });
 
   console.log('Sucesfully logged in, user is:', user);
   //eventually, we'll want this to redirect to a user profile page
