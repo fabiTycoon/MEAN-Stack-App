@@ -44,6 +44,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   $scope.phoneConcat = function () {
     $scope.newOwner.phone = ($scope.phArea + $scope.ph1 + $scope.ph2);
+    console.log("phone concat, # is:", $scope.newOwner.phone);
   }
 
   $scope.createUser = function (data) {
