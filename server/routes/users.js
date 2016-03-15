@@ -3,6 +3,8 @@ var passport = require('passport');
 var User = require('../models/users.js');
 var router = express.Router();
 
+mongoose = require 'mongoose';
+
 //handlers for calls to api/users
 /*router.get('/users/', function(req, res) {
   
@@ -15,6 +17,11 @@ router.put('/', function(req, res) {
 router.delete('/', function(req, res) {
   
 });*/
+
+router.get('/users/', function(req, res) {
+  var userId = req.body.user_id //not sure about this
+
+});
 
 router.post('/register', function(req, res) {
 
@@ -52,6 +59,7 @@ router.post('/register', function(req, res) {
       passport.authenticate('local')(req, res, function(){
         console.log('user registered!');
         req.login(username)
+        console.log('user logged in omg')
         res.redirect('#/addBooking');
       });
     }
@@ -71,15 +79,14 @@ router.post('/login', passport.authenticate('local'), function(req, res){
     });
   }
 
-
   console.log('Sucesfully logged in:', user);
   //eventually, we'll want this to redirect to a user profile page
   //i.e. res.redirect('/users/' + req.body.user.username)
-  res.redirect('/');
+  res.redirect('/account');
 });
 
 router.post('/logout', function(req, res){
-  var user = req.body.username
+  var user = req.body.username  //we should be able to grab the user object from any req - use this instead
   req.logout(user);
   console.log('Sucesfully logged out');
   res.redirect('/');
