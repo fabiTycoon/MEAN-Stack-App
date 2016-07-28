@@ -1,5 +1,6 @@
 'use strict';
 
+
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
   'ngRoute',
@@ -28,7 +29,7 @@ config(['$routeProvider', function($routeProvider) {
 
   var registrationError = '';
 
-  this.user = this.user || {
+  var userObject = userObject || {
     isLoggedIn: false,
     pets: [],
     reservations: []
@@ -42,15 +43,15 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var toggleLoginStatus = function () {
-    this.user.isLoggedIn = !this.user.isLoggedIn;
+    userObject.isLoggedIn = !userObject.isLoggedIn;
   };
   
   var setUser = function (user) {
-    return this.user = user;
+    return userObject = user;
   };
 
   var getUser = function () {
-    var user = this.user;
+    var user = userObject;
     return user;
   };
 
@@ -59,9 +60,24 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var logOut = function() {
-      console.log("called logout")
     return $http.get('/api/users/logout');
   };
+
+  var addReservation = function (reservation) {
+      console.log("CALLED RESERVATINO FACTORY: ", reservation);
+    userObject.reservations.push(reservation);
+    setUser(userObject);
+    return $http.post('/api/bookings/new', reservation);
+  };
+
+  var deleteReservation = function (reservationIndex) {
+    return
+  };
+
+  var editReservation = function (reservationIndex, newReservation) {
+    return
+  };
+
 
   var create = function(data) {
     console.log("Called createUser factory, data is:", data);
@@ -96,6 +112,10 @@ config(['$routeProvider', function($routeProvider) {
     getLoginStatus: getLoginStatus,
     registrationError: registrationError,
     logIn: logIn,
+    logOut: logOut,
+    addReservation: addReservation,
+    deleteReservation: deleteReservation, 
+    editReservation: editReservation,
     create: create,
     read: read,
     edit: edit,

@@ -34,9 +34,9 @@ angular.module('myApp.viewMain', ['ngRoute'])
             isLoggedIn: false,
             pets: [],
             reservations: []
-          }
+          };
+          $location.path('#/')
           console.log("LOGGED OUT")
-          res.redir('/');
         })
     };
   };
@@ -89,6 +89,23 @@ angular.module('myApp.viewMain', ['ngRoute'])
     replace: true,
   }
 }])
+
+.directive('addDogIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/addDog.html',
+    replace: true,
+  }
+}])
+
+.directive('addCatIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/addCat.html',
+    replace: true,
+  }
+}])
+
 
 .directive('kennelIcon', [function(){
   return  {

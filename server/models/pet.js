@@ -3,14 +3,13 @@ var Schema = mongoose.Schema;
 
 var PetSchema = new Schema({
   name: {type: String, required: true},
+  type: {type: String, required: true},
   breed: String,
   owner: {type: Number, required: true},
   weight: Number,
   color: String,
   age: Number,
   neutered: Boolean,
-  //Array containing id's of reservations for this pet
-  reservations: Array,
   foodBrand: String,
   foodServings: String,
   foodAllergies: String,

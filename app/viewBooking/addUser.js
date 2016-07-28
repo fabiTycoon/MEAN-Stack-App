@@ -22,12 +22,13 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     returningUser: false,
     loginUser: false,
     newUser: false,
-    newUserStep: '',
+    newUserStep: 1,
+    maxUserSteps: 4,
     newReservation: false,
     resStep: 1,
-    addPets: false,
+    maxResSteps: 3,
     addPet: false,
-    maxResSteps: 3
+    addPetStep: 1
   };
 
   if ($rootScope.signingUp) {
@@ -55,6 +56,31 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     passwordConfirm: ''
   };
 
+  $scope.newReservation = {
+    service: $scope.serviceSelected,
+    checkInDate: '',
+    checkOutDate: '',
+    checkInTime: '',
+    checkOutTime: '',
+    bringingOwnFood: false,
+    comments: '',
+    pets: []
+  };
+
+  $scope.newPet = {
+    name: '',
+    type: '',
+    breed: '',
+    weight: 0,
+    color: '',
+    age: 0,
+    neutered: false,
+    foodBrand: '',
+    foodServings: '',
+    foodAllergies: '',
+    comments: ''
+  };
+
   $scope.phArea = '';
   $scope.ph1 = '';
   $scope.ph2 = '';
@@ -62,8 +88,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.loginLoading = false;
   $scope.serviceSelected = '';
   $scope.registrationTitle = 'YOUR INFORMATION';
-  $scope.reservationTitle = 'SELECT YOUR DATES'
-  $rootScope.registrationError = ''
+  $scope.reservationTitle = 'SELECT YOUR DATES';
+  $scope.addPetTitle = 'MY PET IS A...';
+  $scope.reservationBackButton = 'BACK TO DATES';
+  $scope.reservationFwdButton = 'REVIEW & ADD PETS';
+  $rootScope.registrationError = '';
+  $scope.reservationError = '';
   $scope.cardClicked = '';
   $scope.refresh = false;
 
@@ -76,6 +106,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     for (var state in $scope.viewModelState) {
       $scope.viewModelState[state] = false;
     };
+
+    $scope.resStep = 1;
 
     if (arguments.length > 0) {
       return;
@@ -138,36 +170,70 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     if ($scope.viewModelState.resStep !== $scope.viewModelState.maxResSteps) {
       $scope.viewModelState.resStep +=1;
     };
+
+    if ($scope.viewModelState.resStep === 2) {
+      $scope.reservationTitle = "ADD PETS TO YOUR RESERVATION";
+    };
+
   };
 
   $scope.backReservationStep = function () {
     if ($scope.viewModelState.resStep !== 1) {
       $scope.viewModelState.resStep -=1;
     };
-  };
 
-  $scope.goToResStep = function (step) {
-
-
-    if (step === 1) {
-
-    } else if (step === 2) {
-
-    } else if (step === 3) {
-
+    if ($scope.viewModelState.resStep === 1) {
+      $scope.reservationTitle = "SELECT YOUR DATES";
     };
 
+  };
 
+  $scope.showPetForm = function () {
+    $scope.defaultState(true);
+      $scope.viewModelState.resStep = 2;
+      $scope.viewModelState.addPet = true;
+      $scope.viewModelState.addPetStep = 1;
   };
 
   $scope.addPets = function () {
     $scope.defaultState(true);
-    $scope.viewModelState.addPets = true;
+    $scope.viewModelState.resStep = 2;
   };
+
+  $scope.setSpecies = function (species) {
+    $scope.defaultState(true);
+
+    if (species === 'dog') {
+      $scope.newPet.type = 'dog';
+    } else if (species === 'cat') {
+      $scope.newPet.type = 'cat';
+    };
+
+    $scope.addPetTitle = 'MY PET\'S INFO';
+    $scope.viewModelState.resStep = 2;
+    $scope.viewModelState.addPet = true;
+    $scope.viewModelState.addPetStep = 2;
+      console.log("VM STATE: ", $scope.viewModelState);
+  };
+
   $scope.phoneConcat = function () {
     $scope.newUser.phone = ($scope.phArea + $scope.ph1 + $scope.ph2);
     console.log("phone concat, # is:", $scope.newUser.phone);
   };
+
+  $scope.createNewReservation = function (reservation) {
+
+    //TO DO: ADD VALIDATION & ERROR MESSAGING FOR USER
+
+    $rootScope.user.reservations.push(reservation);
+    User.addReservation(reservation)
+      .then(function(res){
+        console.log("ADDED RESERVATION:", res);
+        //
+        $scope.viewModelState.resStep = 2;
+      });
+  };
+
 
   $scope.loginUser = function (data) {
     $scope.loginLoading = true;
@@ -193,7 +259,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
           } else if ($scope.serviceSelected && $scope.serviceSelected === 'daycare') {
             $scope.addReservation();
           } else {
-            $scope.addPets();
+            $scope.returningUser();
           };
         };
       });
@@ -211,6 +277,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   var init = function () {
+    $('.modal-trigger').leanModal();
     $('.datepicker').pickadate({
       selectMonths: true, // Creates a dropdown to control month
       selectYears: 15, // Creates a dropdown of 15 years to control year

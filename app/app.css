@@ -159,5 +159,9 @@ video {
   height: 0px;
   width: 0px; }
 
+.pet-info-title {
+  margin-top: 1.4em;
+  margin-left: 0.5em; }
+
 #pet-icon {
   fill: #00bfa5; }

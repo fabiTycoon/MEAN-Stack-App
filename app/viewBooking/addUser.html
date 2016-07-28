@@ -110,11 +110,10 @@
       <div class="row" ng-if="viewModelState.newUser === true">
         <h3 class="thin">{{registrationTitle}}</h3>
         <ul class="pagination">
-           <li class="active"><a>1</a></li>
+           <li ng-class="{active: newUserStep === 1}"><a>1</a></li>
            <li class="waves-effect"><a>2</a></li>
            <li class="waves-effect"><a>3</a></li>
            <li class="waves-effect"><a>4</a></li>
-           <li class="waves-effect"><a>5</a></li>
            <li class="waves-effect"><a><i class="material-icons">chevron_right</i></a></li>
          </ul>
            <div class="row" id="registration-form-container" ng-if="refresh === false">
@@ -210,42 +209,195 @@
 
   <!--ADD BOARDING RESERVATION VIEW-->
 
+  <ul class="pagination" ng-if="viewModelState.newReservation === true">
+    <li ng-class="{active: viewModelState.resStep === 1, disabled: viewModelState.resStep !== 1}"><a>1</a></li>
+    <li ng-class="{active: viewModelState.resStep === 2, disabled: viewModelState.resStep !== 2}"><a >2</a></li>
+    <li ng-class="{active: viewModelState.resStep === 3, disabled: viewModelState.resStep !== 3}"><a>3</a></li>
+  </ul>
+  <br>
+
   <div class="row" ng-if="viewModelState.newReservation === true && serviceSelected === 'boarding'">
-    <div class="col s10 offset-s1">
-      <h4 class="thin center-text">{{reservationTitle}}</h4>
+    <div class="row" id="registration-form-container" ng-if="refresh === false" ng-if="viewModelState.addPet === false">
+      <div class="col s10 offset-s1 card">
+        <h3 class="thin">{{reservationTitle}}</h3>
+        <div class="card-content">
+          
 
-    <div class="row">
-      <div class="col s12 m6 offset-m3">
-        <ul class="pagination">
-           <li ng-class="{disabled: viewModelState.resStep === 1}"><a ng-click="backReservationStep()"><i class="material-icons">chevron_left</i></a></li>
-           <li ng-class="{active: viewModelState.resStep === 1}"> <a ng-click="goToResStep('1')">1</a>
-           </li>
-           <li ng-class="{active: viewModelState.resStep === 2}">
-            <a ng-click="goToResStep('2')">2</a>
+          <div ng-show="viewModelState.resStep === 1">
+            <div class="input-field col s6" ngMouseup="setDate()">
+              <input id="check-in-date" class="datepicker" type="date" ng-model="newReservation.checkInDate" min="currentDate">
+              <label class="active" for="check-in">Check-In Date</label>
+            </div>
+            <div class="input-field col s6" ngMouseup="setDate()">
+              <input id="check-out-date" class="datepicker" type="date" ng-model="newReservation.checkOutDate" min="checkInDate">
+              <label class="active" for="check-out">Check-Out Date</label>
+            </div>
+
+            <div class="input-field col s6">
+              <input id="check-in-time" type="text" ng-model="newReservation.checkInTime" placeholder="HH:MM (i.e. 04:30)">
+              <label for="check-in-time" class="active">Est. Check-In Time</label>
+            </div>
+
+            <div class="input-field col s6">
+              <input id="check-out-time" type="text" ng-model="newReservation.checkOutTime" placeholder="HH:MM (i.e. 04:30)">
+              <label for="check-out-time" class="active">Est. Check-In Time</label>
+            </div>  
+
+            <div class="row">
+              <div class="col s12">
+                <form id ="foodRadioButtons">
+                  <label for="foodRadioButtons">Are You Bringing Your Own Food?</label>
+                    <div class="row">
+                      <div class="col s6">
+                        <p>
+                          <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" />
+                          <label for="ownFoodYes">Yes</label>
+                        </p>
+                        <p>
+                          <input class="with-gap" name="foodRadios" type="radio" id="ownFoodNo" />
+                          <label for="ownFoodNo">No</label>
+                        </p>
+                      </div>
+                      <div class="col s6">
+                        <label for="textarea1">Additional Notes &amp; Comments</label>
+                        <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
+                      </div>
+                    </div>
+              </div>
+            </div>
+        </div>
+
+        <!--ADD PETS VIEW -->
+          
+        <div class="row" ng-if="viewModelState.resStep === 2">
+          <div class="col s12" ng-if="user.pets.length > 0;">
+            <h5 class="thin">Your Pets:</h5>
+            <li>
+              <ul ng-repeat="pet in user.pets;">{{pet.name}}</ul>
             </li>
-           <li ng-class="{active: viewModelState.resStep === 3}"><a ng-click="goToResStep('3)">3</a></li>
-           <li class="waves-effect" id="res-step-4" ng-class="{disabled: viewModelState.resStep === 3}"><a ng-click="advanceReservationStep()"><i class="material-icons">chevron_right</i></a></li>
-         </ul>
-         <br>
-      </div>
-      <div class="input-field col s12 m6 offset-m3" ngMouseup="setDate()">
-        <input id="check-in" class="datepicker" type="date" ng-model="newReservation.checkInDate" min="currentDate">
-        <label class="active" for="check-in">Check-In Date</label>
-      </div>
-      <div class="input-field col s12 m6 offset-m3">
-        <input id="check-out" class="datepicker" type="date" ng-model="newReservation.checkOutDate" min="checkInDate">
-        <label class="active" for="check-out">Check-Out Date</label>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <a ></a>
-    </div>
+          </div>
 
+          <div class="row">
+            <div class="col s10 offset-s1">
+              <a class="waves-effect waves-light btn" ng-click="showPetForm();"><i class="small material-icons">library_add</i>&nbsp;&nbsp;ADD A PET</a>
+              <br>
+              <div ng-if="user.pets.length ===0" class="alt-contact-text">
+                <table><th></th></table>
+                <span>You currently have no pets saved.  Click <a ng-click="showPetForm();">'Add a Pet'</a> to add a pet to your reservation.</span>
+              </div>
+            </div>
+          </div>
 
+          
+          </div>
+        </div>
+
+        
+
+  
+        <div class="row" ng-if="reservationError">
+          <p>ERROR</p>
+        </div>
+
+        <div class="card-action align left" ng-if="viewModelState.resStep !== 1">
+          <i class="material-icons small">play_arrow</i><a ng-click="backReservationStep();" class="matcard-action-text">{{reservationBackButton}}</a>
+        </div>
+
+        <div class="card-action align right" ng-if="viewModelState.resStep !== viewModelState.maxUserSteps">
+          <a ng-click="advanceReservationStep();" class="matcard-action-text" ng-class="{disabled: user.pets.length === 0;}" >{{reservationFwdButton}}</a><i class="material-icons small">play_arrow</i>
+        </div>
+
+        </div>
+      </div>
     </div>
-  </div>
   <!--END BOARDING RESERVATION VIEW--> 
+
+  <!--ADD PETS VIEW -->
+    <!-- SELECT SPECIES CARDS -->
+    <div ng-show="viewModelState.addPet === true && viewModelState.addPetStep === 1;">
+      <h4 class="thin">{{addPetTitle}}</h4>
+      <br>
+      <div class="row">
+        <div class="row center-text">
+          <div class="col s6 grow">
+            <div class="card blue-grey lighten-1" id="add-dog-card">
+              <div class="card-content white-text matcard-intro">
+                <span class="card-title">DOG</span>
+                <p class="thin matcard-desc-text">Man's Best Friend</p>
+                <add-dog-icon></add-dog-icon>
+              </div>
+              <div class="card-action thin white-text">
+                <a ng-click="setSpecies('dog');" class="matcard-action-text" id="actionButtonReturningUser">&nbsp;&nbsp;ADD DOG</a>
+              </div>
+            </div>
+          </div>
+          <div class="col s6 grow">
+              <div class="card blue-grey lighten-1" id="add-cat-card">
+                <div class="card-content white-text matcard-intro">
+                  <span class="card-title">CAT</span>
+                  <p class="thin matcard-desc-text">Finicky But Friendly</p>
+                  <add-cat-icon></add-cat-icon>
+                </div>
+                <div class="card-action thin white-text">
+                  <a ng-click="setSpecies('cat')" class="matcard-action-text" id="actionButtonNewUser">&nbsp;&nbsp;ADD CAT</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END SELECT SPECIES CARDS -->
+
+      <!-- PET INFO CARD -->
+      <div ng-show="viewModelState.addPet === true && viewModelState.addPetStep === 2;">
+        
+        <div class="row">
+          <div class="column s10 offset-s1">
+            <div class="card">
+
+              <div class="row">
+                <div class="col s4">
+                  <div class="card-title">
+                    <h4 class="thin pet-info-title">{{addPetTitle}}</h4>
+                    <h6 ng-if="viewModelState.addPetStep > 2">(cont.)</h6>
+                  </div>
+                </div>
+                <div class="col s5 offset-2" style="fill: rgba(0,0,0,0.87) !important;">
+                  <add-dog-icon ng-if="newPet.type === 'dog'"></add-dog-icon>
+                  <add-cat-icon ng-if="newPet.type === 'cat'"></add-cat-icon>
+                </div>
+              </div>
+
+              <div class="card-content">
+                <div class="row">
+                  <div class="col s4">
+                    <label for="pet-name">Name</label>
+                    <input type="text" id="pet-name" ng-model="newPet.name" class="input-field"/>
+                  </div>
+                  <div class="col s4">
+                    <label for="pet-breed">Breed (Optional)</label>
+                    <input type="text" id="pet-breed" ng-model="newPet.breed" class="input-field"/>
+                  </div>
+                  <div class="col s4">
+                    <label for="pet-color">Color</label>
+                    <input type="text" id="pet-color" ng-model="newPet.color" class="input-field"/>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col s4">
+                    <input type="number" maxlength="3" id="pet-weight" ng-model="newPet.weight"/>
+                    <label for="pet-weight">Weight (lbs.)</label>
+                  </div>
+                  <div class="col s8 align-right"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <!-- END PET INFO CARD -->
+
 
 
 
@@ -257,16 +409,7 @@
 
 
 
-  <!--ADD PET VIEW -->
-    <div class="row" ng-if="viewModelState.addPets">
-      <!-- PETS HERE -->
-      <div class="col s6 offset-s3" ng-if="user.pets.length > 0">
-      </div>
-
-
-
-
-    </div>
+  
 
   <!--BACK BUTTON-->
   <br>

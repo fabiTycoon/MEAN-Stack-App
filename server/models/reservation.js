@@ -3,11 +3,11 @@ var Schema = mongoose.Schema;
 
 var ReservationSchema = new Schema({
   service: {type: String, required: true},
-  checkIn: {type: Date, required: true},
-  checkOut: {type: Date, required: true},
-  checkInTime: {type: Date, required: true},
+  checkInDate: {type: Date, required: true},
   checkOutTime: {type: Date, required: true},
-  owner: {type: Array, required: true},
+  checkInTime: {type: String, required: true},
+  checkOutTime: {type: String, required: true},
+  owner: {type: String, required: true},
   pets: {type: Array, required: true}
 });
 
