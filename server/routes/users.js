@@ -57,7 +57,7 @@ router.post('/register', function(req, res) {
     } else {
       passport.authenticate('local')(req, res, function(){
         console.log('user registered!');
-        req.login(username)
+        req.login(username);
         console.log('user logged in omg')
         res.redirect('#/addBooking');
       });

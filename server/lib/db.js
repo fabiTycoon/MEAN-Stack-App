@@ -10,6 +10,8 @@ var config = {
   mongoUrl: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/holliston_test'
 };
 
+console.log("SET DB URL:", config.mongoUrl);
+
 mongoose.connect(config.mongoUrl, function(err){
   if (err) {
     console.log('ERRAR MANGO PROBLEMS:', err);

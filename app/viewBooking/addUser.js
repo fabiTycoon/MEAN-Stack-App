@@ -144,12 +144,13 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.loginUser = function (data) {
+    console.log("CALLED LOGIN USER: ", data);
     User.logIn(data);
   };  
 
 
   $scope.createUser = function (data) {
-    User.create(data);
+    User.create(data); //.then
   };
 
   $scope.signUp = function () {
@@ -169,9 +170,14 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   var logIn = function(data) {
 
     //assign return user to $rootScope.user 
-
-    return $http.post('/api/users/login', data);
-  }
+    console.log("CALLED LOGIN: ", data);
+    return $http.post('/api/users/login', data)
+      .then(function successCallback(resp){
+        console.log("RESPONSE: ", resp);
+      }), function errorCallback(resp) {
+        console.log("ERROR: ", resp);
+      };
+  };
 
   var logOut = function(data) {
     return $http.get('/api/users/logout', data);
@@ -181,9 +187,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     console.log("Called createUser factory, data is:", data);
     return $http.post('/api/users/register/', data)
       .then(function successCallback(resp){
+          console.log("RESPONSE: ", resp);
         $rootScope.registrationError = resp.data.message;
         $rootScope.$broadcast('registrationError');
       }), function errorCallback(resp) {
+        console.log("ERROR: ", resp);
         // TO DO: Server side error handling
       };
   };
