@@ -23,7 +23,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   } || $scope.viewModelState;
 
   $scope.loginUserObject = {
-    email: '',
+    username: '',
     password: ''
   };
 

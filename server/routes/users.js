@@ -3,6 +3,7 @@ var passport = require('passport');
 var User = require('../models/users.js');
 var router = express.Router();
 var mongoose = require('mongoose');
+var passportLocalMongoose = require('passport-local-mongoose');
 
 //handlers for calls to api/users
 /*router.get('/users/', function(req, res) {
@@ -19,12 +20,11 @@ router.delete('/', function(req, res) {
 
 router.get('/users/', function(req, res) {
   var userId = req.body.user_id //not sure about this
-
 });
 
 router.post('/register', function(req, res) {
 
-  var username = req.body.email
+  var username = req.body.username
   console.log("registering user");
   console.log("user is", username);
 
@@ -79,9 +79,6 @@ router.post('/login', passport.authenticate('local'), function(req, res){
   }
 
   console.log('Sucesfully logged in:', user);
-  //eventually, we'll want this to redirect to a user profile page
-  //i.e. res.redirect('/users/' + req.body.user.username)
-  res.redirect('/account');
 });
 
 router.post('/logout', function(req, res){

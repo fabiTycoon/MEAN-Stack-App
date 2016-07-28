@@ -36,18 +36,20 @@
         <div class="row">
           <div class="col s10 offset-s1">
             <div class="card white">
-              <div class="cart-content">
+              <div class="cart-content" >
                 <div class="row">
                   <div class="col s10 offset-s1">
+
                     <br>
                     <span class="card-title" class="thin">LOGIN:</span>
                     <br>
                     <br>
                     <label for="loginUserEmail">E-Mail:</label>
-                    <input id="loginUserEmail" type="text" ng-model="loginUserObject.email"></input>
+                    <input id="loginUserEmail" type="text" ng-model="loginUserObject.username"></input>
                     <label for="loginUserPass">Password:</label>
                     <input id="loginUserPass" type="password" ng-model="loginUserObject.password"></input>
                     <br><br>
+
                     <div class="row">
                       <div class="col s6">
                         <a class="waves-effect waves-light btn" ng-click="loginUser(loginUserObject);"><i class="material-icons left">input</i>LOGIN</a>
@@ -57,9 +59,7 @@
                       </div>
                     </div>
                     <br><br>
-                    
-                    
-
+                
                   </div>
                 </div>
               </div>
