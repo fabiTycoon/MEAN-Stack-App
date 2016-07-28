@@ -17,15 +17,22 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     pets: []
   };
 
-  $scope.viewModelState = $scope.viewModelState || {
+  $scope.viewModelState = {
     intro: true,
     returningUser: false,
     loginUser: false,
     newUser: false,
     newUserStep: '',
     newReservation: false,
+    resStep: 1,
     addPets: false,
-    addPet: false
+    addPet: false,
+    maxResSteps: 3
+  };
+
+  if ($rootScope.signingUp) {
+    $scope.defaultState(true);
+    $scope.viewModelState.newUser = true;
   };
 
   $scope.loginUserObject = {
@@ -55,6 +62,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.loginLoading = false;
   $scope.serviceSelected = '';
   $scope.registrationTitle = 'YOUR INFORMATION';
+  $scope.reservationTitle = 'SELECT YOUR DATES'
   $rootScope.registrationError = ''
   $scope.cardClicked = '';
   $scope.refresh = false;
@@ -71,8 +79,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     if (arguments.length > 0) {
       return;
-    } else if ($rootScope.user) {
-      $scope.viewModelState.returningUser = true;
     } else {
       $scope.viewModelState.intro = true;
     };
@@ -125,7 +131,34 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.addReservation = function () {
     $scope.defaultState(true);
     $scope.viewModelState.newReservation = true;
+    $scope.viewModelState.resStep = 1;
   };  
+
+  $scope.advanceReservationStep = function () {
+    if ($scope.viewModelState.resStep !== $scope.viewModelState.maxResSteps) {
+      $scope.viewModelState.resStep +=1;
+    };
+  };
+
+  $scope.backReservationStep = function () {
+    if ($scope.viewModelState.resStep !== 1) {
+      $scope.viewModelState.resStep -=1;
+    };
+  };
+
+  $scope.goToResStep = function (step) {
+
+
+    if (step === 1) {
+
+    } else if (step === 2) {
+
+    } else if (step === 3) {
+
+    };
+
+
+  };
 
   $scope.addPets = function () {
     $scope.defaultState(true);
@@ -211,84 +244,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   });
 
   
-}])
+}]);
 
 //TO DO: REFACTOR IN SEPERATE MODULE:
-.factory('User', ['$http', '$rootScope', '$q', function  ($http, $rootScope, $q){
-
-  var registrationError = '';
-
-  this.user = this.user || {
-    isLoggedIn: false,
-    pets: [],
-    reservations: []
-  };
-  
-  this.loginStatus = this.loginStatus || false;
-
-  var getLoginStatus = function () {
-    var status = this.loginStatus;
-    return status;
-  };
-
-  var toggleLoginStatus = function () {
-    this.user.isLoggedIn = !this.user.isLoggedIn;
-  };
-  
-  var setUser = function (user) {
-    return this.user = user;
-  };
-
-  var getUser = function () {
-    var user = this.user;
-    return user;
-  };
-
-  var logIn = function(data) {
-    return $http.post('/api/users/login', data);
-  };
-
-  var logOut = function(data) {
-    return $http.get('/api/users/logout', data);
-  };
-
-  var create = function(data) {
-    console.log("Called createUser factory, data is:", data);
-    return $http.post('/api/users/register/', data)
-      .then(function (res){
-          console.log("OMGRESPONSE: ", res);
-          console.log("OMGRESPONSE: ", res);
-        $rootScope.registrationError = res.data.message;
-        $rootScope.$broadcast('registrationError');
-        return res.data;
-      }), function (errorCallback) {
-        console.log("ERROR: ", res);
-        // TO DO: Server side error handling
-      };
-  };
-
-  var read = function(userId) {
-    return $http.get('/api/users/' + userId);
-  }
-
-  var edit = function(userId, data) {
-    return $http.put('/api/users/' + userId, data);
-  };
-
-  var del = function(userId) {
-    return $http.delete('/api/users/' + userId);
-  };
-
-  return {
-    setUser: setUser,
-    getUser: getUser,
-    getLoginStatus: getLoginStatus,
-    registrationError: registrationError,
-    logIn: logIn,
-    create: create,
-    read: read,
-    edit: edit,
-    del: del
-  };
-
-}]);

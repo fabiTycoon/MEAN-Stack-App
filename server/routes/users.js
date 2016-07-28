@@ -81,9 +81,8 @@ router.post('/login', passport.authenticate('local'), function(req, res, info){
   return res.status(200).json({info: info, loggedIn: true});
 });
 
-router.post('/logout', function(req, res){
-  var user = req.body.username  //we should be able to grab the user object from any req - use this instead
-  req.logout(user);
+router.get('/logout', function(req, res){
+  req.logout();
   console.log('Sucesfully logged out');
   res.redirect('/');
 });

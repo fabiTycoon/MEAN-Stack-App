@@ -209,25 +209,41 @@
 
 
   <!--ADD BOARDING RESERVATION VIEW-->
+
   <div class="row" ng-if="viewModelState.newReservation === true && serviceSelected === 'boarding'">
+    <div class="col s10 offset-s1">
+      <h4 class="thin center-text">{{reservationTitle}}</h4>
 
     <div class="row">
-      <div class="input-field col s12 m6 offset-m3 l4 offset-l4" ngMouseup="setDate()">
+      <div class="col s12 m6 offset-m3">
+        <ul class="pagination">
+           <li ng-class="{disabled: viewModelState.resStep === 1}"><a ng-click="backReservationStep()"><i class="material-icons">chevron_left</i></a></li>
+           <li ng-class="{active: viewModelState.resStep === 1}"> <a ng-click="goToResStep('1')">1</a>
+           </li>
+           <li ng-class="{active: viewModelState.resStep === 2}">
+            <a ng-click="goToResStep('2')">2</a>
+            </li>
+           <li ng-class="{active: viewModelState.resStep === 3}"><a ng-click="goToResStep('3)">3</a></li>
+           <li class="waves-effect" id="res-step-4" ng-class="{disabled: viewModelState.resStep === 3}"><a ng-click="advanceReservationStep()"><i class="material-icons">chevron_right</i></a></li>
+         </ul>
+         <br>
+      </div>
+      <div class="input-field col s12 m6 offset-m3" ngMouseup="setDate()">
         <input id="check-in" class="datepicker" type="date" ng-model="newReservation.checkInDate" min="currentDate">
         <label class="active" for="check-in">Check-In Date</label>
       </div>
-      <div class="input-field col s12 m6 offset-m3 l4 offset-l4">
+      <div class="input-field col s12 m6 offset-m3">
         <input id="check-out" class="datepicker" type="date" ng-model="newReservation.checkOutDate" min="checkInDate">
         <label class="active" for="check-out">Check-Out Date</label>
       </div>
     </div>
-
+    <br>
     <div class="row">
-      
+      <a ></a>
     </div>
 
 
-
+    </div>
   </div>
   <!--END BOARDING RESERVATION VIEW--> 
 

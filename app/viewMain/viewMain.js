@@ -9,9 +9,10 @@ angular.module('myApp.viewMain', ['ngRoute'])
   });
 }])
 
-.controller('MainCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User) {
+.controller('MainCtrl', ['$scope', '$rootScope', '$location', 'User', function($scope, $rootScope, $location, User) {
 
   $scope.user = {isLoggedIn: false};
+  $rootScope.signingUp = false;
 
   $scope.isLoggedIn = function () {
     var status = User.getLoginStatus();
@@ -20,11 +21,20 @@ angular.module('myApp.viewMain', ['ngRoute'])
     };
   };
 
-  $scope.logout = function () {
+  $scope.logOut = function () {
+
+    var status = User.getLoginStatus();
+      console.log("STATUS BE:", status);
+
     console.log("LOGGING OUT USER: ", $rootScope.user);
     if ($rootScope.user.isLoggedIn === true) {
       User.logOut()
         .then(function(res){
+          $rootScope.user = {
+            isLoggedIn: false,
+            pets: [],
+            reservations: []
+          }
           console.log("LOGGED OUT")
           res.redir('/');
         })
