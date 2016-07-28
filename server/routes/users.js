@@ -2,8 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var User = require('../models/users.js');
 var router = express.Router();
-
-mongoose = require 'mongoose';
+var mongoose = require('mongoose');
 
 //handlers for calls to api/users
 /*router.get('/users/', function(req, res) {

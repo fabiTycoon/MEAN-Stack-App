@@ -1,215 +1,31 @@
 <div class="push"></div>
 <div class="container">
-  <div class="row">
-    <div class="col s9 offset-s1">
-      <h4>Book a Stay With Us</h4>
-    </div>
-  </div>
 
-  <div class="row">
-   <div class="col s12 m10 offset-m1">
-     <div class="card">
-       <div class="card-content">
 
-       <span class="card-title">Please  Select a Service:</span>
-        <div class="row">
-          <div class="col s6">
-            <input name="serviceSelect" type="radio" id="boardSelect" ng-click="serviceSel('boarding')"/>
-            <label for="boardSelect">Boarding</label>
-          </div>
-          <div class="col s6">
-            <input name="serviceSelect" type="radio" id="daySelect" ng-click="serviceSel('daycare')"/>
-            <label for="daySelect">Daycare</label>
-          </div>
+
+  <div class="row" ng-if="">
+    <div class="col s6">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">RETURNING GUEST</span>
+          <p>Login &amp; book in minutes</p>
         </div>
-
-        <!--DAYCARE SPECIFIC FIELDS:-->
-        <div class="row animated fadeInDown" ng-if="newReservation.service === 'daycare' ">
-           <span class="card-title">Would You Like Us to Pick Up Your Pet?</span>
-           <p id="transportInfo"><a href="">More information about transportation services</a></p>
-           <!--Consider replacing the above text with a tooltip in addition to linking to the about page-->
-          <div class="col s6">
-            <input name="transportSelect" type="radio" id="pickupSelect" ng-click="transportSel('pickup')"/>
-            <label for="pickupSelect">Yes</label>
-          </div>
-          <div class="col s6">
-            <input name="transportSelect" type="radio" id="daySelect" ng-click="transportSel('dropoff')"/>
-            <label for="daySelect">No</label>
-          </div>
+        <div class="card-action">
+          <a href="#">BOOK NOW</a>
         </div>
-
-        <!--TODO: Add informational text upon selection of boaridng/daycare:
-            i.e. dropoff/pick up hours-->
-
-
-        <!--BOARDING SPECIFIC FIELDS:-->
-        <div class="selectFields animated fadeInDown" id="checkInFieldBoarding" ng-if="newReservation.service === 'boarding' ">
-         <span class="card-title">Your Requested Dates:</span>
-
-            <div class="row">
-              <div class="input-field col s6" ngMouseup="setDate()">
-                <input id="check-in" class="datepicker" type="date" ng-model="newReservation.checkInDate" min="currentDate">
-                <label class="active" for="check-in">Check-In Date</label>
-              </div>
-              <div class="input-field col s6">
-                <input id="check-out" class="datepicker" type="date" ng-model="newReservation.checkOutDate" min="checkInDate">
-                <label class="active" for="check-out">Check-Out Date</label>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="input-field col s2">
-              <label class="active" for="check-in-time">Est. Check-In Time</label>
-                <select ng-model="newReservation.checkInTimeHr">
-                  <option>12</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                </select>
-              </div>
-              <div class="input-field col s2">
-                 <select ng-model="newReservation.checkInTimeMin">
-                  <option>00</option>
-                  <option>15</option>
-                  <option>30</option>
-                  <option>45</option>
-                </select>
-              </div>
-              <div class="input-field col s2">
-                <select ng-model="newReservation.checkInTimeDp">
-                  <option>PM</option>
-                  <option>AM</option>
-                </select>
-              </div>
-              <div class="input-field col s2">
-              <label class="active" for="check-in-time">Est. Check-Out Time</label>
-                <select ng-model="newReservation.checkOutTimeHr">
-                  <option>12</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                </select>
-              </div>
-              <div class="input-field col s2">
-                 <select ng-model="newReservation.checkOutTimeMin">
-                  <option>00</option>
-                  <option>15</option>
-                  <option>30</option>
-                  <option>45</option>
-                </select>
-              </div>
-              <div class="input-field col s2">
-                <select ng-model="newReservation.checkOutTimeDp">
-                  <option>PM</option>
-                  <option>AM</option>
-                </select>
-              </div>
-            </div>
-        </div>
-
-        <!--DAYCARE SPECIFIC FIELDS:-->
-        <div class="selectFields animated fadeInDown" ng-if="newReservation.service === 'daycare' " id="checkInFieldDaycare">
-         <span class="card-title">Your Requested Times:</span>
-            <div class="row">
-              <div class="input-field col s6" ngMouseup="setDate()">
-                <input id="check-in" class="datepicker" type="date" ng-model="newReservation.checkInDate" min="currentDate">
-                <label class="active" for="check-in">Requested Date:</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s2">
-              <label class="active" for="check-in-time" ng-if="pickupSelected">Approx. Pick-Up Time</label>
-              <label class="active" for="check-in-time" ng-if="pickupSelected">Approx. Drop-Off Time</label>
-              <label class="active" for="check-in-time" ng-if="dropoffSelected">Approx. Drop-Off Time</label>
-              <label class="active" for="check-in-time" ng-if="dropoffSelected">Approx. Pick-Up Time</label>
-                <select ng-model="newReservation.checkInTimeHr">
-                  <option>12</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                </select>
-              </div>
-              <div class="input-field col s2">
-                 <select ng-model="newReservation.checkInTimeMin">
-                  <option>00</option>
-                  <option>15</option>
-                  <option>30</option>
-                  <option>45</option>
-                </select>
-              </div>
-              <div class="input-field col s2">
-                <select ng-model="newReservation.checkInTimeDp">
-                  <option>PM</option>
-                  <option>AM</option>
-                </select>
-              </div>
-              <div class="input-field col s2">
-              <label class="active" for="check-in-time">Est. Check-Out Time</label>
-                <select ng-model="newReservation.checkOutTimeHr">
-                  <option>12</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                </select>
-              </div>
-              <div class="input-field col s2">
-                 <select ng-model="newReservation.checkOutTimeMin">
-                  <option>00</option>
-                  <option>15</option>
-                  <option>30</option>
-                  <option>45</option>
-                </select>
-              </div>
-              <div class="input-field col s2">
-                <select ng-model="newReservation.checkOutTimeDp">
-                  <option>PM</option>
-                  <option>AM</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <!--END DAYCARE SPECIFIC FIELDS-->
-        </div>
-
-      <div class="card-action">
-       <a href="#/book">Go Back</a>
-       <a href="#/addPet">Next</a>
       </div>
-      </div>
-
     </div>
-
+    <div class="col s6">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">FIRST TIMER</span>
+            <p>Sign up &amp; book in minutes</p>
+          </div>
+          <div class="card-action">
+            <a href="#">BOOK NOW</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

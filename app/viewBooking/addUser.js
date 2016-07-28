@@ -11,20 +11,104 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
 .controller('AddUserCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User) {
 
+  $scope.viewModelState = {
+    intro: true,
+    returningUser: false,
+    newuser: false,
+    newBoarding: false,
+    newDaycare: false,
+    addPets: false
+  } || $scope.viewModelState;
+
   $rootScope.registrationError = ''
+  $scope.cardClicked = '';
   $scope.refresh = false;
+
+  $scope.refreshView = function () {
+    $scope.refresh = true;
+    $scope.refresh = false;
+  };
+
+  $scope.defaultState = function () {
+    for (var state in $scope.viewModelState) {
+      $scope.viewModelState[state] = false;
+    };
+
+    if (arguments.length > 0) {
+      return;
+    } else if ($rootScope.user) {
+      $scope.viewModelState.returningUser = true;
+    } else {
+      $scope.viewModelState.intro = true;
+    };
+  };
+
+  $scope.defaultState();
+
+  $scope.returningUser = function () {
+    $scope.defaultState(true)
+    $scope.cardClicked = 'returningUser';
+    $rootScope.$broadcast('cardAdvance');
+    $scope.viewModelState.returningUser = true;
+  };
+
+  $scope.addNewUser = function () {
+    $scope.defaultState(true);
+    $scope.viewModelState.newUser = true;
+    $scope.cardClicked = 'newUser';
+    $rootScope.$broadcast('cardAdvance');
+  };
+
+  $scope.goHome = function () {
+    $scope.defaultState();
+  };
+
+  $scope.boardingSelect = function () {
+    $scope.defaultState(true);
+    $scope.viewModelState.newBoarding = true;
+  };
+
+  $scope.daycareSelect = function () {
+    $scope.defaultState(true);
+    $scope.viewModelState.newDaycare = true;
+  };
+
+  $scope.addPets = function () {
+    $scope.defaultState(true);
+    $scope.viewModelState.addPets = true;
+  };
+
+  $rootScope.$on('cardAdvance', function(){
+
+    var returning = $('#matcard-action-returning');
+    var newUser = $('#matcard-action-new');
+
+    returning.removeClass('animated flipInY');
+    newUser.removeClass('animated flipInY');
+
+    if ($scope.cardClicked === 'returningUser') {
+      returning.addClass('animated flipInY');
+    } else if ($scope.cardClicked === 'newUser') {
+      newUser.addClass('animated flipInY');
+    };
+    $scope.refreshView()
+  });
+
+  // LEGACY
+
+
+  
 
   $rootScope.$on('registrationError', function(){
     $('#registration-form-container').addClass('animated shake')
-    $scope.refresh = true;
-    $scope.refresh = false;
+    $scope.refreshView()
   });
 
   //Status bool to hide potentially confusing header if redirected from login
   $scope.loginRedir = false;
 
   //Form Values:
-  $scope.newOwner = {
+  $scope.newUser = {
     first: '',
     last: '',
     phone: '',
@@ -43,8 +127,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.ph2 = '';
 
   $scope.phoneConcat = function () {
-    $scope.newOwner.phone = ($scope.phArea + $scope.ph1 + $scope.ph2);
-    console.log("phone concat, # is:", $scope.newOwner.phone);
+    $scope.newUser.phone = ($scope.phArea + $scope.ph1 + $scope.ph2);
+    console.log("phone concat, # is:", $scope.newUser.phone);
   }
 
   $scope.createUser = function (data) {
@@ -54,21 +138,10 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.signUp = function () {
     $scope.registrationError = '';
     $scope.phoneConcat();
-    return $scope.createUser($scope.newOwner)
+    return $scope.createUser($scope.newUser)
   }
 
-  var init = function () {
-    $('select').material_select(); 
-
-    $(document).ready(function(){
-      $('#state-select').on('change', function (){
-        var selectedValue = $(this).val();
-        $scope.newOwner.state = selectedValue;
-      });
-    });
-  };
-
-  init();
+  
 }])
 
 //TO DO: REFACTOR IN SEPERATE MODULE:
@@ -77,6 +150,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   var registrationError = '';
 
   var logIn = function(data) {
+
+    //assign return user to $rootScope.user 
+
     return $http.post('/api/users/login', data);
   }
 

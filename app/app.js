@@ -12,6 +12,8 @@ angular.module('myApp', [
   'myApp.addPetView',
   'myApp.viewLogin',
   'myApp.version',
+  //'myApp.basicServices',
+  'myApp.directivesModule',
   'ngMessages',
   'ngSanitize',
 ]).

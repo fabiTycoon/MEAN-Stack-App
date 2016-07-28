@@ -11,8 +11,15 @@ angular.module('myApp.viewAddBooking', ['ngRoute'])
 
 .controller('AddBookingCtrl', [ '$scope', function($scope) {
 
+  //MAKE SEPERATE SERVICE FOR 
+
+  $scope.loading = true;
   
 
+
+
+
+// legacy
   $scope.newReservation = {
     service: '',
     checkInDate: '',

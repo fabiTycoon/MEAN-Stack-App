@@ -22,6 +22,8 @@
 </head>
 <body>
 
+<!--FIX THIS - logout href to backend :/ + html outside of app -->
+
   <nav>
    <div class="nav-wrapper red darken-1">
    <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons animated swing">menu</i></a>
@@ -30,16 +32,16 @@
     <ul id="nav-mobile" class="right hide-on-med-and-down red darken-4">
       <li class="action-item"><a href="#/book">BOOK NOW</a></li> 
       <li><a href="#/viewAbout">About</a></li>
-      <li><a href="#/view2">Gallery</a></li>
+      <!--<li><a href="#/view2">Gallery</a></li>
       <li><a href="#/login">Log In</a></li>
-      <li><a href="#/api/users/logout">Log Out</a></li>
+      <li><a ng-click="logOut()">Log Out</a></li>-->
     </ul>
      <ul class="side-nav" id="mobile-menu">
        <li class="action-item"><a href="#/book">BOOK NOW</a></li> 
         <li><a href="#/viewAbout">About</a></li>
-        <li><a href="#/view2">Gallery</a></li>
+        <!--<li><a href="#/view2">Gallery</a></li>
         <li><a href="#/login">Log In</a></li>
-        <li ng-click="logOut()">Log Out</li>
+        <li ng-click="logOut()">Log Out</li>-->
     </ul>
    </div>
   </nav>
@@ -73,6 +75,8 @@
   <script src="viewAccounts/account.js"></script>
   <script src="viewGallery/viewGallery.js"></script>
   <script src="components/version/version.js"></script>
+  <script src="directives/navBar.js"></script>
+  <script src="services/basicServices.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
 </body>

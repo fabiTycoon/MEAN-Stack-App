@@ -11,6 +11,15 @@
   #social-icon:hover {
     fill: #c2c2c2; }
 
+.matcard-intro {
+  height: 15em; }
+
+.matcard-desc-text {
+  font-size: 1.25em; }
+
+.matcard-action-text {
+  font-size: 1.5em; }
+
 .grow:hover {
   -ms-transition: 1s;
   -moz-transition: 1s;
@@ -39,6 +48,9 @@
 
 .error-text p {
   color: #E53935 !important; }
+
+.center-text {
+  text-align: center; }
 
 .push {
   height: 25px; }
@@ -99,8 +111,15 @@ video {
   frameborder: 0px;
   style: "border:0"; }
 
+.error-box {
+  height: 100px; }
+
 #gallery-img {
   width: 200em; }
+
+.alt-contact-text {
+  color: #c2c2c2;
+  font-style: italic; }
 
 .redirect-text {
   color: #c2c2c2;
