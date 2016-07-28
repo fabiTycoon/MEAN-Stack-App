@@ -9,9 +9,30 @@ angular.module('myApp.viewMain', ['ngRoute'])
   });
 }])
 
-.controller('MainCtrl', ['$scope', function($scope) {
+.controller('MainCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User) {
+
+  $scope.user = {isLoggedIn: false};
+
+  $scope.isLoggedIn = function () {
+    var status = User.getLoginStatus();
+    if (status) {
+      $scope.user.isLoggedIn = true;
+    };
+  };
+
+  $scope.logout = function () {
+    console.log("LOGGING OUT USER: ", $rootScope.user);
+    if ($rootScope.user.isLoggedIn === true) {
+      User.logOut()
+        .then(function(res){
+          console.log("LOGGED OUT")
+          res.redir('/');
+        })
+    };
+  };
 
   var init = function () {
+    $scope.isLoggedIn();
     $(document).ready(function(){
       $('.parallax').parallax();
       $(".button-collapse").sideNav();    

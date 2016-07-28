@@ -25,7 +25,18 @@
       <div class="scroll-btn animated fadeInDown">
         <a class="back-to-top waves-effect waves-blue-grey lighten-1 btn" scroll-to-item scroll-to="#top-scroll" id="scroll-box">LEARN MORE</a>
       </div>
-    </div>   
+    </div>
+
+    <div class="fixed-action-btn horizontal" style="bottom: 75px; right: 24px;" ng-if="user.isLoggedIn === true">
+       <a class="btn-floating red">
+         <i class="large material-icons">assignment_ind</i>
+       </a>
+       <ul>
+         <li><a class="btn-floating green"><i class="material-icons">settings_power</i>MY ACCOUNT</a></li>
+         <li><a class="btn-floating blue" ng-click="logout();"><i class="material-icons">mode_edit</i>LOGOUT</a></li>
+       </ul>
+     </div>
+
   </div>  
   
   <div class="row" id="top-scroll" name="top">
