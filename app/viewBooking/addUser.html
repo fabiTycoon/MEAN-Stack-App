@@ -9,22 +9,62 @@
         <div class="card blue-grey lighten-1">
           <div class="card-content white-text matcard-intro">
             <span class="card-title">RETURNING GUESTS</span>
-            <p class="thin matcard-desc-text">Login &amp; book in minutes</p>
+            <p class="thin matcard-desc-text">Login &amp; book a stay</p>
+            <new-user-icon></new-user-icon>
           </div>
           <div class="card-action thin white-text">
-            <a ng-click="returningUser();" class="matcard-action-text" id="actionButtonReturningUser">BOOK NOW</a>
+            <a ng-click="returningUser();" class="matcard-action-text" id="actionButtonReturningUser">&nbsp;&nbsp;BOOK NOW</a>
           </div>
         </div>
       </div>
-      <div class="col s6 grow" ng-click="newUser();">
+      <div class="col s6 grow">
           <div class="card blue-grey lighten-1">
             <div class="card-content white-text matcard-intro">
               <span class="card-title">FIRST TIMERS</span>
               <p class="thin matcard-desc-text">Sign up &amp; book in minutes</p>
+              <returning-user-icon></returning-user-icon>
             </div>
             <div class="card-action thin white-text">
-              <a ng-click="newUser()" class="matcard-action-text" id="actionButtonNewUser">BOOK NOW</a>
+              <a ng-click="addNewUser()" class="matcard-action-text" id="actionButtonNewUser">&nbsp;&nbsp;BOOK NOW</a>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!--LOGIN CARD  -->
+      <div ng-show="viewModelState.loginUser === true">
+        <div class="row">
+          <div class="col s10 offset-s1">
+            <div class="card white">
+              <div class="cart-content">
+                <div class="row">
+                  <div class="col s10 offset-s1">
+                    <br>
+                    <span class="card-title" class="thin">LOGIN:</span>
+                    <br>
+                    <br>
+                    <label for="loginUserEmail">E-Mail:</label>
+                    <input id="loginUserEmail" type="text" ng-model="loginUserObject.email"></input>
+                    <label for="loginUserPass">Password:</label>
+                    <input id="loginUserPass" type="password" ng-model="loginUserObject.password"></input>
+                    <br><br>
+                    <div class="row">
+                      <div class="col s6">
+                        <a class="waves-effect waves-light btn" ng-click="loginUser(loginUserObject);"><i class="material-icons left">cloud</i>LOGIN</a>
+                      </div>
+                      <div class="col s6">
+                        <a class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>FORGOT PASSWORD?</a>
+                      </div>
+                    </div>
+                    <br><br>
+                    
+                    
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -36,10 +76,11 @@
           <div class="card blue-grey lighten-1">
             <div class="card-content white-text matcard-intro">
               <span class="card-title">BOARDING</span>
-              <p class="thin matcard-desc-text">Overnight stays starting from $35/night.<br>Book now in just minutes.</p>
+              <p class="thin matcard-desc-text">Overnight stays starting from $35/night.<br></p>
+              <boarding-icon></boarding-icon>
             </div>
             <div class="card-action thin white-text">
-              <a ng-click="boardingSelect();" class="matcard-action-text" id="actionButtonReturningUser">BOOK NOW</a>
+              <a ng-click="serviceSelect('boarding');" class="matcard-action-text" id="actionButtonReturningUser">BOOK NOW</a>
             </div>
           </div>
         </div>
@@ -47,26 +88,20 @@
             <div class="card blue-grey lighten-1">
               <div class="card-content white-text matcard-intro">
                 <span class="card-title">DAYCARE</span>
-                <p class="thin matcard-desc-text">Drop-off or pick-up all-day play &amp; stay.</p>
+                <p class="thin matcard-desc-text" style="padding-top: 0.75em;">Drop-off or pick-up all-day play &amp; stay.</p>
+                <daycare-icon></daycare-icon>
               </div>
               <div class="card-action thin white-text">
-                <a ng-click="daycareSelect();" class="matcard-action-text" id="actionButtonNewUser">BOOK NOW</a>
+                <a ng-click="serviceSelect('daycare');" class="matcard-action-text" id="actionButtonNewUser">BOOK NOW</a>
               </div>
             </div>
           </div>
         </div>
 
-        <!--BACK BUTTON-->
-        <br>
-        <div ng-hide="viewModelState.intro === true;">
-          <a ng-click="goHome();">Go Back</a>
-        </div>
-
-      <!-- NEW USER CARDS -->
+      <!-- NEW USER VIEWS -->
 
       <div class="row" ng-if="viewModelState.newUser === true">
-        <div class="push"></div>
-        <h3 class="thin">YOUR INFORMATION</h3>
+        <h3 class="thin">{{registrationTitle}}</h3>
         <ul class="pagination">
            <li class="active"><a>1</a></li>
            <li class="waves-effect"><a>2</a></li>
@@ -75,12 +110,100 @@
            <li class="waves-effect"><a>5</a></li>
            <li class="waves-effect"><a><i class="material-icons">chevron_right</i></a></li>
          </ul>
+           <div class="row" id="registration-form-container" ng-if="refresh === false">
+            <div class="col s12">
+              <div class="card">
+                <div class="card-content">
+                  <div ng-if="$root.registrationError" class="error-text">
+                    <p>Error: {{$root.registrationError.message}}</p>
+                  </div>
+                 <div class="row">
+                   <form class="col s12">
+                      <div class="row" ng-if="viewModelState.newUserStep === basicInfo">
+                         <div class="input-field col s6">
+                           <input id="first_name" type="text" ng-model="newOwner.first">
+                           <label class="active" for="first_name">First Name</label>
+                         </div>
+                         <div class="input-field col s6">
+                           <input id="last_name" type="text" ng-model="newOwner.last">
+                           <label class="active" for="last_name">Last Name</label>
+                         </div>
+                       </div>
+                       <div class="row" ng-show="viewModelState.newUserStep === basicInfo">
+                       <div class="input-field col s6">
+                         <p style="white-space: nowrap;">
+                           <input id="phone" type="text" ng-model="phArea" style="width: 2em;" maxlength="3"> - <input id="phone" type="text" ng-model="ph1" style="width: 2em;" maxlength="3"> - <input id="phone" type="text" ng-model="ph2" style="width: 3em;" maxlength="4">
+                           <label class="active" for="phone">Phone</label>
+                         </p>
+                       </div>  
+                       <div class="input-field col s6">
+                         <input id="email" type="email" ng-model="newOwner.email">
+                         <label class="active" for="email">Email</label>
+                       </div>
+                      </div>
 
-         <input type="text" ng-model="newUser.first"></input>
-         <label for=""></label>
-      </div> 
-</div>
+                        <div class="row" ng-if="viewModelState.newUserStep = 'addressInfo'">
+                         <div class="input-field col s4">
+                           <input id="street" type="text" ng-model="newOwner.street">
+                           <label class="active" for="street">Street Address</label>
+                         </div>
+                         <div class="input-field col s4">
+                           <input id="city" type="text" ng-model="newOwner.city">
+                           <label class="active" for="city">City</label>
+                         </div>
+                         <!--Need to bind select value to newOwner-->
+                         <div class="input-field col s2">
+                           <select id="state-select">
+                             <option value="MA">MA</option>
+                             <option value="RI">RI</option>
+                             <option value="CT">CT</option>
+                             <option value="NH">NH</option>
+                             <option value="ME">ME</option>
+                             <option value="NY">NY</option>
+                             <option value="NJ">NJ</option>
+                           </select>
+                           <label  for="state">State</label>
+                         </div>
+                         <div class="input-field col s2">
+                           <input id="zip" type="text" ng-model="newOwner.zip" maxlength="5">
+                           <label class="active" for="zip">Zip Code</label>
+                         </div>
+                       </div>
 
+                       <div class="row" ng-if="viewModelState.newUserStep = 'addressInfo'">
+                         <div class="col s10">
+                           <label class="active" for="hospital">Name of Your Animal Hospital</label>
+                           <input id="hospital" type="text" ng-model="newOwner.hospital">
+                         </div>
+                       </div> 
+                       <div class="row" ng-if="viewModelState.newUserStep.basicInfo === true">
+                         <div class="col s6">
+                           <label class="active" for="password">Choose a password</label>
+                           <input id="password" type="password" ng-model="newOwner.password">
+                         </div>
+                         <div class="col s6">
+                           <label class="active" for="passwordConfirm">Confirm your password</label>
+                           <input id="passwordConfirm" type="password" ng-model="newOwner.passwordConfirm">
+                         </div>
+                       </div>
+                   </form>
+                 </div>
+               </div>
+
+                <div class="card-action">
+                  <a ng-click="signUp()">Next</a>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  <!-- END NEW USER VIEWS -->
+
+  <!--BACK BUTTON-->
+  <br>
+  <div ng-hide="viewModelState.intro === true && viewModelState.loginUser === false;">
+    <a ng-click="goHome();" class="thin" style="font-size: 1.1em;">GO BACK</a>
+  </div>
 
   <div class="row">
     <div class="col s8 offset-s2 center-text alt-contact-text">Prefer to book over the phone?  Call us at 508-429-1500</div>

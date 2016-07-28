@@ -4,6 +4,10 @@
 .action-item {
   color: white; }
 
+#returning-user-icon {
+  height: 5em;
+  width: 5em; }
+
 #social-icon {
   height: 3.5em;
   width: 3.5em;
@@ -39,6 +43,30 @@
 .pet-icon svg {
   height: 2.5em;
   width: 2.5em;
+  fill: #f5f5f5; }
+
+.pet-icon-returning svg {
+  margin-top: 2em;
+  height: 5em;
+  width: 5em;
+  fill: #f5f5f5; }
+
+.pet-icon-new svg {
+  margin-top: 2em;
+  height: 5em;
+  width: 5em;
+  fill: #f5f5f5; }
+
+.pet-icon-boarding svg {
+  margin-top: 1.5em;
+  height: 5em;
+  width: 5em;
+  fill: #f5f5f5; }
+
+.pet-icon-daycare svg {
+  margin-top: 2.1em;
+  height: 5em;
+  width: 5em;
   fill: #f5f5f5; }
 
 .form-icon svg {

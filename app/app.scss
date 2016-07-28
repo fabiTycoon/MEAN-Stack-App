@@ -26,6 +26,11 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   color: white;
 }
 
+#returning-user-icon {
+  height:5em;
+  width:5em;
+}
+
 #social-icon {
   height: 3.5em;
   width: 3.5em;
@@ -71,6 +76,34 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 .pet-icon svg {
   height: 2.5em;
   width: 2.5em;
+  fill: $tertiary-color;
+};
+
+.pet-icon-returning svg {
+  margin-top: 2em;
+  height: 5em;
+  width: 5em;
+  fill: $tertiary-color;
+};
+
+.pet-icon-new svg {
+  margin-top: 2em;
+  height: 5em;
+  width: 5em;
+  fill: $tertiary-color;
+};
+
+.pet-icon-boarding svg {
+  margin-top: 1.5em;
+  height: 5em;
+  width: 5em;
+  fill: $tertiary-color;
+};
+
+.pet-icon-daycare svg {
+  margin-top: 2.1em;
+  height: 5em;
+  width: 5em;
   fill: $tertiary-color;
 };
 

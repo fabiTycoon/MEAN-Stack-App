@@ -14,12 +14,21 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.viewModelState = {
     intro: true,
     returningUser: false,
-    newuser: false,
+    loginUser: false,
+    newUser: false,
+    newUserStep: '',
     newBoarding: false,
     newDaycare: false,
     addPets: false
   } || $scope.viewModelState;
 
+  $scope.loginUserObject = {
+    email: '',
+    password: ''
+  };
+
+  $scope.serviceSelected = '';
+  $scope.registrationTitle = 'YOUR INFORMATION';
   $rootScope.registrationError = ''
   $scope.cardClicked = '';
   $scope.refresh = false;
@@ -55,22 +64,30 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.addNewUser = function () {
     $scope.defaultState(true);
     $scope.viewModelState.newUser = true;
-    $scope.cardClicked = 'newUser';
-    $rootScope.$broadcast('cardAdvance');
+    $scope.viewModelState.newUserStep = 'basicInfo';
+  };
+
+  $scope.addNewUserAddress = function () {
+    $scope.viewModelState.newUserStep = 'addressInfo';
+  };
+
+  $scope.addNewUserPassword = function () {
+    $scope.viewModelState.newUserStep = 'passwordInfo';
   };
 
   $scope.goHome = function () {
     $scope.defaultState();
   };
 
-  $scope.boardingSelect = function () {
+  $scope.serviceSelect = function (service) {
     $scope.defaultState(true);
-    $scope.viewModelState.newBoarding = true;
-  };
 
-  $scope.daycareSelect = function () {
-    $scope.defaultState(true);
-    $scope.viewModelState.newDaycare = true;
+    if (service === 'boarding') {
+      $scope.serviceSelected = 'boarding';
+    } else if (service === 'daycare') {
+      $scope.serviceSelected = 'daycare';
+    };
+    $scope.viewModelState.loginUser = true;
   };
 
   $scope.addPets = function () {
@@ -96,16 +113,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   // LEGACY
 
-
-  
-
   $rootScope.$on('registrationError', function(){
     $('#registration-form-container').addClass('animated shake')
     $scope.refreshView()
   });
 
-  //Status bool to hide potentially confusing header if redirected from login
-  $scope.loginRedir = false;
 
   //Form Values:
   $scope.newUser = {
@@ -129,7 +141,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.phoneConcat = function () {
     $scope.newUser.phone = ($scope.phArea + $scope.ph1 + $scope.ph2);
     console.log("phone concat, # is:", $scope.newUser.phone);
-  }
+  };
+
+  $scope.loginUser = function (data) {
+    User.logIn(data);
+  };  
+
 
   $scope.createUser = function (data) {
     User.create(data);

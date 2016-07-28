@@ -78,4 +78,36 @@ angular.module('myApp.addPetView', ['ngRoute'])
     del: del
   };
 
+}])
+
+.directive('boardingIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/boardingIcon.html',
+    replace: true,
+  }
+}])
+
+.directive('daycareIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/daycareIcon.html',
+    replace: true,
+  }
+}])
+
+.directive('newUserIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/bowl.html',
+    replace: true,
+  }
+}])
+
+.directive('returningUserIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/checklist.html',
+    replace: true,
+  }
 }]);
