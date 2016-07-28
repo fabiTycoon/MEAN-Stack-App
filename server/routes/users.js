@@ -65,20 +65,20 @@ router.post('/register', function(req, res) {
   })
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res){
-  console.log("logging in...", req, res)
+router.post('/login', passport.authenticate('local'), function(req, res, info){
+  //user should be a call to DB fn findByEmail 
 
   var user = req.body.username
   var password = req.body.password
-  
-  //user should be a call to DB fn findByEmail 
+
   if (!user) {
     return res.status(401).json({
-      err: 'Cannot find an account for that e-mail address'
+      err: 'Cannot find an account for that e-mail address',
+      loggedIn: false
     });
-  }
-
-  console.log('Sucesfully logged in:', user);
+  };
+  
+  return res.status(200).json({info: info, loggedIn: true});
 });
 
 router.post('/logout', function(req, res){

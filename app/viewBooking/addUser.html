@@ -3,6 +3,8 @@
   <div class="push"></div>
   <div class="container" ng-if="refresh === false;" id="matcard-action-advance">
 
+  <p>{{registrationError}}</p>
+
     <!--INTRO CARDS-->
     <div class="row center-text" ng-show="viewModelState.intro === true">
       <div class="col s6 grow">
@@ -198,6 +200,10 @@
           </div>
       </div>
   <!-- END NEW USER VIEWS -->
+
+    <div class="row" ng-if="viewModelState.addPets">
+      LAKSJD:LAKSJD:LAKSJD:LAKSJD
+    </div>
 
   <!--BACK BUTTON-->
   <br>

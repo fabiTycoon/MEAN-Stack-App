@@ -11,7 +11,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
 .controller('AddUserCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User) {
 
-  $scope.viewModelState = {
+  $scope.viewModelState = $scope.viewModelState || {
     intro: true,
     returningUser: false,
     loginUser: false,
@@ -20,13 +20,14 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     newBoarding: false,
     newDaycare: false,
     addPets: false
-  } || $scope.viewModelState;
+  };
 
   $scope.loginUserObject = {
     username: '',
     password: ''
   };
 
+  $scope.loginLoading = false;
   $scope.serviceSelected = '';
   $scope.registrationTitle = 'YOUR INFORMATION';
   $rootScope.registrationError = ''
@@ -144,8 +145,15 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.loginUser = function (data) {
-    console.log("CALLED LOGIN USER: ", data);
-    User.logIn(data);
+    $scope.loginLoading = true;
+    User.logIn(data)
+      .then(function(res){
+        User.loginStatus = res.data.loggedIn;
+        if (User.loginStatus === true) {
+          $scope.loginLoading = false;
+          $scope.addPets();
+        };
+      });
   };  
 
 
@@ -156,27 +164,27 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.signUp = function () {
     $scope.registrationError = '';
     $scope.phoneConcat();
-    return $scope.createUser($scope.newUser)
+    var returnedUser = $scope.createUser($scope.newUser);
+    console.log(returnedUser);
   }
 
   
 }])
 
 //TO DO: REFACTOR IN SEPERATE MODULE:
-.factory('User', ['$http', '$rootScope', function  ($http, $rootScope){
+.factory('User', ['$http', '$rootScope', '$q', function  ($http, $rootScope, $q){
 
   var registrationError = '';
 
-  var logIn = function(data) {
+  this.loginStatus = this.loginStatus || false;
 
-    //assign return user to $rootScope.user 
-    console.log("CALLED LOGIN: ", data);
-    return $http.post('/api/users/login', data)
-      .then(function successCallback(resp){
-        console.log("RESPONSE: ", resp);
-      }), function errorCallback(resp) {
-        console.log("ERROR: ", resp);
-      };
+  var getLoginStatus = function () {
+    var status = this.loginStatus;
+    return status;
+  };
+
+  var logIn = function(data) {
+    return $http.post('/api/users/login', data);
   };
 
   var logOut = function(data) {
@@ -186,12 +194,14 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   var create = function(data) {
     console.log("Called createUser factory, data is:", data);
     return $http.post('/api/users/register/', data)
-      .then(function successCallback(resp){
-          console.log("RESPONSE: ", resp);
-        $rootScope.registrationError = resp.data.message;
+      .then(function (res){
+          console.log("OMGRESPONSE: ", res);
+          console.log("OMGRESPONSE: ", res);
+        $rootScope.registrationError = res.data.message;
         $rootScope.$broadcast('registrationError');
-      }), function errorCallback(resp) {
-        console.log("ERROR: ", resp);
+        return res.data;
+      }), function (errorCallback) {
+        console.log("ERROR: ", res);
         // TO DO: Server side error handling
       };
   };
@@ -209,6 +219,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   return {
+    getLoginStatus: getLoginStatus,
+    loginStatus: this.loginStatus,
     registrationError: registrationError,
     logIn: logIn,
     create: create,
