@@ -83,6 +83,9 @@
 .error-text p {
   color: #E53935 !important; }
 
+#new-user-error-text {
+  margin-left: 1.5em; }
+
 .center-text {
   text-align: center; }
 

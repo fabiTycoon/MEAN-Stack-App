@@ -46,6 +46,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.newUser = {
     first: '',
     last: '',
+    phArea: '',
+    ph1: '',
+    ph2: '',
     phone: '',
     email: '',
     street: '',
@@ -82,10 +85,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     comments: ''
   };
 
-  $scope.phArea = '';
-  $scope.ph1 = '';
-  $scope.ph2 = '';
-
   $scope.loginLoading = false;
   $scope.serviceSelected = '';
   $scope.registrationTitle = 'YOUR INFORMATION';
@@ -96,6 +95,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.newUserButton = 'NEXT';
   $rootScope.registrationError = '';
   $scope.reservationError = '';
+  $scope.resultMessage = '';
   $scope.cardClicked = '';
   $scope.refresh = false;
   $scope.displayedSpecies = "DOG";
@@ -153,17 +153,53 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     console.log("CALLED advanceNewUser:", $scope.viewModelState);
 
-    if ($scope.viewModelState.newUserStep === 'basicInfo') {
-      $scope.registrationTitle = 'YOUR ADDRESS';
-      $scope.viewModelState.newUserStep = 'addressInfo';
-      $('#left-chevron').removeClass('disabled');
-    } else if ($scope.viewModelState.newUserStep === 'addressInfo') {
-      $scope.viewModelState.newUserStep = 'passwordInfo'
-      $scope.registrationTitle = 'YOUR PASSWORD';
-    } else if ($scope.viewModelState.newUserStep === 'passwordInfo') {
-      $scope.signUp();
-    };
+    $scope.phoneConcat();
 
+    if ($scope.viewModelState.newUserStep === 'basicInfo') {
+
+      if ($scope.newUser.first.length === 0 || $scope.newUser.last.length === 0) {
+        $rootScope.registrationError = 'Please enter a first and last name';
+        $rootScope.$broadcast('registrationError');
+        return;
+      } else if ($scope.newUser.phone.length !== 10) {
+        $rootScope.registrationError = 'Please enter a phone number';
+        $rootScope.$broadcast('registrationError');
+        return;
+      } else if ($scope.newUser.email.length < 6) {
+        $rootScope.registrationError = 'Please enter a valid e-mail';
+        $rootScope.$broadcast('registrationError');
+        return;
+      } else {
+        $rootScope.registrationError = '';
+        $scope.registrationTitle = 'YOUR ADDRESS';
+        $scope.viewModelState.newUserStep = 'addressInfo';
+        $('#left-chevron').removeClass('disabled');
+      };
+
+    } else if ($scope.viewModelState.newUserStep === 'addressInfo') {
+
+      if ($scope.newUser.street.length === 0 || $scope.newUser.city.length === 0) {
+        $rootScope.registrationError = 'Please enter a street address';
+        $rootScope.$broadcast('registrationError');
+      } else if ($scope.newUser.zip.length !== 5) {
+        $rootScope.registrationError = 'Please enter a valid 5-digit ZIP code';
+        $rootScope.$broadcast('registrationError');
+      } else {
+        $rootScope.registrationError = '';
+        $scope.viewModelState.newUserStep = 'passwordInfo'
+        $scope.registrationTitle = 'YOUR PASSWORD';
+      };
+
+    } else if ($scope.viewModelState.newUserStep === 'passwordInfo') {
+
+      if ($scope.newUser.password !== $scope.newUser.passwordConfirm) {
+        $rootScope.registrationError = 'Passwords do not match';
+        $rootScope.$broadcast('registrationError');
+      } else {
+        $rootScope.registrationError = '';
+        $scope.signUp();
+      };
+    };
     console.log("CALLED advanceNewUser:", $scope.viewModelState);
   };
 
@@ -259,7 +295,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.phoneConcat = function () {
-    $scope.newUser.phone = ($scope.phArea + $scope.ph1 + $scope.ph2);
+    console.log("phone concat, # is:", $scope.newUser.ph1, $scope.newUser.ph2);
+    $scope.newUser.phone = ($scope.newUser.phArea + $scope.newUser.ph1 + $scope.newUser.ph2);
     console.log("phone concat, # is:", $scope.newUser.phone);
   };
 

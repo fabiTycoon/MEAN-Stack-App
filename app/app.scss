@@ -124,6 +124,10 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   color: #E53935 !important;
 };
 
+#new-user-error-text {
+  margin-left: 1.5em;
+};
+
 .center-text {
   text-align: center;
 };

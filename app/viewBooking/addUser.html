@@ -3,8 +3,6 @@
   <div class="push"></div>
   <div class="container" ng-if="refresh === false;" id="matcard-action-advance">
 
-  <p>{{registrationError}}</p>
-
     <!--INTRO CARDS-->
     <div class="row center-text" ng-show="viewModelState.intro === true">
       <div class="col s6 grow">
@@ -116,10 +114,10 @@
         </ul>
       </div>
 
-      <div class="row" ng-if="refresh === false && viewModelState.newUser === true">
-        <div class="col s12">
+      <div class="row" ng-if="viewModelState.newUser === true">
+        <div class="col s12" id="registration-form-container">
 
-          <div class="card">
+          <div class="card" ng-if="refresh === false">
             <div class="card-content">
 
             <div id="basic-info-fields" ng-show="viewModelState.newUserStep === 'basicInfo'">
@@ -127,11 +125,11 @@
                <div class="col s12">
                 <div class="row">
                  <div class="input-field col s6">
-                   <input id="first_name" type="text" ng-model="newOwner.first"/>
+                   <input id="first_name" type="text" ng-model="newUser.first"/>
                    <label class="active" for="first_name">First Name</label>
                  </div>
                  <div class="input-field col s6">
-                   <input id="last_name" type="text" ng-model="newOwner.last"/>
+                   <input id="last_name" type="text" ng-model="newUser.last"/>
                    <label class="active" for="last_name">Last Name</label>
                  </div>
                 </div>
@@ -139,12 +137,12 @@
                 <div class="row">
                   <div class="input-field col s6">
                     <p style="white-space: nowrap;">
-                      <input id="phone" type="text" ng-model="phArea" style="width: 2em;" maxlength="3"/> - <input type="text" ng-model="ph1" style="width: 2em;" maxlength="3"/> - <input type="text" ng-model="ph2" style="width: 3em;" maxlength="4"/>
+                      <input id="phone" type="text" ng-model="newUser.phArea" style="width: 2em;" maxlength="3"/> - <input type="text" ng-model="newUser.ph1" style="width: 2em;" maxlength="3"/> - <input type="text" ng-model="newUser.ph2" style="width: 3em;" maxlength="4"/>
                        <label for="phone" class="active">Phone</label>
                      </p>
                    </div>  
                    <div class="input-field col s6">
-                     <input id="email" type="email" ng-model="newOwner.email"/>
+                     <input id="email" type="email" ng-model="newUser.email"/>
                      <label class="active" for="email">Email</label>
                    </div>
                   </div>
@@ -155,14 +153,14 @@
             <div id="address-info-fields" ng-show="viewModelState.newUserStep === 'addressInfo'">
               <div class="row">
                <div class="input-field col s4">
-                 <input id="street" type="text" ng-model="newOwner.street">
+                 <input id="street" type="text" ng-model="newUser.street">
                  <label class="active" for="street">Street Address</label>
                </div>
                <div class="input-field col s4">
-                 <input id="city" type="text" ng-model="newOwner.city">
+                 <input id="city" type="text" ng-model="newUser.city">
                  <label class="active" for="city">City</label>
                </div>
-               <!--Need to bind select value to newOwner-->
+               <!--Need to bind select value to newUser-->
                <div class="input-field col s2">
                  <select id="state-select">
                    <option value="MA">MA</option>
@@ -176,14 +174,14 @@
                  <label  for="state">State</label>
                </div>
                <div class="input-field col s2">
-                 <input id="zip" type="text" ng-model="newOwner.zip" maxlength="5">
+                 <input id="zip" type="text" ng-model="newUser.zip" maxlength="5">
                  <label class="active" for="zip">Zip Code</label>
                </div>
              </div>
              <div class="row">
                <div class="col s10">
                  <label class="active" for="hospital">Name of Your Animal Hospital</label>
-                 <input id="hospital" type="text" ng-model="newOwner.hospital">
+                 <input id="hospital" type="text" ng-model="newUser.hospital">
                </div>
              </div>
             </div>
@@ -192,11 +190,11 @@
              <div class="row">
                <div class="col s6">
                  <label class="active" for="password">Choose a password</label>
-                 <input id="password" type="password" ng-model="newOwner.password">
+                 <input id="password" type="password" ng-model="newUser.password">
                </div>
                <div class="col s6">
                  <label class="active" for="passwordConfirm">Confirm your password</label>
-                 <input id="passwordConfirm" type="password" ng-model="newOwner.passwordConfirm">
+                 <input id="passwordConfirm" type="password" ng-model="newUser.passwordConfirm">
                </div>
              </div>
             </div>
@@ -204,9 +202,9 @@
           </div>
 
           <div class="row">
-            <div class="col s6">
-              <div ng-show="$rootScope.registrationError" class="error-text">
-                <p>Error: {{$rootScope.registrationError.message}}</p>
+            <div class="col s6 offset">
+              <div ng-show="registrationError" class="error-text" >
+                <p id="new-user-error-text">{{resultMessage}} {{registrationError}}</p>
               </div>
             </div>
             <div class="right card-action">
