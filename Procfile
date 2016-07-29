@@ -1,1 +1,1 @@
-web: node node_modules/gulp/bin/gulp gulp
+web: node node_modules/gulp/bin/gulp gulp sass
