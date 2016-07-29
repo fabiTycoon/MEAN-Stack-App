@@ -27,6 +27,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     newReservation: false,
     resStep: 1,
     maxResSteps: 3,
+    maxUserSteps: 3,
     addPet: false,
     addPetStep: 1
   };
@@ -109,6 +110,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     };
     $rootScope.registrationError = '';
     $scope.resStep = 1;
+    $scope.maxUserSteps = 3;
+    $scope.maxResSteps = 3;
 
     if (arguments.length > 0) {
       return;
@@ -130,14 +133,27 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.defaultState(true);
     $scope.viewModelState.newUser = true;
     $scope.viewModelState.newUserStep = 'basicInfo';
+      console.log("addNewUser:", $scope.viewModelState);
   };
 
-  $scope.addNewUserAddress = function () {
+  $scope.showAddressInfo = function () {
+    $scope.defaultState(true);
+    $scope.viewModelState.newUser = true;
     $scope.viewModelState.newUserStep = 'addressInfo';
+      console.log("showAddressInfo:", $scope.viewModelState);
   };
 
-  $scope.addNewUserPassword = function () {
+  $scope.showPasswordInfo = function () {
+    $scope.defaultState(true);
+    $scope.viewModelState.newUser = true;
     $scope.viewModelState.newUserStep = 'passwordInfo';
+      console.log("showPasswordInfo:", $scope.viewModelState);
+  };
+
+  $scope.signUp = function () {
+    $scope.registrationError = '';
+    $scope.phoneConcat();
+    User.create($scope.newUser); //.then
   };
 
   $scope.goHome = function () {
@@ -288,17 +304,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         };
       });
   };  
-
-  $scope.createUser = function (data) {
-    User.create(data); //.th
-  };
-
-  $scope.signUp = function () {
-    $scope.registrationError = '';
-    $scope.phoneConcat();
-    var returnedUser = $scope.createUser($scope.newUser);
-    console.log(returnedUser);
-  };
 
   var init = function () {
     $('.modal-trigger').leanModal();
