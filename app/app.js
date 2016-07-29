@@ -47,7 +47,8 @@ config(['$routeProvider', function($routeProvider) {
   };
   
   var setUser = function (user) {
-    return userObject = user;
+    userObject = user;
+    $rootScope.user = user;
   };
 
   var getUser = function () {
@@ -70,6 +71,10 @@ config(['$routeProvider', function($routeProvider) {
     return $http.post('/api/bookings/new', reservation);
   };
 
+  var getReservations = function () {
+    return $http.get('/api/reservations');
+  };
+
   var deleteReservation = function (reservationIndex) {
     return
   };
@@ -79,6 +84,8 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var addPet = function (pet) {
+    userObject.pets.push(pet);
+    setUser(userObject)
     return $http.post('/api/pets', pet);
   };
 
@@ -121,7 +128,10 @@ config(['$routeProvider', function($routeProvider) {
     registrationError: registrationError,
     logIn: logIn,
     logOut: logOut,
+    addPet: addPet,
+    getPets: getPets,
     addReservation: addReservation,
+    getReservations: getReservations,
     deleteReservation: deleteReservation, 
     editReservation: editReservation,
     create: create,

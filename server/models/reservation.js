@@ -7,8 +7,7 @@ var ReservationSchema = new Schema({
   checkOutTime: {type: Date, required: true},
   checkInTime: {type: String, required: true},
   checkOutTime: {type: String, required: true},
-  owner: {type: String, required: true},
-  pets: {type: Array, required: true}
+  owner: {type: String, required: true}
 });
 
 var Reservation = mongoose.model('Reservation', ReservationSchema);

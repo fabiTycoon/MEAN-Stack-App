@@ -6,7 +6,14 @@ var Reservation = require('../models/reservation.js');
 
 //handler for calls to api/reservations
 router.get('/', function(req, res) {
-  
+  Reservation.find(function(err, reservations) {
+    if (err) {
+      console.log("ERROR:", err);
+      return;
+    } else {
+      return res.status(200).json({data: reservations});
+    };
+  })
 });
 
 router.post('/new', function(req, res) {
@@ -16,6 +23,7 @@ router.post('/new', function(req, res) {
   var userObject = req.body.user;
   var reservationObject = req.body.reservation;
     console.log("HIT BACKEND: ", reservationObject);
+    console.log("HIT BACKEND: ", userObject);
 
   var newReservation = new Reservation({
     service: reservationObject.serviceSelected,

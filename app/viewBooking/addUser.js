@@ -251,15 +251,18 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         User.loginStatus = res.data.loggedIn;
         $rootScope.user.isLoggedIn = res.data.loggedIn;
 
-        User.getPets().then(function(res){
-          $rootScope.user.pets = res;
-          console.log("SET USER Pet: ", $rootScope.user)
-        });
+        User.getPets()
+          .then(function(res){
+            $rootScope.user.pets = res.data.data;
+            console.log("SET USER Pet: ", $rootScope.user)
+          });
 
-        User.getReservations().then(function(res){
-          $rootScope.user.reservations = res;
-          console.log("SET USER RESERVATIONS: ", $rootScope.user)
-        };
+        User.getReservations()
+          .then(function(res){
+              console.log("RESERVATIONS RES:", res);
+            $rootScope.user.reservations = res.data;
+            console.log("SET USER RESERVATIONS: ", $rootScope.user);
+          });
 
 
         //TO DO - FIX THIS ONCE WE HAVE PETS/RESERVATION API WORKING:
