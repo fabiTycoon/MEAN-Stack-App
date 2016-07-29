@@ -9,7 +9,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   });
 }])
 
-.controller('AddUserCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User) {
+.controller('AddUserCtrl', ['$scope', '$rootScope', '$timeout', 'User', function($scope, $rootScope, $timeout, User) {
 
   $rootScope.user = {
     isLoggedIn: User.getLoginStatus(),
@@ -391,9 +391,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $rootScope.$on('registrationError', function(){
     $('#registration-form-container').addClass('animated shake')
     $scope.refreshView()
-      $('#registration-form-container').removeClass('animated shake')
     $timeout(function(){
-
+      $('#registration-form-container').removeClass('animated shake');
     }, 1500);
 
   });
