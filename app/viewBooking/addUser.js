@@ -91,11 +91,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.reservationTitle = 'SELECT YOUR DATES';
   $scope.addPetTitle = 'MY PET IS A...';
   $scope.reservationBackButton = 'BACK TO DATES';
-  $scope.reservationFwdButton = 'REVIEW & ADD PETS';
+  $scope.reservationFwdButton = 'SELECT PETS';
   $rootScope.registrationError = '';
   $scope.reservationError = '';
   $scope.cardClicked = '';
   $scope.refresh = false;
+  $scope.displayedSpecies = "DOG";
 
   $scope.refreshView = function () {
     $scope.refresh = true;
@@ -172,7 +173,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     };
 
     if ($scope.viewModelState.resStep === 2) {
-      $scope.reservationTitle = "ADD PETS TO YOUR RESERVATION";
+      $scope.reservationTitle = "WHO'S STAYING?";
+      $scope.reservationFwdButton = "REVIEW & BOOK";
     };
 
   };
@@ -205,8 +207,10 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     if (species === 'dog') {
       $scope.newPet.type = 'dog';
+      $scope.displayedSpecies = 'DOG';
     } else if (species === 'cat') {
       $scope.newPet.type = 'cat';
+      $scope.displayedSpecies = 'CAT';
     };
 
     $scope.addPetTitle = 'MY PET\'S INFO';
@@ -214,6 +218,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.viewModelState.addPet = true;
     $scope.viewModelState.addPetStep = 2;
       console.log("VM STATE: ", $scope.viewModelState);
+  };
+
+  $scope.addPet = function (pet) {
+    //pet.owner = ownerID;
+
   };
 
   $scope.phoneConcat = function () {
@@ -241,16 +250,28 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       .then(function(res){
         User.loginStatus = res.data.loggedIn;
         $rootScope.user.isLoggedIn = res.data.loggedIn;
-        //TO DO: RETRIEVE & ASSIGN PETS & RESERVATIONS DATA
+
+        User.getPets().then(function(res){
+          $rootScope.user.pets = res;
+          console.log("SET USER Pet: ", $rootScope.user)
+        });
+
+        User.getReservations().then(function(res){
+          $rootScope.user.reservations = res;
+          console.log("SET USER RESERVATIONS: ", $rootScope.user)
+        };
+
 
         //TO DO - FIX THIS ONCE WE HAVE PETS/RESERVATION API WORKING:
         var newUser = {
           isLoggedIn: res.data.loggedIn,
-          reservations: [],
-          pets: []
+          reservations: $rootScope.user.reservations,
+          pets: $rootScope.user.pets
         };
 
         User.setUser(newUser);
+        $rootScope.user = newUser;
+
         if (User.loginStatus === true) {
           $scope.loginLoading = false;
 
@@ -266,7 +287,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };  
 
   $scope.createUser = function (data) {
-    User.create(data); //.then
+    User.create(data); //.th
   };
 
   $scope.signUp = function () {

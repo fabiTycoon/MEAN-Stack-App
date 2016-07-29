@@ -78,6 +78,14 @@ config(['$routeProvider', function($routeProvider) {
     return
   };
 
+  var addPet = function (pet) {
+    return $http.post('/api/pets', pet);
+  };
+
+  var getPets = function () {
+    return $http.get('/api/pets');
+  };
+
 
   var create = function(data) {
     console.log("Called createUser factory, data is:", data);
@@ -94,12 +102,12 @@ config(['$routeProvider', function($routeProvider) {
       };
   };
 
-  var read = function(userId) {
-    return $http.get('/api/users/' + userId);
-  }
+  var getUserId = function() {
+    return $http.get('/api/users/userId');
+  };
 
   var edit = function(userId, data) {
-    return $http.put('/api/users/' + userId, data);
+    return $http.put('/api/users/', data);
   };
 
   var del = function(userId) {
@@ -117,7 +125,7 @@ config(['$routeProvider', function($routeProvider) {
     deleteReservation: deleteReservation, 
     editReservation: editReservation,
     create: create,
-    read: read,
+    getUserId: getUserId,
     edit: edit,
     del: del
   };

@@ -1,8 +1,8 @@
 var express = require('express');
-var passport = require('passport');
-var User = require('../models/users.js');
 var router = express.Router();
+var passport = require('passport');
 var mongoose = require('mongoose');
+var User = require('../models/users.js');
 var passportLocalMongoose = require('passport-local-mongoose');
 
 //handlers for calls to api/users
@@ -18,8 +18,12 @@ router.delete('/', function(req, res) {
   
 });*/
 
-router.get('/users/', function(req, res) {
-  var userId = req.body.user_id //not sure about this
+router.get('/userId/', function(req, res) {
+    console.log("USER ID:", req)
+    console.log("REQBODY:", req.body)
+    console.log("REQUSEr:", req.user)
+  var userId = req.user;
+  return res.status(200).json({data: userId});
 });
 
 router.post('/register', function(req, res) {

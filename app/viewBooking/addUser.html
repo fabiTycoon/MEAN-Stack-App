@@ -77,7 +77,6 @@
       </div>
 
       <!-- RETURNING USER CARDS -->
-
       <div class="row center-text" ng-show="viewModelState.returningUser === true">
         <div class="col s6 grow" id="matcard-action-returning">
           <div class="card blue-grey lighten-1">
@@ -208,11 +207,10 @@
 
 
   <!--ADD BOARDING RESERVATION VIEW-->
-
-  <ul class="pagination" ng-if="viewModelState.newReservation === true">
-    <li ng-class="{active: viewModelState.resStep === 1, disabled: viewModelState.resStep !== 1}"><a>1</a></li>
-    <li ng-class="{active: viewModelState.resStep === 2, disabled: viewModelState.resStep !== 2}"><a >2</a></li>
-    <li ng-class="{active: viewModelState.resStep === 3, disabled: viewModelState.resStep !== 3}"><a>3</a></li>
+  <ul class="pagination" ng-if="viewModelState.newReservation === true" style="margin-left: 4em;">
+    <li ng-class="{'active': viewModelState.resStep === 1, 'disabled': viewModelState.resStep !== 1}"><a>1</a></li>
+    <li ng-class="{'active': viewModelState.resStep === 2, 'disabled': viewModelState.resStep !== 2}"><a >2</a></li>
+    <li ng-class="{'active': viewModelState.resStep === 3, 'disabled': viewModelState.resStep !== 3}"><a>3</a></li>
   </ul>
   <br>
 
@@ -258,7 +256,9 @@
                           <label for="ownFoodNo">No</label>
                         </p>
                       </div>
-                      <div class="col s6">
+                    </div>
+                    <div class="row">
+                      <div class="col s12">
                         <label for="textarea1">Additional Notes &amp; Comments</label>
                         <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
                       </div>
@@ -268,7 +268,6 @@
         </div>
 
         <!--ADD PETS VIEW -->
-          
         <div class="row" ng-if="viewModelState.resStep === 2">
           <div class="col s12" ng-if="user.pets.length > 0;">
             <h5 class="thin">Your Pets:</h5>
@@ -279,12 +278,11 @@
 
           <div class="row">
             <div class="col s10 offset-s1">
-              <a class="waves-effect waves-light btn" ng-click="showPetForm();"><i class="small material-icons">library_add</i>&nbsp;&nbsp;ADD A PET</a>
-              <br>
               <div ng-if="user.pets.length ===0" class="alt-contact-text">
-                <table><th></th></table>
                 <span>You currently have no pets saved.  Click <a ng-click="showPetForm();">'Add a Pet'</a> to add a pet to your reservation.</span>
               </div>
+              <br>
+              <a class="waves-effect waves-light btn" ng-click="showPetForm();"><i class="small material-icons">library_add</i>&nbsp;&nbsp;ADD A PET</a>
             </div>
           </div>
 
@@ -304,7 +302,7 @@
         </div>
 
         <div class="card-action align right" ng-if="viewModelState.resStep !== viewModelState.maxUserSteps">
-          <a ng-click="advanceReservationStep();" class="matcard-action-text" ng-class="{disabled: user.pets.length === 0;}" >{{reservationFwdButton}}</a><i class="material-icons small">play_arrow</i>
+          <a ng-click="advanceReservationStep();" class="matcard-action-text" ng-class="{'disabled': user.pets.length === 0}" >{{reservationFwdButton}}</a><i class="material-icons small">play_arrow</i>
         </div>
 
         </div>
@@ -349,11 +347,11 @@
       <!-- END SELECT SPECIES CARDS -->
 
       <!-- PET INFO CARD -->
-      <div ng-show="viewModelState.addPet === true && viewModelState.addPetStep === 2;">
+      <div ng-show="viewModelState.addPet === true && viewModelState.addPetStep >= 2;">
         
         <div class="row">
           <div class="column s10 offset-s1">
-            <div class="card">
+            <div class="card" id="pet-content">
 
               <div class="row">
                 <div class="col s4">
@@ -368,7 +366,8 @@
                 </div>
               </div>
 
-              <div class="card-content">
+
+              <div class="card-content" ng-if="viewModelState.addPetStep === 2">
                 <div class="row">
                   <div class="col s4">
                     <label for="pet-name">Name</label>
@@ -384,14 +383,58 @@
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col s4">
-                    <input type="number" maxlength="3" id="pet-weight" ng-model="newPet.weight"/>
-                    <label for="pet-weight">Weight (lbs.)</label>
+                <div class="col s8">
+                  <div class="row">
+                    <div class="col s4">
+                      <label for="pet-age">Age</label>
+                      <input type="number" maxlength="2" id="pet-age" ng-model="newPet.age"/>
+                    </div>
+                    <div class="col s4">
+                      <label for="pet-weight">Weight (lbs.)</label>
+                      <input type="number" maxlength="3" id="pet-weight" ng-model="newPet.weight"/>
+                    </div>
+                    <div class="col s4"></div>
                   </div>
-                  <div class="col s8 align-right"></div>
+
+                  <div class="row">
+                    <div class="col s4">
+                      <label for="pet-brand">Food Brand or Type</label>
+                      <input type="text" id="pet-brand" ng-model="newPet.foodBrand"/>
+                    </div>
+                    <div class="col s8">
+                      <label for="pet-servings">Food Servings (Amt./day + Times/Day)</label>
+                      <input type="text" id="pet-servings" ng-model="newPet.foodServings"/>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col s12">
+                      <label for="pet-allergy">Food Allergies</label>
+                      <input type="text" id="pet-allergy" ng-model="newPet.foodAllergy"/>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col s12">
+                      <label for="textarea1">Additional Notes &amp; Comments</label>
+                      <textarea id="textarea2" class="materialize-textarea" ng-model="newPet.comments"></textarea>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col s4">
+                  <!--PET SIZE ICON GOES HERE-->
                 </div>
               </div>
+              <!-- END PET INFO CARD CONTENT-->
+
+              <!-- PET INFO CARD BUTTONS -->
+              <div class="card-action thin">
+                <a ng-click="addPet(newPet)" class="matcard-action-text right">&nbsp;&nbsp;ADD {{displayedSpecies}}</a>
+              </div>
+
+
             </div>
           </div>
         </div>

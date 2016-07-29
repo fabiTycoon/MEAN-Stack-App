@@ -163,5 +163,8 @@ video {
   margin-top: 1.4em;
   margin-left: 0.5em; }
 
+#pet-content .card-content {
+  height: 50em; }
+
 #pet-icon {
   fill: #00bfa5; }
