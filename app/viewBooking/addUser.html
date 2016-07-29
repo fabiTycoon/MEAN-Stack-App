@@ -314,11 +314,11 @@
         </div>
 
         <div class="card-action align left" ng-if="viewModelState.resStep !== 1">
-          <i class="material-icons small">play_arrow</i><a ng-click="backReservationStep();" class="matcard-action-text">{{reservationBackButton}}</a>
+          <a ng-click="backReservationStep();" class="matcard-action-text">{{reservationBackButton}}</a>
         </div>
 
         <div class="card-action align right" ng-if="viewModelState.resStep !== viewModelState.maxUserSteps">
-          <a ng-click="advanceReservationStep();" class="matcard-action-text" ng-class="{'disabled': user.pets.length === 0}" >{{reservationFwdButton}}</a><i class="material-icons small">play_arrow</i>
+          <a ng-click="advanceReservationStep();" class="matcard-action-text" ng-class="{'disabled': user.pets.length === 0}" >{{reservationFwdButton}}</a>
         </div>
 
         </div>
