@@ -391,6 +391,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $rootScope.$on('registrationError', function(){
     $('#registration-form-container').addClass('animated shake')
     $scope.refreshView()
+      $('#registration-form-container').removeClass('animated shake')
+    $timeout(function(){
+
+    }, 1500);
+
   });
 
   
