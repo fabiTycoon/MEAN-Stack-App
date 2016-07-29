@@ -93,6 +93,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.addPetTitle = 'MY PET IS A...';
   $scope.reservationBackButton = 'BACK TO DATES';
   $scope.reservationFwdButton = 'SELECT PETS';
+  $scope.newUserButton = 'NEXT';
   $rootScope.registrationError = '';
   $scope.reservationError = '';
   $scope.cardClicked = '';
@@ -133,21 +134,33 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.defaultState(true);
     $scope.viewModelState.newUser = true;
     $scope.viewModelState.newUserStep = 'basicInfo';
-      console.log("addNewUser:", $scope.viewModelState);
   };
 
-  $scope.showAddressInfo = function () {
-    $scope.defaultState(true);
-    $scope.viewModelState.newUser = true;
-    $scope.viewModelState.newUserStep = 'addressInfo';
-      console.log("showAddressInfo:", $scope.viewModelState);
+  $scope.backNewUser = function () {
+    if ($scope.viewModelState.newUserStep === 'basicInfo') {
+      return;
+    } else if ($scope.viewModelState.newUserStep === 'addressInfo') {
+      $('#left-chevron').addClass('disabled');
+      $scope.viewModelState.newUserStep = 'basicInfo';
+    } else if ($scope.viewModelState.newUserStep === 'passwordInfo'){
+      $scope.viewModelState.newUserStep = 'addressInfo';
+    };
   };
 
-  $scope.showPasswordInfo = function () {
-    $scope.defaultState(true);
-    $scope.viewModelState.newUser = true;
-    $scope.viewModelState.newUserStep = 'passwordInfo';
-      console.log("showPasswordInfo:", $scope.viewModelState);
+  $scope.advanceNewUser = function () {
+
+    console.log("CALLED advanceNewUser:", $scope.viewModelState);
+
+    if ($scope.viewModelState.newUserStep === 'basicInfo') {
+      $scope.viewModelState.newUserStep = 'addressInfo';
+      $('#left-chevron').removeClass('disabled');
+    } else if ($scope.viewModelState.newUserStep === 'addressInfo') {
+      $scope.viewModelState.newUserStep = 'passwordInfo'
+    } else if ($scope.viewModelState.newUserStep === 'passwordInfo') {
+      $scope.signUp();
+    };
+
+    console.log("CALLED advanceNewUser:", $scope.viewModelState);
   };
 
   $scope.signUp = function () {
