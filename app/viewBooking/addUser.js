@@ -140,9 +140,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     if ($scope.viewModelState.newUserStep === 'basicInfo') {
       return;
     } else if ($scope.viewModelState.newUserStep === 'addressInfo') {
+      $scope.registrationTitle = 'YOUR INFORMATION';
       $('#left-chevron').addClass('disabled');
       $scope.viewModelState.newUserStep = 'basicInfo';
     } else if ($scope.viewModelState.newUserStep === 'passwordInfo'){
+      $scope.registrationTitle = 'YOUR ADDRESS';
       $scope.viewModelState.newUserStep = 'addressInfo';
     };
   };
@@ -152,10 +154,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     console.log("CALLED advanceNewUser:", $scope.viewModelState);
 
     if ($scope.viewModelState.newUserStep === 'basicInfo') {
+      $scope.registrationTitle = 'YOUR ADDRESS';
       $scope.viewModelState.newUserStep = 'addressInfo';
       $('#left-chevron').removeClass('disabled');
     } else if ($scope.viewModelState.newUserStep === 'addressInfo') {
       $scope.viewModelState.newUserStep = 'passwordInfo'
+      $scope.registrationTitle = 'YOUR PASSWORD';
     } else if ($scope.viewModelState.newUserStep === 'passwordInfo') {
       $scope.signUp();
     };

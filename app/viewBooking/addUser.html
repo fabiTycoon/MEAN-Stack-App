@@ -122,12 +122,9 @@
           <div class="card">
             <div class="card-content">
 
-            <div id="basic-info-fields" ng-show="viewModelState[newUserStep] === basicInfo">
+            <div id="basic-info-fields" ng-show="viewModelState.newUserStep === 'basicInfo'">
               <div class="row">
                <div class="col s12">
-                <div ng-show="$rootScope.registrationError" class="error-text">
-                  <p>Error: {{$rootScope.registrationError.message}}</p>
-                </div>
                 <div class="row">
                  <div class="input-field col s6">
                    <input id="first_name" type="text" ng-model="newOwner.first"/>
@@ -155,7 +152,7 @@
               </div>
             </div>
 
-            <div id="address-info-fields" ng-show="viewModelState[newUserStep] === 'addressInfo'">
+            <div id="address-info-fields" ng-show="viewModelState.newUserStep === 'addressInfo'">
               <div class="row">
                <div class="input-field col s4">
                  <input id="street" type="text" ng-model="newOwner.street">
@@ -191,7 +188,7 @@
              </div>
             </div>
 
-            <div id="password-info-fields" ng-show="viewModelState[newUserStep].passwordInfo === true">
+            <div id="password-info-fields" ng-show="viewModelState.newUserStep === 'passwordInfo'">
              <div class="row">
                <div class="col s6">
                  <label class="active" for="password">Choose a password</label>
@@ -206,8 +203,15 @@
 
           </div>
 
-          <div class="right card-action">
-            <a ng-click="advanceNewUser();" class="thin matcard-action-text">{{newUserButton}}</a>
+          <div class="row">
+            <div class="col s6">
+              <div ng-show="$rootScope.registrationError" class="error-text">
+                <p>Error: {{$rootScope.registrationError.message}}</p>
+              </div>
+            </div>
+            <div class="right card-action">
+              <a ng-click="advanceNewUser();" class="thin matcard-action-text">{{newUserButton}}</a>
+            </div>
           </div>
         </div>
         
@@ -470,7 +474,7 @@
 
   <!--BACK BUTTON-->
   <br>
-  <div ng-hide="viewModelState.intro === true && viewModelState.loginUser === false;">
+  <div ng-hide="(viewModelState.intro === true && viewModelState.loginUser === false) || viewModelState.newUser && viewModelState.newUserStep !== 'basicInfo' ">
     <a ng-click="goHome();" class="thin" style="font-size: 1.1em;">GO BACK</a>
   </div>
 
