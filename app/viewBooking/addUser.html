@@ -142,7 +142,7 @@
                      </p>
                    </div>  
                    <div class="input-field col s6">
-                     <input id="email" type="email" ng-model="newUser.email"/>
+                     <input id="email" type="text" ng-model="newUser.email"/>
                      <label class="active" for="email">Email</label>
                    </div>
                   </div>
@@ -207,7 +207,7 @@
                 <p id="new-user-error-text">{{resultMessage}} {{registrationError}}</p>
               </div>
             </div>
-            <div class="right card-action">
+            <div id="registration-action-card" class="right card-action">
               <a ng-click="advanceNewUser();" class="thin matcard-action-text">{{newUserButton}}</a>
             </div>
           </div>
