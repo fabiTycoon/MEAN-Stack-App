@@ -7,7 +7,7 @@ var mongodb;
 //Once we deploy this will become relevant
 
 var config = {
-  mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/holliston_test';
+  mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/holliston_test'
 };
 
 console.log("SET DB URL:", config.mongoUrl);
