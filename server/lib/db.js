@@ -19,4 +19,3 @@ mongoose.connect(config.mongoUrl, function(err){
 });
 
 module.exports = mongoose;
-
