@@ -206,7 +206,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.signUp = function () {
     $scope.registrationError = '';
     $scope.phoneConcat();
-    User.create($scope.newUser); //.then
+    User.create($scope.newUser);
   };
 
   $scope.goHome = function () {

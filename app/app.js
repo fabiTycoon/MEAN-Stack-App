@@ -99,9 +99,11 @@ config(['$routeProvider', function($routeProvider) {
     return $http.post('/api/users/register/', data)
       .then(function (res){
           console.log("OMGRESPONSE: ", res);
-          console.log("OMGRESPONSE: ", res);
-        $rootScope.registrationError = res.data.message;
+        $rootScope.registrationError = res.data.message.message;
         $rootScope.$broadcast('registrationError');
+
+          //TO DO: IF SUCCESFUL, REDIRECT USER
+
         return res.data;
       }), function (errorCallback) {
         console.log("ERROR: ", res);
