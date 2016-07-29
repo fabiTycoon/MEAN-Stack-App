@@ -109,18 +109,19 @@
       <div class="row" ng-if="viewModelState.newUser === true">
         <h3 class="thin">{{registrationTitle}}</h3>
         <ul class="pagination">
-           <li ng-class="{active: newUserStep === 1}"><a>1</a></li>
-           <li class="waves-effect"><a>2</a></li>
-           <li class="waves-effect"><a>3</a></li>
-           <li class="waves-effect"><a>4</a></li>
-           <li class="waves-effect"><a><i class="material-icons">chevron_right</i></a></li>
+            <li ng-show-"viewModelState.newUserStep >= 1"><a><i class="material-icons">chevron_right</i></a></li>
+           <li ng-class="{'active': viewModelState.newUserStep === 1, 'waves-effect': viewModelState.newUserStep !== 1}"><a>1</a></li>
+           <li ng-class="{'active': viewModelState.newUserStep === 1, 'waves-effect': viewModelState.newUserStep !== 1}"><a>2</a></li>
+           <li ng-class="{'active': viewModelState.newUserStep === 1, 'waves-effect': viewModelState.newUserStep !== 1}"><a>3</a></li>
+           <li ng-class="{'active': viewModelState.newUserStep === 1, 'waves-effect': viewModelState.newUserStep !== 1}"><a>4</a></li>
+           <li ng-class="{'disabled': viewModelState.newUserStep === 4, 'waves-effect': viewModelState.newUserStep !== 1}"><a><i class="material-icons">chevron_right</i></a></li>
          </ul>
            <div class="row" id="registration-form-container" ng-if="refresh === false">
             <div class="col s12">
               <div class="card">
                 <div class="card-content">
-                  <div ng-if="$root.registrationError" class="error-text">
-                    <p>Error: {{$root.registrationError.message}}</p>
+                  <div ng-if="$rootScope.registrationError" class="error-text">
+                    <p>Error: {{$rootScope.registrationError.message}}</p>
                   </div>
                  <div class="row">
                    <form class="col s12">
@@ -322,7 +323,7 @@
               <div class="card-content white-text matcard-intro">
                 <span class="card-title">DOG</span>
                 <p class="thin matcard-desc-text">Man's Best Friend</p>
-                <add-dog-icon></add-dog-icon>
+                <i class="pet-icon-new"><add-dog-icon></add-dog-icon></i>
               </div>
               <div class="card-action thin white-text">
                 <a ng-click="setSpecies('dog');" class="matcard-action-text" id="actionButtonReturningUser">&nbsp;&nbsp;ADD DOG</a>
@@ -334,7 +335,7 @@
                 <div class="card-content white-text matcard-intro">
                   <span class="card-title">CAT</span>
                   <p class="thin matcard-desc-text">Finicky But Friendly</p>
-                  <add-cat-icon></add-cat-icon>
+                  <i class="pet-icon-new"><add-cat-icon></add-cat-icon></i>
                 </div>
                 <div class="card-action thin white-text">
                   <a ng-click="setSpecies('cat')" class="matcard-action-text" id="actionButtonNewUser">&nbsp;&nbsp;ADD CAT</a>
@@ -360,9 +361,9 @@
                     <h6 ng-if="viewModelState.addPetStep > 2">(cont.)</h6>
                   </div>
                 </div>
-                <div class="col s5 offset-2" style="fill: rgba(0,0,0,0.87) !important;">
-                  <add-dog-icon ng-if="newPet.type === 'dog'"></add-dog-icon>
-                  <add-cat-icon ng-if="newPet.type === 'cat'"></add-cat-icon>
+                <div class="col s5 offset-2">
+                  <div class="pet-icon-new-dark" ng-if="newPet.type === 'dog'"><add-dog-icon></add-dog-icon></div>
+                  <div class="pet-icon-new-dark" ng-if="newPet.type === 'cat'"><add-cat-icon></add-cat-icon></div>
                 </div>
               </div>
 

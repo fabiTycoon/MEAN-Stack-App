@@ -57,6 +57,12 @@
   width: 5em;
   fill: #f5f5f5; }
 
+.pet-icon-new-dark #pet-icon svg {
+  margin-top: 2em;
+  height: 5em !important;
+  width: 5em !important;
+  fill: black; }
+
 .pet-icon-boarding svg {
   margin-top: 1.5em;
   height: 5em;
@@ -165,6 +171,3 @@ video {
 
 #pet-content .card-content {
   height: 50em; }
-
-#pet-icon {
-  fill: #00bfa5; }

@@ -107,7 +107,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     for (var state in $scope.viewModelState) {
       $scope.viewModelState[state] = false;
     };
-
+    $rootScope.registrationError = '';
     $scope.resStep = 1;
 
     if (arguments.length > 0) {
