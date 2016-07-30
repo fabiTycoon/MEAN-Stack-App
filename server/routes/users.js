@@ -39,11 +39,12 @@ router.post('/register', function(req, res) {
   };*/
 
   //Passport local mongoose takes care of hashing etc;
-  User.register(new User(username), req.body.password, function (err){
+  User.register(new User({username: username}), req.body.password, function (err){
 
     if (err) {
-      console.log('Registration error!', err);
-    } 
+      console.log('Registration error mongoose:', err);
+      console.log('Registration error mongoose:', JSON.stringify(err));
+    }; 
       
     passport.authenticate('local')(req, res, function(){
       console.log('user registered!');
@@ -56,18 +57,19 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res, info){
-  //user should be a call to DB fn findByEmail 
 
   var user = req.body.username
   var password = req.body.password
 
-  if (!user) {
+ /* if (!user) {
     return res.status(401).json({
       'err': 'Cannot find an account for that e-mail address',
       'loggedIn': false
     });
-  };
-  
+  };*/
+  console.log("LOGIN: ", res);
+    console.log("LOGIN: ", info);
+
   return res.status(200).json({'info': info, 'loggedIn': true});
 });
 

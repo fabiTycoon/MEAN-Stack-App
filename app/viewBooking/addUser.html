@@ -295,7 +295,9 @@
 
               <ul class="collection with-header" ng-if="user.pets.length > 0;">
                 <li class="collection-header"><h5 class="thin">My Pets</h5></li>
-                <li class="collection-item" ng-repeat="pet in user.pets"><div>{{pet.name}} <div class="pet-icon-new-dark" ng-if="pet.type === 'dog'"><add-dog-icon></add-dog-icon></div><div class="pet-icon-add-dark" ng-if="pet.type === 'cat'"><add-cat-icon></add-cat-icon></div>
+                <li class="collection-item" ng-repeat="pet in user.pets">
+
+                <div>{{pet.name}} <div class="pet-icon-add-dark" ng-if="pet.type === 'dog'"><add-dog-reservation-icon></add-dog-reservation-icon></div><div class="pet-icon-add-dark" ng-if="pet.type === 'cat'"><add-cat-reservation-icon></add-cat-reservation-icon></div>
 
                 <a href="#!" class="secondary-content"><edit-item-icon></edit-item-icon><add-item-icon></add-item-icon></a></div></li>
               </ul>
@@ -439,6 +441,13 @@
                     <div class="col s12">
                       <label for="textarea1">Additional Notes &amp; Comments</label>
                       <textarea id="textarea2" class="materialize-textarea" ng-model="newPet.comments"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col s12">
+                      <input type="checkbox" class="filled-in" id="neuter-box" checked="checked" ng-model="newPet.neutered"/>
+                      <label for="neuter-box">This critter is neutered &amp; vaccinated</label>
                     </div>
                   </div>
 

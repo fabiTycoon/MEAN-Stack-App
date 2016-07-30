@@ -114,6 +114,22 @@ angular.module('myApp.viewMain', ['ngRoute'])
   }
 }])
 
+.directive('addDogReservationIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/addDogReservationIcon.html',
+    replace: true,
+  }
+}])
+
+.directive('addCatReservationIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/addCatReservationIcon.html',
+    replace: true,
+  }
+}])
+
 .directive('editItemIcon', [function(){
   return  {
     restrict: 'E',

@@ -204,3 +204,6 @@ video {
 
 .chevron-active {
   cursor: pointer; }
+
+#action-button-add-pet {
+  height: 5em; }
