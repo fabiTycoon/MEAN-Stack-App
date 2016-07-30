@@ -106,11 +106,11 @@
       <div ng-if="viewModelState.newUser === true">
         <h3 class="thin">{{registrationTitle}}</h3>
         <ul class="pagination">
-           <li><a id="left-chevron" class="disabled" ng-click="backNewUser()"><i class="material-icons">chevron_left</i></a></li>
-           <li ng-class="{'active': viewModelState[newUserStep] === 'basicInfo', 'waves-effect': viewModelState[newUserStep] !== 'basicInfo'}"><a>1</a></li>
-           <li ng-class="{'active': viewModelState[newUserStep] === 'addressInfo', 'waves-effect': viewModelState[newUserStep] !== 'addressInfo'}"><a>2</a></li>
-           <li ng-class="{'active': viewModelState[newUserStep] === 'passwordInfo', 'waves-effect': viewModelState[newUserStep] !== 'passwordInfo'}"><a>3</a></li>
-           <li ng-class="{'disabled': viewModelState[newUserStep] === 'passwordInfo'}"><a ng-click="advanceNewUser();"><i class="material-icons">chevron_right</i></a></li>
+           <li id="left-chevron" ng-hide="viewModelState.newUserStep === 'basicInfo'"><a ng-click="backNewUser()"><i class="material-icons" >chevron_left</i></a></li>
+           <li ng-class="{'active': viewModelState.newUserStep === 'basicInfo', 'waves-effect clickable-element': viewModelState.newUserStep !== 'basicInfo'}"><a>1</a></li>
+           <li ng-class="{'active': viewModelState.newUserStep === 'addressInfo', 'waves-effect clickable-element': viewModelState.newUserStep !== 'addressInfo'}"><a>2</a></li>
+           <li ng-class="{'active': viewModelState.newUserStep === 'passwordInfo', 'waves-effect clickable-element': viewModelState.newUserStep !== 'passwordInfo'}"><a>3</a></li>
+           <li id="right-chevron" ng-hide="viewModelState.newUserStep === 'passwordInfo'"><a ng-click="advanceNewUser();"><i class="material-icons">chevron_right</i></a></li>
         </ul>
       </div>
 

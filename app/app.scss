@@ -43,6 +43,10 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 
 // APP WIDE STYLES:
 
+.clickable-element {
+  cursor: pointer;
+};
+
 .matcard-intro {
   height: 15em;
 };
@@ -252,3 +256,22 @@ video {
 #registration-action-card {
   margin-right: 1.5em;
 };
+
+#left-chevron .chevron-disabled i {
+  background-color: #9e9e9e !important;
+  color: #9e9e9e !important;
+  fill: #9e9e9e !important;
+  cursor: default;
+};
+
+ #right-chevron .chevron-disabled i {
+  color: #9e9e9e !important;
+  fill: #9e9e9e !important;
+  cursor: default;
+};
+
+.chevron-active {
+  cursor: pointer;
+};
+
+

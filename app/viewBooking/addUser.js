@@ -157,7 +157,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     if ($scope.viewModelState.newUserStep === 'basicInfo') {
 
-      if ($scope.newUser.first.length === 0 || $scope.newUser.last.length === 0) {
+      /*if ($scope.newUser.first.length === 0 || $scope.newUser.last.length === 0) {
         $rootScope.registrationError = 'Please enter a first and last name';
         $rootScope.$broadcast('registrationError');
         return;
@@ -169,36 +169,36 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         $rootScope.registrationError = 'Please enter a valid e-mail';
         $rootScope.$broadcast('registrationError');
         return;
-      } else {
+      } else {*/
         $rootScope.registrationError = '';
         $scope.registrationTitle = 'YOUR ADDRESS';
         $scope.viewModelState.newUserStep = 'addressInfo';
         $('#left-chevron').removeClass('disabled');
-      };
+      //};
 
     } else if ($scope.viewModelState.newUserStep === 'addressInfo') {
 
-      if ($scope.newUser.street.length === 0 || $scope.newUser.city.length === 0) {
+      /*if ($scope.newUser.street.length === 0 || $scope.newUser.city.length === 0) {
         $rootScope.registrationError = 'Please enter a street address';
         $rootScope.$broadcast('registrationError');
       } else if ($scope.newUser.zip.length !== 5) {
         $rootScope.registrationError = 'Please enter a valid 5-digit ZIP code';
         $rootScope.$broadcast('registrationError');
-      } else {
+      } else {*/
         $rootScope.registrationError = '';
         $scope.viewModelState.newUserStep = 'passwordInfo'
         $scope.registrationTitle = 'YOUR PASSWORD';
-      };
+      //};
 
     } else if ($scope.viewModelState.newUserStep === 'passwordInfo') {
 
-      if ($scope.newUser.password !== $scope.newUser.passwordConfirm) {
+      /*if ($scope.newUser.password !== $scope.newUser.passwordConfirm) {
         $rootScope.registrationError = 'Passwords do not match';
         $rootScope.$broadcast('registrationError');
-      } else {
+      } else {*/
         $rootScope.registrationError = '';
         $scope.signUp();
-      };
+      //};
     };
     console.log("CALLED advanceNewUser:", $scope.viewModelState);
   };
@@ -245,7 +245,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       $scope.reservationTitle = "WHO'S STAYING?";
       $scope.reservationFwdButton = "REVIEW & BOOK";
     };
-
   };
 
   $scope.backReservationStep = function () {
