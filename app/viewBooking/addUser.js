@@ -213,6 +213,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.defaultState();
   };
 
+
+
   $scope.serviceSelect = function (service) {
     $scope.defaultState(true);
 
@@ -225,6 +227,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     if ($rootScope.user.isLoggedIn === true) {
       $scope.viewModelState.newReservation = true;
+      $scope.viewModelState.resStep = 1;
     } else {
       $scope.viewModelState.loginUser = true;
     };
@@ -244,6 +247,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     if ($scope.viewModelState.resStep === 2) {
       $scope.reservationTitle = "WHO'S STAYING?";
       $scope.reservationFwdButton = "REVIEW & BOOK";
+          $rootScope.user.pets = [{name: 'Olivia', type: 'cat'}];
     };
   };
 
@@ -258,9 +262,10 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   };
 
+
   $scope.showPetForm = function () {
     $scope.defaultState(true);
-      $scope.viewModelState.resStep = 2;
+      $scope.viewModelState.resStep = 2; //?
       $scope.viewModelState.addPet = true;
       $scope.viewModelState.addPetStep = 1;
   };
@@ -289,7 +294,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.addPet = function (pet) {
-    //pet.owner = ownerID;
+    //pet.owner = {first: '', last: '', email: ''};
 
   };
 

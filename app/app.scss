@@ -118,6 +118,19 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   fill: $tertiary-color;
 };
 
+.pet-icon-collection svg {
+  height: 1em;
+  width: 1em;
+  fill: black;
+};
+
+.pet-icon-add-dark svg {
+  fill: black;
+  height: 2em;
+  margin-left:20em;
+};
+
+
 .form-icon svg {
   height: 2.5em;
   width: 2.5em;

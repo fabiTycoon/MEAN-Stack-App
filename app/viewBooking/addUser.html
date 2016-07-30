@@ -285,25 +285,30 @@
 
         <!--ADD PETS VIEW -->
         <div class="row" ng-if="viewModelState.resStep === 2">
-          <div class="col s12" ng-if="user.pets.length > 0;">
-            <h5 class="thin">Your Pets:</h5>
-            <li>
-              <ul ng-repeat="pet in user.pets;">{{pet.name}}</ul>
-            </li>
-          </div>
-
+  
           <div class="row">
             <div class="col s10 offset-s1">
               <div ng-if="user.pets.length ===0" class="alt-contact-text">
                 <span>You currently have no pets saved.  Click <a ng-click="showPetForm();">'Add a Pet'</a> to add a pet to your reservation.</span>
               </div>
               <br>
+
+              <ul class="collection with-header" ng-if="user.pets.length > 0;">
+                <li class="collection-header"><h5 class="thin">My Pets</h5></li>
+                <li class="collection-item" ng-repeat="pet in user.pets"><div>{{pet.name}} <div class="pet-icon-new-dark" ng-if="pet.type === 'dog'"><add-dog-icon></add-dog-icon></div><div class="pet-icon-add-dark" ng-if="pet.type === 'cat'"><add-cat-icon></add-cat-icon></div>
+
+                <a href="#!" class="secondary-content"><edit-item-icon></edit-item-icon><add-item-icon></add-item-icon></a></div></li>
+              </ul>
+
+
+
               <a class="waves-effect waves-light btn" ng-click="showPetForm();"><i class="small material-icons">library_add</i>&nbsp;&nbsp;ADD A PET</a>
             </div>
           </div>
 
           
           </div>
+
         </div>
 
         
@@ -446,7 +451,7 @@
               <!-- END PET INFO CARD CONTENT-->
 
               <!-- PET INFO CARD BUTTONS -->
-              <div class="card-action thin">
+              <div id="action-button-add-pet" class="card-action thin">
                 <a ng-click="addPet(newPet)" class="matcard-action-text right">&nbsp;&nbsp;ADD {{displayedSpecies}}</a>
               </div>
 

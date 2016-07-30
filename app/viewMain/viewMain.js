@@ -106,6 +106,22 @@ angular.module('myApp.viewMain', ['ngRoute'])
   }
 }])
 
+.directive('addItemIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/addItemIcon.html',
+    replace: true,
+  }
+}])
+
+.directive('editItemIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/editItemIcon.html',
+    replace: true,
+  }
+}])
+
 
 .directive('kennelIcon', [function(){
   return  {
