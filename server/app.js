@@ -1,7 +1,7 @@
 //NPM MODULES:
 var express = require('express');
 var session = require('express-session');
-//var morgan = require('morgan');
+var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
@@ -23,7 +23,8 @@ app.use(express.static(assetFolder));
 app.use(bodyParser.urlencoded({ extended: true }) );
 app.use(bodyParser.json());
 //log requests to the console
-//app.use(morgan('dev'));
+//app.use(express.logger());
+app.use(morgan('dev'));
 // Parse incoming cookies
 app.use(cookieParser());
 app.use(require('express-session')({

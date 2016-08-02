@@ -96,7 +96,7 @@ config(['$routeProvider', function($routeProvider) {
 
   var create = function(data) {
     console.log("Called createUser factory, data is:", data);
-    return $http.post('/api/users/register/', data)
+    return $http.post('/api/users/register', data)
       .then(function (res){
           console.log("OMGRESPONSE: ", res);
         $rootScope.registrationError = res.data.message.message;

@@ -18,12 +18,13 @@ var UserSchema = new Schema({
   updated_at: {type: Date, default: Date.now},
   admin: {type: Boolean, default: false}
 });
-
+/*
 var options = {
   usernameField: 'email'
 };
-
-UserSchema.plugin(passportLocalMongoose, options); 
+*/
+//UserSchema.plugin(passportLocalMongoose, options);
+UserSchema.plugin(passportLocalMongoose); 
 
 var User = mongoose.model('User', UserSchema);
 

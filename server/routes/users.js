@@ -28,9 +28,11 @@ router.get('/userId/', function(req, res) {
 
 router.post('/register', function(req, res) {
 
-  var username = req.body.email
-  console.log("registering user");
-  console.log("user is", username);
+  
+  console.log("registering user", req.body);
+  console.log("user is", req.body.username);
+  console.log("phone is", req.body.phone);
+  console.log("password is", req.body.password);
 /*
   if (req.body.password !== req.body.passwordConfirm) {
     console.log('error, passwords do not match');
@@ -39,7 +41,18 @@ router.post('/register', function(req, res) {
   };*/
 
   //Passport local mongoose takes care of hashing etc;
-  User.register(new User({username: username}), req.body.password, function (err){
+  User.register(new User({
+    username: req.body.username,
+    first: req.body.first,
+    last: req.body.last,
+    email: req.body.email,
+    phone: req.body.phone,
+    street: req.body.street,
+    city: req.body.city,
+    state: req.body.state,
+    zip: req.body.zip,
+    hospital: req.body.hospital
+  }), req.body.password, function (err, account){
 
     if (err) {
       console.log('Registration error mongoose:', err);
@@ -48,11 +61,10 @@ router.post('/register', function(req, res) {
       
     passport.authenticate('local')(req, res, function(){
       console.log('user registered!');
-      req.login(username);
+      req.login(req.body.username);
       console.log('user logged in omg')
-      res.redirect('#/addBooking');
+      res.status(200).json({'logged in response': res});
     });
-    
   })
 });
 

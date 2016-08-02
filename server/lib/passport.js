@@ -26,12 +26,14 @@ passport.deserializeUser(function (user, done) {
 
 passport.use('local-signup', new LocalStrategy(
   // We want to pass req.body so that we can get the additional fields at sign up, such as first name, last name
-  { usernameField: 'email', passwordField: 'password', passReqToCallback: true },
+  { usernameField: 'username', passwordField: 'password', passReqToCallback: true },
   function (req, username, password, done) {
     var firstName = req.body.first,
         lastName = req.body.last,
         phone = req.body.phone,
         email = req.body.email,
+        username = username,
+        password = password;
         street = req.body.street,
         city = req.body.city,
         state = req.body.state,
@@ -46,7 +48,7 @@ passport.use('local-signup', new LocalStrategy(
       console.log("User.findByEmail called, user is:", user);
       if (user) {
         //^^^ not sure about this
-        done(null, false, { message: 'User already exists' });
+        done(null, false, { 'message': 'User already exists', 'user' : user });
         return;
       }
       // User doesnt exist, lets create a new one
@@ -57,8 +59,9 @@ passport.use('local-signup', new LocalStrategy(
     .then(function (passHash) {
       // Return a promise of the user sign up
       return User.signUp({
-        email: username,
+        username: username,
         password: passHash,
+        email: email,
         first: firstName,
         last: lastName,
         phone: phone,

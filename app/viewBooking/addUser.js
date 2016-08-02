@@ -46,19 +46,24 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.newUser = {
     first: '',
     last: '',
-    phArea: '',
-    ph1: '',
-    ph2: '',
+    username: '',
+    email: '',  
+    ph1 : '',
+    ph2 : '',
+    phArea : '',
     phone: '',
-    email: '',
     street: '',
     city: '',
     state: 'MA',
     zip: '',
     hospital: '',
+    created_at: undefined,
+    updated_at: undefined,
+    admin: false,
     password: '',
     passwordConfirm: ''
   };
+
 
   $scope.newReservation = {
     service: $scope.serviceSelected,
@@ -99,6 +104,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.cardClicked = '';
   $scope.refresh = false;
   $scope.displayedSpecies = "DOG";
+
+  $scope.state = ['MA', 'RI', 'NH', 'CT', 'ME', 'VT', 'NY', 'NJ', 'DE', 'PA'];
 
   $scope.refreshView = function () {
     $scope.refresh = true;
@@ -206,6 +213,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.signUp = function () {
     $scope.registrationError = '';
     $scope.phoneConcat();
+    $scope.newUser.email = $scope.newUser.username;
+    console.log("Called new user:", $scope.newUser);
     User.create($scope.newUser);
   };
 
@@ -299,7 +308,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.phoneConcat = function () {
-    console.log("phone concat, # is:", $scope.newUser.ph1, $scope.newUser.ph2);
+    console.log("phone concat, # is:", $scope.newUser.phArea, $scope.newUser.ph1, $scope.newUser.ph2);
     $scope.newUser.phone = ($scope.newUser.phArea + $scope.newUser.ph1 + $scope.newUser.ph2);
     console.log("phone concat, # is:", $scope.newUser.phone);
   };
