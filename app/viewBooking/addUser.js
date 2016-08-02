@@ -42,28 +42,31 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     password: ''
   };
 
-  //Form Values:
-  $scope.newUser = {
-    first: '',
-    last: '',
-    username: '',
-    email: '',  
-    ph1 : '',
-    ph2 : '',
-    phArea : '',
-    phone: '',
-    street: '',
-    city: '',
-    state: 'MA',
-    zip: '',
-    hospital: '',
-    created_at: undefined,
-    updated_at: undefined,
-    admin: false,
-    password: '',
-    passwordConfirm: ''
+  $scope.setDefaultUser = function () {
+    //Form Values:
+    $scope.newUser = {
+      first: '',
+      last: '',
+      username: '',
+      email: '',  
+      ph1 : '',
+      ph2 : '',
+      phArea : '',
+      phone: '',
+      street: '',
+      city: '',
+      state: 'MA',
+      zip: '',
+      hospital: '',
+      created_at: undefined,
+      updated_at: undefined,
+      admin: false,
+      password: '',
+      passwordConfirm: ''
+    };
   };
 
+  $scope.setDefaultUser();
 
   $scope.newReservation = {
     service: $scope.serviceSelected,
@@ -131,6 +134,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.defaultState();
 
   $scope.returningUser = function () {
+      console.log("returningUser: ", $scope.viewModelState);
+      console.log("returningUser: ", $rootScope.user);
+      console.log("returningUser: ", $scope.loginLoading);
     $scope.defaultState(true)
     $scope.cardClicked = 'returningUser';
     $rootScope.$broadcast('cardAdvance');
@@ -164,7 +170,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     if ($scope.viewModelState.newUserStep === 'basicInfo') {
 
-      /*if ($scope.newUser.first.length === 0 || $scope.newUser.last.length === 0) {
+      if ($scope.newUser.first.length === 0 || $scope.newUser.last.length === 0) {
         $rootScope.registrationError = 'Please enter a first and last name';
         $rootScope.$broadcast('registrationError');
         return;
@@ -172,40 +178,43 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         $rootScope.registrationError = 'Please enter a phone number';
         $rootScope.$broadcast('registrationError');
         return;
-      } else if ($scope.newUser.email.length < 6) {
+      } else if ($scope.newUser.username.length < 6) {
         $rootScope.registrationError = 'Please enter a valid e-mail';
         $rootScope.$broadcast('registrationError');
         return;
-      } else {*/
+      } else {
         $rootScope.registrationError = '';
         $scope.registrationTitle = 'YOUR ADDRESS';
         $scope.viewModelState.newUserStep = 'addressInfo';
         $('#left-chevron').removeClass('disabled');
-      //};
+      };
 
     } else if ($scope.viewModelState.newUserStep === 'addressInfo') {
 
-      /*if ($scope.newUser.street.length === 0 || $scope.newUser.city.length === 0) {
+      if ($scope.newUser.street.length === 0 || $scope.newUser.city.length === 0) {
         $rootScope.registrationError = 'Please enter a street address';
         $rootScope.$broadcast('registrationError');
       } else if ($scope.newUser.zip.length !== 5) {
         $rootScope.registrationError = 'Please enter a valid 5-digit ZIP code';
         $rootScope.$broadcast('registrationError');
-      } else {*/
+      } else {
         $rootScope.registrationError = '';
         $scope.viewModelState.newUserStep = 'passwordInfo'
         $scope.registrationTitle = 'YOUR PASSWORD';
-      //};
+      };
 
     } else if ($scope.viewModelState.newUserStep === 'passwordInfo') {
 
-      /*if ($scope.newUser.password !== $scope.newUser.passwordConfirm) {
+      if ($scope.newUser.password !== $scope.newUser.passwordConfirm) {
         $rootScope.registrationError = 'Passwords do not match';
         $rootScope.$broadcast('registrationError');
-      } else {*/
+      } else if ($scope.newUser.password.length < 8) {
+        $rootScope.registrationError = 'Password must be at least 8 characters';
+        $rootScope.$broadcast('registrationError');
+      } else {
         $rootScope.registrationError = '';
         $scope.signUp();
-      //};
+      };
     };
     console.log("CALLED advanceNewUser:", $scope.viewModelState);
   };
@@ -225,11 +234,27 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
           $rootScope.user.last = res.data.user.last;
           $rootScope.user.id = res.data.user._id;
           $rootScope.user.isLoggedIn = true;
+          $scope.newUser = 
           $scope.defaultState(true);
-          $scope.viewModelState.returningUser === true;
+          $scope.cardClicked = 'returningUser';
+          $rootScope.$broadcast('cardAdvance');
           $rootScope.loading = false;
+          $scope.setDefaultUser();
+          $scope.viewModelState.returningUser = true;
+            console.log("viewModelState: ", $scope.viewModelState);
+            console.log("viewModelState", $scope.loginLoading);
         } else {
-          $rootScope.registrationError = res.data.error
+
+          if (res.data.error.message) {
+            $rootScope.registrationError = res.data.error.message;
+            console.log("registrationError1:", $rootScope.registrationError);
+          };
+
+          if (res.data.error.code === 11000) {
+            $rootScope.registrationError = "A user with this e-mail address has already registered.";
+            console.log("registrationError2:", $rootScope.registrationError);
+          };
+
           $rootScope.$broadcast('registrationError');
         }
       }), function (errorCallback) {
@@ -241,8 +266,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.goHome = function () {
     $scope.defaultState();
   };
-
-
 
   $scope.serviceSelect = function (service) {
     $scope.defaultState(true);
@@ -276,7 +299,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     if ($scope.viewModelState.resStep === 2) {
       $scope.reservationTitle = "WHO'S STAYING?";
       $scope.reservationFwdButton = "REVIEW & BOOK";
-          $rootScope.user.pets = [{name: 'Olivia', type: 'cat'}];
+      $rootScope.user.pets = [{name: 'Olivia', type: 'cat'}];
     };
   };
 
@@ -288,15 +311,13 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     if ($scope.viewModelState.resStep === 1) {
       $scope.reservationTitle = "SELECT YOUR DATES";
     };
-
   };
-
 
   $scope.showPetForm = function () {
     $scope.defaultState(true);
-      $scope.viewModelState.resStep = 2; //?
-      $scope.viewModelState.addPet = true;
-      $scope.viewModelState.addPetStep = 1;
+    $scope.viewModelState.resStep = 2; //?
+    $scope.viewModelState.addPet = true;
+    $scope.viewModelState.addPetStep = 1;
   };
 
   $scope.addPets = function () {
@@ -334,9 +355,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.createNewReservation = function (reservation) {
-
     //TO DO: ADD VALIDATION & ERROR MESSAGING FOR USER
-
     $rootScope.user.reservations.push(reservation);
     User.addReservation(reservation)
       .then(function(res){
@@ -346,17 +365,18 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       });
   };
 
-
+  //REFACTOR THIS FUNCTION:
   $scope.loginUser = function (data) {
     $scope.loginLoading = true;
     User.logIn(data)
       .then(function(res){
+          //REDO THESE TO MATCH FORMAT USED AFTER USER REGISTRTION
         User.loginStatus = res.data.loggedIn;
         $rootScope.user.isLoggedIn = res.data.loggedIn;
 
         User.getPets()
           .then(function(res){
-            $rootScope.user.pets = res.data.data;
+            $rootScope.user.pets = res.data.user.pets;
             console.log("SET USER Pet: ", $rootScope.user)
           });
 
@@ -415,6 +435,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     if ($scope.cardClicked === 'returningUser') {
       returning.addClass('animated flipInY');
+
+      $timeout(function(){
+        returning.removeClass('animated flipInY');
+        returning.addClass('grow');
+      }, 600);
+
     } else if ($scope.cardClicked === 'newUser') {
       newUser.addClass('animated flipInY');
     };
@@ -432,5 +458,3 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   
 }]);
-
-//TO DO: REFACTOR IN SEPERATE MODULE:
