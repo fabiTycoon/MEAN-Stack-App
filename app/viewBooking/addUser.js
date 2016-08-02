@@ -211,11 +211,31 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.signUp = function () {
+    $rootScope.loading = true;
     $scope.registrationError = '';
     $scope.phoneConcat();
     $scope.newUser.email = $scope.newUser.username;
-    console.log("Called new user:", $scope.newUser);
-    User.create($scope.newUser);
+    User.create($scope.newUser)
+      .then(function (res){
+          console.log("RESPONSE: ", res);
+
+        if (res.data.success) {
+          $rootScope.user.email = res.data.user.email;
+          $rootScope.user.first = res.data.user.first;
+          $rootScope.user.last = res.data.user.last;
+          $rootScope.user.id = res.data.user._id;
+          $rootScope.user.isLoggedIn = true;
+          $scope.defaultState(true);
+          $scope.viewModelState.returningUser === true;
+          $rootScope.loading = false;
+        } else {
+          $rootScope.registrationError = res.data.error
+          $rootScope.$broadcast('registrationError');
+        }
+      }), function (errorCallback) {
+        console.log("ERROR: ", res);
+        // TO DO: Server side error handling
+      };
   };
 
   $scope.goHome = function () {

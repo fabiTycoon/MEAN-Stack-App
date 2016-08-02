@@ -24,6 +24,8 @@ passport.deserializeUser(function (user, done) {
   });
 });
 
+
+/*
 passport.use('local-signup', new LocalStrategy(
   // We want to pass req.body so that we can get the additional fields at sign up, such as first name, last name
   { usernameField: 'username', passwordField: 'password', passReqToCallback: true },
@@ -33,16 +35,14 @@ passport.use('local-signup', new LocalStrategy(
         phone = req.body.phone,
         email = req.body.email,
         username = username,
-        password = password;
         street = req.body.street,
         city = req.body.city,
         state = req.body.state,
         zip = req.body.zip,
         hospital = req.body.hospital;
 
-
     // Try to find the user first to check if they already have signed up
-    User.findByEmail(username)
+    User.findByEmail(email)
     .then(function (user) {
       // User already exists, we dont want to sign up
       console.log("User.findByEmail called, user is:", user);
@@ -57,7 +57,10 @@ passport.use('local-signup', new LocalStrategy(
     })
     // After hashing password, try to sign up
     .then(function (passHash) {
-      // Return a promise of the user sign up
+
+        console.log("HASHED PASSWORD: ", passHash);
+
+      // Return a promise of the user sign up  - this is actual call to database signup method
       return User.signUp({
         username: username,
         password: passHash,
@@ -70,7 +73,7 @@ passport.use('local-signup', new LocalStrategy(
         zip: zip,
         hospital: hospital
       });
-    })
+    })  
     // User successfully signed up
     .then(function (newUser) {
       return done(null, newUser, { message: 'Successfully signed up' });
@@ -79,4 +82,4 @@ passport.use('local-signup', new LocalStrategy(
       return done(null, false, { message: 'Error signing up'});
     });
   }
-));
+));*/

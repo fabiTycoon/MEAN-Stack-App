@@ -97,18 +97,6 @@ config(['$routeProvider', function($routeProvider) {
   var create = function(data) {
     console.log("Called createUser factory, data is:", data);
     return $http.post('/api/users/register', data)
-      .then(function (res){
-          console.log("OMGRESPONSE: ", res);
-        $rootScope.registrationError = res.data.message.message;
-        $rootScope.$broadcast('registrationError');
-
-          //TO DO: IF SUCCESFUL, REDIRECT USER
-
-        return res.data;
-      }), function (errorCallback) {
-        console.log("ERROR: ", res);
-        // TO DO: Server side error handling
-      };
   };
 
   var getUserId = function() {
