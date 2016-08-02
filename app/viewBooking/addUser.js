@@ -128,9 +128,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.defaultState();
 
   $scope.returningUser = function () {
-      console.log("returningUser: ", $scope.viewModelState);
-      console.log("returningUser: ", $rootScope.user);
-      console.log("returningUser: ", $scope.loginLoading);
     $scope.defaultState(true)
     $scope.cardClicked = 'returningUser';
     $rootScope.$broadcast('cardAdvance');
@@ -260,7 +257,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.serviceSelect = function (service) {
-    $scope.defaultState(true);
+    $scope.defaultState(true);    
 
     if (service === 'boarding') {
       $scope.serviceSelected = 'boarding';
@@ -269,14 +266,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     };
       console.log("SET SERVICE:", $scope.serviceSelected)
 
-    if ($rootScope.user && $rootScope.user.isLoggedIn === true) {
+    if ($rootScope.user && $rootScope.user.isLoggedIn) {
       $scope.viewModelState.newReservation = true;
       $scope.viewModelState.resStep = 1;
     } else {
-      $scope.defaultState(true);
       $scope.viewModelState.loginUser = true;
-      $rootScope.registrationError = "You must be logged in to book a reservation";
-      $rootScope.$broadcast('registrationError');
     };
   };
 
@@ -361,24 +355,37 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   //REFACTOR THIS FUNCTION:
-  $scope.loginUser = function (data) {
-    $scope.loginLoading = true;
-    User.logIn(data)
+  $scope.loginUser = function () {
+    //$scope.loginLoading = true;
+    
+    if ($scope.loginUserObject.username.length > 3 && $scope.loginUserObject.password.length > 7) {
+      User.logIn($scope.loginUserObject)
       .then(function(res){
-        //console.log("RES: ", res);
+        console.log("LOGIN RES: ", res);
+        $scope.loginLoading = false;
+
+        if (res.status === 401) {
+          $rootScope.registrationError = "Invalid username or password";
+          $rootScope.$broadcast('registrationError');   
+        };
+
         if (res.data.isLoggedIn) {
           $rootScope.user = res.data.user;
-          $scope.loginLoading = false;
+            console.log("WE LOGGED IN LIKE A MOFO:", res.data.user);
 
           if ($scope.serviceSelected && $scope.serviceSelected === 'boarding') {
             $scope.addReservation();
           } else if ($scope.serviceSelected && $scope.serviceSelected === 'daycare') {
             $scope.addReservation();
-          } else {
-            $scope.returningUser();
-          };
+          }; 
+        } else {
+          console.log("INVALID USERNAME OR PASSWORD:", res.data);
         };
       });
+    } else {
+      $rootScope.registrationError = "Please enter a username and password";
+      $rootScope.$broadcast('registrationError');   
+    };
   };  
 
   var init = function () {
@@ -408,7 +415,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       $timeout(function(){
         returning.removeClass('animated flipInY');
         returning.addClass('grow');
-      }, 600);
+      }, 750);
 
     } else if ($scope.cardClicked === 'newUser') {
       newUser.addClass('animated flipInY');

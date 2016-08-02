@@ -11,30 +11,13 @@ angular.module('myApp.viewMain', ['ngRoute'])
 
 .controller('MainCtrl', ['$scope', '$rootScope', '$location', 'User', function($scope, $rootScope, $location, User) {
 
-  $scope.user = {isLoggedIn: false};
   $rootScope.signingUp = false;
 
-  $scope.isLoggedIn = function () {
-    var status = User.getLoginStatus();
-    if (status) {
-      $scope.user.isLoggedIn = true;
-    };
-  };
-
   $scope.logOut = function () {
-
-    var status = User.getLoginStatus();
-      console.log("STATUS BE:", status);
-
-    console.log("LOGGING OUT USER: ", $rootScope.user);
-    if ($rootScope.user.isLoggedIn === true) {
+    if ($rootScope.user) {
       User.logOut()
         .then(function(res){
-          $rootScope.user = {
-            isLoggedIn: false,
-            pets: [],
-            reservations: []
-          };
+          $rootScope.user = {};
           $location.path('#/')
           console.log("LOGGED OUT")
         })
@@ -42,7 +25,6 @@ angular.module('myApp.viewMain', ['ngRoute'])
   };
 
   var init = function () {
-    $scope.isLoggedIn();
     $(document).ready(function(){
       $('.parallax').parallax();
       $(".button-collapse").sideNav();    

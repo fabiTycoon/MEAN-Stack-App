@@ -102,6 +102,12 @@ router.post('/register', function(req, res) {
 
 router.post('/login', passport.authenticate('local'), function(req, res){
 
+  console.log("LOGIN RESPONSE:", res);
+
+  if (res.status === 401) {
+    console.log("BAD CREDENTIALS");
+  };
+
   console.log("LOGIN: ", req.user);
 
   var returnedUser = {

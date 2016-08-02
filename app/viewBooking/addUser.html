@@ -33,7 +33,7 @@
 
       <!--LOGIN CARD  -->
       <div ng-show="viewModelState.loginUser === true">
-        <div class="row">
+        <div class="row" id="registration-form-container" ng-if="refresh === false">
           <div class="col s10 offset-s1">
             <div class="card white">
               <div class="cart-content" ng-hide="loginLoading === true">
@@ -51,11 +51,14 @@
 
                     <div class="row">
                       <div class="col s6">
-                        <a class="waves-effect waves-light btn" ng-click="loginUser(loginUserObject);" ng-class="{'disabled': loginLoading === true}"><i class="material-icons left">input</i>LOGIN</a>
+                        <a class="waves-effect waves-light btn" ng-click="loginUser();" ng-class="{'disabled': loginLoading === true}"><i class="material-icons left">input</i>LOGIN</a>
                       </div>
                       <div class="col s6">
                         <a class="waves-effect waves-light btn"><i class="material-icons left">info_outline</i>FORGOT PASSWORD?</a>
                       </div>
+                    </div>
+                    <div class="row" ng-show="registrationError.length > 0">
+                      <div class="col s6 error-text"><p>{{registrationError}}</p></div>
                     </div>
                     <br><br>
                   </div>
