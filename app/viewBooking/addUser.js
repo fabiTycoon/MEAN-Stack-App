@@ -218,16 +218,14 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.registrationError = '';
     $scope.phoneConcat();
     $scope.newUser.email = $scope.newUser.username;
-    User.create($scope.newUser)
+    User.register($scope.newUser)
       .then(function (res){
           console.log("RESPONSE: ", res);
 
         if (res.data.success) {
-          $rootScope.user.email = res.data.user.email;
-          $rootScope.user.first = res.data.user.first;
-          $rootScope.user.last = res.data.user.last;
-          $rootScope.user.id = res.data.user._id;
-          $rootScope.user.isLoggedIn = true;
+          $rootScope.user = res.data.user
+
+
           $scope.newUser = 
           $scope.defaultState(true);
           $scope.cardClicked = 'returningUser';
@@ -353,7 +351,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   $scope.createNewReservation = function (reservation) {
     //TO DO: ADD VALIDATION & ERROR MESSAGING FOR USER
-    $rootScope.user.reservations.push(reservation);
+      //$rootScope.user.reservations.push(reservation);
     User.addReservation(reservation)
       .then(function(res){
         console.log("ADDED RESERVATION:", res);
@@ -367,38 +365,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.loginLoading = true;
     User.logIn(data)
       .then(function(res){
-          //REDO THESE TO MATCH FORMAT USED AFTER USER REGISTRTION
-
-          console.log("RES: ", res);
-
-        User.loginStatus = res.data.loggedIn;
-        $rootScope.user.isLoggedIn = res.data.loggedIn;
-
-       /* User.getPets()
-          .then(function(res){
-            $rootScope.user.pets = res.data.user.pets;
-            console.log("SET USER Pet: ", $rootScope.user)
-          });
-
-        User.getReservations()
-          .then(function(res){
-              console.log("RESERVATIONS RES:", res);
-            $rootScope.user.reservations = res.data;
-            console.log("SET USER RESERVATIONS: ", $rootScope.user);
-          });*/
-
-
-        //TO DO - FIX THIS ONCE WE HAVE PETS/RESERVATION API WORKING:
-        var newUser = {
-          isLoggedIn: res.data.loggedIn,
-          reservations: $rootScope.user.reservations,
-          pets: $rootScope.user.pets
-        };
-
-        User.setUser(newUser);
-        $rootScope.user = newUser;
-
-        if (User.loginStatus === true) {
+        //console.log("RES: ", res);
+        if (res.data.isLoggedIn) {
+          $rootScope.user = res.data.user;
           $scope.loginLoading = false;
 
           if ($scope.serviceSelected && $scope.serviceSelected === 'boarding') {

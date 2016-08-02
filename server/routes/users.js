@@ -73,38 +73,61 @@ router.post('/register', function(req, res) {
       })
     } else {
 
+      var returnedUser = {
+        _id: user._id,
+        first: user.first,
+        last: user.last,
+        email: user.email,
+        phone: user.phone,
+        street: user.street,
+        state: user.state,
+        zip: user.zip,
+        hospital: user.hospital,
+        pets: user.pets,
+        reservations: user.reservations,
+        admin: user.admin,
+        isLoggedIn: true,
+        created_at: user.created_at
+      };
+
       passport.authenticate('local')(req, res, function () {
         return res.send({
           'success': true,
-          'user': user
+          'user': returnedUser
         });
       });
     };
   });
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res, info){
+router.post('/login', passport.authenticate('local'), function(req, res){
 
+  console.log("LOGIN: ", req.user);
 
-  var user = req.body.username
-  var password = req.body.password
+  var returnedUser = {
+    _id: req.user._id,
+    first: req.user.first,
+    last: req.user.last,
+    email: req.user.email,
+    phone: req.user.phone,
+    street: req.user.street,
+    state: req.user.state,
+    zip: req.user.zip,
+    hospital: req.user.hospital,
+    pets: req.user.pets,
+    reservations: req.user.reservations,
+    admin: req.user.admin,
+    isLoggedIn: true,
+    created_at: req.user.created_at
+  };
 
- /* if (!user) {
-    return res.status(401).json({
-      'err': 'Cannot find an account for that e-mail address',
-      'loggedIn': false
-    });
-  };*/
-  console.log("LOGIN: ", res);
-    console.log("LOGIN: ", info);
-
-  return res.status(200).json({'info': info, 'loggedIn': true});
+  return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
 });
 
 router.get('/logout', function(req, res){
   req.logout();
   console.log('Sucesfully logged out');
-  res.redirect('/');
+  return res.redirect('/');
 });
 
 module.exports = router;
