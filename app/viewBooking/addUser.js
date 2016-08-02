@@ -11,12 +11,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
 .controller('AddUserCtrl', ['$scope', '$rootScope', '$timeout', 'User', function($scope, $rootScope, $timeout, User) {
 
-  $rootScope.user = {
-    isLoggedIn: User.getLoginStatus(),
-    reservations: [],
-    pets: []
-  };
-
   $scope.viewModelState = {
     intro: true,
     returningUser: false,
@@ -277,11 +271,14 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     };
       console.log("SET SERVICE:", $scope.serviceSelected)
 
-    if ($rootScope.user.isLoggedIn === true) {
+    if ($rootScope.user && $rootScope.user.isLoggedIn === true) {
       $scope.viewModelState.newReservation = true;
       $scope.viewModelState.resStep = 1;
     } else {
+      $scope.defaultState(true);
       $scope.viewModelState.loginUser = true;
+      $rootScope.registrationError = "You must be logged in to book a reservation";
+      $rootScope.$broadcast('registrationError');
     };
   };
 
@@ -371,10 +368,13 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     User.logIn(data)
       .then(function(res){
           //REDO THESE TO MATCH FORMAT USED AFTER USER REGISTRTION
+
+          console.log("RES: ", res);
+
         User.loginStatus = res.data.loggedIn;
         $rootScope.user.isLoggedIn = res.data.loggedIn;
 
-        User.getPets()
+       /* User.getPets()
           .then(function(res){
             $rootScope.user.pets = res.data.user.pets;
             console.log("SET USER Pet: ", $rootScope.user)
@@ -385,7 +385,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
               console.log("RESERVATIONS RES:", res);
             $rootScope.user.reservations = res.data;
             console.log("SET USER RESERVATIONS: ", $rootScope.user);
-          });
+          });*/
 
 
         //TO DO - FIX THIS ONCE WE HAVE PETS/RESERVATION API WORKING:

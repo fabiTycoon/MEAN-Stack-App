@@ -19,9 +19,12 @@ router.delete('/', function(req, res) {
 });*/
 
 router.get('users', function (req, res){
-  User.find({}, function (err, returnedUsers){
-    res.json(returnedUsers);
-  });
+
+  if (req.user && req.user.admin === true ) {
+    User.find({}, function (err, returnedUsers){
+      res.json(returnedUsers);
+    });    
+  };
 });
 
 router.get('/:email', function(req, res) {
@@ -81,6 +84,7 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res, info){
+
 
   var user = req.body.username
   var password = req.body.password
