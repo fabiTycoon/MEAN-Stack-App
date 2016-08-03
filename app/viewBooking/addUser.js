@@ -93,7 +93,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.registrationTitle = 'YOUR INFORMATION';
   $scope.reservationTitle = 'SELECT YOUR DATES';
   $scope.addPetTitle = 'MY PET IS A...';
-  $scope.reservationBackButton = 'BACK TO DATES';
+  $scope.reservationBackButton = 'EDIT DATES';
   $scope.reservationFwdButton = 'SELECT PETS';
   $scope.newUserButton = 'NEXT';
   $rootScope.registrationError = '';
@@ -309,12 +309,28 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     console.log("ADDING PET: ", newPet);
 
-
-
-    User.addPet(newPet, owner.pets)
-      .then(function(req, res){
+    User.addPet(newPet)
+      .then(function(res){
         console.log("ADDED PET: ", res);
-          //TODO: reset $scope.newPet using fn
+        console.log("PET OBJECT: ", res.data.pet)
+        //update local user object
+        $rootScope.user.pets = res.data.updatedPets;
+        //update user object in DB
+        User.addPetToUser($rootScope.user)
+          .then(function(res){
+
+            if (res.data.success === true) {
+                console.log("YAY UPDATED USER: ", $rootScope.user);
+              $scope.defaultState(true);
+              $scope.reservationTitle = "WHO'S STAYING?";
+              $scope.reservationFwdButton = "REVIEW & BOOK";
+              $scope.viewModelState.resStep = 2;
+            } else {
+              console.log("ERROR ADDING PET TO USER: ", res.data.error)
+              $rootScope.registrationError = "Unable to add pet to user";
+              $rootScope.$broadcast('registrationError');
+            };
+          });
       })
   };
 

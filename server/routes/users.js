@@ -135,6 +135,29 @@ router.post('/login', passport.authenticate('local'), function(req, res){
   return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
 });
 
+router.post('/addPet', function(req, res){
+
+  var updatedUser = req.body;
+    console.log("UPDATED USER: ", updatedUser);
+
+  var query = {'username': updatedUser.username};
+  var newData = { $set : {'pets': updatedUser.pets}}
+  var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedUser){
+      if (err) {
+        return res.send(500, { error: err });
+      } else {
+        return returnedUser;
+      }
+  });
+
+
+  if (err) {
+    return res.status(500).json({'success': false, 'error':err});
+  } else {
+    return res.status(200).json({'success': true, 'updatedUser': returnedUser});
+  } 
+});
+
 router.get('/logout', function(req, res){
   req.logout();
   console.log('Sucesfully logged out');

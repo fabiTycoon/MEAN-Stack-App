@@ -56,10 +56,12 @@ config(['$routeProvider', function($routeProvider) {
     return
   };
 
-  var addPet = function (pet, existingPets) {
-    //$rootScope.user.pets.push(pet);
-      //setUser(userObject)
-    return $http.post('/api/pets', pet, existingPets);
+  var addPet = function (pet) {
+    return $http.post('/api/pets', pet);
+  };
+
+  var addPetToUser = function (updatedUser) {
+    return $http.post('/api/users/addPet');
   };
 
   var getPets = function () {
@@ -88,6 +90,7 @@ config(['$routeProvider', function($routeProvider) {
     logIn: logIn,
     logOut: logOut,
     addPet: addPet,
+    addPetToUser: addPetToUser,
     getPets: getPets,
     addReservation: addReservation,
     getReservations: getReservations,

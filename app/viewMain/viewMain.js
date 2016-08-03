@@ -120,6 +120,14 @@ angular.module('myApp.viewMain', ['ngRoute'])
   }
 }])
 
+.directive('removeItemIcon', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewBooking/removeItemIcon.html',
+    replace: true,
+  }
+}])
+
 
 .directive('kennelIcon', [function(){
   return  {
