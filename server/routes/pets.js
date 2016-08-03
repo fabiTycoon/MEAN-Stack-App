@@ -17,11 +17,14 @@ var User = require('../models/users.js');
 });*/
 
 router.post('/', function(req, res) {
-  var petObject = req.body.data;
-  var existingPets = req.body.existingPets;
+
+    console.log("ADD PETS ENDPOINT: ", res);
+
+  var petObject = req.body;
     console.log("PET OBJECT: ", petObject);
 
-  var userEmail = req.body.data.owner;
+  var userEmail = req.body.owner;
+  var existingPets = req.body.existingPets;
 
 
 
@@ -38,23 +41,23 @@ router.post('/', function(req, res) {
       existingPets.push(pet);
       var query = {'pets': req.user.pets};
       req.newData.pets = existingPets;
-      User.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, doc){
+      var updatedUser = User.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, returnedUser){
           if (err) {
             return res.send(500, { error: err });
           } else {
-            return res.send("User update succesful: ", {'data' : doc});
+            return returnedUser
+            console.log("ADDED PET TO USER: ", returnedUser);
           }
       });
-
-      //TO DO: INSURE THAT rootScope.user updates with new pets array
-
-      return res.status(200).json({'data': pet, 'updatedPets': existingPets});
+      //TO DO: INSURE THAT rootScope.user updates with new pets array when service receives this data
+      return res.status(200).json({'pet': pet, 'updatedPets': existingPets, 'updatedUser': updatedUser});
     };
   });
 });
 
 router.put('/', function(req, res) {
-  
+
+
 });
 
 router.delete('/', function(req, res) {

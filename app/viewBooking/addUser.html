@@ -33,9 +33,9 @@
 
       <!--LOGIN CARD  -->
       <div ng-show="viewModelState.loginUser === true">
-        <div class="row" ng-if="refresh === false">
+        <div class="row" ng-if="refresh === false" id="registration-form-container">
           <div class="col s10 offset-s1">
-            <div class="card white" id="registration-form-container">
+            <div class="card white">
               <div class="cart-content" ng-hide="loginLoading === true">
                 <div class="row">
                   <div class="col s10 offset-s1">
@@ -51,14 +51,17 @@
 
                     <div class="row">
                       <div class="col s6">
-                        <a class="waves-effect waves-light btn" ng-click="loginUser();" ng-class="{'disabled': loginLoading === true}"><i class="material-icons left">input</i>LOGIN</a>
+                        <a class="waves-effect waves-light btn thin" style="width: 12em;" ng-click="loginUser();" ng-class="{'disabled': loginLoading === true}"><i class="material-icons left">input</i>LOGIN</a>
                       </div>
                       <div class="col s6">
-                        <a class="waves-effect waves-light btn"><i class="material-icons left">info_outline</i>FORGOT PASSWORD?</a>
+                        <a class="waves-effect waves-light btn thin"><i class="material-icons left">info_outline</i>FORGOT PASSWORD?</a>
                       </div>
                     </div>
-                    <div class="row" ng-show="registrationError.length > 0">
-                      <div class="col s6 error-text"><p>{{registrationError}}</p></div>
+                    <div class="row" >
+                      <div class="col s6">
+                        <a class="waves-effect waves-light red btn thin" style="width: 12em;" ng-click="addNewUser()"><i class="material-icons left">mode_edit</i>REGISTER</a>
+                      </div>
+                      <div class="col s6 error-text" ng-show="registrationError.length > 0"><p>{{registrationError}}</p></div>
                     </div>
                     <br><br>
                   </div>
@@ -118,9 +121,9 @@
       </div>
 
       <div class="row" ng-if="viewModelState.newUser === true">
-        <div class="col s12" id="registration-form-container">
+        <div class="col s12" id="registration-form-container" ng-if="refresh === false">
 
-          <div class="card" ng-if="refresh === false">
+          <div class="card">
             <div class="card-content">
 
             <div id="basic-info-fields" ng-show="viewModelState.newUserStep === 'basicInfo'">
@@ -192,6 +195,13 @@
             </div>
 
             <div id="password-info-fields" ng-show="viewModelState.newUserStep === 'passwordInfo'">
+              <div class="row">
+                <div class="col s6 offset-s6 error-text">
+                  <div ng-show="registrationError.length > 0">
+                    <p>{{registrationError}}</p>
+                  </div>
+                </div>
+              </div>
              <div class="row">
                <div class="col s6">
                  <label class="active" for="password">Choose a password (8 characters minimum)</label>
@@ -207,15 +217,11 @@
           </div>
 
           <div class="row">
-            <div class="col s6 offset">
-              <div ng-show="registrationError" class="error-text" >
-                <p id="new-user-error-text">{{resultMessage}} {{registrationError}}</p>
-              </div>
-            </div>
             <div id="registration-action-card" class="right card-action">
               <a ng-click="advanceNewUser();" class="thin matcard-action-text">{{newUserButton}}</a>
             </div>
           </div>
+
         </div>
         
 
@@ -259,7 +265,7 @@
 
             <div class="input-field col s6">
               <input id="check-out-time" type="text" ng-model="newReservation.checkOutTime" placeholder="HH:MM (i.e. 04:30)">
-              <label for="check-out-time" class="active">Est. Check-In Time</label>
+              <label for="check-out-time" class="active">Est. Check-Out Time</label>
             </div>  
 
             <div class="row">
@@ -375,10 +381,10 @@
       <!-- END SELECT SPECIES CARDS -->
 
       <!-- PET INFO CARD -->
-      <div ng-show="viewModelState.addPet === true && viewModelState.addPetStep >= 2;">
+      <div ng-show="viewModelState.addPet === true && viewModelState.addPetStep >= 2;" id="registration-form-container" ng-if="refresh === false">
         
-        <div class="row" ng-if="refresh === false">
-          <div class="column s10 offset-s1" id="registration-form-container">
+        <div class="row">
+          <div class="column s10 offset-s1">
             <div class="card" id="pet-content">
 
               <div class="row">
@@ -450,9 +456,12 @@
                   </div>
 
                   <div class="row">
-                    <div class="col s12">
+                    <div class="col s6">
                       <input type="checkbox" class="filled-in" id="neuter-box" checked="checked" ng-model="newPet.neutered"/>
                       <label for="neuter-box">This critter is neutered &amp; vaccinated</label>
+                    </div>
+                    <div class="col s6 error-text">
+                      <p ng-show="registrationError.length > 0">{{registrationError}}</p>
                     </div>
                   </div>
 
@@ -466,7 +475,7 @@
 
               <!-- PET INFO CARD BUTTONS -->
               <div id="action-button-add-pet" class="card-action thin">
-                <a ng-click="addPet(newPet)" class="matcard-action-text right">&nbsp;&nbsp;ADD {{displayedSpecies}}</a>
+                <a ng-click="addPet()" class="matcard-action-text right">&nbsp;&nbsp;ADD {{displayedSpecies}}</a>
               </div>
 
 

@@ -70,6 +70,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     checkOutTime: '',
     bringingOwnFood: false,
     comments: '',
+    owner: '',
     pets: []
   };
 
@@ -209,7 +210,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     console.log("CALLED advanceNewUser:", $scope.viewModelState);
   };
   
-
   $scope.goHome = function () {
     $scope.defaultState();
   };
@@ -222,7 +222,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     } else if (service === 'daycare') {
       $scope.serviceSelected = 'daycare';
     };
-      console.log("SET SERVICE:", $scope.serviceSelected)
 
     if ($rootScope.user && $rootScope.user.isLoggedIn) {
       $scope.viewModelState.newReservation = true;
@@ -235,6 +234,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.addReservation = function () {
     $scope.defaultState(true);
     $scope.viewModelState.newReservation = true;
+    $scope.newReservation.owner = $rootScope.user.email;
     $scope.viewModelState.resStep = 1;
   };  
 
@@ -246,7 +246,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     if ($scope.viewModelState.resStep === 2) {
       $scope.reservationTitle = "WHO'S STAYING?";
       $scope.reservationFwdButton = "REVIEW & BOOK";
-      $rootScope.user.pets = [{name: 'Olivia', type: 'cat'}];
     };
   };
 
@@ -290,13 +289,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       console.log("VM STATE: ", $scope.viewModelState);
   };
 
-  $scope.addPet = function (pet) {
-    //pet.owner = {first: '', last: '', email: ''};
+  $scope.addPet = function () {
 
-    //TO DO VALIDATION:
     var owner = $rootScope.user;
     var newPet = $scope.newPet;
     newPet.owner = owner.email;
+    newPet.existingPets = owner.pets;
 
     if (newPet.name.length === 0) {
       $rootScope.registrationError = 'Please enter a name for your pet';
@@ -307,13 +305,13 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     } else if (newPet.age === 0) {
       $rootScope.registrationError = 'Please enter an approximate age for your pet';
       $rootScope.$broadcast('registrationError');
-    }
+    };
+
+    console.log("ADDING PET: ", newPet);
 
 
 
-
-
-    User.addPet(newPet)
+    User.addPet(newPet, owner.pets)
       .then(function(req, res){
         console.log("ADDED PET: ", res);
           //TODO: reset $scope.newPet using fn
@@ -380,33 +378,32 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       .then(function (res){
           console.log("RESPONSE: ", res);
 
-        if (res.data.success) {
+        if (res.data.success === true) {
           $rootScope.user = res.data.user
-
-
-          $scope.newUser = 
           $scope.defaultState(true);
           $scope.cardClicked = 'returningUser';
           $rootScope.$broadcast('cardAdvance');
           $rootScope.loading = false;
           $scope.setDefaultUser();
           $scope.viewModelState.returningUser = true;
-            console.log("viewModelState: ", $scope.viewModelState);
-            console.log("viewModelState", $scope.loginLoading);
+            console.log("REGISTER viewModelState: ", $scope.viewModelState);
         } else {
+          console.log("REGISTRATION FAILED:")
 
           if (res.data.error.message) {
             $rootScope.registrationError = res.data.error.message;
             console.log("registrationError1:", $rootScope.registrationError);
-          };
-
-          if (res.data.error.code === 11000) {
-            $rootScope.registrationError = "A user with this e-mail address has already registered.";
+          } else if (res.data.message) {
+            $rootScope.registrationError = res.data.message;
             console.log("registrationError2:", $rootScope.registrationError);
-          };
+          }
 
+          else if (res.data.error.code === 11000) {
+            $rootScope.registrationError = "A user with this e-mail address has already registered.";
+            console.log("registrationError3:", $rootScope.registrationError);
+          };
           $rootScope.$broadcast('registrationError');
-        }
+        };
       }), function (errorCallback) {
         console.log("ERROR: ", res);
         // TO DO: Server side error handling
@@ -449,6 +446,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   });
 
   $rootScope.$on('registrationError', function(){
+
+      console.log("ERROR:", $rootScope.registrationError);
+
     $('#registration-form-container').addClass('animated shake')
     $scope.refreshView()
     $timeout(function(){

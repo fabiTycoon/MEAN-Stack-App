@@ -68,7 +68,7 @@ config(['$routeProvider', function($routeProvider) {
 
 
   var register = function(data) {
-    return $http.post('/api/users/register', data)
+    return $http.post('/api/users/register', data);
   };
 
   var getUserId = function() {
