@@ -169,7 +169,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         $rootScope.registrationError = 'Please enter a phone number';
         $rootScope.$broadcast('registrationError');
         return;
-      } else if ($scope.newUser.username.length < 6) {
+      } else if ($scope.newUser.username.length < 6 || $scope.newUser.username.indexOf('@') === -1 || $scope.newUser.username.indexOf('.') === -1) {
         $rootScope.registrationError = 'Please enter a valid e-mail';
         $rootScope.$broadcast('registrationError');
         return;
