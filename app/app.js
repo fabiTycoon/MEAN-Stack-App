@@ -56,10 +56,10 @@ config(['$routeProvider', function($routeProvider) {
     return
   };
 
-  var addPet = function (pet) {
-    userObject.pets.push(pet);
+  var addPet = function (pet, existingPets) {
+    //$rootScope.user.pets.push(pet);
       //setUser(userObject)
-    return $http.post('/api/pets', pet);
+    return $http.post('/api/pets', pet, existingPets);
   };
 
   var getPets = function () {

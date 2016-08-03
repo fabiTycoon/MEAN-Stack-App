@@ -33,8 +33,13 @@ router.get('/:email', function(req, res) {
     console.log("REQUSEr:", req.user)
 
       if (req.params.email) {
-        User.find({email: req.params.email}, function (err, returnedUser) {
-        return res.json(returnedUser);
+        User.findOne({email: req.params.email}, function (err, returnedUser) {
+
+          if (err) {
+            return res.status(401).json({'message': 'User not found', 'error': err});
+          } else {
+            return res.status(200).json({'success': true, 'user' : returnedUser});
+          };
         });
       };
 });

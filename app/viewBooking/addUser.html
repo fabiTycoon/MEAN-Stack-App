@@ -166,7 +166,7 @@
                <!--Need to bind select value to newUser-->
                <div class="input-field col s2">
                  <select id="state-select">
-                  <option ng-repeat="state in states" value="state.abbrev" ng-model="newUser.state"></option>
+                  <option ng-repeat="state in states" ng-model="newUser.state"></option>
                   <!--
                    <option value="MA">MA</option>
                    <option value="RI">RI</option>
@@ -377,8 +377,8 @@
       <!-- PET INFO CARD -->
       <div ng-show="viewModelState.addPet === true && viewModelState.addPetStep >= 2;">
         
-        <div class="row">
-          <div class="column s10 offset-s1">
+        <div class="row" ng-if="refresh === false">
+          <div class="column s10 offset-s1" id="registration-form-container">
             <div class="card" id="pet-content">
 
               <div class="row">

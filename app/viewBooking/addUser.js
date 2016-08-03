@@ -101,8 +101,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.cardClicked = '';
   $scope.refresh = false;
   $scope.displayedSpecies = "DOG";
-
-  $scope.state = ['MA', 'RI', 'NH', 'CT', 'ME', 'VT', 'NY', 'NJ', 'DE', 'PA'];
+  $scope.states = ['MA', 'RI', 'NH', 'CT', 'ME', 'VT', 'NY', 'NJ', 'DE', 'PA'];
 
   $scope.refreshView = function () {
     $scope.refresh = true;
@@ -209,48 +208,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     };
     console.log("CALLED advanceNewUser:", $scope.viewModelState);
   };
-
-  $scope.signUp = function () {
-    $rootScope.loading = true;
-    $scope.registrationError = '';
-    $scope.phoneConcat();
-    $scope.newUser.email = $scope.newUser.username;
-    User.register($scope.newUser)
-      .then(function (res){
-          console.log("RESPONSE: ", res);
-
-        if (res.data.success) {
-          $rootScope.user = res.data.user
-
-
-          $scope.newUser = 
-          $scope.defaultState(true);
-          $scope.cardClicked = 'returningUser';
-          $rootScope.$broadcast('cardAdvance');
-          $rootScope.loading = false;
-          $scope.setDefaultUser();
-          $scope.viewModelState.returningUser = true;
-            console.log("viewModelState: ", $scope.viewModelState);
-            console.log("viewModelState", $scope.loginLoading);
-        } else {
-
-          if (res.data.error.message) {
-            $rootScope.registrationError = res.data.error.message;
-            console.log("registrationError1:", $rootScope.registrationError);
-          };
-
-          if (res.data.error.code === 11000) {
-            $rootScope.registrationError = "A user with this e-mail address has already registered.";
-            console.log("registrationError2:", $rootScope.registrationError);
-          };
-
-          $rootScope.$broadcast('registrationError');
-        }
-      }), function (errorCallback) {
-        console.log("ERROR: ", res);
-        // TO DO: Server side error handling
-      };
-  };
+  
 
   $scope.goHome = function () {
     $scope.defaultState();
@@ -335,6 +293,31 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.addPet = function (pet) {
     //pet.owner = {first: '', last: '', email: ''};
 
+    //TO DO VALIDATION:
+    var owner = $rootScope.user;
+    var newPet = $scope.newPet;
+    newPet.owner = owner.email;
+
+    if (newPet.name.length === 0) {
+      $rootScope.registrationError = 'Please enter a name for your pet';
+      $rootScope.$broadcast('registrationError');
+    } else if (newPet.weight === 0) {
+      $rootScope.registrationError = 'Please enter an approximate weight for your pet';
+      $rootScope.$broadcast('registrationError');
+    } else if (newPet.age === 0) {
+      $rootScope.registrationError = 'Please enter an approximate age for your pet';
+      $rootScope.$broadcast('registrationError');
+    }
+
+
+
+
+
+    User.addPet(newPet)
+      .then(function(req, res){
+        console.log("ADDED PET: ", res);
+          //TODO: reset $scope.newPet using fn
+      })
   };
 
   $scope.phoneConcat = function () {
@@ -387,6 +370,48 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       $rootScope.$broadcast('registrationError');   
     };
   };  
+
+  $scope.signUp = function () {
+    $rootScope.loading = true;
+    $scope.registrationError = '';
+    $scope.phoneConcat();
+    $scope.newUser.email = $scope.newUser.username;
+    User.register($scope.newUser)
+      .then(function (res){
+          console.log("RESPONSE: ", res);
+
+        if (res.data.success) {
+          $rootScope.user = res.data.user
+
+
+          $scope.newUser = 
+          $scope.defaultState(true);
+          $scope.cardClicked = 'returningUser';
+          $rootScope.$broadcast('cardAdvance');
+          $rootScope.loading = false;
+          $scope.setDefaultUser();
+          $scope.viewModelState.returningUser = true;
+            console.log("viewModelState: ", $scope.viewModelState);
+            console.log("viewModelState", $scope.loginLoading);
+        } else {
+
+          if (res.data.error.message) {
+            $rootScope.registrationError = res.data.error.message;
+            console.log("registrationError1:", $rootScope.registrationError);
+          };
+
+          if (res.data.error.code === 11000) {
+            $rootScope.registrationError = "A user with this e-mail address has already registered.";
+            console.log("registrationError2:", $rootScope.registrationError);
+          };
+
+          $rootScope.$broadcast('registrationError');
+        }
+      }), function (errorCallback) {
+        console.log("ERROR: ", res);
+        // TO DO: Server side error handling
+      };
+  };
 
   var init = function () {
     $('.modal-trigger').leanModal();
