@@ -11,7 +11,7 @@ angular.module('myApp', [
   'myApp.viewAddUser',
   'myApp.viewAddBooking',
   'myApp.addPetView',
-  'myApp.viewLogin',
+  //'myApp.viewLogin',
   'myApp.version',
   //'myApp.basicServices',
   'myApp.directivesModule',
@@ -64,6 +64,10 @@ config(['$routeProvider', function($routeProvider) {
     return $http.post('/api/users/addPet');
   };
 
+  var addReservationToUser = function (reservation) {
+    return $http.post('/api/users/addReservation');
+  };
+
   var getPets = function () {
     return $http.get('/api/pets');
   };
@@ -91,6 +95,7 @@ config(['$routeProvider', function($routeProvider) {
     logOut: logOut,
     addPet: addPet,
     addPetToUser: addPetToUser,
+    addReservationToUser: addReservationToUser,
     getPets: getPets,
     addReservation: addReservation,
     getReservations: getReservations,

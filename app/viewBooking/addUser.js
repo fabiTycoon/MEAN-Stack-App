@@ -23,7 +23,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     maxResSteps: 3,
     maxUserSteps: 3,
     addPet: false,
-    addPetStep: 1
+    addPetStep: 1,
+    finalConfirm: false
   };
 
   if ($rootScope.signingUp) {
@@ -244,9 +245,29 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     };
 
     if ($scope.viewModelState.resStep === 2) {
-      $scope.reservationTitle = "WHO'S STAYING?";
-      $scope.reservationFwdButton = "REVIEW & BOOK";
+
+      if ($scope.newReservation.checkInDate > $scope.newReservation.checkOutDate) {
+        //validate dates
+        $rootScope.registrationError = "Please select valid check-in and check-out dates";
+        $rootScope.$broadcast('registrationError')
+      } else {
+        $scope.reservationTitle = "WHO'S STAYING?";
+        $scope.reservationFwdButton = "REVIEW & BOOK";
+      };
+
+      if ($scope.viewModelState.resStep === 3) {
+        //additinoal validation here;
+        $scope.reservationTitle = "REVIEW & CONFIRM";
+        $scope.reservationFwdButton = "CONFIRM";
+      };
+
+
+
+
     };
+
+
+
   };
 
   $scope.backReservationStep = function () {
@@ -315,6 +336,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         console.log("PET OBJECT: ", res.data.pet)
         //update local user object
         $rootScope.user.pets = res.data.updatedPets;
+
+          console.log("UPDATED USER LOCALLY: ", $rootScoper.user);  
         //update user object in DB
         User.addPetToUser($rootScope.user)
           .then(function(res){
@@ -340,14 +363,30 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     console.log("phone concat, # is:", $scope.newUser.phone);
   };
 
-  $scope.createNewReservation = function (reservation) {
+  $scope.createNewReservation = function () {
+
+    var reservation = $scope.newReservation;
+    reservation.owner = $rootScope.owner.username;
+
+
     //TO DO: ADD VALIDATION & ERROR MESSAGING FOR USER
       //$rootScope.user.reservations.push(reservation);
     User.addReservation(reservation)
       .then(function(res){
         console.log("ADDED RESERVATION:", res);
-        //
-        $scope.viewModelState.resStep = 2;
+
+        if (res.success === true) {
+          //update local user:
+          $rootScope.user.reservations.push(res);
+          //update view to confirmation screen 
+            /*
+            $scope.defaultState(true);
+            $scope.viewModelState.finalConfirm = true;
+            */
+        } else {
+          $rootScope.registrationError = res.message;
+          $rootScope.$broadcast('registrationError');
+        };
       });
   };
 
@@ -433,7 +472,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       selectYears: 15, // Creates a dropdown of 15 years to control year
     });
 
-    $('select').material_select();
+    $('select').material_select(); //is this being called at the correct time?
   };
 
   init();

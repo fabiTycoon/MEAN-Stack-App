@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 angular.module('myApp.viewLogin', ['ngRoute'])
 
@@ -44,4 +44,4 @@ angular.module('myApp.viewLogin', ['ngRoute'])
     return $http.post('api/users/logout', $scope.user.username);
   };
 
-}]);
+}]);*/
