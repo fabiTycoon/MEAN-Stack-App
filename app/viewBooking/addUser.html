@@ -241,13 +241,12 @@
   </ul>
   <br>
 
-  <div class="row" ng-if="viewModelState.newReservation === true && serviceSelected === 'boarding'">
-    <div class="row" id="registration-form-container" ng-if="refresh === false" ng-if="viewModelState.addPet === false">
+  <div class="row" ng-if="viewModelState.newReservation === true && serviceSelected === 'boarding' && viewModelState.addPet === false && refresh === false">
+    
       <div class="col s10 offset-s1 card">
         <h3 class="thin">{{reservationTitle}}</h3>
         <div class="card-content">
           
-
           <div ng-show="viewModelState.resStep === 1">
             <div class="input-field col s6" ngMouseup="setDate()">
               <input id="check-in-date" class="datepicker" type="date" ng-model="newReservation.checkInDate" min="currentDate">
@@ -290,14 +289,35 @@
                         <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
                       </div>
                     </div>
+                  </form>
+                </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col s12" ng-if="reservationError">
+                <p>ERROR</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="card-action align left" ng-if="viewModelState.resStep !== 1">
+                <a ng-click="backReservationStep();" class="matcard-action-text">{{reservationBackButton}}</a>
+              </div>
+
+              <div class="card-action align right" ng-if="viewModelState.resStep !== viewModelState.maxUserSteps">
+                <a ng-click="advanceReservationStep();" class="matcard-action-text" ng-class="{'disabled': user.pets.length === 0}" >{{reservationFwdButton}}</a>
+              </div> 
+            </div>
+
         </div>
+      </div>
+    </div>
 
         <!--DAYCARE SPECIFIC FIELDS-->
 
-        <div class="row" ng-if="viewModelState.newReservation === true && serviceSelected === 'boarding'">
-          <div class="row" id="registration-form-container" ng-if="refresh === false" ng-if="viewModelState.addPet === false">
+        <div class="row" ng-if="viewModelState.newReservation === true && serviceSelected === 'daycare' && viewModelState.addPet === false && refresh === false">
+          
             <div class="col s10 offset-s1 card">
               <h3 class="thin">{{reservationTitle}}</h3>
               <div class="card-content">
@@ -310,21 +330,20 @@
 
                   <div class="input-field col s6">
                     <input id="check-in-time" type="text" ng-model="newReservation.checkInTime" placeholder="HH:MM (i.e. 04:30)">
-                    <label for="check-in-time" class="active">Est. Drop Off Time</label>
+                    <label for="check-in-time" class="active">Est. Drop-Off Time</label>
                   </div>
 
                   <div class="input-field col s6">
                     <input id="check-out-time" type="text" ng-model="newReservation.checkOutTime" placeholder="HH:MM (i.e. 04:30)">
-                    <label for="check-out-time" class="active">Est. Pick Up Time</label>
+                    <label for="check-out-time" class="active">Est. Pick-Up Time</label>
                   </div>  
 
                   <div class="row">
                     <div class="col s12">
                       <form id ="foodRadioButtons">
-                        
+                        <label for="foodRadioButtons">Are You Bringing Your Own Food?</label>
                           <div class="row">
                             <div class="col s6">
-                              <label for="foodRadios">Are You Bringing Your Own Food?</label>
                               <p>
                                 <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" />
                                 <label for="ownFoodYes">Yes</label>
@@ -334,17 +353,6 @@
                                 <label for="ownFoodNo">No</label>
                               </p>
                             </div>
-                            <div class="col s6">
-                              <label for="transportRadios">Do you require door-to-door transportation service?</label>
-                              <p>
-                                <input class="with-gap" name="transportRadios" type="radio" id="needTransportYes" />
-                                <label for="needTransportYes">Yes</label>
-                              </p>
-                              <p>
-                                <input class="with-gap" name="transportRadios" type="radio" id="needTransportNo" />
-                                <label for="needTransportNo">No</label>
-                              </p>
-                            </div>
                           </div>
                           <div class="row">
                             <div class="col s12">
@@ -352,9 +360,31 @@
                               <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
                             </div>
                           </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
+                  <!--ACTION BUTTONS-->
+                  <div class="row">
+                    <div class="col s12" ng-if="reservationError">
+                      <p>ERROR</p>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="card-action align left" ng-if="viewModelState.resStep !== 1">
+                      <a ng-click="backReservationStep();" class="matcard-action-text">{{reservationBackButton}}</a>
+                    </div>
+
+                    <div class="card-action align right" ng-if="viewModelState.resStep !== viewModelState.maxUserSteps">
+                      <a ng-click="advanceReservationStep();" class="matcard-action-text" ng-class="{'disabled': user.pets.length === 0}" >{{reservationFwdButton}}</a>
+                    </div> 
+                  </div>
+                  <!--END ACTION BUTTONS-->
               </div>
+            </div>
+          </div>
+
         <!--END DAYCARE SPECIFIC FIELDS-->
 
         <!--ADD PETS VIEW -->
@@ -412,20 +442,7 @@
 
         </div>
 
-        
-
-  
-        <div class="row" ng-if="reservationError">
-          <p>ERROR</p>
-        </div>
-
-        <div class="card-action align left" ng-if="viewModelState.resStep !== 1">
-          <a ng-click="backReservationStep();" class="matcard-action-text">{{reservationBackButton}}</a>
-        </div>
-
-        <div class="card-action align right" ng-if="viewModelState.resStep !== viewModelState.maxUserSteps">
-          <a ng-click="advanceReservationStep();" class="matcard-action-text" ng-class="{'disabled': user.pets.length === 0}" >{{reservationFwdButton}}</a>
-        </div>
+      
 
         </div>
       </div>
