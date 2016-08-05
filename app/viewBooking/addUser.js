@@ -367,17 +367,17 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     var reservation = $scope.newReservation;
     reservation.owner = $rootScope.owner.username;
-
+    reservation.existingReservations = $rootScope.owner.reservations;
 
     //TO DO: ADD VALIDATION & ERROR MESSAGING FOR USER
       //$rootScope.user.reservations.push(reservation);
     User.addReservation(reservation)
       .then(function(res){
-        console.log("ADDED RESERVATION:", res);
+        console.log("ADDED RESERVATION:", res.reservation);
 
         if (res.success === true) {
           //update local user:
-          $rootScope.user.reservations.push(res);
+          $rootScope.user.reservations.push(res.reservation);
           //update view to confirmation screen 
             /*
             $scope.defaultState(true);

@@ -18,33 +18,25 @@ router.get('/', function(req, res) {
 
 router.post('/new', function(req, res) {
 
-  //SEND RES TO DATABASE & RETURN SUCCESS OR ERROR
+    console.log("ADD RESERVATION ENDPOINT: ", res);
+    //EXPECTS RESERVATION OBJ + owner e-mail & array of existing user reservations
 
-  var userObject = req.body.user;
-  var reservationObject = req.body.reservation;
-    console.log("HIT BACKEND: ", reservationObject);
-    console.log("HIT BACKEND: ", userObject);
+  var reservationObject = req.body;
+  var userEmail = req.body.owner;
+  var existingReservations = req.body.existingReservations;
+  var newReservation = new Reservation(reservationObject);
+  
+  console.log("RESERVATION OBJECT: ", reservationObject);
 
-  var newReservation = new Reservation({
-    service: reservationObject.serviceSelected,
-    checkInDate: reservationObject.checkInDate,
-    checkOutDate: reservationObject.checkOutDate,
-    checkInTime: reservationObject.checkInTime,
-    checkOutTime: reservationObject.checkOutTime,
-    owner: userObject,
-    pets: reservationObject.petsArray
-  }); 
-
-  newReservation.save(function(err){
+  newReservation.save(function(err, pet){
     if (err) {
-      console.log("RESERVATION ERROR: ", err);
-      return res.status(500).json({error: err})
+      console.log("ERROR: ", err);
+      return res.status(500).json({'error': err, 'message': 'Please check that you\'ve filled in all required fields.'});
     } else {
-      console.log("RESERVATION CREATED")
-      return res.status(200).json({message: 'Reservation created.'})
-    }
-  })
-
+      existingReservations.push(pet);
+      return res.status(200).json({'reservation': reservation, 'updatedReservations': existingReservations, 'userEmail': userEmail});
+    };
+  });
 
 });
 
