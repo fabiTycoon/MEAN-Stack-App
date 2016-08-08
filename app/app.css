@@ -46,7 +46,8 @@
 .pet-icon svg {
   height: 2.5em;
   width: 2.5em;
-  fill: #f5f5f5; }
+  fill: #f5f5f5;
+  transform: translateY(-0.5em); }
 
 .pet-icon-returning svg {
   margin-top: 2em;

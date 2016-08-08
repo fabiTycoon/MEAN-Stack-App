@@ -81,6 +81,7 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   height: 2.5em;
   width: 2.5em;
   fill: $tertiary-color;
+  transform: translateY(-0.5em);
 };
 
 .pet-icon-returning svg {
@@ -309,5 +310,3 @@ video {
 #dummy-table-row {
   height: 5em;
 };
-
-

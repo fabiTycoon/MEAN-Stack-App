@@ -247,9 +247,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         $rootScope.registrationError = "Please select valid check-in and check-out dates";
         $rootScope.$broadcast('registrationError');
       } else {
+        $rootScope.registrationError = "";
         $scope.reservationTitle = "WHO'S STAYING?";
         $scope.reservationFwdButton = "REVIEW & BOOK";
-
         $scope.viewModelState.resStep = 2;
       };
 
@@ -259,18 +259,17 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         $rootScope.registrationError = "Please add at least one pet to your reservation";
         $rootScope.$broadcast('registrationError');
       } else {
+        $rootScope.registrationError = "";
         $scope.reservationTitle = "REVIEW & CONFIRM";
         $scope.reservationFwdButton = "CONFIRM";
+        $scope.viewModelState.resStep = 3;
       };
 
-    } else if ($scope.viewModelState.resStep !== $scope.viewModelState.maxResSteps && $scope.viewModelState.resStep === 3) {
-
+    } else if ($scope.viewModelState.resStep === $scope.viewModelState.maxResSteps) {
       //SUBMIT FINAL:
+      $rootScope.registrationError = "";
 
-    } else {
-      //RESET ERROR HANDLING?
-    }
-
+    };
   };
 
   $scope.backReservationStep = function () {
@@ -284,18 +283,20 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.addPetToReservation = function (petName) {
-    console.log("CALLED ADD PET TO RESERVATION: ", petName);
-
     for (var i = 0; i < $rootScope.user.pets.length; i++) {
-
       if ($rootScope.user.pets[i].name === petName) {
         $scope.newReservation.pets.push($rootScope.user.pets[i]);
       };
-
-
     };
+  };
 
-
+  $scope.removePetFromReservation = function (petName) {
+    for (var i = 0; i < $scope.newReservation.pets.length; i++) {
+      if ($scope.newReservation.pets[i].name === petName) {
+        var removedPet = $scope.newReservation.pets.splice(i, 1);
+        console.log("REMOVED PET: ", removedPet);
+      };
+    };
   };
 
   $scope.showPetForm = function () {
