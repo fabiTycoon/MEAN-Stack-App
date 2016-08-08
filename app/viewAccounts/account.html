@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs">
+      <li class="tab col s3"><a ng-click="showUserInfo();">My Info</a></li>
+      <li class="tab col s3" ng-class="{'disabled': user.pets.length === 0}"><a ng-click="showProfilePets();" class="active">My Pets</a></li>
+      <li class="tab col s3" ng-class="{'disabled': user.reservations.length === 0}"><a ng-click="showProfileReservations();">My Reservations</a></li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    <h4 class="thin">{{profileTitle}}</h4>
+  </div>
+</div>
+<br>

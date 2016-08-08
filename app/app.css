@@ -209,6 +209,9 @@ video {
 #action-button-add-pet {
   height: 5em; }
 
+.pet-collection-name {
+  transform: translateY(-1em); }
+
 .pet-collection-empty-text {
   margin-left: 0.5em !important;
   margin-top: 0.5em !important;

@@ -8,6 +8,7 @@ angular.module('myApp', [
   'myApp.viewAbout',
   'myApp.viewGallery',
   'myApp.viewMain',
+  'myApp.viewAccount',
   'myApp.viewAddUser',
   'myApp.viewAddBooking',
   'myApp.addPetView',
