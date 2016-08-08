@@ -352,7 +352,10 @@
                     <li class="collection-item" ng-repeat="pet in user.pets">
                     <div>{{pet.name}} <div class="pet-icon-add-dark" ng-if="pet.type === 'dog'"><add-dog-reservation-icon></add-dog-reservation-icon></div><div class="pet-icon-add-dark" ng-if="pet.type === 'cat'"><add-cat-reservation-icon></add-cat-reservation-icon></div>
 
-                    <a href="#!" class="secondary-content"><edit-item-icon></edit-item-icon><add-item-icon></add-item-icon></a></div></li>
+                    <a href="" class="secondary-content" ng-click="addPetToReservation(pet.name);"><add-item-icon></add-item-icon></a></a>
+                    <a href="" class="secondary-content"><edit-item-icon></edit-item-icon></a>
+                    
+                    </div></li>
                   </ul>
 
                   <a class="waves-effect waves-light btn" ng-click="showPetForm();"><i class="small material-icons">library_add</i>&nbsp;&nbsp;ADD A PET</a>
@@ -370,7 +373,7 @@
                     <li class="collection-item" ng-repeat="pet in newReservation.pets">
                     <div>{{pet.name}} <div class="pet-icon-add-dark" ng-if="pet.type === 'dog'"><add-dog-reservation-icon></add-dog-reservation-icon></div><div class="pet-icon-add-dark" ng-if="pet.type === 'cat'"><add-cat-reservation-icon></add-cat-reservation-icon></div>
 
-                    <a href="#!" class="secondary-content"><edit-item-icon></edit-item-icon><add-item-icon></add-item-icon></a></div></li>
+                    <a href="#!" class="secondary-content"><edit-item-icon></edit-item-icon><remove-item-icon></remove-item-icon></a></div></li>
                   </ul>
                   <!-- END PETS SAVED TO RESERVATION GO HERE -->
 
@@ -391,14 +394,7 @@
                   </div>
                   <br>
 
-                  <ul class="collection with-header" ng-if="newReservation.pets.length > 0;">
-                    <li class="collection-header"><h5 class="thin">Pets Added to Reservation:</h5></li>
-                    <li class="collection-item" ng-repeat="pet in newReservation.pets">
-
-                    <div><p class="pet-name-text">{{pet.name}}</p> <div class="pet-icon-add-dark" ng-if="pet.type === 'dog'"><add-dog-reservation-icon></add-dog-reservation-icon></div><div class="pet-icon-add-dark" ng-if="pet.type === 'cat'"><add-cat-reservation-icon></add-cat-reservation-icon></div>
-
-                    <a href="#!" class="secondary-content"><edit-item-icon></edit-item-icon><remove-item-icon></remove-item-icon></a></div></li>
-                  </ul>
+      
                 </div>
               </div>
             </div>

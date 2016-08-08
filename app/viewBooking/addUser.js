@@ -283,6 +283,21 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     };
   };
 
+  $scope.addPetToReservation = function (petName) {
+    console.log("CALLED ADD PET TO RESERVATION: ", petName);
+
+    for (var i = 0; i < $rootScope.user.pets.length; i++) {
+
+      if ($rootScope.user.pets[i].name === petName) {
+        $scope.newReservation.pets.push($rootScope.user.pets[i]);
+      };
+
+
+    };
+
+
+  };
+
   $scope.showPetForm = function () {
     $scope.defaultState(true);
     $scope.viewModelState.resStep = 2; //?
