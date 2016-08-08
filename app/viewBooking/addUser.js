@@ -240,33 +240,36 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };  
 
   $scope.advanceReservationStep = function () {
-    if ($scope.viewModelState.resStep !== $scope.viewModelState.maxResSteps) {
-      $scope.viewModelState.resStep +=1;
-    };
-
-    if ($scope.viewModelState.resStep === 2) {
-
+    if ($scope.viewModelState.resStep !== $scope.viewModelState.maxResSteps && $scope.viewModelState.resStep === 1) {
+  
       if ($scope.newReservation.checkInDate > $scope.newReservation.checkOutDate) {
         //validate dates
         $rootScope.registrationError = "Please select valid check-in and check-out dates";
-        $rootScope.$broadcast('registrationError')
+        $rootScope.$broadcast('registrationError');
       } else {
         $scope.reservationTitle = "WHO'S STAYING?";
         $scope.reservationFwdButton = "REVIEW & BOOK";
+
+        $scope.viewModelState.resStep = 2;
       };
 
-      if ($scope.viewModelState.resStep === 3) {
-        //additinoal validation here;
+    } else if ($scope.viewModelState.resStep !== $scope.viewModelState.maxResSteps && $scope.viewModelState.resStep === 2) {
+
+      if ($scope.newReservation.pets.length === 0) {
+        $rootScope.registrationError = "Please add at least one pet to your reservation";
+        $rootScope.$broadcast('registrationError');
+      } else {
         $scope.reservationTitle = "REVIEW & CONFIRM";
         $scope.reservationFwdButton = "CONFIRM";
       };
 
+    } else if ($scope.viewModelState.resStep !== $scope.viewModelState.maxResSteps && $scope.viewModelState.resStep === 3) {
 
+      //SUBMIT FINAL:
 
-
-    };
-
-
+    } else {
+      //RESET ERROR HANDLING?
+    }
 
   };
 
