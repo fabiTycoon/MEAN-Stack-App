@@ -426,7 +426,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
         if (res.data.isLoggedIn) {
           $rootScope.user = res.data.user;
-            console.log("WE LOGGED IN LIKE A MOFO:", res.data.user);
+            console.log("LOGGED IN", res.data.user);
 
           if ($scope.serviceSelected && $scope.serviceSelected === 'boarding') {
             $scope.addReservation();
