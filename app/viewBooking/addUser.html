@@ -464,32 +464,34 @@
 
   <!--ADD PETS VIEW -->
     <!-- SELECT SPECIES CARDS -->
-    <div ng-show="viewModelState.addPet === true && viewModelState.addPetStep === 1;">
-      <h4 class="thin">{{addPetTitle}}</h4>
-      <br>
-      <div class="row">
-        <div class="row center-text">
-          <div class="col s6 grow">
-            <div class="card blue-grey lighten-1" id="add-dog-card">
-              <div class="card-content white-text matcard-intro">
-                <span class="card-title">DOG</span>
-                <p class="thin matcard-desc-text">Man's Best Friend</p>
-                <i class="pet-icon-new"><add-dog-icon></add-dog-icon></i>
-              </div>
-              <div class="card-action thin white-text">
-                <a ng-click="setSpecies('dog');" class="matcard-action-text" id="actionButtonReturningUser">&nbsp;&nbsp;ADD DOG</a>
-              </div>
-            </div>
-          </div>
-          <div class="col s6 grow">
-              <div class="card blue-grey lighten-1" id="add-cat-card">
+    <div class="row" ng-show="viewModelState.addPet === true && viewModelState.addPetStep === 1;">
+      <div class="col s10 offset-s1">
+        <h4 class="thin">{{addPetTitle}}</h4>
+        <br>
+        <div class="row">
+          <div class="row center-text">
+            <div class="col s6 grow">
+              <div class="card blue-grey lighten-1" id="add-dog-card">
                 <div class="card-content white-text matcard-intro">
-                  <span class="card-title">CAT</span>
-                  <p class="thin matcard-desc-text">Finicky But Friendly</p>
-                  <i class="pet-icon-new"><add-cat-icon></add-cat-icon></i>
+                  <span class="card-title">DOG</span>
+                  <p class="thin matcard-desc-text">Man's Best Friend</p>
+                  <i class="pet-icon-new"><add-dog-icon></add-dog-icon></i>
                 </div>
                 <div class="card-action thin white-text">
-                  <a ng-click="setSpecies('cat')" class="matcard-action-text" id="actionButtonNewUser">&nbsp;&nbsp;ADD CAT</a>
+                  <a ng-click="setSpecies('dog');" class="matcard-action-text" id="actionButtonReturningUser">&nbsp;&nbsp;ADD DOG</a>
+                </div>
+              </div>
+            </div>
+            <div class="col s6 grow">
+                <div class="card blue-grey lighten-1" id="add-cat-card">
+                  <div class="card-content white-text matcard-intro">
+                    <span class="card-title">CAT</span>
+                    <p class="thin matcard-desc-text">Finicky But Friendly</p>
+                    <i class="pet-icon-new"><add-cat-icon></add-cat-icon></i>
+                  </div>
+                  <div class="card-action thin white-text">
+                    <a ng-click="setSpecies('cat')" class="matcard-action-text" id="actionButtonNewUser">&nbsp;&nbsp;ADD CAT</a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -499,104 +501,106 @@
       <!-- END SELECT SPECIES CARDS -->
 
       <!-- PET INFO CARD -->
-      <div ng-show="viewModelState.addPet === true && viewModelState.addPetStep >= 2;">
-        
-        <div class="row" id="registration-form-container" ng-if="refresh === false">
-          <div class="column s10 offset-s1">
-            <div class="card" id="pet-content">
+      <div class="row" ng-show="viewModelState.addPet === true && viewModelState.addPetStep >= 2;">
+        <div class="col s10 offset-s1">
 
-              <div class="row">
-                <div class="col s4">
-                  <div class="card-title">
-                    <h4 class="thin pet-info-title">{{addPetTitle}}</h4>
-                    <h6 ng-if="viewModelState.addPetStep > 2">(cont.)</h6>
-                  </div>
-                </div>
-                <div class="col s5 offset-2">
-                  <div class="pet-icon-new-dark" ng-if="newPet.type === 'dog'"><add-dog-icon></add-dog-icon></div>
-                  <div class="pet-icon-new-dark" ng-if="newPet.type === 'cat'"><add-cat-icon></add-cat-icon></div>
-                </div>
-              </div>
+          <div class="row" id="registration-form-container" ng-if="refresh === false">
+            <div class="column s10 offset-s1">
+              <div class="card" id="pet-content">
 
-
-              <div class="card-content" ng-if="viewModelState.addPetStep === 2">
                 <div class="row">
                   <div class="col s4">
-                    <label for="pet-name">Name</label>
-                    <input type="text" id="pet-name" ng-model="newPet.name" class="input-field"/>
+                    <div class="card-title">
+                      <h4 class="thin pet-info-title">{{addPetTitle}}</h4>
+                      <h6 ng-if="viewModelState.addPetStep > 2">(cont.)</h6>
+                    </div>
                   </div>
+                  <div class="col s5 offset-2">
+                    <div class="pet-icon-new-dark" ng-if="newPet.type === 'dog'"><add-dog-icon></add-dog-icon></div>
+                    <div class="pet-icon-new-dark" ng-if="newPet.type === 'cat'"><add-cat-icon></add-cat-icon></div>
+                  </div>
+                </div>
+
+
+                <div class="card-content" ng-if="viewModelState.addPetStep === 2">
+                  <div class="row">
+                    <div class="col s4">
+                      <label for="pet-name">Name</label>
+                      <input type="text" id="pet-name" ng-model="newPet.name" class="input-field"/>
+                    </div>
+                    <div class="col s4">
+                      <label for="pet-breed">Breed (Optional)</label>
+                      <input type="text" id="pet-breed" ng-model="newPet.breed" class="input-field"/>
+                    </div>
+                    <div class="col s4">
+                      <label for="pet-color">Color</label>
+                      <input type="text" id="pet-color" ng-model="newPet.color" class="input-field"/>
+                    </div>
+                  </div>
+
+                  <div class="col s8">
+                    <div class="row">
+                      <div class="col s4">
+                        <label for="pet-age">Age</label>
+                        <input type="number" maxlength="2" id="pet-age" ng-model="newPet.age"/>
+                      </div>
+                      <div class="col s4">
+                        <label for="pet-weight">Weight (lbs.)</label>
+                        <input type="number" maxlength="3" id="pet-weight" ng-model="newPet.weight"/>
+                      </div>
+                      <div class="col s4"></div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col s4">
+                        <label for="pet-brand">Food Brand or Type</label>
+                        <input type="text" id="pet-brand" ng-model="newPet.foodBrand"/>
+                      </div>
+                      <div class="col s8">
+                        <label for="pet-servings">Food Servings (Amt./day + Times/Day)</label>
+                        <input type="text" id="pet-servings" ng-model="newPet.foodServings"/>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col s12">
+                        <label for="pet-allergy">Food Allergies</label>
+                        <input type="text" id="pet-allergy" ng-model="newPet.foodAllergy"/>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col s12">
+                        <label for="textarea1">Additional Notes &amp; Comments</label>
+                        <textarea id="textarea2" class="materialize-textarea" ng-model="newPet.comments"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col s6">
+                        <input type="checkbox" class="filled-in" id="neuter-box" checked="checked" ng-model="newPet.neutered"/>
+                        <label for="neuter-box">This critter is neutered &amp; vaccinated</label>
+                      </div>
+                      <div class="col s6 error-text">
+                        <p ng-show="registrationError.length > 0">{{registrationError}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+
                   <div class="col s4">
-                    <label for="pet-breed">Breed (Optional)</label>
-                    <input type="text" id="pet-breed" ng-model="newPet.breed" class="input-field"/>
-                  </div>
-                  <div class="col s4">
-                    <label for="pet-color">Color</label>
-                    <input type="text" id="pet-color" ng-model="newPet.color" class="input-field"/>
+                    <!--PET SIZE ICON GOES HERE-->
                   </div>
                 </div>
+                <!-- END PET INFO CARD CONTENT-->
 
-                <div class="col s8">
-                  <div class="row">
-                    <div class="col s4">
-                      <label for="pet-age">Age</label>
-                      <input type="number" maxlength="2" id="pet-age" ng-model="newPet.age"/>
-                    </div>
-                    <div class="col s4">
-                      <label for="pet-weight">Weight (lbs.)</label>
-                      <input type="number" maxlength="3" id="pet-weight" ng-model="newPet.weight"/>
-                    </div>
-                    <div class="col s4"></div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col s4">
-                      <label for="pet-brand">Food Brand or Type</label>
-                      <input type="text" id="pet-brand" ng-model="newPet.foodBrand"/>
-                    </div>
-                    <div class="col s8">
-                      <label for="pet-servings">Food Servings (Amt./day + Times/Day)</label>
-                      <input type="text" id="pet-servings" ng-model="newPet.foodServings"/>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col s12">
-                      <label for="pet-allergy">Food Allergies</label>
-                      <input type="text" id="pet-allergy" ng-model="newPet.foodAllergy"/>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col s12">
-                      <label for="textarea1">Additional Notes &amp; Comments</label>
-                      <textarea id="textarea2" class="materialize-textarea" ng-model="newPet.comments"></textarea>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col s6">
-                      <input type="checkbox" class="filled-in" id="neuter-box" checked="checked" ng-model="newPet.neutered"/>
-                      <label for="neuter-box">This critter is neutered &amp; vaccinated</label>
-                    </div>
-                    <div class="col s6 error-text">
-                      <p ng-show="registrationError.length > 0">{{registrationError}}</p>
-                    </div>
-                  </div>
-
+                <!-- PET INFO CARD BUTTONS -->
+                <div id="action-button-add-pet" class="card-action thin">
+                  <a ng-click="addPet()" class="matcard-action-text right">&nbsp;&nbsp;ADD {{displayedSpecies}}</a>
                 </div>
 
-                <div class="col s4">
-                  <!--PET SIZE ICON GOES HERE-->
-                </div>
+
               </div>
-              <!-- END PET INFO CARD CONTENT-->
-
-              <!-- PET INFO CARD BUTTONS -->
-              <div id="action-button-add-pet" class="card-action thin">
-                <a ng-click="addPet()" class="matcard-action-text right">&nbsp;&nbsp;ADD {{displayedSpecies}}</a>
-              </div>
-
-
             </div>
           </div>
         </div>
