@@ -36,7 +36,7 @@
         <div class="row" ng-if="refresh === false" id="registration-form-container">
           <div class="col s10 offset-s1">
             <div class="card white">
-              <div class="cart-content" ng-hide="loginLoading === true">
+              <div ng-hide="loginLoading === true">
                 <div class="row">
                   <div class="col s10 offset-s1">
                     <br>
@@ -61,24 +61,27 @@
                       <div class="col s6">
                         <a class="waves-effect waves-light red btn thin" style="width: 12em;" ng-click="addNewUser()"><i class="material-icons left">mode_edit</i>REGISTER</a>
                       </div>
-                      <div class="col s6 error-text" ng-show="registrationError.length > 0"><p>{{registrationError}}</p></div>
                     </div>
-                    <br><br>
-                  </div>
-
-                  <div class="col s10 offset-s1" ng-show="loginLoading === true">
-                    <span>LOADING...</span><br><br>
-                    <img src="https://i1.wp.com/cdnjs.cloudflare.com/ajax/libs/galleriffic/2.0.1/css/loader.gif" class="login-loading-wheel"/>
-                  </div>
-
-
+                  <br>
                 </div>
+
+                <div class="col s6 error-text" ng-if="registrationError.length !== 0">
+                  <p>{{registrationError}}</p>
+                </div>
+
+                <div class="col s10 offset-s1" ng-show="loginLoading === true">
+                  <span>LOADING...</span><br><br>
+                  <img src="https://i1.wp.com/cdnjs.cloudflare.com/ajax/libs/galleriffic/2.0.1/css/loader.gif" class="login-loading-wheel"/>
+                </div>
+
+
               </div>
             </div>
-            
           </div>
+          
         </div>
       </div>
+    </div>
 
       <!-- RETURNING USER CARDS -->
       <div class="row center-text" ng-show="viewModelState.returningUser === true">
@@ -121,9 +124,8 @@
       </div>
 
       <div class="row" ng-if="viewModelState.newUser === true">
-        <div class="col s12" id="registration-form-container" ng-if="refresh === false">
-
-          <div class="card">
+        <div class="col s12">
+          <div class="card" id="registration-form-container" ng-if="refresh === false">
             <div class="card-content">
 
             <div id="basic-info-fields" ng-show="viewModelState.newUserStep === 'basicInfo'">
@@ -195,13 +197,6 @@
             </div>
 
             <div id="password-info-fields" ng-show="viewModelState.newUserStep === 'passwordInfo'">
-              <div class="row">
-                <div class="col s6 offset-s6 error-text">
-                  <div ng-show="registrationError.length > 0">
-                    <p>{{registrationError}}</p>
-                  </div>
-                </div>
-              </div>
              <div class="row">
                <div class="col s6">
                  <label class="active" for="password">Choose a password (8 characters minimum)</label>
@@ -214,7 +209,18 @@
              </div>
             </div>
 
+            <!-- ERROR BOX -->
+            <div class="row animated shake">
+              <div class="col s6 offset-s6 error-text">
+                <div ng-show="registrationError.length !== 0">
+                  <p>{{registrationError}}</p>
+                </div>
+              </div>
+            </div>
+          <!--END CARD CONTENT, USER REGISTRATION-->
           </div>
+
+
 
           <div class="row">
             <div id="registration-action-card" class="right card-action">
@@ -268,31 +274,47 @@
             </div>  
 
             <div class="row">
-              <div class="col s12">
-                <form id ="foodRadioButtons">
-                  <label for="foodRadioButtons">Are You Bringing Your Own Food?</label>
-                    <div class="row">
-                      <div class="col s6">
-                        <p>
-                          <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" />
-                          <label for="ownFoodYes">Yes</label>
-                        </p>
-                        <p>
-                          <input class="with-gap" name="foodRadios" type="radio" id="ownFoodNo" />
-                          <label for="ownFoodNo">No</label>
-                        </p>
-                      </div>
+              <div class="col s6" id ="foodRadioButtons">
+                <label for="foodRadioButtons">Are You Bringing Your Own Food?</label>
+                  <div class="row">
+                    <div class="col s12">
+                      <p>
+                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" />
+                        <label for="ownFoodYes">Yes</label>
+                      </p>
+                      <p>
+                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodNo" />
+                        <label for="ownFoodNo">No</label>
+                      </p>
                     </div>
-                    <div class="row">
-                      <div class="col s12">
-                        <label for="textarea1">Additional Notes &amp; Comments</label>
-                        <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
-                      </div>
-                    </div>
-                  </form>
+                  </div>
                 </div>
-              </div>
+
+
+                  
+                <div class="col s6" id="returningRadioButtons">
+                  <label for="returningRadioButtons">Has Your Pet Stayed With Us Before?</label>
+                  <p>
+                    <input class="with-gap" name="returningRadios" type="radio" id="returningGuest Yes" />
+                    <label for="returningGuest Yes">Yes</label>
+                  </p>
+                  <p>
+                    <input class="with-gap" name="returningRadios" type="radio" id="returningGuest No" />
+                    <label for="returningGuest No">No</label>
+                  </p>
+                </div>
+                    
+
+
+                <div class="row">
+                  <div class="col s12">
+                    <label for="textarea1">Additional Notes &amp; Comments</label>
+                    <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
+                  </div>
+                </div>
+              
             </div>
+          </div>
             <!-- END BOARDING SPECIFIC FIELDS -->
 
             <!--DAYCARE SPECIFIC FIELDS-->
@@ -391,7 +413,7 @@
                   <!-- NO SAVED PETS VIEW -->
                   <ul class="collection with-header" ng-if="newReservation.pets.length === 0">
                     <li class="collection-header"><h5 class="thin">My Pets Staying</h5></li>
-                    <tr class="collection-item" id="dummy-table-row"><p class="pet-collection-empty-text">Please add a saved pet to your reservation.</p></tr>
+                    <tr class="collection-item" id="dummy-table-row"><p class="pet-collection-empty-text thin">Please add a saved pet to your reservation.</p></tr>
                   </ul>
                   <!-- END NO SAVED PETS VIEW -->
 
