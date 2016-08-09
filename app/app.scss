@@ -235,6 +235,15 @@ video {
   transform: translateX(0.5em);
 };
 
+.more-info-text {
+  position: relative;
+  bottom: 0.1em;
+};
+
+#info-icon {
+  font-size: 1em;
+};
+
 //LOGIN PAGE:
 .error-box {
   height: 100px;

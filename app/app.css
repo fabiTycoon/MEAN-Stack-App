@@ -169,6 +169,13 @@ video {
   font-size: 2em;
   transform: translateX(0.5em); }
 
+.more-info-text {
+  position: relative;
+  bottom: 0.1em; }
+
+#info-icon {
+  font-size: 1em; }
+
 .error-box {
   height: 100px; }
 
