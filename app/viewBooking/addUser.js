@@ -332,12 +332,14 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     if (species === 'dog') {
       $scope.newPet.type = 'dog';
       $scope.displayedSpecies = 'DOG';
+      $scope.addPetTitle = 'MY DOG\'S INFO'
     } else if (species === 'cat') {
       $scope.newPet.type = 'cat';
       $scope.displayedSpecies = 'CAT';
+      $scope.addPetTitle = 'MY CAT\'S INFO'
     };
 
-    $scope.addPetTitle = 'MY PET\'S INFO';
+    //$scope.addPetTitle = 'MY PET\'S INFO';
     $scope.viewModelState.resStep = 2;
     $scope.viewModelState.addPet = true;
     $scope.viewModelState.addPetStep = 2;
