@@ -161,23 +161,17 @@ router.post('/update/', function (req, res){
 
 router.post('/addPet', function(req, res){
 
-    console.log("UPDATED USER: ", updatedUser);
   var updatedUser = req.body;
+    console.log("UPDATED USER: ", updatedUser);
   var query = {'username': updatedUser.username};
   var newData = { $set : {'pets': updatedUser.pets}}
   var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedUser){
       if (err) {
-        return res.send(500, { error: err });
+        return res.status(500).json({'success': false, 'error':err});
       } else {
-        return returnedUser;
+        return res.status(200).json({'success': true, 'updatedUser': returnedUser});
       };
   });
-
-  if (err) {
-    return res.status(500).json({'success': false, 'error':err});
-  } else {
-    return res.status(200).json({'success': true, 'updatedUser': returnedUser});
-  } 
 });
 
 router.post('/addReservation', function(req, res){

@@ -373,10 +373,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         //update local user object
         $rootScope.user.pets = res.data.updatedPets;
 
-          console.log("UPDATED USER LOCALLY: ", $rootScoper.user);  
+          console.log("UPDATED USER LOCALLY: ", $rootScope.user);  
         //update user object in DB
         User.addPetToUser($rootScope.user)
           .then(function(res){
+
+            console.log("CALLED ADD PET TO USER: ", res);
 
             if (res.data.success === true) {
                 console.log("YAY UPDATED USER: ", $rootScope.user);
