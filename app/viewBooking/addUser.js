@@ -105,6 +105,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.displayedSpecies = "DOG";
   $scope.states = ['MA', 'RI', 'NH', 'CT', 'ME', 'VT', 'NY', 'NJ', 'DE', 'PA'];
 
+  var clicked = false;
+
   $scope.refreshView = function () {
     $scope.refresh = true;
     $scope.refresh = false;
@@ -348,6 +350,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   $scope.addPet = function () {
 
+    if (clicked === true) {
+      return;
+    }
+
+    clicked = true;
+
     var owner = $rootScope.user;
     var newPet = $scope.newPet;
     newPet.owner = owner.email;
@@ -381,6 +389,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         User.addPetToUser(reqPayload)
           .then(function(res){
             console.log("CALLED ADD PET TO USER: ", res);
+            clicked = false;
             if (res.data.success === true) {
               $scope.defaultState(true);
               $scope.reservationTitle = "WHO'S STAYING?";
