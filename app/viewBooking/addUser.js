@@ -246,7 +246,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         //validate dates
         $rootScope.registrationError = "Please select valid check-in and check-out dates";
         $rootScope.$broadcast('registrationError');
-      } else {
+      } 
+
+      // ADD VALIDATION FOR RADIOS & MAKE SURE THEY BIND
+
+      else {
         $rootScope.registrationError = "";
         $scope.reservationTitle = "WHO'S STAYING?";
         $scope.reservationFwdButton = "REVIEW & BOOK";
@@ -268,7 +272,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     } else if ($scope.viewModelState.resStep === $scope.viewModelState.maxResSteps) {
       //SUBMIT FINAL:
       $rootScope.registrationError = "";
-
+      $location.path('/bookingConfirm');
     };
   };
 
