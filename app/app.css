@@ -107,6 +107,9 @@
 .center-text {
   text-align: center; }
 
+#register-back-btn {
+  margin-left: 2em; }
+
 .push {
   height: 25px; }
 
