@@ -110,7 +110,8 @@ router.post('/login', passport.authenticate('local'), function(req, res){
   console.log("LOGIN RESPONSE:", res);
 
   if (res.status === 401) {
-    console.log("BAD CREDENTIALS");
+    console.log("BAD CREDENTIALS", res);
+    return res.status(401).json({'message': 'Invalid username or password.', 'isLoggedIn': false});
   };
 
   console.log("LOGIN: ", req.user);
