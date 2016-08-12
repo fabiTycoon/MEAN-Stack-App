@@ -275,10 +275,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.backReservationStep = function () {
     if ($scope.viewModelState.resStep !== 1) {
       $scope.viewModelState.resStep -=1;
-    };
-
-    if ($scope.viewModelState.resStep === 1) {
+    } else if ($scope.viewModelState.resStep === 1) {
       $scope.reservationTitle = "SELECT YOUR DATES";
+    } else if ($scope.viewModelState.resStep === 2) {
+      $rootScope.registrationError = "";
+      $scope.reservationTitle = "WHO'S STAYING?";
+      $scope.reservationFwdButton = "REVIEW & BOOK";
     };
   };
 

@@ -12,6 +12,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 .controller('viewAccountCtrl', [ '$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
 
   $scope.displayName = '';
+  $scope.profileTitle = 'MY ACCOUNT';
 
   $scope.accountViewModelState = {
     userInfo: true,
@@ -55,8 +56,4 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.profileTitle = "MY RESERVATIONS:";
     $scope.accountViewModelState.reservationInfo = true;
   };
-
-
-
-
 }]);
