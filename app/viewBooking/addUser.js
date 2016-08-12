@@ -299,20 +299,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     };
   };
 
-  $scope.styleSavedPets = function () {
-
-    var petNames = [];
-    //Grab a current list of the pets added to the reservation
-    for (var i = 0 ; i < $scope.newReservation.pets.length; i++) {
-      petNames.push($scope.newReservation.pets[i].name);
-    };
-
-    for (i = 0; i < $rootScope.user.pets.lenth; i++) {
-      return;
-    };
-
-
-  };
 
   $scope.showPetForm = function () {
     $scope.defaultState(true);
@@ -378,14 +364,15 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         User.addPetToUser($rootScope.user)
           .then(function(res){
 
-            console.log("CALLED ADD PET TO USER: ", res);
+            console.log("CALLED ADD PET TO USER: ", res);   //FOR SOME REASON THIS IS RETURNING A DIFFERENT ACCOUNT FROM LINE 362
 
             if (res.data.success === true) {
-                console.log("YAY UPDATED USER: ", $rootScope.user);
               $scope.defaultState(true);
               $scope.reservationTitle = "WHO'S STAYING?";
               $scope.reservationFwdButton = "REVIEW & BOOK";
               $scope.viewModelState.resStep = 2;
+                console.log("YAY UPDATED USER: ", $rootScope.user);
+                console.log("VM STATE: ", $scope.viewModelState);
             } else {
               console.log("ERROR ADDING PET TO USER: ", res.data.error)
               $rootScope.registrationError = "Unable to add pet to user";

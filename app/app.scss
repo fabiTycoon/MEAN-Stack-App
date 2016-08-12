@@ -120,15 +120,20 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 };
 
 .pet-icon-collection svg {
-  height: 1em;
+  height: 2em;
   width: 1em;
   fill: black;
 };
 
+.pet-name-text p {
+  margin-top: 0.35em;
+};
+
 .pet-icon-add-dark svg {
   fill: black;
+  position: relative;
+  left: 2.5em;
   height: 2em;
-  margin-left:10em;
 };
 
 .pet-name-text {

@@ -162,8 +162,10 @@ router.post('/update/', function (req, res){
 router.post('/addPet', function(req, res){
 
   var updatedUser = req.body;
-    console.log("UPDATED USER: ", updatedUser);
+    console.log("CALLED ADD PET TO USER: ", updatedUser, req);
+    console.log("QUERY TO DATABASE: ", updatedUser, req);
   var query = {'username': updatedUser.username};
+    console.log("QUERYING THIS FUCKING USER: ", query);
   var newData = { $set : {'pets': updatedUser.pets}}
   var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedUser){
       if (err) {
