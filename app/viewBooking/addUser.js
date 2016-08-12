@@ -295,6 +295,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         $scope.newReservation.pets.push($rootScope.user.pets[i]);
       };
     };
+
+    $('#dummy-table-row').removeClass('pet-collection-empty-text');
   };
 
   $scope.removePetFromReservation = function (petName) {
@@ -304,12 +306,17 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         console.log("REMOVED PET: ", removedPet);
       };
     };
+
+    if ($scope.newReservation.pets.length === 0) {
+      $('#dummy-table-row').addClass('pet-collection-empty-text');
+    };
+
   };
 
 
   $scope.showPetForm = function () {
     $scope.defaultState(true);
-    $scope.viewModelState.resStep = 2; //?
+    $scope.viewModelState.resStep = 2; 
     $scope.viewModelState.addPet = true;
     $scope.viewModelState.addPetStep = 1;
   };
@@ -365,17 +372,15 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         console.log("PET OBJECT: ", res.data.pet)
         //update local user object
         $rootScope.user.pets = res.data.updatedPets;
+        $('#dummy-table-row').removeClass('pet-collection-empty-text');
 
           console.log("UPDATED USER LOCALLY: ", $rootScope.user);  
-        //update user object in DB
-              // THIS IS WHERE THINGS ARE GOING HORRIBLY WRONG IT IS NOT RECIEVING THE USER!!!!!
-              var reqPayload = JSON.stringify($rootScope.user);
-                console.log("PAYLOAD: ", reqPayload);
+        //update user object in DB    
+        var reqPayload = JSON.stringify($rootScope.user);
+          console.log("PAYLOAD: ", reqPayload);
         User.addPetToUser(reqPayload)
           .then(function(res){
-
-            console.log("CALLED ADD PET TO USER: ", res);   //FOR SOME REASON THIS IS RETURNING A DIFFERENT ACCOUNT FROM LINE 362
-
+            console.log("CALLED ADD PET TO USER: ", res);
             if (res.data.success === true) {
               $scope.defaultState(true);
               $scope.reservationTitle = "WHO'S STAYING?";
