@@ -12,6 +12,7 @@ angular.module('myApp', [
   'myApp.viewAddUser',
   'myApp.viewAddBooking',
   'myApp.addPetView',
+  'myApp.viewConfirm',
   //'myApp.viewLogin',
   'myApp.version',
   //'myApp.basicServices',
