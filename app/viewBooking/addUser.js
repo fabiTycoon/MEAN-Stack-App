@@ -194,6 +194,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       } else {
         $rootScope.registrationError = '';
         $scope.viewModelState.newUserStep = 'passwordInfo'
+        $scope.newUserButton = 'REGISTER';
         $scope.registrationTitle = 'YOUR PASSWORD';
       };
 
@@ -353,7 +354,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     if (clicked === true) {
       return;
     }
-
     clicked = true;
 
     var owner = $rootScope.user;
@@ -372,8 +372,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       $rootScope.$broadcast('registrationError');
     };
 
-    console.log("ADDING PET: ", newPet);
-
     User.addPet(newPet)
       .then(function(res){
         console.log("ADDED PET: ", res);
@@ -381,8 +379,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         //update local user object
         $rootScope.user.pets = res.data.updatedPets;
         $('#dummy-table-row').removeClass('pet-collection-empty-text');
-
-          console.log("UPDATED USER LOCALLY: ", $rootScope.user);  
         //update user object in DB    
         var reqPayload = JSON.stringify($rootScope.user);
           console.log("PAYLOAD: ", reqPayload);
