@@ -162,10 +162,12 @@ router.post('/update/', function (req, res){
 router.post('/addPet', function(req, res){
 
   var updatedUser = req.body;
-    console.log("CALLED ADD PET TO USER: ", updatedUser, req);
-    console.log("QUERY TO DATABASE: ", updatedUser, req);
-  var query = {'username': updatedUser.username};
-    console.log("QUERYING THIS FUCKING USER: ", query);
+    console.log("CALLED ADD PET TO USER: ", updatedUser, req.data); //why is this returning account w my email when using Olivia test account?
+    console.log("RES BODY: ", res.body, res.data);
+          //ANSWER: REQ.BODY IS EMPTY??
+    console.log("QUERY TO DATABASE: ", updatedUser);
+  var query = {'username': updatedUser.email};
+    console.log("QUERYING THIS FUCKING USER: ", query); //8/12/16 - UNDEFINED
   var newData = { $set : {'pets': updatedUser.pets}}
   var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedUser){
       if (err) {

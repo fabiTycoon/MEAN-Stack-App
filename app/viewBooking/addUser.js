@@ -272,7 +272,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     } else if ($scope.viewModelState.resStep === $scope.viewModelState.maxResSteps) {
       //SUBMIT FINAL:
       $rootScope.registrationError = "";
-      $location.path('/bookingConfirm');
+        console.log("REDIRECTING TO VIEWCONFIRM");
+      $location.path('#/viewConfirm');
     };
   };
 
@@ -367,7 +368,10 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
           console.log("UPDATED USER LOCALLY: ", $rootScope.user);  
         //update user object in DB
-        User.addPetToUser($rootScope.user)
+              // THIS IS WHERE THINGS ARE GOING HORRIBLY WRONG IT IS NOT RECIEVING THE USER!!!!!
+              var reqPayload = JSON.stringify($rootScope.user);
+                console.log("PAYLOAD: ", reqPayload);
+        User.addPetToUser(reqPayload)
           .then(function(res){
 
             console.log("CALLED ADD PET TO USER: ", res);   //FOR SOME REASON THIS IS RETURNING A DIFFERENT ACCOUNT FROM LINE 362

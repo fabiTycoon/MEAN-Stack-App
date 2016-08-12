@@ -63,7 +63,7 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var addPetToUser = function (updatedUser) {
-    return $http.post('/api/users/addPet');
+    return $http.post('/api/users/addPet', updatedUser);
   };
 
   var addReservationToUser = function (reservation) {

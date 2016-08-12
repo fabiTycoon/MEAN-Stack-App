@@ -26,7 +26,10 @@ router.post('/', function(req, res) {
   var newPet = new Pet(petObject);
   
 
+  //8/12/16 - THESE ARE ALL BEING PASSED IN CORRECTLY
   console.log("PET OBJECT: ", petObject);
+  console.log("USER EMAIL: ", userEmail);
+  console.log("EXISTING PETS: ", existingPets);
 
   newPet.save(function(err, pet){
     if (err) {
@@ -45,7 +48,14 @@ router.put('/', function(req, res) {
 });
 
 router.delete('/', function(req, res) {
-  
+  var userEmail = req.body.owner;
+    console.log("USER EMAIL: ", userEmail);
+  var pet = req.body.pet;
+    console.log("DELETING PET: ", pet);
+  //remove pet from pets database
+  //save user e-mail, remove pet from user
+
+
 });
 
 module.exports = router;
