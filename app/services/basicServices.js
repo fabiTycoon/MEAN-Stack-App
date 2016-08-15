@@ -2,6 +2,5 @@
 
 .service('userService', ['$location', function($location) {
 
-   var fuckyou = 'fuckyou';
 
 }]);*/

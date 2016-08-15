@@ -65,7 +65,7 @@
                   <br>
                 </div>
 
-                <div class="col s6 error-text" ng-if="registrationError.length !== 0">
+                <div class="col s6 offset-s2 error-text" ng-if="registrationError.length !== 0">
                   <p>{{registrationError}}</p>
                 </div>
 
@@ -278,11 +278,11 @@
                   <div class="row">
                     <div class="col s12">
                       <p>
-                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" />
+                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" ng-model="newReservation.bringingOwnFood" ng-true-value="'YES'"/>
                         <label for="ownFoodYes">Yes</label>
                       </p>
                       <p>
-                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodNo" />
+                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodNo" ng-model="newReservation.bringingOwnFood" ng-true-value="'NO'"/>
                         <label for="ownFoodNo">No</label>
                       </p>
                     </div>
@@ -294,11 +294,11 @@
                 <div class="col s6" id="returningRadioButtons">
                   <label for="returningRadioButtons">Have Your Pets Stayed With Us Before?</label>
                   <p>
-                    <input class="with-gap" name="returningRadios" type="radio" id="returningGuest Yes" />
+                    <input class="with-gap" name="returningRadios" type="radio" id="returningGuest Yes" ng-model="newReservation.returningGuest" ng-true-value="'YES'"/>
                     <label for="returningGuest Yes">Yes</label>
                   </p>
                   <p>
-                    <input class="with-gap" name="returningRadios" type="radio" id="returningGuest No" />
+                    <input class="with-gap" name="returningRadios" type="radio" id="returningGuest No" ng-model="newReservation.returningGuest" ng-true-value="'YES'"/>
                     <label for="returningGuest No">No</label>
                   </p>
                 </div>
@@ -447,11 +447,11 @@
                 <div class="col s10 offset-s1" ng-if="serviceSelected === 'boarding'">
                   
                   <div class="col s6" id="check-in-summary">
-                    <label for="check-in-summary">Check-In Date:</label>
+                    <label for="check-in-summary">Requested Check-In Date:</label>
                     <p>{{newReservation.checkInDate}}</p>
                   </div>
                   <div class="col s6" id="check-out-summary">
-                    <label for="check-out-summary">Check-Out Date:</label>
+                    <label for="check-out-summary">Requested Check-Out Date:</label>
                     <p>{{newReservation.checkOutDate}}</p>
                   </div>
 
@@ -467,11 +467,11 @@
               <div class="row">
                 <div class="col s10 offset-s1" ng-if="serviceSelected === 'boarding'">
                   
-                  <div class="col s6" id="drop-off-summary">
+                  <div class="col s6" id="drop-off-summary" ng-if="newReservation.checkInTime !== ''">
                     <label for="drop-off-summary">Est. Check-In Time:</label>
                     <p>{{newReservation.checkInTime}}</p>
                   </div>
-                  <div class="col s6" id="pick-up-summary">
+                  <div class="col s6" id="pick-up-summary" ng-if="newReservation.checkOutTime !== ''">
                     <label for="pick-up-summary">Est. Check-Out Time:</label>
                     <p>{{newReservation.checkOutTime}}</p>
                   </div>
@@ -499,22 +499,25 @@
 
               <div class="row">
                 <div class="col s10 offset-s1">
-                  <div class="col s6">
+                <div class="col s12">
+                  <h5 class="thin">How would you like us to contact you about your reservation?</h5>
+                </div>
+                  <div class="col s4">
                     <p>
-                      <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
-                      <label for="filled-in-box">I'm a returning guest.</label>
+                      <input name="contact-info" type="radio" id="contact-email" />
+                      <label for="test1">E-Mail</label>
                     </p>
                   </div>
-                  <div class="col s6" ng-if="">
+                  <div class="col s4">
                     <p>
-                      <input type="checkbox" class="filled-in" id="food-yes-box" checked="checked" />
-                      <label for="food-yes-box">I'm bringing my own food.</label>
+                      <input name="contact-info" type="radio" id="contact-phone" />
+                      <label for="test1">Phone</label>
                     </p>
                   </div>
-                  <div class="col s6" ng-if="">
+                  <div class="col s4">
                     <p>
-                      <input type="checkbox" id="food-no-box" disabled="disabled"/>
-                      <label for="food-no-box">I'm not bringing my own food</label>
+                      <input name="contact-info" type="radio" id="contact-text" />
+                      <label for="test1">Text Message</label>
                     </p>
                   </div>
                 </div>

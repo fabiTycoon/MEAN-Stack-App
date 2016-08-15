@@ -70,6 +70,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     checkInTime: '',
     checkOutTime: '',
     bringingOwnFood: false,
+    returningGuest: false,
+    preferredContact: 'email',
     comments: '',
     owner: '',
     pets: []
@@ -242,21 +244,46 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.viewModelState.resStep = 1;
   };  
 
+  var formatDate = function (dateString) {
+
+  };
+
+  var formatDisplayDates = function () {
+    $scope.displayCheckInDate = '';
+    $scope.displayCheckOutDate = '';
+
+    var dateString = $scope.newReservation.checkInDate;
+    var deleteIndex = dateString.indexOf('T');
+    dateString = dateString.splice(0, deleteIndex);
+    var year = dateString.splice(0, 4);
+    var month = dateString.splice(6, 8);
+    var day = 
+
+      console.log("FORMATTED DATE: ", day, month, year)
+  };
+
   $scope.advanceReservationStep = function () {
     if ($scope.viewModelState.resStep !== $scope.viewModelState.maxResSteps && $scope.viewModelState.resStep === 1) {
   
-      if ($scope.newReservation.checkInDate > $scope.newReservation.checkOutDate) {
+      if ($scope.serviceSelected === 'boarding' && ($scope.newReservation.checkInDate > $scope.newReservation.checkOutDate)) {
         //validate dates
         $rootScope.registrationError = "Please select valid check-in and check-out dates";
         $rootScope.$broadcast('registrationError');
-      } 
-
-      // ADD VALIDATION FOR RADIOS & MAKE SURE THEY BIND
-
-      else {
+        return;
+      } else if ($scope.serviceSelected === 'boarding' && $scope.newReservation.checkInDate === '' && $scope.newReservation.checkOutDate === '') {
+        $rootScope.registrationError = "Please select a check-in and check-out date";
+        $rootScope.$broadcast('registrationError');
+        return;
+      } else if ($scope.serviceSelected === 'daycare' && $scope.newReservation.checkInDate === '') {
+        $rootScope.registrationError = "Please select a date";
+        $rootScope.$broadcast('registrationError');
+        return;
+      } else {
+        // ADD VALIDATION FOR RADIOS & MAKE SURE THEY BIND
         $rootScope.registrationError = "";
         $scope.reservationTitle = "WHO'S STAYING?";
         $scope.reservationFwdButton = "REVIEW & BOOK";
+        $scope.reservationBackButton = "EDIT DATES";
         $scope.viewModelState.resStep = 2;
       };
 
@@ -265,30 +292,38 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       if ($scope.newReservation.pets.length === 0) {
         $rootScope.registrationError = "Please add at least one pet to your reservation";
         $rootScope.$broadcast('registrationError');
+        return;
       } else {
         $rootScope.registrationError = "";
         $scope.reservationTitle = "REVIEW & CONFIRM";
+        formatDisplayDates();
         $scope.reservationFwdButton = "CONFIRM";
+        $scope.reservationBackButton = "EDIT PETS";
         $scope.viewModelState.resStep = 3;
       };
-
     } else if ($scope.viewModelState.resStep === $scope.viewModelState.maxResSteps) {
       //SUBMIT FINAL:
-      $rootScope.registrationError = "";
-        console.log("REDIRECTING TO VIEWCONFIRM");
-      $location.path('#/viewConfirm');
+      $scope.confirmReservation();
     };
-  };
+};
 
   $scope.backReservationStep = function () {
     if ($scope.viewModelState.resStep !== 1) {
       $scope.viewModelState.resStep -=1;
-    } else if ($scope.viewModelState.resStep === 1) {
+    };
+
+    if ($scope.viewModelState.resStep === 1) {
       $scope.reservationTitle = "SELECT YOUR DATES";
+      $scope.reservationFwdButton = "SELECT PETS";
+      $scope.reservationBackButton = "EDIT DATES";
     } else if ($scope.viewModelState.resStep === 2) {
       $rootScope.registrationError = "";
       $scope.reservationTitle = "WHO'S STAYING?";
       $scope.reservationFwdButton = "REVIEW & BOOK";
+      $scope.reservationBackButton = "EDIT DATES";
+            //$scope.reservationBackButton = "BACK TO DATES";
+
+
     };
   };
 
@@ -316,6 +351,16 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   };
 
+  $scope.confirmReservation = function () {
+    console.log("REDIRECTING TO VIEWCONFIRM");
+
+    $rootScope.registrationError = "";
+    $location.path('#/viewConfirm');
+
+    var reservationObject = $scope.newReservation;
+
+
+  };
 
   $scope.showPetForm = function () {
     $scope.defaultState(true);

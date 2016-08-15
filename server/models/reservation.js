@@ -8,6 +8,7 @@ var ReservationSchema = new Schema({
   checkInTime: {type: String, required: true},
   bringingOwnFood: Boolean,
   returningGuest: Boolean,
+  preferredContact: {type: String, default: 'email'},
   checkOutTime: {type: String, required: true},
   owner: {type: String, required: true},
   pets: {type: Array, required: true}
