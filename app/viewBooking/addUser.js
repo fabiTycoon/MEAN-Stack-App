@@ -229,6 +229,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       $scope.serviceSelected = 'daycare';
     };
 
+    if($scope.serviceSelected === 'daycare') {
+        $scope.reservationTitle = "SELECT A DATE";
+      } else if ($scope.serviceSelected === 'boarding') {
+        $scope.reservationTitle = "SELECT YOUR DATES";
+      };
+
     if ($rootScope.user && $rootScope.user.isLoggedIn) {
       $scope.viewModelState.newReservation = true;
       $scope.viewModelState.resStep = 1;
@@ -314,7 +320,13 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     };
 
     if ($scope.viewModelState.resStep === 1) {
-      $scope.reservationTitle = "SELECT YOUR DATES";
+      
+      if($scope.serviceSelected === 'daycare') {
+        $scope.reservationTitle = "SELECT A DATE";
+      } else if ($scope.serviceSelected === 'boarding') {
+        $scope.reservationTitle = "SELECT YOUR DATES";
+      };
+
       $scope.reservationFwdButton = "SELECT PETS";
       $scope.reservationBackButton = "EDIT DATES";
     } else if ($scope.viewModelState.resStep === 2) {
@@ -323,8 +335,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       $scope.reservationFwdButton = "REVIEW & BOOK";
       $scope.reservationBackButton = "EDIT DATES";
             //$scope.reservationBackButton = "BACK TO DATES";
-
-
     };
   };
 
