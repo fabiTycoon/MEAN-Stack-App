@@ -252,11 +252,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.displayCheckInDate = '';
     $scope.displayCheckOutDate = '';
 
-    var dateString = $scope.newReservation.checkInDate;
+    var dateString = $scope.newReservation.checkInDate + '';
+      console.log("DATESTRING:", dateString);
     var deleteIndex = dateString.indexOf('T');
-    dateString = dateString.splice(0, deleteIndex);
-    var year = dateString.splice(0, 4);
-    var month = dateString.splice(6, 8);
+    dateString = dateString.slice(0, deleteIndex);
+    var year = dateString.slice(0, 4);
+    var month = dateString.slice(6, 8);
     var day = 
 
       console.log("FORMATTED DATE: ", day, month, year)
@@ -348,17 +349,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     if ($scope.newReservation.pets.length === 0) {
       $('#dummy-table-row').addClass('pet-collection-empty-text');
     };
-
-  };
-
-  $scope.confirmReservation = function () {
-    console.log("REDIRECTING TO VIEWCONFIRM");
-
-    $rootScope.registrationError = "";
-    $location.path('#/viewConfirm');
-
-    var reservationObject = $scope.newReservation;
-
 
   };
 
@@ -459,8 +449,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     reservation.owner = $rootScope.owner.username;
     reservation.existingReservations = $rootScope.owner.reservations;
 
-    //TO DO: ADD VALIDATION & ERROR MESSAGING FOR USER
-      //$rootScope.user.reservations.push(reservation);
     User.addReservation(reservation)
       .then(function(res){
         console.log("ADDED RESERVATION:", res.reservation);
@@ -468,11 +456,20 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         if (res.success === true) {
           //update local user:
           $rootScope.user.reservations.push(res.reservation);
-          //update view to confirmation screen 
-            /*
-            $scope.defaultState(true);
-            $scope.viewModelState.finalConfirm = true;
-            */
+          User.addReservationToUser(reservation)
+            .then(function(res){
+
+              if (res.success === true) {
+                //update view to confirmation screen 
+                $scope.defaultState(true);
+                $scope.viewModelState.finalConfirm = true;
+                
+              } else {
+                $rootScope.registrationError = res.error;
+                //$rootScope.registrationError = res.message;
+                $rootScope.$broadcast('registrationError');
+              };
+            });
         } else {
           $rootScope.registrationError = res.message;
           $rootScope.$broadcast('registrationError');

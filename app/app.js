@@ -41,8 +41,6 @@ config(['$routeProvider', function($routeProvider) {
 
   var addReservation = function (reservation) {
       console.log("CALLED RESERVATINO FACTORY: ", reservation);
-    userObject.reservations.push(reservation);
-      //update user and refresh rootScope.user
     return $http.post('/api/bookings/new', reservation);
   };
 
@@ -67,7 +65,7 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var addReservationToUser = function (reservation) {
-    return $http.post('/api/users/addReservation');
+    return $http.post('/api/users/addReservation', reservation);
   };
 
   var getPets = function () {
@@ -77,10 +75,6 @@ config(['$routeProvider', function($routeProvider) {
 
   var register = function(data) {
     return $http.post('/api/users/register', data);
-  };
-
-  var getUserId = function() {
-    return $http.get('/api/users/userId');
   };
 
   var edit = function(userId, data) {
@@ -104,7 +98,6 @@ config(['$routeProvider', function($routeProvider) {
     deleteReservation: deleteReservation, 
     editReservation: editReservation,
     register: register,
-    getUserId: getUserId,
     edit: edit,
     del: del
   };
