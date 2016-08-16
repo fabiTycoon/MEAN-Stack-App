@@ -278,11 +278,11 @@
                   <div class="row">
                     <div class="col s12">
                       <p>
-                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" ng-model="newReservation.bringingOwnFood" ng-true-value="'YES'"/>
+                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" ng-model="newReservation.bringingOwnFood"/>
                         <label for="ownFoodYes">Yes</label>
                       </p>
                       <p>
-                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodNo" ng-model="newReservation.bringingOwnFood" ng-true-value="'NO'"/>
+                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodNo" ng-model="newReservation.bringingOwnFood"/>
                         <label for="ownFoodNo">No</label>
                       </p>
                     </div>
@@ -334,28 +334,26 @@
               </div>  
 
               <div class="row">
-                <div class="col s12">
-                  <form id ="foodRadioButtons">
-                    <label for="foodRadioButtons">Are You Bringing Your Own Food?</label>
-                      <div class="row">
-                        <div class="col s6">
-                          <p>
-                            <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" />
-                            <label for="ownFoodYes">Yes</label>
-                          </p>
-                          <p>
-                            <input class="with-gap" name="foodRadios" type="radio" id="ownFoodNo" />
-                            <label for="ownFoodNo">No</label>
-                          </p>
-                        </div>
+                <div class="col s12" id="foodRadioButtons">
+                  <label for="foodRadioButtons">Are You Bringing Your Own Food?</label>
+                    <div class="row">
+                      <div class="col s6">
+                        <p>
+                          <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" ng-model="newReservation.bringingOwnFood"/>
+                          <label for="ownFoodYes">Yes</label>
+                        </p>
+                        <p>
+                          <input class="with-gap" name="foodRadios" type="radio" id="ownFoodNo" ng-model="newReservation.bringingOwnFood"/>
+                          <label for="ownFoodNo">No</label>
+                        </p>
                       </div>
-                      <div class="row">
-                        <div class="col s12">
-                          <label for="textarea1">Additional Notes &amp; Comments</label>
-                          <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
-                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col s12">
+                        <label for="textarea1">Additional Notes &amp; Comments</label>
+                        <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
                       </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -448,18 +446,18 @@
                   
                   <div class="col s6" id="check-in-summary">
                     <label for="check-in-summary">Requested Check-In Date:</label>
-                    <p>{{newReservation.checkInDate}}</p>
+                    <p>{{displayCheckInDate}}</p>
                   </div>
                   <div class="col s6" id="check-out-summary">
                     <label for="check-out-summary">Requested Check-Out Date:</label>
-                    <p>{{newReservation.checkOutDate}}</p>
+                    <p>{{displayCheckOutDate}}</p>
                   </div>
 
                 </div>
                 <div class="col s10 offset-s1" ng-if="serviceSelected === 'daycare'">
                   <div class="col s6" id="req-date-summary">
                     <label for="req-date-summary">Requested Date:</label>
-                    <p>{{newReservation.checkInDate}}</p>
+                    <p>{{displayCheckInDate}}</p>
                   </div>
                 </div>
               </div>
@@ -489,10 +487,19 @@
               <div class="row" ng-repeat="pet in newReservation.pets">
                 <div class="col s10 offset-s1">
                   <div class="col s6" id="pet-name-review">
-                    <label for="pet-name-review">Name: </label>{{pet.name}}
+                    <ul>
+                      <li>
+                        <p>{{pet.name}}</p>
+                      </li>
+                    </ul>
                   </div>
                   <div class="col s6" id="pet-type-review">
-                    <label for="pet-type-review">Species: </label>{{pet.type}}
+                    <ul>
+                      <li>
+                        <span ng-if="pet.type === 'dog'" class="pet-icons-confirmation"><add-dog-reservation-icon></add-dog-reservation-icon></span>
+                        <span ng-if="pet.type === 'cat'" class="pet-icons-confirmation"><add-cat-reservation-icon></add-cat-reservation-icon></span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -500,24 +507,24 @@
               <div class="row">
                 <div class="col s10 offset-s1">
                 <div class="col s12">
-                  <h5 class="thin">How would you like us to contact you about your reservation?</h5>
+                  <h6 class="thin">How would you like us to contact you about your reservation?</h6>
                 </div>
                   <div class="col s4">
                     <p>
-                      <input name="contact-info" type="radio" id="contact-email" />
-                      <label for="test1">E-Mail</label>
+                      <input name="contact-info" class="with-gap" type="radio" id="contact-email" />
+                      <label for="contact-email">E-Mail</label>
                     </p>
                   </div>
                   <div class="col s4">
                     <p>
-                      <input name="contact-info" type="radio" id="contact-phone" />
-                      <label for="test1">Phone</label>
+                      <input name="contact-info" class="with-gap" type="radio" id="contact-phone" />
+                      <label for="contact-phone">Phone</label>
                     </p>
                   </div>
                   <div class="col s4">
                     <p>
-                      <input name="contact-info" type="radio" id="contact-text" />
-                      <label for="test1">Text Message</label>
+                      <input name="contact-info" class="with-gap" type="radio" id="contact-text" />
+                      <label for="contact-text">Text Message</label>
                     </p>
                   </div>
                 </div>
@@ -676,7 +683,7 @@
 
                     <div class="row">
                       <div class="col s6">
-                        <input type="checkbox" class="filled-in" id="neuter-box" checked="checked" ng-model="newPet.neutered"/>
+                        <input type="checkbox" class="with-gap" id="neuter-box" checked="checked" ng-model="newPet.neutered"/>
                         <label for="neuter-box">This critter is neutered &amp; vaccinated</label>
                       </div>
                       <div class="col s6 error-text">

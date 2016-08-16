@@ -91,6 +91,12 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
   fill: $tertiary-color;
 };
 
+.pet-icons-confirmation svg {
+  height: 2em;
+  margin-left: -10em; 
+  margin-top: -0.5em;
+}
+
 .pet-icon-new svg {
   margin-top: 2em;
   height: 5em;

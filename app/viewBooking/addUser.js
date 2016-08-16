@@ -250,23 +250,22 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.viewModelState.resStep = 1;
   };  
 
-  var formatDate = function (dateString) {
-
+  var formatDateString = function (dateString) {
+    var formattedDateString = '';
+    dateString = dateString + '';
+    var year = dateString.slice(11, 15);
+    var month = dateString.slice(4, 7);
+    var day = dateString.slice(8, 10);
+    formattedDateString = month + " " + day + ", " + year;
+    return formattedDateString;
   };
 
   var formatDisplayDates = function () {
-    $scope.displayCheckInDate = '';
-    $scope.displayCheckOutDate = '';
+    $scope.displayCheckInDate = formatDateString($scope.newReservation.checkInDate);
 
-    var dateString = $scope.newReservation.checkInDate + '';
-      console.log("DATESTRING:", dateString);
-    var deleteIndex = dateString.indexOf('T');
-    dateString = dateString.slice(0, deleteIndex);
-    var year = dateString.slice(0, 4);
-    var month = dateString.slice(6, 8);
-    var day = 
-
-      console.log("FORMATTED DATE: ", day, month, year)
+    if ($scope.serviceSelected === 'boarding') {
+      $scope.displayCheckOutDate = formatDateString($scope.newReservation.checkOutDate);
+    };
   };
 
   $scope.advanceReservationStep = function () {

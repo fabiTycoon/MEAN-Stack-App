@@ -55,6 +55,11 @@
   width: 5em;
   fill: #f5f5f5; }
 
+.pet-icons-confirmation svg {
+  height: 2em;
+  margin-left: -10em;
+  margin-top: -0.5em; }
+
 .pet-icon-new svg {
   margin-top: 2em;
   height: 5em;
