@@ -456,7 +456,7 @@
                 </div>
                 <div class="col s10 offset-s1" ng-if="serviceSelected === 'daycare'">
                   <div class="col s6" id="req-date-summary">
-                    <label for="req-date-summary">Requested Date:</label>
+                    <label for="req-date-summary">Requested Daycare Date:</label>
                     <p>{{displayCheckInDate}}</p>
                   </div>
                 </div>
@@ -479,7 +479,8 @@
               <div class="row">
                 <div class="col s10 offset-s1">
                   <div class="col s12">
-                    <h4 class="thin">Who's Staying:</h4>
+                    <h4 ng-if="serviceSelected === 'boarding'" class="thin">Who's Staying:</h4>
+                    <h4 ng-if="serviceSelected === 'daycare'" class="thin">Who's Coming To Play:</h4>
                   </div>
                 </div>
               </div>
