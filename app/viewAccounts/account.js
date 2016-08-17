@@ -21,7 +21,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   };
 
   if ($rootScope.user) {
-    $scope.displayName = $rootScope.user.first + " " + rootScope.user.last;
+    $scope.displayName = $rootScope.user.first + " " + $rootScope.user.last;
     console.log("SET DISPLAY NAME: ", $scope.displayName);
   };
 
