@@ -231,10 +231,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     if($scope.serviceSelected === 'daycare') {
         $scope.reservationTitle = "SELECT A DATE";
-        $scope.newReservation.service === 'daycare';
       } else if ($scope.serviceSelected === 'boarding') {
         $scope.reservationTitle = "SELECT YOUR DATES";
-        $scope.newReservation.service === 'boarding';
       };
 
     if ($rootScope.user && $rootScope.user.isLoggedIn) {
@@ -454,6 +452,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.createNewReservation = function () {
     if (clicked === true) { return; };
     clicked = true;
+
+    if ($scope.serviceSelected === 'boarding') {
+      $scope.newReservation.service === 'boarding';
+    } else {
+      $scope.newReservation.service === 'daycare';
+    };
 
       console.log("CALLED CREATE NEW RESERVATION: ", $scope.newReservation);
     var reservation = $scope.newReservation;
