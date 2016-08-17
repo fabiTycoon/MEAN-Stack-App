@@ -250,7 +250,7 @@
     
       <div class="col s10 offset-s1 card" id="registration-form-container" ng-if="refresh === false">
         <h3 class="thin">{{reservationTitle}}</h3>
-        <div class="card-content">
+        <div class="card-content" ng-hide="viewModelState.resStep === 3">
           
           <div ng-show="viewModelState.resStep === 1 && serviceSelected === 'boarding'">
             <div class="input-field col s6" ngMouseup="setDate()">
