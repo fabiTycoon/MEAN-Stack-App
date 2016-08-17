@@ -40,7 +40,7 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var addReservation = function (reservation) {
-      console.log("CALLED RESERVATINO FACTORY: ", reservation);
+      console.log("CALLED RESERVATION FACTORY: ", reservation);
     return $http.post('/api/bookings/new', reservation);
   };
 
@@ -65,6 +65,7 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var addReservationToUser = function (reservation) {
+    console.log("CALLED RESERVATION TO USER FACTORY: ", reservation);
     return $http.post('/api/users/addReservation', reservation);
   };
 

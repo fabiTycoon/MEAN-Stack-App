@@ -168,7 +168,7 @@ router.post('/addPet', function(req, res){
           //ANSWER: REQ.BODY IS EMPTY??
     console.log("QUERY TO DATABASE: ", updatedUser);
   var query = {'username': updatedUser.email};
-    console.log("QUERYING THIS FUCKING USER: ", query); //8/12/16 - UNDEFINED
+    console.log("QUERYING THIS USER: ", query); //8/12/16 - UNDEFINED
   var newData = { $set : {'pets': updatedUser.pets}}
   var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedUser){
       if (err) {
@@ -184,7 +184,7 @@ router.post('/addReservation', function(req, res){
   var updatedUser = req.body;
     console.log("UPDATED USER: ", updatedUser);
 
-  var query = {'username': updatedUser.username};
+  var query = {'username': updatedUser.email};
   var newData = { $set : {'reservations': updatedUser.reservations}}
   var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedUser){
       if (err) {

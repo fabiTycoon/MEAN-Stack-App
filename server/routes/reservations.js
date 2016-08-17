@@ -26,7 +26,7 @@ router.post('/new', function(req, res) {
   var existingReservations = req.body.existingReservations;
   var newReservation = new Reservation(reservationObject);
   
-  console.log("RESERVATION OBJECT: ", reservationObject);
+    console.log("RESERVATION OBJECT: ", reservationObject);
 
   newReservation.save(function(err, pet){
     if (err) {

@@ -735,6 +735,13 @@
           Congrats!  You've scheduled a stay for your pets.  We'll be following up with a final confirmation shortly.  In the meantime, if you need to make any changes to your reservation, you can access all of your information on <a href="#/account">your account page</a>.
         </p>
       </div>
+
+      <div>
+        <ul>
+          <li ng-repeat="res in user.reservations">{{res.checkInDate}} - {{res.checkOutDate}}</li>
+        </ul>
+      </div>
+
       <div class="card-action">
         <a href="/#">OK!</a>
       </div>

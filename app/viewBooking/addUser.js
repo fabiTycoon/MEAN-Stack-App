@@ -64,7 +64,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.setDefaultUser();
 
   $scope.newReservation = {
-    service: $scope.serviceSelected,
+    service: '',
     checkInDate: '',
     checkOutDate: '',
     checkInTime: '',
@@ -231,8 +231,10 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     if($scope.serviceSelected === 'daycare') {
         $scope.reservationTitle = "SELECT A DATE";
+        $scope.newReservation.service === 'daycare';
       } else if ($scope.serviceSelected === 'boarding') {
         $scope.reservationTitle = "SELECT YOUR DATES";
+        $scope.newReservation.service === 'boarding';
       };
 
     if ($rootScope.user && $rootScope.user.isLoggedIn) {
@@ -307,9 +309,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         $scope.reservationBackButton = "EDIT PETS";
         $scope.viewModelState.resStep = 3;
       };
-    } else if ($scope.viewModelState.resStep === $scope.viewModelState.maxResSteps) {
+    } else if ($scope.viewModelState.resStep === 3) {
       //SUBMIT FINAL:
-      $scope.confirmReservation();
+      $scope.createNewReservation();
     };
 };
 
@@ -394,10 +396,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.addPet = function () {
-
-    if (clicked === true) {
-      return;
-    }
+    if (clicked === true) { return;}; 
     clicked = true;
 
     var owner = $rootScope.user;
@@ -453,34 +452,41 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.createNewReservation = function () {
+    if (clicked === true) { return; };
+    clicked = true;
 
+      console.log("CALLED CREATE NEW RESERVATION: ", $scope.newReservation);
     var reservation = $scope.newReservation;
-    reservation.owner = $rootScope.owner.username;
-    reservation.existingReservations = $rootScope.owner.reservations;
+    reservation.owner = $rootScope.user.email;
+    reservation.existingReservations = $rootScope.user.reservations;
+      console.log("RESERVATION ASSIGNMENTS: ", reservation);
 
     User.addReservation(reservation)
       .then(function(res){
         console.log("ADDED RESERVATION:", res.reservation);
+        console.log("ADDED RESERVATION RES:", res);
 
         if (res.success === true) {
           //update local user:
+            console.log("ADDED RESERVATION TO DB, NOW ADDING TO USER")
           $rootScope.user.reservations.push(res.reservation);
+            console.log("ADDED RESERVATION TO LOCAL USER:", $rootScope.user);
           User.addReservationToUser(reservation)
             .then(function(res){
 
+              clicked = false; 
+
               if (res.success === true) {
-                //update view to confirmation screen 
                 $scope.defaultState(true);
                 $scope.viewModelState.finalConfirm = true;
-                
               } else {
                 $rootScope.registrationError = res.error;
-                //$rootScope.registrationError = res.message;
                 $rootScope.$broadcast('registrationError');
               };
             });
         } else {
-          $rootScope.registrationError = res.message;
+          clicked = false; 
+          $rootScope.registrationError = res.error;
           $rootScope.$broadcast('registrationError');
         };
       });
