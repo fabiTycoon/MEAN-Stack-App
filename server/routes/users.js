@@ -186,19 +186,13 @@ router.post('/addReservation', function(req, res){
 
   var query = {'username': updatedUser.email};
   var newData = { $set : {'reservations': updatedUser.reservations}}
-  var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedUser){
+  var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedReservation){
       if (err) {
-        return res.send(500, { error: err });
+        return res.status(500).json({'success': false, 'error':err});
       } else {
-        return returnedUser;
-      }
+        return res.status(200).json({'success': true, 'reservation': returnedReservation});
+      };
   });
-
-  if (err) {
-    return res.status(500).json({'success': false, 'error':err});
-  } else {
-    return res.status(200).json({'success': true, 'updatedUser': returnedUser});
-  } 
 });
 
 router.get('/logout', function(req, res){

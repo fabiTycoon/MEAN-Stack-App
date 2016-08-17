@@ -28,13 +28,13 @@ router.post('/new', function(req, res) {
   
     console.log("RESERVATION OBJECT: ", reservationObject);
 
-  newReservation.save(function(err, pet){
+  newReservation.save(function(err, returnedReservation){
     if (err) {
       console.log("ERROR: ", err);
-      return res.status(500).json({'error': err, 'message': 'Please check that you\'ve filled in all required fields.'});
+      return res.status(500).json({'success': false, 'error': err, 'message': 'Please check that you\'ve filled in all required fields.'});
     } else {
-      existingReservations.push(pet);
-      return res.status(200).json({'reservation': reservation, 'updatedReservations': existingReservations, 'userEmail': userEmail});
+      existingReservations.push(returnedReservation);
+      return res.status(200).json({'success': true, 'reservation': returnedReservation, 'updatedReservations': existingReservations, 'userEmail': userEmail});
     };
   });
 

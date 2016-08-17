@@ -467,36 +467,37 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     User.addReservation(reservation)
       .then(function(res){
-        console.log("ADDED RESERVATION:", res.reservation);
-        console.log("ADDED RESERVATION RES:", res);
+        console.log("ADDED RESERVATION TO RESERVATION DB - RES:", res.data);
 
-        if (res.success === true) {
+        if (res.data.success === true) {
           //update local user:
-            console.log("ADDED RESERVATION TO DB, NOW ADDING TO USER")
-          $rootScope.user.reservations.push(res.reservation);
+          $rootScope.user.reservations.push(res.data.reservation);
             console.log("ADDED RESERVATION TO LOCAL USER:", $rootScope.user);
-          User.addReservationToUser(reservation)
+
+
+          User.addReservationToUser(res.data.reservation)
             .then(function(res){
+
+                console.log("SUCCESS ADDED RES TO USER IN DB:", res.data);
 
               clicked = false; 
 
-              if (res.success === true) {
+              if (res.data.success === true) {
                 $scope.defaultState(true);
                 $scope.viewModelState.finalConfirm = true;
               } else {
-                $rootScope.registrationError = res.error;
+                $rootScope.registrationError = res.data.error;
                 $rootScope.$broadcast('registrationError');
               };
             });
         } else {
           clicked = false; 
-          $rootScope.registrationError = res.error;
+          $rootScope.registrationError = res.data.error;
           $rootScope.$broadcast('registrationError');
         };
       });
   };
 
-  //REFACTOR THIS FUNCTION:
   $scope.loginUser = function () {
     //$scope.loginLoading = true;
     
