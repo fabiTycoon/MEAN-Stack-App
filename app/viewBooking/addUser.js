@@ -454,9 +454,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     clicked = true;
 
     if ($scope.serviceSelected === 'boarding') {
-      $scope.newReservation.service === 'boarding';
+      $scope.newReservation.service = 'boarding';
     } else {
-      $scope.newReservation.service === 'daycare';
+      $scope.newReservation.service = 'daycare';
     };
 
       console.log("CALLED CREATE NEW RESERVATION: ", $scope.newReservation);
