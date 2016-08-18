@@ -392,14 +392,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     for (var i = 0; i < $scope.newReservation.pets.length; i++) {
       if ($scope.newReservation.pets[i].name === petName) {
         var removedPet = $scope.newReservation.pets.splice(i, 1);
-        console.log("REMOVED PET: ", removedPet);
       };
     };
 
     if ($scope.newReservation.pets.length === 0) {
       $('#dummy-table-row').addClass('pet-collection-empty-text');
     };
-
   };
 
   $scope.showPetForm = function () {
@@ -427,11 +425,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       $scope.addPetTitle = 'MY CAT\'S INFO'
     };
 
-    //$scope.addPetTitle = 'MY PET\'S INFO';
     $scope.viewModelState.resStep = 2;
     $scope.viewModelState.addPet = true;
     $scope.viewModelState.addPetStep = 2;
-      console.log("VM STATE: ", $scope.viewModelState);
   };
 
   $scope.addPet = function () {
@@ -485,9 +481,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.phoneConcat = function () {
-    console.log("phone concat, # is:", $scope.newUser.phArea, $scope.newUser.ph1, $scope.newUser.ph2);
     $scope.newUser.phone = ($scope.newUser.phArea + $scope.newUser.ph1 + $scope.newUser.ph2);
-    console.log("phone concat, # is:", $scope.newUser.phone);
   };
 
   $scope.createNewReservation = function () {
@@ -545,7 +539,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     if ($scope.loginUserObject.username.length > 3 && $scope.loginUserObject.password.length > 7) {
       User.logIn($scope.loginUserObject)
       .then(function(res){
-        console.log("LOGIN RES: ", res);
         $scope.loginLoading = false;
 
         if (res.status === 401) {
@@ -555,7 +548,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
         if (res.data.isLoggedIn) {
           $rootScope.user = res.data.user;
-            console.log("LOGGED IN", res.data.user);
 
           if ($scope.serviceSelected && $scope.serviceSelected === 'boarding') {
             $scope.addReservation();
@@ -579,8 +571,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.newUser.email = $scope.newUser.username;
     User.register($scope.newUser)
       .then(function (res){
-          console.log("RESPONSE: ", res);
-
         if (res.data.success === true) {
           $rootScope.user = res.data.user
           $scope.defaultState(true);
@@ -589,10 +579,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
           $rootScope.loading = false;
           $scope.setDefaultUser();
           $scope.viewModelState.returningUser = true;
-            console.log("REGISTER viewModelState: ", $scope.viewModelState);
         } else {
-          console.log("REGISTRATION FAILED:")
-
           if (res.data.error.message) {
             $rootScope.registrationError = res.data.error.message;
             console.log("registrationError1:", $rootScope.registrationError);
@@ -619,7 +606,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       selectMonths: true, // Creates a dropdown to control month
       selectYears: 15, // Creates a dropdown of 15 years to control year
     });
-
     $('select').material_select(); //is this being called at the correct time?
   };
 
@@ -649,9 +635,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   });
 
   $rootScope.$on('registrationError', function(){
-
       console.log("ERROR:", $rootScope.registrationError);
-
     $('#registration-form-container').addClass('animated shake')
     $scope.refreshView()
     $timeout(function(){
