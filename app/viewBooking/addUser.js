@@ -285,7 +285,29 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         $rootScope.$broadcast('registrationError');
         return;
       } else {
-        // ADD VALIDATION FOR RADIOS & MAKE SURE THEY BIND
+        //RADIO VALIDATION & BINDING:
+        var bringingFoodYes = $('#bringingFoodYes').prop('checked');
+        var bringingFoodNo = $('#bringingFoodNo').prop('checked');
+        var returningGuestYes = $('#returningGuestYes').prop('checked');
+        var returningGuestNo = $('#returningGuestNo').prop('checked');
+    
+        if ($scope.serviceSelected === 'boarding' && (bringingFoodYes === false && bringingFoodNo === false)) {
+          $rootScope.registrationError = "Please select whether or not you'll be bringing food from home for your pets.";
+          $rootScope.$broadcast('registrationError');
+          return;
+        };
+
+        if (bringingFoodYes === true) {
+          $scope.newReservation.bringingFood = true
+        } else if (bringingFoodYes === false) {
+          $scope.newReservation.bringingFood = false;
+        } else if (returningGuestYes === true) { 
+          $scope.newReservation.returningGuest = true;
+        } else if (returningGuestNo === true) {
+          $scope.newReservation.returningGuest = false;
+        };
+
+        //ADVANCE USER:
         $rootScope.registrationError = "";
         $scope.reservationTitle = "WHO'S STAYING?";
         $scope.reservationFwdButton = "REVIEW & BOOK";
@@ -308,6 +330,25 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         $scope.viewModelState.resStep = 3;
       };
     } else if ($scope.viewModelState.resStep === 3) {
+
+      var contactEmail = $('#contact-email').prop('checked');
+      var contactPhone = $('#contact-phone').prop('checked');
+      var contactText = $('#contact-text').prop('checked');
+
+      if (contactEmail === false && contactPhone === false && contactText === false) {
+        $rootScope.registrationError = "Please select a preferred contact method to confrim your reservation";
+        $rootScope.$broadcast('registrationError');
+        return; 
+      } 
+
+      if (contactEmail === true) {
+        $scope.newReservation.preferredContact === 'email';
+      } else if (contactPhone === true) {
+        $scope.newReservation.preferredContact === 'phone';
+      } else if (contactText === true) {
+        $scope.newReservation.preferredContact === 'text';
+      };
+
       //SUBMIT FINAL:
       $scope.createNewReservation();
     };
