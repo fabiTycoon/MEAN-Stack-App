@@ -219,8 +219,6 @@
           <!--END CARD CONTENT, USER REGISTRATION-->
           </div>
 
-
-
           <div class="row">
             <div id="registration-action-card" class="right card-action">
               <a ng-click="advanceNewUser();" class="thin matcard-action-text">{{newUserButton}}</a>
@@ -228,14 +226,10 @@
           </div>
 
         </div>
-        
-
-
       </div>
     </div>
 
   <!-- END NEW USER VIEWS -->
-
 
 
   <!--ADD BOARDING RESERVATION VIEW-->
@@ -247,7 +241,7 @@
   <br>
 
   <div class="row" ng-if="viewModelState.newReservation === true && viewModelState.addPet === false">
-    
+
       <div class="col s10 offset-s1 card" id="registration-form-container" ng-if="refresh === false">
         <h3 class="thin">{{reservationTitle}}</h3>
         <div class="card-content" ng-hide="viewModelState.resStep === 3">
@@ -273,45 +267,39 @@
             </div>  
 
             <div class="row">
-              <div class="col s6" id ="foodRadioButtons">
-                <label for="foodRadioButtons">Are You Bringing Your Own Food?</label>
-                  <div class="row">
-                    <div class="col s12">
-                      <p>
-                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodYes" ng-model="newReservation.bringingOwnFood"/>
-                        <label for="ownFoodYes">Yes</label>
-                      </p>
-                      <p>
-                        <input class="with-gap" name="foodRadios" type="radio" id="ownFoodNo" ng-model="newReservation.bringingOwnFood"/>
-                        <label for="ownFoodNo">No</label>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              <div class="col s6" id="foodRadioButtons">
+                <label for="foodRadioButtons">Will You Be Bringing Your Own Food?</label>
+                <p>
+                  <input class="with-gap" name="foodRadios" type="radio" id="bringingFoodYes"/>
+                  <label for="bringingFoodYes">Yes</label>
+                </p>
+                <p>
+                  <input class="with-gap" name="foodRadios" type="radio" id="bringingFoodNo"/>
+                  <label for="bringingFoodNo">No</label>
+                </p>
+              </div>
 
-
+              <div class="col s6" id="returningRadioButtons">
+                <label for="returningRadioButtons">Have Your Pets Stayed With Us Before?</label>
+                <p>
+                  <input class="with-gap" name="returningRadios" type="radio" id="returningGuestYes"/>
+                  <label for="returningGuestYes">Yes</label>
+                </p>
+                <p>
+                  <input class="with-gap" name="returningRadios" type="radio" id="returningGuestNo"/>
+                  <label for="returningGuestNo">No</label>
+                </p>
+              </div>
                   
-                <div class="col s6" id="returningRadioButtons">
-                  <label for="returningRadioButtons">Have Your Pets Stayed With Us Before?</label>
-                  <p>
-                    <input class="with-gap" name="returningRadios" type="radio" id="returningGuest Yes" ng-model="newReservation.returningGuest" ng-true-value="'YES'"/>
-                    <label for="returningGuest Yes">Yes</label>
-                  </p>
-                  <p>
-                    <input class="with-gap" name="returningRadios" type="radio" id="returningGuest No" ng-model="newReservation.returningGuest" ng-true-value="'YES'"/>
-                    <label for="returningGuest No">No</label>
-                  </p>
+
+              <div class="row">
+                <div class="col s12">
+                  <label for="textarea1">Any Additional Notes &amp; Comments</label>
+                  <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
                 </div>
-                    
+              </div>
 
 
-                <div class="row">
-                  <div class="col s12">
-                    <label for="textarea1">Any Additional Notes &amp; Comments</label>
-                    <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
-                  </div>
-                </div>
-              
             </div>
           </div>
             <!-- END BOARDING SPECIFIC FIELDS -->
@@ -724,23 +712,12 @@
             </p>
           </div>
 
-          <div>
-            <ul>
-              <li ng-repeat="res in user.reservations">{{res.checkInDate}} - {{res.checkOutDate}}</li>
-            </ul>
-          </div>
 
-          <div class="card-action">
+          <div class="card-action right">
             <a href="/#">OK!</a>
           </div>
         </div>
       </div>
-    </div>
-
-    <div id="temp-list" ng-if="user.reservations.length !== 0">
-      <ul>
-        <li ng-repeat="res in user.reservations">Reservation: {{res.checkInDate}} - {{res.checkOutDate}}</li>
-      </ul>
     </div>
   </div>
 
