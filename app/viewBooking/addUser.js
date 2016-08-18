@@ -298,9 +298,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         };
 
         if (bringingFoodYes === true) {
-          $scope.newReservation.bringingFood = true
+          $scope.newReservation.bringingOwnFood = true
         } else if (bringingFoodYes === false) {
-          $scope.newReservation.bringingFood = false;
+          $scope.newReservation.bringingOwnFood = false;
         } else if (returningGuestYes === true) { 
           $scope.newReservation.returningGuest = true;
         } else if (returningGuestNo === true) {

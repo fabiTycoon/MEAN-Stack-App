@@ -21,10 +21,8 @@ angular.module('myApp', [
   'ngSanitize'
 ]).
 config(['$routeProvider', function($routeProvider) {
-
   $routeProvider.otherwise({redirectTo: '/main'});
   //add additional routes
-
 }])
 
 .factory('User', ['$http', '$rootScope', '$q', function  ($http, $rootScope, $q){
