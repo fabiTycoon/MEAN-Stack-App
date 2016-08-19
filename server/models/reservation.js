@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var ReservationSchema = new Schema({
   service: {type: String, required: true},
   checkInDate: {type: Date, required: true},
+  checkOutDate: {type: Date, required: true},
   checkOutTime: String,
   checkInTime: String,
   bringingOwnFood: Boolean,
