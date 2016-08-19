@@ -27,6 +27,7 @@ router.post('/new', function(req, res) {
   var newReservation = new Reservation(reservationObject);
   
     console.log("RESERVATION OBJECT: ", reservationObject);
+    console.log("EXISTING RESERVATIONS WERE: ", reservationObject.existingReservations);
 
   newReservation.save(function(err, returnedReservation){
     if (err) {
@@ -34,6 +35,7 @@ router.post('/new', function(req, res) {
       return res.status(500).json({'success': false, 'error': err, 'message': 'Please check that you\'ve filled in all required fields.'});
     } else {
       existingReservations.push(returnedReservation);
+        console.log("SHOULD HAVE ALL RESERVATIONS NOW: ", existingReservations);
       return res.status(200).json({'success': true, 'reservation': returnedReservation, 'updatedReservations': existingReservations, 'userEmail': userEmail});
     };
   });

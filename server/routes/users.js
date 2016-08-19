@@ -165,7 +165,7 @@ router.post('/addPet', function(req, res){
   var updatedUser = req.body;
     console.log("CALLED ADD PET TO USER: ", updatedUser, req.data); //why is this returning account w my email when using Olivia test account?
     console.log("RES BODY: ", res.body, res.data);
-          //ANSWER: REQ.BODY IS EMPTY??
+          // WHY IS THIS MISSING EXISTING RESERVATIONS OBJECT???
     console.log("QUERY TO DATABASE: ", updatedUser);
   var query = {'username': updatedUser.email};
     console.log("QUERYING THIS USER: ", query); //8/12/16 - UNDEFINED
@@ -184,8 +184,8 @@ router.post('/addReservation', function(req, res){
   var updatedUser = req.body;
     console.log("UPDATED USER: ", updatedUser);
 
-  var query = {'username': updatedUser.email};
-  var newData = { $set : {'reservations': updatedUser.reservations}}
+  var query = {'username': updatedUser.owner};
+  var newData = { $set : {'reservations': updatedUser.updatedReservations}}
   var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedReservation){
       if (err) {
         return res.status(500).json({'success': false, 'error':err});

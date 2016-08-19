@@ -511,10 +511,14 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
           $rootScope.user.reservations.push(res.data.reservation);
             console.log("ADDED RESERVATION TO LOCAL USER:", $rootScope.user);
 
+          var updateObject = {};
+          updateObject.updatedReservations = res.data.updatedReservations;
+          updateObject.owner = $rootScope.user.email;
 
-          User.addReservationToUser(res.data.reservation)
+          User.addReservationToUser(updateObject)
             .then(function(res){
 
+              //THIS SEEMS TO BE MISSING EXISTING RESERVATIONS...
                 console.log("SUCCESS ADDED RES TO USER IN DB:", res.data);
 
               clicked = false; 
