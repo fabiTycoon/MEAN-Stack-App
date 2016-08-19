@@ -1,8 +1,8 @@
-<div class="container" ng-if="user.isLoggedIn === false">
-  <div class="col s10 offset-s1">
-    <span class="alt-contact-text">Woops!  There's nothing here.  Log-in to view your account.</span>
+<div class="container" ng-if="user.isLoggedIn === false || !user">
+  <div class="col s12">
+    <br><br><br>
+    <span class="alt-contact-text center-text">Woops!  There's nothing here.  Log-in to view your account.</span>
   </div>
-  
 </div>
 
 <div class="container" ng-if="user.isLoggedIn === true">
@@ -37,15 +37,29 @@
                 <div class="col s6" id="email-field">
                   <label for="email-field">E-Mail:</label><p>{{user.email}}</p>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col s6" id="phone-field">
                   <label for="phone-field">Contact Phone:</label><p>{{user.phone}}</p>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" ng-if="user.address !== ''">
                 <div class="col s6" id="address-field">
                   <label for="address-field">Address:</label><p>{{user.address}}</p>
+                </div>
+                <div class="col s6" id="city-field">
+                  <label for="city-field">City/Town:</label><p>{{user.city}}</p>
+                </div>
+              </div>
+              <div class="row" ng-if="user.address !== ''">
+                <div class="col s6" id="state-field">
+                  <label for="state-field">State:</label><p>{{user.state}}</p>
+                </div>
+                <div class="col s6" id="zip-field">
+                  <label for="zip-field">ZIP:</label><p>{{user.zip}}</p>
+                </div>
+              </div>
+              <div class="row" ng-if="user.hospital !== ''">
+                <div class="col s12" id="hospital-field">
+                  <label for="hospital-field">Animal Hospital:</label><p>{{user.hospital}}</p>
                 </div>
               </div>
             </div>
@@ -96,7 +110,7 @@
                   <div ng-if="res.service === 'daycare'">
                     <div class="row">
                       <div class="col s6">
-                        <label for="account-res-date">Date: </label><p id="account-res-date">{{res.checkInDate}}</p>
+                        <label for="account-res-date">Date: </label><p id="account-res-date">{{res.displayCheckInDate}}</p>
                       </div>
                       <div class="col s6">
                         
@@ -105,11 +119,19 @@
                   </div>
                   <div ng-if="res.service === 'boarding'">
                     <div class="row">
-                      <div class="col s6">
-                        <label for="account-res-dates">Dates: </label><p id="account-res-dates">{{res.checkInDate}} - {{res.checkOutDate}}</p>
+                      <div class="col s4">
+                        <label for="account-res-dates">Dates: </label><p id="account-res-dates">{{res.displayCheckInDate}} - {{res.displayCheckOutDate}}</p>
                       </div>
-                      <div class="col s6">
-                        {{res.petString}}
+                      <div class="col s4">
+                      <label for="account-res-petstring">Pets: </label>
+                        <p id="account-res-petstring">{{res.displayPetString}}</p>
+                      </div>
+                      <div class="col s4">
+                        <label for="account-res-service">Service: </label>
+                        <div id="account-res-service">
+                          <p ng-if="res.service === 'daycare'">Daycare</p>
+                          <p ng-if="res.service === 'boarding'">Boarding</p>
+                        </div>
                       </div>
                     </div>
                   </div>

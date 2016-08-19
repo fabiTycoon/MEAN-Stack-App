@@ -57,18 +57,45 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.accountViewModelState.reservationInfo = true;
   };
 
+  var formatDateString = function (dateString) {
+
+    if (!dateString) {return;}
+
+      console.log("INPUT STRING:", dateString);
+
+    var formattedDateString = '';
+    dateString = dateString + '';
+    var year = dateString.slice(0, 4);
+      console.log("YEAR: ", year)
+    var month = dateString.slice(5, 7);
+    month += "/"
+      console.log("MONTH: ", month);
+    var day = dateString.slice(8, 10);
+      console.log("DAY: ", day);
+    formattedDateString = month + day + "/" + year;
+    return formattedDateString;
+  };
+
   var init = function () {
+    //FORMAT DATA FOR DISPLAY:
     if ($rootScope.user && $rootScope.user.reservations.length > 0) {
       for (var i = 0; i < $rootScope.user.reservations.length; i++) {
-        var petString = $rootScope.user.reservations[i].pets[0].name;
-          console.log("FOUND FIRST PET: ", petString);
+        var currentReservation = $rootScope.user.reservations[i];
+        var petString = currentReservation.pets[0].name;
 
-        if ($rootScope.user.reservations[i].pets.length > 1) {
-          petString += " & " + $rootScope.user.reservations[i].pets.length - 1 + " other pets.";
-          $rootScope.user.reservations[i].petString = petString
+        if (currentReservation.pets.length > 1) {
+          (petString += " & ");
+          if (currentReservation.pets.length !==2) {
+            var number = currentReservation.pets.length - 1;
+            number += "";
+            petString = petString + " " + number + " other pets"
+          } else {
+            petString += " 1 other pet";
+          };
         };
-        
-          console.log("ADDED PETSTRING: ", petString);
+        currentReservation.displayPetString = petString
+        currentReservation.displayCheckInDate = formatDateString(currentReservation.checkInDate);
+        currentReservation.displayCheckOutDate = formatDateString(currentReservation.checkOutDate);
       };
     };
 
