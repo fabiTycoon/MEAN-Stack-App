@@ -63,7 +63,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   $scope.setDefaultUser();
 
-  $scope.newReservation = {
+  $scope.newReservation = $scope.newReservation || {
     service: '',
     checkInDate: '',
     checkOutDate: '',
@@ -335,6 +335,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       var contactPhone = $('#contact-phone').prop('checked');
       var contactText = $('#contact-text').prop('checked');
 
+        console.log("CONTACT CHECKS: ", contactEmail, contactPhone, contactText);
+
       if (contactEmail === false && contactPhone === false && contactText === false) {
         $rootScope.registrationError = "Please select a preferred contact method to confrim your reservation";
         $rootScope.$broadcast('registrationError');
@@ -342,11 +344,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       } 
 
       if (contactEmail === true) {
-        $scope.newReservation.preferredContact === 'email';
+        $scope.newReservation.preferredContact = 'email';
       } else if (contactPhone === true) {
-        $scope.newReservation.preferredContact === 'phone';
+        $scope.newReservation.preferredContact = 'phone';
       } else if (contactText === true) {
-        $scope.newReservation.preferredContact === 'text';
+        $scope.newReservation.preferredContact = 'text';
       };
 
       //SUBMIT FINAL:
