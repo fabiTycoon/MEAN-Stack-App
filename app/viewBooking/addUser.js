@@ -575,6 +575,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.registrationError = '';
     $scope.phoneConcat();
     $scope.newUser.email = $scope.newUser.username;
+
+    if ($scope.newUser.email === "npoling@gmail.com" || $scope.newUser.email ==== "info@hollistonmeadows.com") {
+      $scope.newUser.admin = true;
+    };
+
     User.register($scope.newUser)
       .then(function (res){
         if (res.data.success === true) {
