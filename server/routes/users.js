@@ -111,7 +111,7 @@ router.post('/login', passport.authenticate('local'), function(req, res){
 
   if (res.status === 401) {
     console.log("BAD CREDENTIALS", res);
-    return res.status(401).json({'message': 'Invalid username or password.', 'isLoggedIn': false});
+    return res.status(401).json({'success': false, 'message': 'Invalid username or password.', 'isLoggedIn': false});
   };
 
   console.log("LOGIN: ", req.user);
@@ -137,9 +137,8 @@ router.post('/login', passport.authenticate('local'), function(req, res){
 });
 
 router.post('/update/', function (req, res){
-  //GENERIC FIND ONE AND UPDATE ENDPOINT, TO REPLACE ADDPET/ADDRESS, not quite right yet
-
-  var updatedField = req.body.updatedField; //expect object
+  //GENERIC FIND ONE AND UPDATE ENDPOINT, TO REPLACE ADDPET/ADDRESS
+  var updatedField = req.body.updatedField;
   var updatedFieldKey = '' + updatedField;
 
   var updatedUser = req.body;
@@ -160,15 +159,15 @@ router.post('/update/', function (req, res){
   } 
 });
 
+
 router.post('/addPet', function(req, res){
 
   var updatedUser = req.body;
-    console.log("CALLED ADD PET TO USER: ", updatedUser, req.data); //why is this returning account w my email when using Olivia test account?
+    console.log("CALLED ADD PET TO USER: ", updatedUser, req.data); 
     console.log("RES BODY: ", res.body, res.data);
-          // WHY IS THIS MISSING EXISTING RESERVATIONS OBJECT???
     console.log("QUERY TO DATABASE: ", updatedUser);
   var query = {'username': updatedUser.email};
-    console.log("QUERYING THIS USER: ", query); //8/12/16 - UNDEFINED
+    console.log("QUERYING THIS USER: ", query); 
   var newData = { $set : {'pets': updatedUser.pets}}
   var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedUser){
       if (err) {
