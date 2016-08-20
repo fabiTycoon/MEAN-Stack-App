@@ -576,7 +576,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.phoneConcat();
     $scope.newUser.email = $scope.newUser.username;
 
-    if ($scope.newUser.email === "npoling@gmail.com" || $scope.newUser.email ==== "info@hollistonmeadows.com") {
+    if ($scope.newUser.email === "npoling@gmail.com" || $scope.newUser.email === "info@hollistonmeadows.com") {
       $scope.newUser.admin = true;
     };
 
