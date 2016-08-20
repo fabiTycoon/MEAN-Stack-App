@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      
+      <!-- Dropdown Structure -->
+      <ul id="admin-views" class="dropdown-content">
+        <li><a href="#!">one</a></li>
+        <li><a href="#!">two</a></li>
+        <li class="divider"></li>
+        <li><a href="#!">three</a></li>
+      </ul>
+      <nav>
+        <div class="nav-wrapper">
+          <a href="#!" class="brand-logo">ADMINISTRATOR MODE</a>
+          <ul class="right hide-on-med-and-down">
+            <li><a ng-click="showInboxView">INBOX</a></li> <!--RESERVATIONS TO CONFIRM-->
+            <li><a ng-click="showDataView();">DATA</a></li> <!--DATA & ANALYTICS-->
+            <li><a ng-click="showUsersView();">USERS</a></li> <!--VIEW & MANAGE USERS-->
+            <!-- Dropdown Trigger -->
+            <li><a class="dropdown-button" href="#!" data-activates="admin-views">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+          </ul>
+        </div>
+      </nav>
+
+
+    </div>
+  </div>
+</div>

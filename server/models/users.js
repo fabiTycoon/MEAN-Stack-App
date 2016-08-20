@@ -22,20 +22,12 @@ var UserSchema = new Schema({
   reservations: Array,
   created_at: {type: Date, default: Date.now},
   updated_at: {type: Date, default: Date.now},
+  last_login: Date,
+  deactivated: {type: Boolean, default: false},
   admin: {type: Boolean, default: false}
 });
-/*
-var options = {
-  usernameField: 'email'
-};
-*/
-//UserSchema.plugin(passportLocalMongoose, options);
+
 UserSchema.plugin(passportLocalMongoose); 
-
 var User = mongoose.model('User', UserSchema);
-
-User.findByEmail = function (email) {
-  return;
-};
 
 module.exports = User;

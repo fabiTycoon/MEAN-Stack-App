@@ -72,6 +72,13 @@ config(['$routeProvider', function($routeProvider) {
     return $http.get('/api/pets');
   };
 
+  var getUsers = function (adminUser) {
+    if (adminUser.admin === false) {
+      return;
+    } else {
+      return $http.get('/api/users/', adminUser);
+    };
+  };
 
   var register = function(data) {
     return $http.post('/api/users/register', data);
@@ -93,6 +100,7 @@ config(['$routeProvider', function($routeProvider) {
     addPetToUser: addPetToUser,
     addReservationToUser: addReservationToUser,
     getPets: getPets,
+    getUsers: getUsers,
     addReservation: addReservation,
     getReservations: getReservations,
     deleteReservation: deleteReservation, 
