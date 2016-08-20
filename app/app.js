@@ -13,6 +13,7 @@ angular.module('myApp', [
   'myApp.viewAddBooking',
   'myApp.addPetView',
   'myApp.viewConfirm',
+  'myApp.viewAdmin',
   //'myApp.viewLogin',
   'myApp.version',
   //'myApp.basicServices',

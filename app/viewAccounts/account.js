@@ -85,6 +85,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
         if (currentReservation.pets.length > 1) {
           (petString += " & ");
+
           if (currentReservation.pets.length !==2) {
             var number = currentReservation.pets.length - 1;
             number += "";
@@ -102,7 +103,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $(document).ready(function(){
       console.log("CALLED")
        $('.collapsible').collapsible({
-         accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+         accordion : false
        });
      });
   };
