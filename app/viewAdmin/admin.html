@@ -1,28 +1,56 @@
 <div class="container">
+
+  <br>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="" class="brand-logo">ADMIN</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a ng-click="showUsers();">USERS</a></li>
+        <li><a ng-click="showReservations();">RESERVATIONS <span class="new badge" ng-if="newMessageCount > 0">{{newMessageCount}}</span></a></li>
+        <li><a ng-click="showData();">DATA</a></li>
+      </ul>
+    </div>
+  </nav>
+  <br>
+
+  <!--USERS VIEW -->
+  <div class="row">
+    <div class="col s12">
+
+      <table>
+        <thead>
+        <tr>
+        <th data-field="id">Name</th>
+        <th data-field="name">Item Name</th>
+        <th data-field="price">Item Price</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+
+  <!--RESERVATIONS VIEW -->
   <div class="row">
     <div class="col s12">
       
-      <!-- Dropdown Structure -->
-      <ul id="admin-views" class="dropdown-content">
-        <li><a href="#!">one</a></li>
-        <li><a href="#!">two</a></li>
-        <li class="divider"></li>
-        <li><a href="#!">three</a></li>
-      </ul>
-      <nav>
-        <div class="nav-wrapper">
-          <a href="#!" class="brand-logo">ADMINISTRATOR MODE</a>
-          <ul class="right hide-on-med-and-down">
-            <li><a ng-click="showInboxView">INBOX</a></li> <!--RESERVATIONS TO CONFIRM-->
-            <li><a ng-click="showDataView();">DATA</a></li> <!--DATA & ANALYTICS-->
-            <li><a ng-click="showUsersView();">USERS</a></li> <!--VIEW & MANAGE USERS-->
-            <!-- Dropdown Trigger -->
-            <li><a class="dropdown-button" href="#!" data-activates="admin-views">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
-          </ul>
-        </div>
-      </nav>
-
-
     </div>
   </div>
+
+  <!--DATA VIEW -->
+  <div class="row">
+    <div class="col s12">
+      
+    </div>
+  </div>
+
+   
 </div>

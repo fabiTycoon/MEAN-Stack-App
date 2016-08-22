@@ -84,7 +84,7 @@ config(['$routeProvider', function($routeProvider) {
     return $http.post('/api/users/register', data);
   };
 
-  var edit = function(userId, data) {
+  var editUser = function(userId, data) {
     return $http.put('/api/users/', data);
   };
 
@@ -106,7 +106,7 @@ config(['$routeProvider', function($routeProvider) {
     deleteReservation: deleteReservation, 
     editReservation: editReservation,
     register: register,
-    edit: edit,
+    editUser: editUser,
     del: del
   };
 

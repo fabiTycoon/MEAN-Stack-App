@@ -16,7 +16,17 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   //IF USER CLICKS EDIT BUTTON, SHOW EDITABLE TEXT AREAS:
   $scope.userData = {
-
+    first: '',
+    last: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
+    hospital: '',
+    password: '',
+    passwordConfirm: ''
   };
 
   $scope.editingData = false;
@@ -44,6 +54,28 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   $scope.setDefaultState(true);
 
+  $scope.editUser = function () {
+    $scope.editingData = true;
+  };
+
+  $scope.cancelEdit = function () {
+    $scope.editingData = false;
+  };
+
+  $scope.confirmEdit = function () {
+    //DATA VALIDATION:
+   /*
+
+    User.editUser($scope.userData)
+      .then(function (res) {
+
+        $rootScope.user = 
+
+
+      })*/
+
+
+  };
 
   $scope.showUserInfo = function () {
     $scope.profileTitle = "MY ACCOUNT:";
