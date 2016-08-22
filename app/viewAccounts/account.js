@@ -14,6 +14,13 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.displayName = '';
   $scope.profileTitle = 'MY ACCOUNT';
 
+  //IF USER CLICKS EDIT BUTTON, SHOW EDITABLE TEXT AREAS:
+  $scope.userData = {
+
+  };
+
+  $scope.editingData = false;
+
   $scope.accountViewModelState = {
     userInfo: true,
     petInfo: false,
@@ -55,6 +62,19 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.setDefaultState();
     $scope.profileTitle = "MY RESERVATIONS:";
     $scope.accountViewModelState.reservationInfo = true;
+  };
+
+  $scope.editPet = function (petId) {
+
+  };
+
+  $scope.editUser = function () {
+
+    var existingUserObject = $rootScope.user;
+        console.log("GRABBED USER DATA: ", existingUserObject);
+
+    var updatedData
+
   };
 
   var formatDateString = function (dateString) {
