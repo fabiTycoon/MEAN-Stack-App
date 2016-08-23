@@ -80,15 +80,15 @@ config(['$routeProvider', function($routeProvider) {
     };
   };
 
-  var register = function(data) {
+  var register = function (data) {
     return $http.post('/api/users/register', data);
   };
 
-  var editUser = function(userId, data) {
+  var editUser = function (data) {
     return $http.put('/api/users/', data);
   };
 
-  var del = function(userId) {
+  var del = function (userId) {
     return $http.delete('/api/users/' + userId);
   };
 
