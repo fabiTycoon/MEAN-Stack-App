@@ -26,7 +26,7 @@
           <div>
             
             <!-- USER INFO VIEW -->
-            <div ng-if="accountViewModelState.userInfo === true && editingData === false">
+            <div ng-if="accountViewModelState.userInfo === true && accountViewModelState.editingData === false">
               
               <div class="row">
                 <div class="col s6">
@@ -38,7 +38,7 @@
                   <label for="email-field">E-Mail:</label><p>{{user.email}}</p>
                 </div>
                 <div class="col s6" id="phone-field">
-                  <label for="phone-field">Contact Phone:</label><p>{{user.phone}}</p>
+                  <label for="phone-field">Contact Phone:</label><p>{{displayPhone}}</p>
                 </div>
               </div>
               <div class="row" ng-if="user.address !== ''">
@@ -64,15 +64,18 @@
               </div>
               <br>
               <div class="row">
-                <div class="col s4 offset-s1">
+                <div class="col s4 offset-s1" ng-if="accountViewModelState.editingUser === false">
                   <a class="waves-effect waves-light btn" ng-click="editUser();"><i class="small material-icons">edit</i>&nbsp;&nbsp;EDIT INFO</a>
+                </div>
+                <div class="col s4 offset-s1" ng-if="accountViewModelState.editingUser === true">
+                  <a class="waves-effect btn" ng-click="cancelEdit();">CANCEL<i id="about-icon" class=" material-icons right">highlight_off</i></a>
                 </div>
               </div>
             </div>
             <!-- END USER INFO VIEW -->
 
             <!-- EDIT USER INFO VIEW -->
-            <div ng-if="accountViewModelState.userInfo === true && editingData === true">
+            <div ng-if="accountViewModelState.userInfo === true && accountViewModelState.editingData === true">
               
               <div class="row">
                 <div class="col s6" id="first-field">

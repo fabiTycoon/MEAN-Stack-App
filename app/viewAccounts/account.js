@@ -29,12 +29,13 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     passwordConfirm: ''
   };
 
-  $scope.editingData = false;
+  $scope.displayPhone = '';
 
   $scope.accountViewModelState = {
     userInfo: true,
     petInfo: false,
-    reservationInfo: false
+    reservationInfo: false,
+    editingUser: false
   };
 
   if ($rootScope.user) {
@@ -55,11 +56,13 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.setDefaultState(true);
 
   $scope.editUser = function () {
-    $scope.editingData = true;
+    $scope.setDefaultState(true);
+    $scope.accountViewModelState.editingUser = true;
   };
 
   $scope.cancelEdit = function () {
-    $scope.editingData = false;
+    $scope.setDefaultState(true);
+    $scope.accountViewModelState.editingUser = false;
   };
 
   $scope.confirmEdit = function () {
@@ -69,7 +72,15 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     User.editUser($scope.userData)
       .then(function (res) {
 
-        $rootScope.user = 
+        if (res.data.success === true) {
+  
+          //UPDATE LOCAL USER PROPERTIES
+          $rootScope.user = 
+          //RESET VIEW STATE
+        } else {
+  
+        };
+  
 
 
       })*/
@@ -130,6 +141,15 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   var init = function () {
     //FORMAT DATA FOR DISPLAY:
+    if ($rootScope.user && $rootScope.user.phone.length > 0) {
+      var phoneString = $rootScope.user.phone;
+      var phoneArea = phoneString.slice(0, 3);
+      var ph1 = phoneString.slice(3, 6);
+      var ph2 = phoneString.slice(6, 10);
+      $scope.displayPhone = "(" + phoneArea + ") " + ph1 + " - " + ph2;
+        console.log("SET DISPLAY PHONE: ", $scope.displayPhone);
+    };
+
     if ($rootScope.user && $rootScope.user.reservations.length > 0) {
       for (var i = 0; i < $rootScope.user.reservations.length; i++) {
         var currentReservation = $rootScope.user.reservations[i];
