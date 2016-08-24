@@ -12,7 +12,10 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 .controller('viewAccountCtrl', [ '$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
 
   $scope.displayName = '';
+  $scope.displayPhone = '';
   $scope.profileTitle = 'MY ACCOUNT';
+  $rootScope.accountError = ''
+  $scope.refresh = false;
 
   //IF USER CLICKS EDIT BUTTON, SHOW EDITABLE TEXT AREAS:
   $scope.userData = {
@@ -27,9 +30,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     hospital: '',
     password: '',
     passwordConfirm: ''
-  };
-
-  $scope.displayPhone = '';
+  };  
 
   $scope.accountViewModelState = {
     userInfo: true,
@@ -43,6 +44,11 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     console.log("SET DISPLAY NAME: ", $scope.displayName);
   };
 
+  $scope.refreshView = function () {
+    $scope.refresh = true;
+    $scope.refresh = false;
+  };
+
   $scope.setDefaultState = function (reset) {
     for (var state in $scope.accountViewModelState) {
       $scope.accountViewModelState[state] = false;
@@ -53,7 +59,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     };
   };
 
-  $scope.setDefaultState(true);
+  $scope.setDefaultState();
 
   $scope.editUser = function () {
     $scope.setDefaultState(true);
@@ -65,25 +71,34 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.accountViewModelState.editingUser = false;
   };
 
-  $scope.confirmEdit = function () {
-    //DATA VALIDATION:
-   /*
+  $scope.showEditUser = function () {
+     $scope.setDefaultState(true); 
+     $scope.accountViewModelState.editingUser = true;
+  };
 
-    User.editUser($scope.userData)
-      .then(function (res) {
+  $scope.editUser = function () {
+    var updatedData = $scope.userData;
+    //TO DO: DATA VALIDATION
+
+    for (var key in updatedData) {
+
+      if (updatedData[key] === '' && $rootScope.user[key]) {
+        updatedData[key] = $rootScope.user[key];
+      };
+      console.log("SET THIS VALUE ", key, updatedData);
+    };
+
+    User.editUser(updatedData)
+      .then(function(res){
 
         if (res.data.success === true) {
-  
-          //UPDATE LOCAL USER PROPERTIES
-          $rootScope.user = 
-          //RESET VIEW STATE
+          var returnedUser = res.data.user; 
+            console.log("UPDATED USER: ", returnedUser);
         } else {
-  
-        };
-  
-
-
-      })*/
+          $rootScope.accountError = ''
+          $rootScope.$broadcast('accountError');
+        };  
+      });
 
 
   };
@@ -95,28 +110,19 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
 
   $scope.showProfilePets = function () {
-    $scope.setDefaultState();
+    $scope.setDefaultState(true);
     $scope.profileTitle = "MY SAVED PETS:";
     $scope.accountViewModelState.petInfo = true;
   };
 
 
   $scope.showProfileReservations = function () {
-    $scope.setDefaultState();
+    $scope.setDefaultState(true);
     $scope.profileTitle = "MY RESERVATIONS:";
     $scope.accountViewModelState.reservationInfo = true;
   };
 
   $scope.editPet = function (petId) {
-
-  };
-
-  $scope.editUser = function () {
-
-    var existingUserObject = $rootScope.user;
-        console.log("GRABBED USER DATA: ", existingUserObject);
-
-    var updatedData
 
   };
 
@@ -138,6 +144,16 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     formattedDateString = month + day + "/" + year;
     return formattedDateString;
   };
+
+  //ERROR HANDLER:
+  $rootScope.$on('accountError', function(){
+      console.log("ERROR:", $rootScope.accountError);
+    $('#account-form-container').addClass('animated shake')
+    $scope.refreshView()
+    $timeout(function(){
+      $('#account-form-container').removeClass('animated shake');
+    }, 1500);
+  });
 
   var init = function () {
     //FORMAT DATA FOR DISPLAY:

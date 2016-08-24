@@ -161,7 +161,6 @@ router.put('/', function (req, res) {
   var query = {'username' : userEmail};  
   //pull existing user data
 /*  User.findOne(query, function (err, person) {
-
     if (err) {
       res.status(500).json('success': false, 'error': err);
     } else {
@@ -172,27 +171,26 @@ router.put('/', function (req, res) {
     console.log("DATA TO UPDATE: ", updatedUserData);
     console.log("DATA EXISTING ", existingUserData);
 
-
-    for (var existingUserField in existingUserData) {
-      for (var updatedUserField in updatedUserData) {
-        //if the new data doesn't match the old data, and the new data is blank, keep old data:
-        if (updatedUserData[updatedUserField] !== existingUserData[existingUserField] && updatedUserData[updatedUserField] === '') {
-          updatedUserData[updatedUserField] = existingUserData[existingUserField];
-        };
+  for (var existingUserField in existingUserData) {
+    for (var updatedUserField in updatedUserData) {
+      //if the new data doesn't match the old data, and the new data is blank, keep old data:
+      if (updatedUserData[updatedUserField] !== existingUserData[existingUserField] && updatedUserData[updatedUserField] === '') {
+        updatedUserData[updatedUserField] = existingUserData[existingUserField];
       };
     };
+  };
 
-    console.log("FINAL UPDATED USER OBJECT, before save: ", existingUserData);
+  console.log("FINAL UPDATED USER OBJECT, before save: ", existingUserData);
 
-    User.findOneAndUpdate(query, updatedUserData, {new: true}, function (err, data) {
-      if (err) {
-        console.log("ERROR: ", err);
-        return res.status(500).json({'error': err, 'success': false});
-      } else {
-        console.log("SAVED UPDATED USER DATA: ", user);
-        return res.status(200).json({'user': user, 'success': true});
-      };
-    });
+  User.findOneAndUpdate(query, updatedUserData, {new: true}, function (err, data) {
+    if (err) {
+      console.log("ERROR: ", err);
+      return res.status(500).json({'error': err, 'success': false});
+    } else {
+      console.log("SAVED UPDATED USER DATA: ", user);
+      return res.status(200).json({'user': user, 'success': true});
+    };
+  });
 });
 
 
