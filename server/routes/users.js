@@ -75,7 +75,7 @@ router.post('/register', function(req, res) {
       return res.send({
         'success': false,
         'error': err
-      })
+      });
     } else {
 
       var returnedUser = {
@@ -132,31 +132,67 @@ router.post('/login', passport.authenticate('local'), function(req, res){
     isLoggedIn: true,
     created_at: req.user.created_at
   };
-
   return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
 });
+
 
 router.post('/update/', function (req, res){
   //GENERIC FIND ONE AND UPDATE ENDPOINT, TO REPLACE ADDPET/ADDRESS
   var updatedField = req.body.updatedField;
   var updatedFieldKey = '' + updatedField;
-
   var updatedUser = req.body;
   var query = {'username' : updatedUser.username};
   var newData = { $set : {updatedFieldKey : updatedUser.updatedField}}
   var updatedUser = User.findOneAndUpdate(query, newData, function(err, returnedUser){
-      if (err) {
-        return res.send(500, { error: err });
-      } else {
-        return returnedUser;
-      };
+    
+    if (err) {
+      return res.status(500).json({'success': false, 'error':err});
+    } else {
+      return res.status(200).json({'success': true, 'updatedUser': returnedUser});
+    } 
   });
+});
 
-  if (err) {
-    return res.status(500).json({'success': false, 'error':err});
-  } else {
-    return res.status(200).json({'success': true, 'updatedUser': returnedUser});
-  } 
+
+router.put('/', function (req, res) {
+
+  var updatedUserData = req.data;
+  var userEmail = req.data.username;
+  var query = {'username' : userEmail};  
+  //pull existing user data
+/*  User.findOne(query, function (err, person) {
+
+    if (err) {
+      res.status(500).json('success': false, 'error': err);
+    } else {
+      var existingUserData = person;
+    };
+  });*/
+
+    console.log("DATA TO UPDATE: ", updatedUserData);
+    console.log("DATA EXISTING ", existingUserData);
+
+
+    for (var existingUserField in existingUserData) {
+      for (var updatedUserField in updatedUserData) {
+        //if the new data doesn't match the old data, and the new data is blank, keep old data:
+        if (updatedUserData[updatedUserField] !== existingUserData[existingUserField] && updatedUserData[updatedUserField] === '') {
+          updatedUserData[updatedUserField] = existingUserData[existingUserField];
+        };
+      };
+    };
+
+    console.log("FINAL UPDATED USER OBJECT, before save: ", existingUserData);
+
+    User.findOneAndUpdate(query, updatedUserData, {new: true}, function (err, data) {
+      if (err) {
+        console.log("ERROR: ", err);
+        return res.status(500).json({'error': err, 'success': false});
+      } else {
+        console.log("SAVED UPDATED USER DATA: ", user);
+        return res.status(200).json({'user': user, 'success': true});
+      };
+    });
 });
 
 
