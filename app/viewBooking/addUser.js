@@ -541,6 +541,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   $scope.loginUser = function () {
     //$scope.loginLoading = true;
+    //UPDATE DB WITH LAST LOGIN TIME (IF MONGOOSE DOESNT DO THIS FOR ME?)
     
     if ($scope.loginUserObject.username.length > 3 && $scope.loginUserObject.password.length > 7) {
       User.logIn($scope.loginUserObject)

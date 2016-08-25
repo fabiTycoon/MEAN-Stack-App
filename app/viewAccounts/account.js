@@ -36,7 +36,8 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     userInfo: true,
     petInfo: false,
     reservationInfo: false,
-    editingUser: false
+    editingUser: false,
+    editingPet: false,
   };
 
   if ($rootScope.user) {
@@ -67,8 +68,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   };
 
   $scope.cancelEdit = function () {
-    $scope.setDefaultState(true);
-    $scope.accountViewModelState.editingUser = false;
+    $scope.setDefaultState();
   };
 
   $scope.showEditUser = function () {
@@ -122,7 +122,12 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.accountViewModelState.reservationInfo = true;
   };
 
-  $scope.editPet = function (petId) {
+  $scope.showEditPet = function () {
+    $scope.setDefaultState(true); 
+    $scope.accountViewModelState.editingPet = true;
+  };
+
+  $scope.editPet = function () {
 
   };
 

@@ -20,17 +20,24 @@
       <table>
         <thead>
         <tr>
-        <th data-field="id">Name</th>
-        <th data-field="name">Item Name</th>
-        <th data-field="price">Item Price</th>
+        <th data-field="name">Name</th>
+        <th data-field="phone">Phone</th>
+        <th data-field="email">Email</th>
+        <th data-field="pets">View Pets</th>
+        <th data-field="reservations">View Reservations</th>
+        <th data-field="price">View Data</th>
+        <th data-field="ban">Ban User</th>
         </tr>
         </thead>
 
         <tbody>
-          <tr ng-repeat>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
+          <tr ng-repeat="user in users" id="{{user.email}}">
+            <td>{{user.last}}, {{user.first</td>
+            <td>{{displayPhone}}</td>
+            <td><a href="mailto:{{user.email}}">{{user.email}}<a></td>
+            <td><a ng-click="showUserPets({{user.email}})" ng-if="user.pets.length > 0">PETS</a><a ng-if="user.pets.length === 0"><!--DISABLED BUTTON--></a></td>
+            <td><a ng-click="showUserReservations({{user.email}})" ng-if="user.reservations.length > 0">RESERVATIONS</a><a ng-if="user.reservations.length === 0"><!--DISABLED BUTTON--></a></td>
+            <td><!--<ban-user-button></ban-user-button>--></td>
           </tr>
         </tbody>
       </table>

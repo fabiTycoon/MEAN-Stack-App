@@ -15,6 +15,8 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   $scope.users = $scope.users || [];
   $scope.reservations = $scope.reservations || [];
 
+  $scope.displayPhone = '';
+
 
   var getUsers = function () {
 
@@ -40,6 +42,15 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
 
 
   var init = function () {
+
+    if ($rootScope.user && $rootScope.user.phone.length > 0) {
+      var phoneString = $rootScope.user.phone;
+      var phoneArea = phoneString.slice(0, 3);
+      var ph1 = phoneString.slice(3, 6);
+      var ph2 = phoneString.slice(6, 10);
+      $scope.displayPhone = "(" + phoneArea + ") " + ph1 + " - " + ph2;
+        console.log("SET DISPLAY PHONE: ", $scope.displayPhone);
+    };
 
     $scope.errorMessage = '';
     //Pull all reservations from DB
