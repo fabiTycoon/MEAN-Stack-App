@@ -17,7 +17,7 @@
   <div class="row">
     <div class="col s12">
 
-      <table>
+      <table ng-if="accountViewModelState.viewUsers">
         <thead>
         <tr>
         <th data-field="name">Name</th>
@@ -30,7 +30,7 @@
         </tr>
         </thead>
 
-        <tbody>
+        <tbody ng-if="dataLoading === false;">
           <tr ng-repeat="user in users" id="{{user.email}}">
             <td>{{user.last}}, {{user.first</td>
             <td>{{displayPhone}}</td>
@@ -40,6 +40,13 @@
             <td><!--<ban-user-button></ban-user-button>--></td>
           </tr>
         </tbody>
+
+        <div class="row" ng-if="dataLoading === true">
+          <div class="col s12" id="admin-loading-wheel">
+            <!-- <admin-loading-wheel></admin-loading-wheeel-->
+          </div>
+        </div>
+
       </table>
       
     </div>
@@ -48,6 +55,39 @@
   <!--RESERVATIONS VIEW -->
   <div class="row">
     <div class="col s12">
+
+    <table ng-if="accountViewModelState.viewReservations">
+      <thead>
+      <tr>
+      <th data-field="name">Date</th>
+      <th data-field="phone">Service</th>
+      <th data-field="email">Name</th>
+      <th data-field="pets">Pets</th>
+      <th data-field="reservations">Booked On</th>
+      <th data-field="price">View Data</th>
+      <th data-field="ban">Approve/Reject Reservation</th>
+      </tr>
+      </thead>
+
+      <tbody ng-if="dataLoading === false;">
+        <tr ng-repeat="reservation in loadedUser.reservations" id="{{reservation.email}}">
+          <td>{{reservation.last}}, {{reservation.first</td>
+          <td>{{displayPhone}}</td>
+          <td><a href="mailto:{{reservation.email}}">{{reservation.email}}<a></td>
+          <td><a ng-click="" ng-if="reservation.pets.length > 0">PETS</a><a ng-if="reservation.pets.length === 0"><!--DISABLED BUTTON--></a></td>
+          <td><a ng-click="" ng-if="reservation.reservations.length > 0">RESERVATIONS</a><a ng-if="reservation.reservations.length === 0"><!--DISABLED BUTTON--></a></td>
+          <td> 
+          <!--<ban-user-button></ban-user-button>--></td>
+        </tr>
+      </tbody>
+
+      <div class="row" ng-if="dataLoading === true">
+        <div class="col s12" id="admin-loading-wheel">
+          <!-- <admin-loading-wheel></admin-loading-wheeel-->
+        </div>
+      </div>
+
+    </table>
       
     </div>
   </div>

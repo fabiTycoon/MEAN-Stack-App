@@ -10,7 +10,6 @@ var ReservationSchema = new Schema({
   bringingOwnFood: Boolean,
   returningGuest: Boolean,
   preferredContact: String,
-  adminViewed: Boolean,
   adminApproved: {type: Boolean, default: null},
   checkOutTime: String,
   owner: {type: String, required: true},

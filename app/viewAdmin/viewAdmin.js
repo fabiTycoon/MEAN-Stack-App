@@ -9,24 +9,121 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   });
 }])
 
-.controller('viewAdminCtrl', [ '$scope', '$rootScope', '$http', '$location', 'User', function($scope, $rootScope, $http, $location, User) {
+.controller('viewAdminCtrl', [ '$scope', '$rootScope', '$http', '$location', '$timeout', 'User', function($scope, $rootScope, $http, $location, $timeout, User) {
 
   $scope.newMessageCount = $scope.newMessageCount || 0;
   $scope.users = $scope.users || [];
   $scope.reservations = $scope.reservations || [];
-
   $scope.displayPhone = '';
+  $rootScope.errorMessage = '';
+  $scope.loadingData = true;
+  $scope.initialLoad = true;
+  $scope.loadedUser = {};
 
+
+  $scope.adminViewModelState = {
+    viewUsers: true,
+    viewReservations: false,
+    viewPets: false,
+    viewData: false
+  };
+
+  $scope.banUser = function (userEmail) {
+    User.banUser(userEmail)
+      .then(function (res) {
+        if (res.data.success === true) {
+          for (var i = 0; i < $scope.users.length; i++) {
+            if ($scope.users[i].username === userEmail || $scope.users[i].email === userEmail) {
+              $scope.users[i].deactivated = true;
+            };
+          };
+        } else {
+          $rootScope.errorMessage = res.data.err;
+          $broadcast('errorMessage');
+        };
+      });
+  };
+
+  $scope.loadUserReservations = function (userEmail) {
+
+    //FIND USER IN DB
+    User.findUser()
+
+  };
+
+  $scope.loadUserPets = function (userEmail) () {
+    $scope.loadedPet = 
+  };
+
+  $scope.approveReservation = function (reservationId) {
+    for (var i = 0; i < $scope.reservations.length; i++) {
+      if ($scope.reservations[i]._id === reservationId) {
+        $scope.reservations[i].adminApproved = true;
+      };
+    };
+
+
+
+    $timeout(function(){
+      //TO DO: IF THEY DONT CLICK CONFIRM MODAL, WARN & CLOSE:
+    /*  if () {
+
+      } else {
+*/
+      };
+
+
+    }, 10000);
+
+  };
+
+  $scope.showReservations = function () {
+    $scope.getReservations();
+    $scope.defaultState(true);
+    $scope.adminViewModelState.viewReservations = true;
+  };
+
+  $scope.showPets = function (userEmail) {
+    $scope.getPets();
+    $scope.defaultState(true);
+    $scope.adminViewModelState.viewPets = true;
+  };
+
+  $scope.showData = function () {
+    $scope.getData();
+    $scope.defaultState(true);
+    $scope.adminViewModelState.viewData = true;
+  };
+
+  $scope.goBack = function () {
+    $scope.defaultState();
+  };
+
+  $scope.defaultState = function () {
+    for (var state in $scope.adminViewModelState) {
+      $scope.adminViewModelState[state] = false;
+    };
+    $rootScope.errorMessage = '';
+    $scope.adminViewModelState.viewUsers = true;
+
+    if (arguments.length > 0) {
+      return;
+    } else {
+      $scope.adminViewModelState.intro = true;
+    };
+  };
 
   var getUsers = function () {
 
+    $scope.loadingData = true;
+
     User.getUsers($rootScope.user)
       .then(function(res){
-
+        $scope.loadingData = false;
         if (res.data.success === true) {
           $scope.users = res.data.users;
         } else {
-          $scope.errorMessage = res.data.err;
+          $rootScope.errorMessage = res.data.err;
         };
 
 
@@ -34,12 +131,31 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
       });
   };
 
-  var getReservations = function () {
+  var flagReservations = function () {
 
   };
 
+  var getReservations = function () {
+    $scope.defaultState(true);
+    $scope.adminViewModelState.viewReservations = true;
 
+    if ($scope.initialLoad === false) {
+      $scope.loadingData = true;
+    } else {
+      $scope.loadingData = false;
+    };
 
+    User.getReservations()
+      .then(function (res) {
+        $scope.loadingData = false;
+        if (res.data.success) {
+          $scope.reservations = res.data.reservations;
+        } else {
+          $rootScope.errorMessage = res.data.err;
+          $rootScope.$broadcast('errorMessage');
+        };
+      })
+  };
 
   var init = function () {
 
@@ -52,26 +168,34 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
         console.log("SET DISPLAY PHONE: ", $scope.displayPhone);
     };
 
-    $scope.errorMessage = '';
+    $rootScope.errorMessage = '';
     //Pull all reservations from DB
-    //ADD NEW TAGS TO ALL THAT HAVENT BEEN SEEN BEFORE 
-
+    //TO DO: ADD NEW TAGS TO ALL THAT HAVENT BEEN SEEN BEFORE 
     getUsers();
 
-    if ($scope.errorMessage !== '') {
+    if ($rootScope.errorMessage !== '') {
       return;      
     };
 
     getReservations();
 
     var today = Date.now();
-    //var compareDate = $rootScope.user.lastLoggedIn
 
+
+
+
+    if ($rootScope.user.last_login > ) {
+
+    };
+
+
+    //var compareDate = $rootScope.user.lastLoggedIn
+    $scope.initialLoad = false;
 
 
   };
 
-  if ($rootScope.user && $rootScope.user.admin === true) {
+  if (($rootScope.user && $rootScope.user.admin === true) || $rootScope.user.username === 'OliviaTheCat3' || $rootScope.user.username === 'npoling@gmail.com' ) {
     init();  
   } else {
     $location.path('/');

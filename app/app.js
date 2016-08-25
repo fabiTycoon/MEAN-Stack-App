@@ -72,12 +72,20 @@ config(['$routeProvider', function($routeProvider) {
     return $http.get('/api/pets');
   };
 
+  var getUser = function (userEmail) {
+    return $http.post('/api/users/')
+  };
+
   var getUsers = function (adminUser) {
     if (adminUser.admin === false) {
       return;
     } else {
       return $http.get('/api/users/', adminUser);
     };
+  };
+
+  $scope.approveRegistration = function (registrationId) {
+    return $http.post('/api/reservations/approveRes/' + 'registrationId' + '/');
   };
 
   var register = function (data) {
@@ -101,6 +109,7 @@ config(['$routeProvider', function($routeProvider) {
     addReservationToUser: addReservationToUser,
     getPets: getPets,
     getUsers: getUsers,
+    approveRegistration: approveRegistration,
     addReservation: addReservation,
     getReservations: getReservations,
     deleteReservation: deleteReservation, 

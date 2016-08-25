@@ -16,6 +16,13 @@ router.get('/', function(req, res) {
   })
 });
 
+router.post('/approveRes/:reservationId', function (res, res) {
+
+
+    //TO DO: FIND RESERVATION IN DB & UPDATE; UPDATE USER RESERVATIONS OBJECT THEN RETURN
+
+});
+
 router.post('/new', function(req, res) {
 
     console.log("ADD RESERVATION ENDPOINT: ", res);
