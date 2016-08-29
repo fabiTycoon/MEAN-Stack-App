@@ -27,7 +27,7 @@ router.get('users', function (req, res){
   };
 });
 
-router.get('/:email', function(req, res) {
+router.get('/getUserByEmail/:email', function(req, res) {
     console.log("USER ID:", req)
     console.log("REQBODY:", req.body)
     console.log("REQUSEr:", req.user)
@@ -189,6 +189,37 @@ router.put('/', function (req, res) {
     } else {
       console.log("SAVED UPDATED USER DATA: ", user);
       return res.status(200).json({'user': user, 'success': true});
+    };
+  });
+});
+
+router.post('/toggleBanUser/', function (){
+  var userEmail = req.data.userEmail;
+    console.log("BANNING THIS USER: ", userEmail);
+
+  //FIRST PULL USER FROM DB:
+  //User.findOne('')
+  var query = {'username' : userEmail};  
+  var updatedUserData = {};
+
+  User.findOne(query, function (err, data) {
+    if (err) {
+      console.log("ERROR COULDNT FIND ANYONE TO BAN :( : ", err);
+      return res.status(500).json({'error': err, 'success': false});
+    } else {    
+      var updatedUserData = data;
+      updatedUserData.deactivated = true;
+      console.log("BANNING THIS USER: ", updatedUserData);  
+
+      User.findOneAndUpdate(query, updatedUserData, {new: true}, function (err, data) {
+        if (err) {
+          console.log("ERROR: ", err);
+          return res.status(500).json({'error': err, 'success': false});
+        } else {
+          console.log("SAVED UPDATED USER DATA: ", user);
+          return res.status(200).json({'user': user, 'success': true});
+        };
+      });
     };
   });
 });

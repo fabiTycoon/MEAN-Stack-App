@@ -72,8 +72,8 @@ config(['$routeProvider', function($routeProvider) {
     return $http.get('/api/pets');
   };
 
-  var getUser = function (userEmail) {
-    return $http.post('/api/users/')
+  var getUserByEmail = function (userEmail) {
+    return $http.post('/api/getUserByEmail/' + userEmail);
   };
 
   var getUsers = function (adminUser) {
@@ -96,8 +96,8 @@ config(['$routeProvider', function($routeProvider) {
     return $http.put('/api/users/', data);
   };
 
-  var del = function (userId) {
-    return $http.delete('/api/users/' + userId);
+  var banUser = function (userEmail) {
+    return $http.delete('/api/toggleBanUser/', userEmail);
   };
 
   return {
@@ -108,6 +108,7 @@ config(['$routeProvider', function($routeProvider) {
     addPetToUser: addPetToUser,
     addReservationToUser: addReservationToUser,
     getPets: getPets,
+    getUserByEmail: getUserByEmail,
     getUsers: getUsers,
     approveRegistration: approveRegistration,
     addReservation: addReservation,
@@ -116,7 +117,7 @@ config(['$routeProvider', function($routeProvider) {
     editReservation: editReservation,
     register: register,
     editUser: editUser,
-    del: del
+    banUser: banUser
   };
 
 }]);
