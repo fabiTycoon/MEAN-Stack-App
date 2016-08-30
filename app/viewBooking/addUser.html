@@ -149,7 +149,7 @@
                      </p>
                    </div>  
                    <div class="input-field col s6">
-                     <input id="email" type="text" ng-model="newUser.username"/>
+                     <input id="email" type="text" ng-model="newUser.username" length="30"/>
                      <label class="active" for="email">Email</label>
                    </div>
                   </div>
@@ -199,11 +199,11 @@
              <div class="row">
                <div class="col s6">
                  <label class="active" for="password">Choose a password (8 characters minimum)</label>
-                 <input id="password" type="password" ng-model="newUser.password">
+                 <input id="password" type="password" ng-model="newUser.password" length="25">
                </div>
                <div class="col s6">
                  <label class="active" for="passwordConfirm">Confirm your password</label>
-                 <input id="passwordConfirm" type="password" ng-model="newUser.passwordConfirm">
+                 <input id="passwordConfirm" type="password" ng-model="newUser.passwordConfirm" length="25">
                </div>
              </div>
             </div>
