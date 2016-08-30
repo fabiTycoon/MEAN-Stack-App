@@ -84,7 +84,7 @@ config(['$routeProvider', function($routeProvider) {
     };
   };
 
-  $scope.approveRegistration = function (registrationId) {
+  var approveRegistration = function (registrationId) {
     return $http.post('/api/reservations/approveRes/' + 'registrationId' + '/');
   };
 

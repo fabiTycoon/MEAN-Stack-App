@@ -47,16 +47,16 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   $scope.loadUserReservations = function (userEmail) {
 
     //FIND USER IN DB
-    User.findUser()
+   return;
 
   };
 
-  $scope.loadUserPets = function (userEmail) () {
-    $scope.loadedPet = 
+  $scope.loadUserPets = function (userEmail) {
+    return;
   };
 
   $scope.approveReservation = function (reservationId) {
-    for (var i = 0; i < $scope.reservations.length; i++) {
+ /*   for (var i = 0; i < $scope.reservations.length; i++) {
       if ($scope.reservations[i]._id === reservationId) {
         $scope.reservations[i].adminApproved = true;
       };
@@ -66,15 +66,15 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
 
     $timeout(function(){
       //TO DO: IF THEY DONT CLICK CONFIRM MODAL, WARN & CLOSE:
-    /*  if () {
+      if () {
 
       } else {
-*/
+
       };
 
 
     }, 10000);
-
+*/
   };
 
   $scope.showReservations = function () {
@@ -114,7 +114,6 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   };
 
   var getUsers = function () {
-
     $scope.loadingData = true;
 
     User.getUsers($rootScope.user)
@@ -125,14 +124,11 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
         } else {
           $rootScope.errorMessage = res.data.err;
         };
-
-
-
       });
   };
 
   var flagReservations = function () {
-
+    return;
   };
 
   var getReservations = function () {
@@ -154,7 +150,7 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
           $rootScope.errorMessage = res.data.err;
           $rootScope.$broadcast('errorMessage');
         };
-      })
+      });
   };
 
   var init = function () {
@@ -183,10 +179,10 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
 
 
 
-
+/*
     if ($rootScope.user.last_login > ) {
 
-    };
+    };*/
 
 
     //var compareDate = $rootScope.user.lastLoggedIn
