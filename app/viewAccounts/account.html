@@ -1,13 +1,15 @@
-<div class="row" ng-if="user.isLoggedIn === false || !user">
-  <div class="col s12">
-    <br><br><br>
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">WOOPS!</span>
-        <br>
-        <span class="alt-contact-text center-text">There's nothing here.  Please <a href="">log in</a>a to view your account.</span>
+<div class="container">
+  <div class="row" ng-if="user.isLoggedIn === false || !user">
+    <div class="col s10 offset-s1 m6 offset-s3 l6 offset-s3">
+      <br><br><br>
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">WOOPS!</span>
+          <br>
+          <span class="alt-contact-text center-text">There's nothing here.  Please <a href="#/login">log in</a> to view your account.</span>
+        </div>
+        
       </div>
-      
     </div>
   </div>
 </div>
@@ -35,44 +37,53 @@
             <!-- USER INFO VIEW -->
             <div ng-if="accountViewModelState.userInfo === true">
               
-              <div class="row">
+              <div class="row" ng-if="accountViewModelState.userField === ''">
                 <div class="col s6">
                   <h4>{{displayName}}</h4>
                 </div>
               </div>
-              <div class="row">
+
+              <div class="row" id="contact-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'contact-fields'">
                 <div class="col s6" id="email-field">
-                  <label for="email-field">E-Mail:</label><p>{{user.email}}</p>
+                  <label for="email-field">E-Mail:</label><p>{{user.email}} &nbsp;&nbsp; <a ng-click="showEditUserField('email');"><i class="small material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+                  
                 </div>
                 <div class="col s6" id="phone-field">
-                  <label for="phone-field">Contact Phone:</label><p>{{displayPhone}}</p>
+                  <label for="phone-field">Contact Phone:</label><p>{{displayPhone}} &nbsp;&nbsp; <a ng-click="showEditUserField('email');"><i class="small material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                 </div>
               </div>
-              <div class="row" ng-if="user.address !== ''">
-                <div class="col s6" id="address-field">
-                  <label for="address-field">Address:</label><p>{{user.address}}</p>
+
+              <div id="address-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'address-fields'">
+                <div class="row" ng-if="user.address !== ''" id="address-fields">
+                  <div class="col s6" id="address-field">
+                    <label for="address-field">Address:</label><p>{{user.address}}</p>
+                  </div>
+                  <div class="col s6" id="city-field">
+                    <label for="city-field">City/Town:</label><p>{{user.city}}</p>
+                  </div>
                 </div>
-                <div class="col s6" id="city-field">
-                  <label for="city-field">City/Town:</label><p>{{user.city}}</p>
-                </div>
-              </div>
-              <div class="row" ng-if="user.address !== ''">
-                <div class="col s6" id="state-field">
-                  <label for="state-field">State:</label><p>{{user.state}}</p>
-                </div>
-                <div class="col s6" id="zip-field">
-                  <label for="zip-field">ZIP:</label><p>{{user.zip}}</p>
-                </div>
-              </div>
-              <div class="row" ng-if="user.hospital !== ''">
-                <div class="col s12" id="hospital-field">
-                  <label for="hospital-field">Animal Hospital:</label><p>{{user.hospital}}</p>
+                <div class="row" ng-if="user.address !== ''">
+                  <div class="col s6" id="state-field">
+                    <label for="state-field">State:</label><p>{{user.state}}</p>
+                  </div>
+                  <div class="col s6" id="zip-field">
+                    <label for="zip-field">ZIP:</label><p>{{user.zip}}</p>
+                  </div>
                 </div>
               </div>
+
+              <div id="hospital-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'hospital-fields'">
+                <div class="row" ng-if="user.hospital !== ''">
+                  <div class="col s12" id="hospital-field">
+                    <label for="hospital-field">Animal Hospital:</label><p>{{user.hospital}}</p>
+                  </div>
+                </div>
+              </div>
+
               <br>
               <div class="row">
                 <div class="col s4 offset-s1" ng-if="accountViewModelState.editingUser === false">
-                  <a class="waves-effect waves-light btn" ng-click="showEditUser();"><i class="small material-icons">edit</i>&nbsp;&nbsp;EDIT INFO</a>
+                  <a class="waves-effect waves-light btn" ng-click="confirmEditField();"><i class="small material-icons">edit</i>&nbsp;&nbsp;CONFIRM CHANGE</a>
                 </div>
                 <div class="col s4 offset-s1" ng-if="accountViewModelState.editingUser === true">
                   <a class="waves-effect btn" ng-click="cancelEdit();">CANCEL<i id="about-icon" class=" material-icons right">highlight_off</i></a>
@@ -84,6 +95,12 @@
             <!-- EDIT USER INFO VIEW -->
             <div ng-if="accountViewModelState.editingUser === true">
               
+            <div class="row">
+              <div class="col s10 offset-s1">
+                <h5>{{editUserTitle}}</h5>
+              </div>
+            </div>
+
               <div class="row">
                 <div class="col s6" id="first-field">
                     <label for="first-field">First Name:</label><input type="text" ng-model="userData.first">{{userData.first}}</input>
