@@ -27,11 +27,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     finalConfirm: false
   };
 
-  if ($rootScope.signingUp) {
-    $scope.defaultState(true);
-    $scope.viewModelState.newUser = true;
-  };
-
   $scope.loginUserObject = {
     username: '',
     password: ''
@@ -131,6 +126,18 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
 
   $scope.defaultState();
+
+  if ($rootScope.signingUp) {
+    $scope.defaultState(true);
+    $scope.viewModelState.newUser = true;
+  } else if ($rootScope.user && $rootScope.user.username !== '') {
+
+      console.log("USER: ", $rootScope.user);
+      console.log("VM STATE: ", $scope.viewModelState);
+
+    $scope.defaultState(true);
+    $scope.viewModelState.returningUser = true;
+  };
 
   $scope.returningUser = function () {
     $scope.defaultState(true)
