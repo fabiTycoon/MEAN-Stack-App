@@ -60,24 +60,20 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     };
   };
 
-  $scope.setDefaultState();
-
-  $scope.editUser = function () {
-    $scope.setDefaultState(true);
-    $scope.accountViewModelState.editingUser = true;
-  };
+  $scope.setDefaultState(true);
 
   $scope.cancelEdit = function () {
     $scope.setDefaultState();
   };
 
   $scope.showEditUser = function () {
-     $scope.setDefaultState(true); 
+     $scope.setDefaultState(); 
      $scope.accountViewModelState.editingUser = true;
   };
 
   $scope.editUser = function () {
     var updatedData = $scope.userData;
+    console.log("UPDATING USER WITH THIS DATA: ", $scope.userData); 
     //TO DO: DATA VALIDATION
 
     for (var key in updatedData) {
@@ -108,22 +104,21 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.setDefaultState(true);
   };
 
-
   $scope.showProfilePets = function () {
-    $scope.setDefaultState(true);
+    $scope.setDefaultState();
     $scope.profileTitle = "MY SAVED PETS:";
     $scope.accountViewModelState.petInfo = true;
   };
 
 
   $scope.showProfileReservations = function () {
-    $scope.setDefaultState(true);
+    $scope.setDefaultState();
     $scope.profileTitle = "MY RESERVATIONS:";
     $scope.accountViewModelState.reservationInfo = true;
   };
 
   $scope.showEditPet = function () {
-    $scope.setDefaultState(true); 
+    $scope.setDefaultState(); 
     $scope.accountViewModelState.editingPet = true;
   };
 
@@ -132,20 +127,13 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   };
 
   var formatDateString = function (dateString) {
-
     if (!dateString) {return;}
-
-      console.log("INPUT STRING:", dateString);
-
     var formattedDateString = '';
     dateString = dateString + '';
     var year = dateString.slice(0, 4);
-      console.log("YEAR: ", year)
     var month = dateString.slice(5, 7);
     month += "/"
-      console.log("MONTH: ", month);
     var day = dateString.slice(8, 10);
-      console.log("DAY: ", day);
     formattedDateString = month + day + "/" + year;
     return formattedDateString;
   };

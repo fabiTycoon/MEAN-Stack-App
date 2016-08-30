@@ -1,45 +1,49 @@
-<!--<div id="loginPage">
-  <div class="push"></div>
-  <div class="row">
-    <div class="col s12 m5 offset-m4">
-      <p class="redirect-text">
-        Not registered? <br> Please <a href="#/addUser">sign up</a> to book online with us!
-      </p>
-    </div>
-  </div>
+<!--LOGIN CARD  -->
+<div class="push"></div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col s12 m6 offset-m3 center-align" ng-if="refresh == false"> 
-        <div class="card" id="login-form-container">
-          <div class="card-content">
-            <span class="card-title"><h4>LOG IN:</h4></span>
-            <form><br>
-              <div class="row">
-                <div class="input-field col s12 center-align">
-                  <input id="username" type="text" ng-model="user.username">
-                  <label for="username">E-mail:</label>
-               </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12 center-align">
-                  <input id="password" type="password" ng-model="user.password">
-                  <label for="password">Password:</label>
-                </div>
-              <div class="error-box col s12" ng-if="loginError">
-                <p class="error-text">{{loginErrorMessage}}</p>
-              </div>
-              </div>
-            </form>
+<div class="row" ng-if="refresh === false" id="registration-form-container">
+  <div class="col s8 offset-s2">
+    <div class="card white">
+      <div ng-hide="loginLoading === true">
 
-            <div class="card-action">
-              <a href="#/">Go Back</a>
-              <a ng-click="logIn(user)">Enter</a>
+        <div class="row">
+          <div class="col s10 offset-s1">
+            <br>
+            <span class="card-title" class="thin">LOGIN:</span>
+            <br>
+            <br>
+              <label for="loginUserEmail">E-Mail:</label>
+              <input id="loginUserEmail" type="text" ng-model="loginUser.username"></input>
+              <label for="loginUserPass">Password:</label>
+              <input id="loginUserPass" type="password" ng-model="loginUser.password"></input>
+            <br><br>
+
+            <div class="row">
+              <div class="col s6">
+                <a class="waves-effect waves-light btn thin" style="width: 12em;" ng-click="loginUser();" ng-class="{'disabled': loginLoading === true}"><i class="material-icons left">input</i>LOGIN</a>
+              </div>
+              <div class="col s6">
+                <a class="waves-effect waves-light btn thin" ng-click="recoverPassword();"><i class="material-icons left">info_outline</i>FORGOT PASSWORD?</a>
+              </div>
             </div>
-
-          </div>
+            <div class="row" >
+              <div class="col s6">
+                <a class="waves-effect waves-light red btn thin" style="width: 12em;" ng-click="addNewUser()"><i class="material-icons left">mode_edit</i>REGISTER</a>
+              </div>
+            </div>
+          <br>
         </div>
+
+        <div class="col s6 offset-s2 error-text" ng-if="registrationError.length !== 0">
+          <p>{{registrationError}}</p>
+        </div>
+
+        <div class="col s10 offset-s1" ng-show="loginLoading === true">
+          <span>LOADING...</span><br><br>
+          <img src="https://i1.wp.com/cdnjs.cloudflare.com/ajax/libs/galleriffic/2.0.1/css/loader.gif" class="login-loading-wheel"/>
+        </div>
+
       </div>
     </div>
   </div>
-</div>-->
+</div>

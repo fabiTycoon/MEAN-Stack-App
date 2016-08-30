@@ -14,7 +14,7 @@ angular.module('myApp', [
   'myApp.addPetView',
   'myApp.viewConfirm',
   'myApp.viewAdmin',
-  //'myApp.viewLogin',
+  'myApp.viewLogin',
   'myApp.version',
   //'myApp.basicServices',
   'myApp.directivesModule',

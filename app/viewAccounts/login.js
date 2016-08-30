@@ -1,4 +1,4 @@
-/*'use strict';
+'use strict';
 
 angular.module('myApp.viewLogin', ['ngRoute'])
 
@@ -9,39 +9,59 @@ angular.module('myApp.viewLogin', ['ngRoute'])
   });
 }])
 
-.controller('viewLoginCtrl', [ '$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
+.controller('viewLoginCtrl', [ '$scope', '$rootScope', '$http', '$location', 'User', function($scope, $rootScope, $http, $location, User) {
 
   $scope.refresh = false;
-  $scope.loginError = false;
-  $scope.loginErrorMessage = '';
+  $scope.loginLoading = false;
+  $rootScope.signingUp = false;
 
-  $scope.user = {
+  $scope.loginUser = {
     username: '',
     password: ''
   };
 
-  $scope.$on('login-error', function() {
-    $('#login-form-container').addClass('animated shake')
+  $scope.$on('registrationError', function() {
+    $('#registration-form-container').addClass('animated shake')
     $scope.refresh = true;
     $scope.refresh = false; 
   });
 
+  $scope.addNewuser = function () {
+    $location.path('/book')
+    $rootScope.signingUp = true;
+  };
+
   $scope.logIn = function () {
-    $scope.loginErrorMessage = '';
-    return $http.post('api/users/login', $scope.user)
-      .then(function successCallback(req, res){
-        console.log("req is:", req)
-        console.log("resp is:", res)
-        //$scope.loginError = res.data.message;
-        $rootScope.$broadcast('login-error');
-      }), function errorCallback(res) {
-        console.log("error, res is:", res);
-        // TO DO: additional error handling
-      }
+    $scope.loginLoading = true;
+    //UPDATE DB WITH LAST LOGIN TIME (IF MONGOOSE DOESNT DO THIS FOR ME?)
+    if ($scope.loginUser.username.length > 3 && $scope.loginUser.password.length > 7) {
+      User.logIn($scope.loginUser)
+      .then(function(res){
+        $scope.loginLoading = false;
+
+        if (res.status === 401) {
+          $rootScope.registrationError = "Invalid username or password";
+          $rootScope.$broadcast('registrationError');   
+        };
+
+        if (res.data.isLoggedIn) {
+          $rootScope.user = res.data.user; 
+                console.log("LOGGED IN: ", $rootScope.user);
+          if ($scope.serviceSelected && $scope.serviceSelected === 'boarding' || $scope.serviceSelected && $scope.serviceSelected === 'daycare') {
+            $scope.addReservation();
+          };
+        } else {
+          console.log("INVALID USERNAME OR PASSWORD:", res.data);
+        };
+      });
+    } else {
+      $rootScope.registrationError = "Please enter a valid username and password";
+      $rootScope.$broadcast('registrationError');   
+    };  
   };
 
-  $scope.logOut = function (user) {
-    return $http.post('api/users/logout', $scope.user.username);
+  $scope.recoverPassword = function () {
+    return;
   };
 
-}]);*/
+}]);

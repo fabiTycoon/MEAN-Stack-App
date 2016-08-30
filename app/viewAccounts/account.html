@@ -1,7 +1,14 @@
-<div class="container" ng-if="user.isLoggedIn === false || !user">
+<div class="row" ng-if="user.isLoggedIn === false || !user">
   <div class="col s12">
     <br><br><br>
-    <span class="alt-contact-text center-text">Woops!  There's nothing here.  Log-in to view your account.</span>
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">WOOPS!</span>
+        <br>
+        <span class="alt-contact-text center-text">There's nothing here.  Please <a href="">log in</a>a to view your account.</span>
+      </div>
+      
+    </div>
   </div>
 </div>
 
