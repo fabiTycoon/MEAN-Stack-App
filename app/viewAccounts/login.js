@@ -47,7 +47,7 @@ angular.module('myApp.viewLogin', ['ngRoute'])
         if (res.data.isLoggedIn) {
           $rootScope.user = res.data.user; 
             console.log("LOGGED IN: ", $rootScope.user);
-          $location.path('#/account')      
+          $location.path('/account')      
         } else {
           $rootScope.registrationError = res.error;
           console.log("INVALID USERNAME OR PASSWORD:", res.data);
