@@ -70,6 +70,8 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     };
 
     $scope.setDefaultState(true);
+
+
   };
 
   $scope.phoneConcat = function () {
@@ -87,6 +89,14 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.showEditUserField = function (editedUserField) {
      $scope.setDefaultState(); 
      $scope.accountViewModelState.editingUser = true;
+
+     //animate transition
+
+
+     $('#edit-container').addClass('animated flipOutY');
+     $scope.refresh = true;
+     $scope.refresh = false;
+     $('#edit-container').removeClass('animated flipOutY');
      
      if (editedUserField === 'email' || editedUserField === 'phone') {
       $scope.displayName = 'EDIT MY CONTACT INFO:';
@@ -141,8 +151,18 @@ angular.module('myApp.viewAccount', ['ngRoute'])
             $rootScope.broadcast('registrationError');
             return;
           };
-      } else if ($scope.accountViewModelState.userField === 'hospital-field') {
+      } else if ($scope.accountViewModelState.userField === 'medical-fields') {
         return;
+      } else if ($scope.accountViewModelState.userField === 'password-fields') {
+        if ($scope.userData.password.length < 8) {
+          $rootScope.registrationError = 'Password must be at least 8 characters'.
+          $rootScope.broadcast('registrationError');
+          return;
+        } else if ($scope.userData.password !== $scope.userData.passwordConfirm) {
+          $rootScope.registrationError = 'Passwords do not match'.
+          $rootScope.broadcast('registrationError');
+          return;
+        };
       };
     $scope.confirmEditUser();
   };
@@ -164,7 +184,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     };
 
     if (updateCount === 0) {
-      $rootScope.registrationError = "Please update any and all fields ";
+      $rootScope.registrationError = "Please update any selected fields "; //or just reset form?
       $rootScope.$broadcast('registrationError');
     };
 
@@ -202,6 +222,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.setDefaultState();
     $scope.profileTitle = "MY RESERVATIONS:";
     $scope.accountViewModelState.reservationInfo = true;
+      console.log("WTF? ", $scope.accountViewModelState)
   };
 
   $scope.showEditPet = function () {
