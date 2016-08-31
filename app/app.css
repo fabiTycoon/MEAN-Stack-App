@@ -122,9 +122,8 @@
   height: 200px; }
 
 video {
-  opacity: 0.85;
   width: 100%;
-  height: auto; }
+  height: %; }
 
 .splash-img {
   opacity: 0.8; }

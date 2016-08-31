@@ -224,7 +224,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
   
   $scope.goHome = function () {
-    $scope.defaultState();
+    if ($rootScope.user) {
+      $scope.viewModelState.returningUser = true;
+    } else {
+      $scope.defaultState();
+    };
   };
 
   $scope.serviceSelect = function (service) {

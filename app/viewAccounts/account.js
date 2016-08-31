@@ -9,7 +9,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   });
 }])
 
-.controller('viewAccountCtrl', [ '$scope', '$rootScope', '$http', '$timeout', function($scope, $rootScope, $http, $timeout) {
+.controller('viewAccountCtrl', [ '$scope', '$rootScope', '$http', '$timeout', 'User', function($scope, $rootScope, $http, $timeout, User) {
 
   $scope.displayName = '';
   $scope.displayPhone = '';
@@ -17,6 +17,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $rootScope.registrationError = '';
   $scope.refresh = false;
   $scope.editUserTitle = '';
+  $scope.updatingUsername = false;
 
   //IF USER CLICKS EDIT BUTTON, SHOW EDITABLE TEXT AREAS:
   $scope.userData = {
@@ -53,6 +54,10 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   };
 
   $scope.setDefaultState = function (reset) {
+    if ($rootScope.user) {
+      $scope.displayName = $rootScope.user.first + " " + $rootScope.user.last;
+    };
+
     for (var state in $scope.accountViewModelState) {
       $scope.accountViewModelState[state] = false;
     };
@@ -118,49 +123,54 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      //VALIDATION RULES
      if ($scope.accountViewModelState.userField === 'contact-fields') { 
 
+      
+
       $scope.phoneConcat();
       
        if ($scope.userData.email.length > 0) {
+
+        $scope.updatingUsername = true;
+
          if ($scope.userData.email.length < 3 || $scope.userData.email.indexOf('.') === -1 || $scope.userData.email.indexOf('@') === -1) {
-           $rootScope.registrationError = 'Please enter a valid e-mail address'.
-           $rootScope.broadcast('registrationError');
+           $rootScope.registrationError = 'Please enter a valid e-mail address';
+           $rootScope.$broadcast('registrationError');
            return;
          };
        };
 
        if ($scope.userData.phone.length > 0 && $scope.userData.phone.length !== 10) {
-        $rootScope.registrationError = 'Please enter a valid phone number'.
-        $rootScope.broadcast('registrationError');
+        $rootScope.registrationError = 'Please enter a valid phone number';
+        $rootScope.$broadcast('registrationError');
         return;
        };
       } else if ($scope.accountViewModelState.userField === 'address-fields') {
 
         if ($scope.userField.address.length > 0 && $scope.userField.address.length < 4) {
-          $rootScope.registrationError = 'Please enter a valid street address'.
-          $rootScope.broadcast('registrationError');
+          $rootScope.registrationError = 'Please enter a valid street address';
+          $rootScope.$broadcast('registrationError');
           return;
         } else if ($scope.userField.city.length > 0 && $scope.userField.city.length < 3) {
-          $rootScope.registrationError = 'Please enter a valid city or town'.
-          $rootScope.broadcast('registrationError');
+          $rootScope.registrationError = 'Please enter a valid city or town';
+          $rootScope.$broadcast('registrationError');
           return;
         } /*else if ($scope.userField.state.length > 0) {
           //FIGURE OUT HOW TO DO THIS
         }*/
           else if ($scope.userField.zip.length > 0 && $scope.userField.zip.length !== 5) {
-            $rootScope.registrationError = 'Please enter a valid zip code'.
-            $rootScope.broadcast('registrationError');
+            $rootScope.registrationError = 'Please enter a valid zip code';
+            $rootScope.$broadcast('registrationError');
             return;
           };
       } else if ($scope.accountViewModelState.userField === 'medical-fields') {
         return;
       } else if ($scope.accountViewModelState.userField === 'password-fields') {
         if ($scope.userData.password.length < 8) {
-          $rootScope.registrationError = 'Password must be at least 8 characters'.
-          $rootScope.broadcast('registrationError');
+          $rootScope.registrationError = 'Password must be at least 8 characters';
+          $rootScope.$broadcast('registrationError');
           return;
         } else if ($scope.userData.password !== $scope.userData.passwordConfirm) {
-          $rootScope.registrationError = 'Passwords do not match'.
-          $rootScope.broadcast('registrationError');
+          $rootScope.registrationError = 'Passwords do not match';
+          $rootScope.$broadcast('registrationError');
           return;
         };
       };
@@ -179,13 +189,17 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       if (updatedData[key] === '' && $rootScope.user[key]) {
         updateCount++;
         updatedData[key] = $rootScope.user[key];
+          console.log("SET THIS VALUE ", key, updatedData);
       };
-      console.log("SET THIS VALUE ", key, updatedData);
     };
 
     if (updateCount === 0) {
       $rootScope.registrationError = "Please update any selected fields "; //or just reset form?
       $rootScope.$broadcast('registrationError');
+    };
+
+    if ($scope.updatingUsername === true) {
+      updatedData.updatingUsername = true;
     };
 
     User.editUser(updatedData)
@@ -202,8 +216,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
           $rootScope.$broadcast('registrationError');
         };  
       });
-
-
   };
 
   $scope.showUserInfo = function () {
@@ -264,17 +276,14 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       var ph1 = phoneString.slice(3, 6);
       var ph2 = phoneString.slice(6, 10);
       $scope.displayPhone = "(" + phoneArea + ") " + ph1 + " - " + ph2;
-        console.log("SET DISPLAY PHONE: ", $scope.displayPhone);
     };
 
     if ($rootScope.user && $rootScope.user.reservations.length > 0) {
       for (var i = 0; i < $rootScope.user.reservations.length; i++) {
         var currentReservation = $rootScope.user.reservations[i];
         var petString = currentReservation.pets[0].name;
-
         if (currentReservation.pets.length > 1) {
           (petString += " & ");
-
           if (currentReservation.pets.length !==2) {
             var number = currentReservation.pets.length - 1;
             number += "";
@@ -288,14 +297,13 @@ angular.module('myApp.viewAccount', ['ngRoute'])
         currentReservation.displayCheckOutDate = formatDateString(currentReservation.checkOutDate);
       };
     };
-
-    $(document).ready(function(){
-      console.log("CALLED")
-       $('.collapsible').collapsible({
-         accordion : false
-       });
-     });
   };
+
+  $(document).ready(function(){
+     $('.collapsible').collapsible({
+       accordion : false
+     });
+   });
 
   init();
 }]);
