@@ -32,23 +32,27 @@ angular.module('myApp.viewLogin', ['ngRoute'])
   };
 
   $scope.login = function () {
-    $scope.loginLoading = true;
+    //$scope.loginLoading = true;
     //UPDATE DB WITH LAST LOGIN TIME (IF MONGOOSE DOESNT DO THIS FOR ME?)
     if ($scope.loginUser.username.length > 3 && $scope.loginUser.password.length > 7) {
       User.logIn($scope.loginUser)
       .then(function(res){
-        $scope.loginLoading = false;
+
+
+        console.log("LOGGED IN:", res);
+
+        //$scope.loginLoading = false;
 
         if (res.status === 401) {
           $rootScope.registrationError = "Invalid username or password";
           $rootScope.$broadcast('registrationError');   
         };
 
-        if (res.data.isLoggedIn) {
+        if (res.data.isLoggedIn === true) {
           $rootScope.user = res.data.user; 
             console.log("LOGGED IN: ", $rootScope.user);
           $location.path('/account')      
-        } else {
+        } else if (res.data.isLoggedIn === false) {
           $rootScope.registrationError = res.error;
           console.log("INVALID USERNAME OR PASSWORD:", res.data);
         };

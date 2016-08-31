@@ -247,3 +247,7 @@ video {
 
 #dummy-table-row {
   height: 5em; }
+
+.account-edit i {
+  font-size: 1rem !important;
+  color: black; }

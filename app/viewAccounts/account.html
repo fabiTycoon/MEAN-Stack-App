@@ -45,29 +45,28 @@
 
               <div class="row" id="contact-fields">
                 <div class="col s6" id="email-field">
-                  <label for="email-field">E-Mail:</label><p>{{user.email}} &nbsp;&nbsp; <a ng-click="showEditUserField('email');"><i class="small material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
-                  
+                  <label for="email-field">E-Mail:</label><p class="account-edit">{{user.email}} &nbsp;&nbsp; <a ng-click="showEditUserField('email');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                 </div>
                 <div class="col s6" id="phone-field">
-                  <label for="phone-field">Contact Phone:</label><p>{{displayPhone}} &nbsp;&nbsp; <a ng-click="showEditUserField('phone');"><i class="small material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+                  <label for="phone-field">Contact Phone:</label><p class="account-edit">{{displayPhone}} &nbsp;&nbsp; <a ng-click="showEditUserField('phone');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                 </div>
               </div>
 
-              <div id="address-fields">
+              <div id="address-fields" class="account-edit">
                 <div class="row" ng-if="user.address !== ''" id="address-field">
                   <div class="col s6" id="address-field">
-                    <label for="address-field">Address:</label><p>{{user.address}}</p>
+                    <label for="address-field">Address:</label><p>{{user.address}} <a ng-click="showEditUserField('address');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                   </div>
                   <div class="col s6" id="city-field">
-                    <label for="city-field">City/Town:</label><p>{{user.city}}</p>
+                    <label for="city-field">City/Town:</label><p>{{user.city}} <a ng-click="showEditUserField('city');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                   </div>
                 </div>
                 <div class="row" ng-if="user.address !== ''">
                   <div class="col s6" id="state-field">
-                    <label for="state-field">State:</label><p>{{user.state}}</p>
+                    <label for="state-field">State:</label><p>{{user.state}} <a ng-click="showEditUserField('state');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                   </div>
                   <div class="col s6" id="zip-field">
-                    <label for="zip-field">ZIP:</label><p>{{user.zip}}</p>
+                    <label for="zip-field">ZIP:</label><p>{{user.zip}} <a ng-click="showEditUserField('zip');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                   </div>
                 </div>
               </div>
@@ -75,20 +74,21 @@
               
               <div class="row" ng-if="user.hospital !== ''">
                 <div class="col s12" id="hospital-field">
-                  <label for="hospital-field">Animal Hospital:</label><p>{{user.hospital}}</p>
+                  <label for="hospital-field">Animal Hospital:</label><p class="account-edit">{{user.hospital}} <a ng-click="showEditUserField('hospital');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                 </div>
               </div>
               
 
               <br>
-              <div class="row">
-                <div class="col s4 offset-s1" ng-if="accountViewModelState.editingUser === false">
-                  <a class="waves-effect waves-light btn" ng-click="confirmEditField();"><i class="small material-icons">edit</i>&nbsp;&nbsp;CONFIRM CHANGE</a>
-                </div>
-                <div class="col s4 offset-s1" ng-if="accountViewModelState.editingUser === true">
-                  <a class="waves-effect btn" ng-click="cancelEdit();">CANCEL<i id="about-icon" class=" material-icons right">highlight_off</i></a>
+          
+              <div class="row" ng-if="accountViewModelState.editingUser === false">
+                <div class="col s4 offset-s1" >
+                  <a class="waves-effect waves-light btn" ng-click="showEditUserField(password);"><i class="small material-icons">edit</i>&nbsp;&nbsp;CHANGE PASSWORD</a>
                 </div>
               </div>
+
+
+
             </div>
             <!-- END USER INFO VIEW -->
 
@@ -97,7 +97,7 @@
               
             <div class="row">
               <div class="col s10 offset-s1">
-                <h5>{{displayName}}</h5>
+                <h6 class="thin">{{displayName}}</h6>
               </div>
             </div>
 
@@ -118,7 +118,7 @@
                   <label for="city-field">City/Town:</label><input type="text" ng-model="userData.city">{{userData.city}}</input>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'address-fields'">
                 <div class="col s6" id="state-field">
                   <label for="state-field">State:</label><input type="text" ng-model="userData.state">{{userData.state}}</input>
                 </div>
@@ -134,14 +134,24 @@
               </div>
 
               <div class="row" id="password-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'password-fields'">
-                <div class="col s6" id="password-field">
-                  <label for="password-field">Password:</label><input type="text" ng-model="userData.password">{{userData.password}}</input>
+                <div class="row" id="password-field">
+                  <div class="col s6" id="password-field">
+                    <label for="password-field">Password:</label><input type="text" ng-model="userData.password">{{userData.password}}</input>
+                  </div>
                 </div>
+                <div class="row">
+                  <div class="col s6" id="password-confirm-field">
+                    <label for="password-confirm-field">Confirm Password:</label><input type="text" ng-model="userData.passwordConfirm">{{userData.passwordConfirm}}</input>
+                  </div>
+                </div>
+            </div>
+
+            <div class="row" ng-if="accountViewModelState.editingUser === true">
+              <div class="col s4 offset-s1" >
+                <a class="waves-effect waves-light left btn" ng-click="confirmEditField();">CONFIRM CHANGES</a>
               </div>
-              <div class="row">
-                <div class="col s6" id="password-confirm-field">
-                  <label for="password-confirm-field">Confirm Password:</label><input type="text" ng-model="userData.passwordConfirm">{{userData.passwordConfirm}}</input>
-                </div>
+              <div class="col s4 offset-s1">
+                <a class="waves-effect waves-light red left btn" ng-click="cancelEdit();">DISCARD CHANGES<i id="about-icon" class=" material-icons right">highlight_off</i></a>
               </div>
             </div>
             <!-- END USER INFO VIEW -->

@@ -9,7 +9,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   });
 }])
 
-.controller('viewAccountCtrl', [ '$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
+.controller('viewAccountCtrl', [ '$scope', '$rootScope', '$http', '$timeout', function($scope, $rootScope, $http, $timeout) {
 
   $scope.displayName = '';
   $scope.displayPhone = '';
@@ -65,7 +65,11 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.setDefaultState(true);
 
   $scope.cancelEdit = function () {
-    $scope.setDefaultState();
+    for (var userField in $scope.userData) {
+      $scope.userData[userField] = '';
+    };
+
+    $scope.setDefaultState(true);
   };
 
   $scope.phoneConcat = function () {
@@ -85,16 +89,16 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      $scope.accountViewModelState.editingUser = true;
      
      if (editedUserField === 'email' || editedUserField === 'phone') {
-      $scope.displayName = 'EDIT MY CONTACT INFO';
+      $scope.displayName = 'EDIT MY CONTACT INFO:';
       $scope.accountViewModelState.userField = 'contact-fields';
      } else if (editedUserField === 'address' || editedUserField === 'city' || editedUserField === 'state' || editedUserField === 'zip') {
-      $scope.displayName = 'EDIT MY ADDRESS INFO';
+      $scope.displayName = 'EDIT MY ADDRESS INFO:';
       $scope.accountViewModelState.userField = 'address-fields';
      } else if (editedUserField === 'hospital') {
-      $scope.displayName = 'EDIT MY MEDICAL PROVIDER INFORMATION';
+      $scope.displayName = 'EDIT MY MEDICAL PROVIDER INFORMATION:';
       $scope.accountViewModelState.userField = 'medical-fields';
      } else if (editedUserField === 'password') {
-      $scope.displayName = 'UPDATE MY PASSWORD';
+      $scope.displayName = 'UPDATE MY PASSWORD:';
       $scope.accountViewModelState.userField = 'password-fields';
      };
   };
