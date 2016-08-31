@@ -38,7 +38,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     petInfo: false,
     reservationInfo: false,
     editingUser: false,
-      userField: '',
+      userField: '', //accepts: 'contact-fields', 'address-fields', 'medical-fields', ''
     editingPet: false,
   };
 
@@ -92,7 +92,10 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       $scope.accountViewModelState.userField = 'address-fields';
      } else if (editedUserField === 'hospital') {
       $scope.displayName = 'EDIT MY MEDICAL PROVIDER INFORMATION';
-      $scope.accountViewModelState.userField = 'hospital-fields';
+      $scope.accountViewModelState.userField = 'medical-fields';
+     } else if (editedUserField === 'password') {
+      $scope.displayName = 'UPDATE MY PASSWORD';
+      $scope.accountViewModelState.userField = 'password-fields';
      };
   };
 

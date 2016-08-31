@@ -43,18 +43,18 @@
                 </div>
               </div>
 
-              <div class="row" id="contact-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'contact-fields'">
+              <div class="row" id="contact-fields">
                 <div class="col s6" id="email-field">
                   <label for="email-field">E-Mail:</label><p>{{user.email}} &nbsp;&nbsp; <a ng-click="showEditUserField('email');"><i class="small material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                   
                 </div>
                 <div class="col s6" id="phone-field">
-                  <label for="phone-field">Contact Phone:</label><p>{{displayPhone}} &nbsp;&nbsp; <a ng-click="showEditUserField('email');"><i class="small material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+                  <label for="phone-field">Contact Phone:</label><p>{{displayPhone}} &nbsp;&nbsp; <a ng-click="showEditUserField('phone');"><i class="small material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                 </div>
               </div>
 
-              <div id="address-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'address-fields'">
-                <div class="row" ng-if="user.address !== ''" id="address-fields">
+              <div id="address-fields">
+                <div class="row" ng-if="user.address !== ''" id="address-field">
                   <div class="col s6" id="address-field">
                     <label for="address-field">Address:</label><p>{{user.address}}</p>
                   </div>
@@ -72,13 +72,13 @@
                 </div>
               </div>
 
-              <div id="hospital-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'hospital-fields'">
-                <div class="row" ng-if="user.hospital !== ''">
-                  <div class="col s12" id="hospital-field">
-                    <label for="hospital-field">Animal Hospital:</label><p>{{user.hospital}}</p>
-                  </div>
+              
+              <div class="row" ng-if="user.hospital !== ''">
+                <div class="col s12" id="hospital-field">
+                  <label for="hospital-field">Animal Hospital:</label><p>{{user.hospital}}</p>
                 </div>
               </div>
+              
 
               <br>
               <div class="row">
@@ -97,19 +97,11 @@
               
             <div class="row">
               <div class="col s10 offset-s1">
-                <h5>{{editUserTitle}}</h5>
+                <h5>{{displayName}}</h5>
               </div>
             </div>
 
-              <div class="row">
-                <div class="col s6" id="first-field">
-                    <label for="first-field">First Name:</label><input type="text" ng-model="userData.first">{{userData.first}}</input>
-                </div>
-                <div class="col s6" id="last-field">
-                    <label for="last-field">Last Name:</label><input type="text" ng-model="userData.last">{{userData.last}}</input>
-                </div>
-              </div>
-              <div class="row">
+              <div class="row" id="contact-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'contact-fields'">
                 <div class="col s6" id="email-field">
                   <label for="email-field">E-Mail:</label><input type="text" ng-model="userData.email">{{userData.email}}</input>
                 </div>
@@ -117,7 +109,8 @@
                   <label for="phone-field">Contact Phone:</label><input type="text" ng-model="userData.email">{{userData.phone}}</input>
                 </div>
               </div>
-              <div class="row">
+
+              <div class="row" id="address-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'address-fields'">
                 <div class="col s6" id="address-field">
                   <label for="address-field">Address:</label><input type="text" ng-model="userData.address">{{userData.address}}</input>
                 </div>
@@ -133,12 +126,14 @@
                   <label for="zip-field">ZIP:</label><input type="text" ng-model="userData.zip">{{userData.zip}}</input>
                 </div>
               </div>
-              <div class="row">
+
+              <div class="row" id="medical-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'medical-fields'">
                 <div class="col s12" id="hospital-field">
                   <label for="hospital-field">Animal Hospital:</label><input type="text" ng-model="userData.hospital">{{userData.hospital}}</input>
                 </div>
               </div>
-              <div class="row">
+
+              <div class="row" id="password-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'password-fields'">
                 <div class="col s6" id="password-field">
                   <label for="password-field">Password:</label><input type="text" ng-model="userData.password">{{userData.password}}</input>
                 </div>

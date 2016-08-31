@@ -31,7 +31,7 @@ angular.module('myApp.viewLogin', ['ngRoute'])
     $rootScope.signingUp = true;
   };
 
-  $scope.logIn = function () {
+  $scope.login = function () {
     $scope.loginLoading = true;
     //UPDATE DB WITH LAST LOGIN TIME (IF MONGOOSE DOESNT DO THIS FOR ME?)
     if ($scope.loginUser.username.length > 3 && $scope.loginUser.password.length > 7) {
@@ -46,11 +46,10 @@ angular.module('myApp.viewLogin', ['ngRoute'])
 
         if (res.data.isLoggedIn) {
           $rootScope.user = res.data.user; 
-                console.log("LOGGED IN: ", $rootScope.user);
-          if ($scope.serviceSelected && $scope.serviceSelected === 'boarding' || $scope.serviceSelected && $scope.serviceSelected === 'daycare') {
-            $scope.addReservation();
-          };
+            console.log("LOGGED IN: ", $rootScope.user);
+          $location.path('#/account')      
         } else {
+          $rootScope.registrationError = res.error;
           console.log("INVALID USERNAME OR PASSWORD:", res.data);
         };
       });

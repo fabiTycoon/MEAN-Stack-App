@@ -116,6 +116,9 @@ router.post('/login', passport.authenticate('local'), function(req, res){
 
   console.log("LOGIN: ", req.user);
 
+  var currentTime = Date.now();
+
+
   var returnedUser = {
     _id: req.user._id,
     first: req.user.first,
@@ -130,6 +133,7 @@ router.post('/login', passport.authenticate('local'), function(req, res){
     reservations: req.user.reservations,
     admin: req.user.admin,
     isLoggedIn: true,
+    last_login: currentTime,
     created_at: req.user.created_at
   };
   return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
@@ -223,7 +227,6 @@ router.post('/toggleBanUser/', function (){
     };
   });
 });
-
 
 router.post('/addPet', function(req, res){
 
