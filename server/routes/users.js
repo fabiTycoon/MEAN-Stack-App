@@ -27,7 +27,7 @@ router.get('users', function (req, res){
   };
 });
 
-router.get('/getUserByEmail/:email', function(req, res) {
+router.get('/getUserByEmail/', function(req, res) {
     console.log("USER ID:", req)
     console.log("REQBODY:", req.body)
     console.log("REQUSEr:", req.user)
@@ -159,41 +159,43 @@ router.post('/update/', function (req, res){
 
 
 router.put('/', function (req, res) {
+  console.log("HIT EDIT USER ENDPOINT: ", req.body);
 
-  var updatedUserData = req.data;
-  var userEmail = req.data.username;
-  var query = {'username' : userEmail};  
-  //pull existing user data
-/*  User.findOne(query, function (err, person) {
-    if (err) {
-      res.status(500).json('success': false, 'error': err);
-    } else {
-      var existingUserData = person;
-    };
-  });*/
+  var updatedUser = req.body;
+  updatedUser.isNew = false;
+  var currentUsername = req.body.username;
+  var updatingUsername = false;
 
-    console.log("DATA TO UPDATE: ", updatedUserData);
-    console.log("DATA EXISTING ", existingUserData);
-
-  for (var existingUserField in existingUserData) {
-    for (var updatedUserField in updatedUserData) {
-      //if the new data doesn't match the old data, and the new data is blank, keep old data:
-      if (updatedUserData[updatedUserField] !== existingUserData[existingUserField] && updatedUserData[updatedUserField] === '') {
-        updatedUserData[updatedUserField] = existingUserData[existingUserField];
-      };
-    };
+  if (updatedUser.updatingUsername === true) {
+    updatingUsername = true;  
+    console.log("UPDATING USERNAME")
   };
+    
+  User.findOne({username: currentUsername}, function (err, returnedUser) {
 
-  console.log("FINAL UPDATED USER OBJECT, before save: ", existingUserData);
-
-  User.findOneAndUpdate(query, updatedUserData, {new: true}, function (err, data) {
-    if (err) {
-      console.log("ERROR: ", err);
-      return res.status(500).json({'error': err, 'success': false});
-    } else {
-      console.log("SAVED UPDATED USER DATA: ", user);
-      return res.status(200).json({'user': user, 'success': true});
+    for (var userKey in updatedUser) {
+      console.log("KEY: ", userKey, updatedUser[userKey]);
+      returnedUser[userKey] = updatedUser[userKey];
     };
+
+    if (updatingUsername === true) {
+      returnedUser.username = updatedUser.email;
+      updatingUsername = false;
+    } else {
+      returnedUser.username = returnedUser.email
+      delete returnedUser.email;
+    }
+
+    console.log("SAVING THIS USER: ", returnedUser);
+
+    returnedUser.save(function (err, user) {
+      if (err) {
+        console.error('ERROR! ', err);
+        return res.status(500).json({'error': err, 'success': false});
+      } else {
+        return res.status(200).json({'user': user, 'success': true});
+      }
+    });
   });
 });
 

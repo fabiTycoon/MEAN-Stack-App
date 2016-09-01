@@ -18,11 +18,14 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   $rootScope.errorMessage = '';
   $scope.loadingData = true;
   $scope.initialLoad = true;
+  $scope.userLoaded = false;
   $scope.loadedUser = {};
 
 
   $scope.adminViewModelState = {
-    viewUsers: true,
+    viewUsers: true, 
+    viewUsersPets: false,
+    viewUsersReservations: false,
     viewReservations: false,
     viewPets: false,
     viewData: false
@@ -44,15 +47,40 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
       });
   };
 
+  var loadUser = function (userEmail, dataType) {
+    $scope.loadedUser = {};
+    $scope.adminViewModelState.viewUsersReservations = false;
+    $scope.adminViewModelState.viewUsersPets = false;
+    $scope.userLoaded = false;
+    var query = {'email': userEmail};
+
+    User.getUserByEmail(query)
+      .then(function (res, user) {
+          console.log("FOUND USER: ", res.data);
+          console.log("USER? ", user);
+
+        if (res.data.success === true) {
+          $scope.loadedUser = res.data.user;
+          $scope.userLoaded = true;       
+
+          if (dataType === 'reservations') {
+            $scope.adminViewModelState.viewUsersReservations = true;
+          } else if (dataType === 'pets') {
+            $scope.adminViewModelState.viewUsersPets = true;
+          };
+        } else {
+          $rootScope.registrationError = "Failed to load user, please try again."
+          $rootScope.$broadcast('registrationError');
+        };
+      })
+  };
+
   $scope.loadUserReservations = function (userEmail) {
-
-    //FIND USER IN DB
-   return;
-
+    loadUser(userEmail, 'reservations');
   };
 
   $scope.loadUserPets = function (userEmail) {
-    return;
+    loadUser(userEmail, 'pets');
   };
 
   $scope.approveReservation = function (reservationId) {
@@ -177,12 +205,6 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
 
     var today = Date.now();
 
-
-
-/*
-    if ($rootScope.user.last_login > ) {
-
-    };*/
 
 
     //var compareDate = $rootScope.user.lastLoggedIn
