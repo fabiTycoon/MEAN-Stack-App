@@ -162,21 +162,27 @@ router.put('/', function (req, res) {
   console.log("HIT EDIT USER ENDPOINT: ", req.body);
 
   var updatedUser = req.body;
+  var fieldToUpdate = req.body.fieldToUpdate;
   var currentUsername = req.body.username;
-  var fieldToUpdate = '';
-
-  
-
-
-
     
   User.findOne({username: currentUsername}, function (err, returnedUser) {
 
-    //series of if statements for possible fields to update:
-
-
-    console.log("UPDATING THIS FIELD: ", fieldToUpdate);
-    console.log("SAVING THIS USER: ", returnedUser);
+    if (fieldToUpdate === 'email') {
+      
+    } else if (fieldToUpdate === 'phone') {
+      returnedUser[phone] = updatedUser.phone;
+    } else if (fieldToUpdate === 'address') {
+      returnedUser[address] = updatedUser.address;
+      returnedUser[city] = updatedUser.city;
+      returnedUser[state] = updatedUser.state;
+      returnedUser[zip] = updatedUser.zip;
+    } else if (fieldToUpdate === 'hospital') {
+      returnedUser[hospital] = updatedUser.hospital;
+    } else if (fieldToUpdate === 'password') {
+      //NEED PASSPORT TO HASH & SAVE PASSWORD
+    };
+    returnedUser.isNew = false; //not sure if this works
+      console.log("SAVING THIS USER: ", returnedUser);
 
     returnedUser.save(function (err, user) {
       if (err) {

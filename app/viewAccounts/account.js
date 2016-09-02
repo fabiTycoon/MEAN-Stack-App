@@ -143,6 +143,8 @@ angular.module('myApp.viewAccount', ['ngRoute'])
             $rootScope.registrationError = 'E-mail addresses do not match';
             $rootScope.$broadcast('registrationError');
             return;
+         } else {
+          $scope.userData.username = $scope.userData.email;
          };
        } else if (fieldToUpdate === 'phone') {
          if ($scope.userData.phone.length !== 10) {
@@ -167,14 +169,14 @@ angular.module('myApp.viewAccount', ['ngRoute'])
             $rootScope.$broadcast('registrationError');
             return;
           };
-      } else if ($scope.accountViewModelState.userField === 'medical-fields') {
+      } else if (fieldToUpdate === 'hospital') {
           if ($scope.userData.hospital.length < 3) {
             $rootScope.registrationError = 'Please enter a valid hospital name';
             $rootScope.$broadcast('registrationError');
             return;
           };
           return;
-      } else if ($scope.accountViewModelState.userField === 'password-fields') {
+      } else if (fieldToUpdate === 'password') {
         if ($scope.userData.password.length < 8) {
           $rootScope.registrationError = 'Password must be at least 8 characters';
           $rootScope.$broadcast('registrationError');
