@@ -111,9 +111,11 @@
               <div class="col s6" id="phone-field" ng-if="accountViewModelState.userField === 'phone-fields'">
                 <label for="phone-field">Contact Phone:</label>
                 <div class="row">
-                  <input type="number" style="width: 2em;" maxlength="3" ng-model="userData.area"></input>
-                  <input type="number" style="width: 2em;" maxlength="3" ng-model="userData.ph1"></input>  
-                  <input type="number" style="width: 3em;" maxlength="4" ng-model="userData.ph2"></input>
+                  <div class="col s10 offset-s1">
+                    <input type="number" style="width: 3em;" maxlength="3" ng-model="userData.area"></input>
+                    <input type="number" style="width: 3em;" maxlength="3" ng-model="userData.ph1"></input>  
+                    <input type="number" style="width: 3em;" maxlength="4" ng-model="userData.ph2"></input>
+                  </div>
                 </div>
               </div>
 

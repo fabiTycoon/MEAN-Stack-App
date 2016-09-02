@@ -158,18 +158,18 @@ angular.module('myApp.viewAccount', ['ngRoute'])
           return;
          };
        } else if (fieldToUpdate === 'address') {
-        if ($scope.userField.address.length < 4) {
+        if ($scope.userData.address.length < 4) {
           $rootScope.registrationError = 'Please enter a valid street address';
           $rootScope.$broadcast('registrationError');
           return;
-        } else if ($scope.userField.city.length < 3) {
+        } else if ($scope.userData.city.length < 3) {
           $rootScope.registrationError = 'Please enter a valid city or town';
           $rootScope.$broadcast('registrationError');
           return;
-        } /*else if ($scope.userField.state.length > 0) {
+        } /*else if ($scope.userData.state.length > 0) {
           //FIGURE OUT HOW TO DO THIS
         }*/
-          else if ($scope.userField.zip.length !== 5) {
+          else if ($scope.userData.zip.length !== 5) {
             $rootScope.registrationError = 'Please enter a valid zip code';
             $rootScope.$broadcast('registrationError');
             return;
