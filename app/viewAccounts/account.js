@@ -25,7 +25,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     last: '',
     email: '',
     emailConfirm: '',
-    username: ''.
+    username: '',
     phone: '',
     address: '',
     city: '',
@@ -139,7 +139,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
            $rootScope.registrationError = 'Please enter a valid e-mail address';
            $rootScope.$broadcast('registrationError');
            return;
-         } else if ($scope.userData.email !=== $scope.userData.emailConfirm) {
+         } else if ($scope.userData.email !== $scope.userData.emailConfirm) {
             $rootScope.registrationError = 'E-mail addresses do not match';
             $rootScope.$broadcast('registrationError');
             return;
