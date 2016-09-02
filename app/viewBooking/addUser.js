@@ -505,6 +505,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       $scope.newReservation.service = 'boarding';
     } else {
       $scope.newReservation.service = 'daycare';
+      $scope.newReservation.checkOutDate = $scope.newReservation.checkInDate;
     };
 
       console.log("CALLED CREATE NEW RESERVATION: ", $scope.newReservation);

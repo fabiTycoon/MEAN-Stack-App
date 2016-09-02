@@ -48,6 +48,13 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   if ($rootScope.user) {
     $scope.displayName = $rootScope.user.first + " " + $rootScope.user.last;
     console.log("SET DISPLAY NAME: ", $scope.displayName);
+
+    if ($rootScope.user.pets) {
+      for (var i = 0; i < $rootScope.user.pets; i++) {
+
+      }
+    }
+
   };
 
   $scope.refreshView = function () {
@@ -66,24 +73,16 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
     if (arguments.length !== 0) {
       $scope.accountViewModelState.userInfo = true;
-
       for (var key in $scope.userData) {
         $scope.userData[key] = '';
       };
-
     };
   };
 
   $scope.setDefaultState(true);
 
   $scope.cancelEdit = function () {
-    for (var userField in $scope.userData) {
-      $scope.userData[userField] = '';
-    };
-
     $scope.setDefaultState(true);
-
-
   };
 
   $scope.phoneConcat = function () {
@@ -96,6 +95,8 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      ph2 += $scope.userData.ph2;
 
     $scope.userData.phone = area + ph1 + ph2;
+      console.log("PHONE CONCAT: ", $scope.userData.phone);
+      console.log("PHONE CONCAT: ", $scope.userData.ph2);
   };
 
   $scope.showEditUserField = function (editedUserField) {
@@ -228,6 +229,10 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.setDefaultState();
     $scope.profileTitle = "MY SAVED PETS:";
     $scope.accountViewModelState.petInfo = true;
+
+    $('.collapsible').collapsible({
+      accordion : false
+    });
   };
 
 
@@ -298,13 +303,15 @@ angular.module('myApp.viewAccount', ['ngRoute'])
         currentReservation.displayCheckOutDate = formatDateString(currentReservation.checkOutDate);
       };
     };
-  };
 
   $(document).ready(function(){
      $('.collapsible').collapsible({
        accordion : false
      });
    });
+
+  };
+
 
   init();
 }]);

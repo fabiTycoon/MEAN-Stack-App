@@ -112,8 +112,8 @@
                 <label for="phone-field">Contact Phone:</label>
                 <div class="row">
                   <div class="col s10 offset-s1">
-                    (<input type="number" style="width: 3em;" maxlength="3" ng-model="userData.area"></input>)&nbsp;-&nbsp;
-                    <input type="number" style="width: 3em;" maxlength="3" ng-model="userData.ph1"></input>&nbsp;-&nbsp;
+                    (<input type="number" style="width: 3em;" maxlength="3" ng-model="userData.area"></input>)&nbsp;&nbsp;-&nbsp;&nbsp;
+                    <input type="number" style="width: 3em;" maxlength="3" ng-model="userData.ph1"></input>&nbsp;&nbsp;-&nbsp;&nbsp;
                     <input type="number" style="width: 4em;" maxlength="4" ng-model="userData.ph2"></input>
                   </div>
                 </div>
@@ -171,6 +171,9 @@
             </div>
           </div>
           <!-- END EDIT USER INFO VIEW -->
+
+
+
           <!-- PET INFO VIEW -->
           <div ng-if="accountViewModelState.petInfo === true">       
             <ul class="collapsible" data-collapsible="accordion">
@@ -195,6 +198,7 @@
             </ul>
           </div>
           <!-- END PET INFO VIEW -->
+
           <!-- RESERVATION INFO VIEW-->
           <div ng-if="accountViewModelState.reservationInfo === true">
             <div class="row" ng-repeat="res in user.reservations">
@@ -241,4 +245,6 @@
   </div>
   <!-- END USER CARD -->
 </div>
+
+<script>$('.collapsible').collapsible();</script>
 
