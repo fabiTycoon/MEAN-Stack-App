@@ -162,30 +162,20 @@ router.put('/', function (req, res) {
   console.log("HIT EDIT USER ENDPOINT: ", req.body);
 
   var updatedUser = req.body;
-  updatedUser.isNew = false;
   var currentUsername = req.body.username;
-  var updatingUsername = false;
+  var fieldToUpdate = '';
 
-  if (updatedUser.updatingUsername === true) {
-    updatingUsername = true;  
-    console.log("UPDATING USERNAME")
-  };
+  
+
+
+
     
   User.findOne({username: currentUsername}, function (err, returnedUser) {
 
-    for (var userKey in updatedUser) {
-      console.log("KEY: ", userKey, updatedUser[userKey]);
-      returnedUser[userKey] = updatedUser[userKey];
-    };
+    //series of if statements for possible fields to update:
 
-    if (updatingUsername === true) {
-      returnedUser.username = updatedUser.email;
-      updatingUsername = false;
-    } else {
-      returnedUser.username = returnedUser.email
-      delete returnedUser.email;
-    }
 
+    console.log("UPDATING THIS FIELD: ", fieldToUpdate);
     console.log("SAVING THIS USER: ", returnedUser);
 
     returnedUser.save(function (err, user) {
