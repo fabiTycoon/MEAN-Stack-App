@@ -112,9 +112,9 @@
                 <label for="phone-field">Contact Phone:</label>
                 <div class="row">
                   <div class="col s10 offset-s1">
-                    <input type="number" style="width: 3em;" maxlength="3" ng-model="userData.area"></input>
-                    <input type="number" style="width: 3em;" maxlength="3" ng-model="userData.ph1"></input>  
-                    <input type="number" style="width: 3em;" maxlength="4" ng-model="userData.ph2"></input>
+                    (<input type="number" style="width: 3em;" maxlength="3" ng-model="userData.area"></input>)&nbsp;-&nbsp;
+                    <input type="number" style="width: 3em;" maxlength="3" ng-model="userData.ph1"></input>&nbsp;-&nbsp;
+                    <input type="number" style="width: 4em;" maxlength="4" ng-model="userData.ph2"></input>
                   </div>
                 </div>
               </div>
@@ -155,7 +155,9 @@
 
           <div class="row" ng-if="accountViewModelState.editingUser === true && registrationError.length > 0">
             <div class="col s10 offset-s1">
-              <p class="error-text">{{registrationError}}</p>
+              <div class="error-text">
+                <p>{{registrationError}}</p>
+              </div>
             </div>
           </div>
 

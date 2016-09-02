@@ -153,6 +153,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
          };
        } else if (fieldToUpdate === 'phone') {
          if ($scope.userData.phone.length !== 10) {
+              console.log("PHONE: ", $scope.userData.phone)
           $rootScope.registrationError = 'Please enter a valid phone number';
           $rootScope.$broadcast('registrationError');
           return;
