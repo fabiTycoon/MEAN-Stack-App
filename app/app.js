@@ -73,14 +73,14 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var getUserByEmail = function (userEmail) {
-    return $http.post('/api/getUserByEmail/';
+    return $http.post('/api/getUserByEmail/');
   };
 
-  var getUsers = function (adminUser) {
-    if (adminUser.admin === false) {
+  var getUsers = function (user) {
+    if (user.admin === false) {
       return;
     } else {
-      return $http.get('/api/users/', adminUser);
+      return $http.get('/api/users/', user);
     };
   };
 
