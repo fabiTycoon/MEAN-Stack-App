@@ -421,10 +421,18 @@
 
             <div ng-if="viewModelState.resStep === 3">
 
+            <div class"row">
+              <div class="col s10 offset-s1">
+                <h6 class="thin">You're almost done!  <br>Once you've submitted your reservation request, we'll follow up by your preferred contact method to confirm availability and your reservation.</h6>
+              </div>
+            </div>
+
+
+
               <div class="row">
                 <div class="col s10 offset-s1">
                   <div class="col s12">
-                    <h4 class="thin">Reservation Summary:</h4>
+                    <h5 class="thin">Reservation Summary:</h5>
                   </div>
                 </div>
               </div>
@@ -467,8 +475,8 @@
               <div class="row">
                 <div class="col s10 offset-s1">
                   <div class="col s12">
-                    <h4 ng-if="serviceSelected === 'boarding'" class="thin">Who's Staying:</h4>
-                    <h4 ng-if="serviceSelected === 'daycare'" class="thin">Who's Coming To Play:</h4>
+                    <h5 ng-if="serviceSelected === 'boarding'" class="thin">Who's Staying:</h5>
+                    <h5 ng-if="serviceSelected === 'daycare'" class="thin">Who's Coming To Play:</h5>
                   </div>
                 </div>
               </div>
@@ -496,7 +504,7 @@
               <div class="row">
                 <div class="col s10 offset-s1">
                 <div class="col s12">
-                  <h6 class="thin">How would you like us to contact you about your reservation?</h6>
+                  <h5 class="thin">How would you like us to contact you about your reservation?</h5>
                 </div>
                   <div class="col s4">
                     <p>
