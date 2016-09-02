@@ -66,6 +66,11 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
     if (arguments.length !== 0) {
       $scope.accountViewModelState.userInfo = true;
+
+      for (var key in $scope.userData) {
+        $scope.userData[key] = '';
+      };
+
     };
   };
 
@@ -193,27 +198,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.confirmEditUser = function () {
     var updatedData = $scope.userData;
     console.log("UPDATING USER WITH THIS DATA: ", $scope.userData); 
-    //TO DO: DATA VALIDATION
-
-    var updateCount = 0;
-
-    for (var key in updatedData) {
-
-      if (updatedData[key] === '' && $rootScope.user[key]) {
-        updateCount++;
-        updatedData[key] = $rootScope.user[key];
-          console.log("SET THIS VALUE ", key, updatedData);
-      };
-    };
-
-    if (updateCount === 0) {
-      $rootScope.registrationError = "Please update any selected fields "; //or just reset form?
-      $rootScope.$broadcast('registrationError');
-    };
-
-    if ($scope.updatingUsername === true) {
-      updatedData.updatingUsername = true;
-    };
 
     User.editUser(updatedData)
       .then(function(res){
@@ -222,8 +206,11 @@ angular.module('myApp.viewAccount', ['ngRoute'])
           var returnedUser = res.data.user; 
             console.log("UPDATED USER: ", returnedUser);
 
-            $scope.setDefaultState();
-            $scope.accountViewModelState.editingUser = true;
+            $scope.setDefaultState(true);
+            $timeout(function(){
+              Materialize.toast('Succesfully updated!', 4000);
+            }, 500);
+
         } else {
           $rootScope.registrationError = res.data.err;
           $rootScope.$broadcast('registrationError');
