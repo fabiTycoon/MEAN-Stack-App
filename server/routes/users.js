@@ -159,18 +159,20 @@ router.post('/update/', function (req, res){
 
 
 router.put('/', function (req, res) {
-  console.log("HIT EDIT USER ENDPOINT: ", req.body);
+    console.log("HIT EDIT USER ENDPOINT: ", req.body);
 
   var updatedUser = req.body;
   var fieldToUpdate = req.body.fieldToUpdate;
   var currentUsername = req.body.username;
+
+    console.log("HIT EDIT USER ENDPOINT, EDITING THIS:", fieldToUpdate);
     
-  User.findOne({username: currentUsername}, function (err, returnedUser) {
+  User.findByUsername({username: currentUsername}, function (err, returnedUser) {
 
     if (fieldToUpdate === 'email') {
       
     } else if (fieldToUpdate === 'phone') {
-      returnedUser[phone] = updatedUser.phone;
+      returnedUseras[phone] = updatedUser.phone;
     } else if (fieldToUpdate === 'address') {
       returnedUser[address] = updatedUser.address;
       returnedUser[city] = updatedUser.city;
@@ -179,9 +181,12 @@ router.put('/', function (req, res) {
     } else if (fieldToUpdate === 'hospital') {
       returnedUser[hospital] = updatedUser.hospital;
     } else if (fieldToUpdate === 'password') {
-      //NEED PASSPORT TO HASH & SAVE PASSWORD
+        returnedUser.setPassword(req.body.password, function (){
+          returnedUser.save();
+          return res.status(200).json({message: 'password reset successful'});
+        });
     };
-    returnedUser.isNew = false; //not sure if this works
+    //returnedUser.isNew = false;
       console.log("SAVING THIS USER: ", returnedUser);
 
     returnedUser.save(function (err, user) {
