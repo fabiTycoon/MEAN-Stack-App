@@ -113,7 +113,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      
      if (editedUserField === 'email') {
       $scope.displayName = 'EDIT MY CONTACT INFO:';
-      $scope.accountViewModelState.userField = 'contact-fields';
+      $scope.accountViewModelState.userField = 'email-fields';
       $scope.userData.fieldToUpdate = 'email';
      } else if (editedUserField === 'phone') {
      $scope.displayName = 'EDIT MY CONTACT INFO:';
@@ -210,6 +210,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
             $scope.setDefaultState(true);
             $timeout(function(){
+                console.log("TOAST FIRED");
               Materialize.toast('Succesfully updated!', 4000);
             }, 500);
 
@@ -276,7 +277,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   var init = function () {
     //FORMAT DATA FOR DISPLAY:
-    if ($rootScope.user && $rootScope.user.phone.length > 0) {
+    if ($rootScope.user && $rootScope.user.phone && $rootScope.user.phone.length > 0) {
       var phoneString = $rootScope.user.phone;
       var phoneArea = phoneString.slice(0, 3);
       var ph1 = phoneString.slice(3, 6);
