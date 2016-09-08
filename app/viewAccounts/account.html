@@ -101,7 +101,7 @@
 
             <div class="row" id="contact-fields" ng-if="accountViewModelState.editingUser === true">
               <div class="col s6" id="email-field" ng-if="accountViewModelState.userField === 'email-fields'">
-                <label for="email-field">New E-Mail:</label><input type="text" ng-model="userData.email"></input>
+                <label for="email-field">Enter New E-Mail:</label><input type="text" ng-model="userData.email"></input>
               </div>
               <div class="col s6" id="email-confirm-field" ng-if="accountViewModelState.userField === 'email-fields'">
                 <label for="email-field">Confirm New E-Mail:</label><input type="text" ng-model="userData.emailConfirm"></input>
@@ -146,10 +146,10 @@
 
             <div class="row" id="password-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'password-fields'">
               <div class="col s6">
-                <label for="password-field">Password:</label><input type="password" ng-model="userData.password"></input>
+                <label for="password-field">Enter New Password:</label><input type="password" ng-model="userData.password"></input>
               </div>
               <div class="col s6" id="password-confirm-field">
-                <label for="password-confirm-field">Confirm Password:</label><input type="password" ng-model="userData.passwordConfirm"></input>
+                <label for="password-confirm-field">Confirm New Password:</label><input type="password" ng-model="userData.passwordConfirm"></input>
               </div>
           </div>
 
