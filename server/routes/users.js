@@ -153,7 +153,7 @@ router.post('/update/', function (req, res){
       return res.status(500).json({'success': false, 'error':err});
     } else {
       return res.status(200).json({'success': true, 'updatedUser': returnedUser});
-    } 
+    }; 
   });
 });
 
@@ -163,42 +163,49 @@ router.put('/', function (req, res) {
 
   var updatedUser = req.body;
   var fieldToUpdate = req.body.fieldToUpdate;
-  var currentUsername = req.body.username;
+  var currentUsername = req.body.currentUsername;
 
     console.log("HIT EDIT USER ENDPOINT, EDITING THIS:", fieldToUpdate);
-    
-  User.findByUsername({username: currentUsername})
-    .then(function (res) {
-      if (fieldToUpdate === 'email') {
-        
-      } else if (fieldToUpdate === 'phone') {
-        returnedUseras[phone] = updatedUser.phone;
-      } else if (fieldToUpdate === 'address') {
-        returnedUser[address] = updatedUser.address;
-        returnedUser[city] = updatedUser.city;
-        returnedUser[state] = updatedUser.state;
-        returnedUser[zip] = updatedUser.zip;
-      } else if (fieldToUpdate === 'hospital') {
-        returnedUser[hospital] = updatedUser.hospital;
-      } else if (fieldToUpdate === 'password') {
-          returnedUser.setPassword(req.body.password, function (){
-            returnedUser.save();
-            return res.status(200).json({message: 'password reset successful'});
-          });
-      };
-      //returnedUser.isNew = false;
-        console.log("SAVING THIS USER: ", returnedUser);
+    console.log("FINDING THIS USER: ", currentUsername);
 
-      returnedUser.save(function (err, user) {
-        if (err) {
-          console.error('ERROR! ', err);
-          return res.status(500).json({'error': err, 'success': false});
-        } else {
-          return res.status(200).json({'user': user, 'success': true});
-        }
-      });
+  User.findOne({username: currentUsername}, function (err, returnedUser) { 
+    console.log("FIND USER CALLED: ", returnedUser);
+    if (err) {console.log("FIND USER CALLED ERROR: ", err);}
+
+    if (fieldToUpdate === 'email') {
+      //need to do someething to avoid duplicate key error
+    } else if (fieldToUpdate === 'phone') {
+      returnedUser[phone] = updatedUser.phone;
+    } else if (fieldToUpdate === 'address') {
+      returnedUser[address] = updatedUser.address;
+      returnedUser[city] = updatedUser.city;
+      returnedUser[state] = updatedUser.state;
+      returnedUser[zip] = updatedUser.zip;
+    } else if (fieldToUpdate === 'hospital') {
+      returnedUser[hospital] = updatedUser.hospital;
+    } else if (fieldToUpdate === 'password') {
+        returnedUser.setPassword(req.body.password, function (res){
+
+            console.log("CALLED SET PASSWORD: ", res);
+            console.log("CALLED SET PASSWORD: ", res.body);
+
+          returnedUser.save();
+          return res.status(200).json({message: 'password reset successful', user: returnedUser});
+        });
+    };
+    //returnedUser.isNew = false;
+      console.log("SAVING THIS USER: ", returnedUser);
+
+    returnedUser.save(function (err, user) {
+      if (err) {
+        console.error('ERROR! ', err);
+        return res.status(500).json({'error': err, 'success': false});
+      } else {
+        return res.status(200).json({'user': user, 'success': true});
+      }
     });
 
+  });  
 });
 
 router.post('/toggleBanUser/', function (){

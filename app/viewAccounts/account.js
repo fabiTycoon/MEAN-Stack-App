@@ -199,6 +199,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   $scope.confirmEditUser = function () {
     var updatedData = $scope.userData;
+    updatedData.currentUsername = $rootScope.user.username
     console.log("UPDATING USER WITH THIS DATA: ", $scope.userData); 
 
     User.editUser(updatedData)
