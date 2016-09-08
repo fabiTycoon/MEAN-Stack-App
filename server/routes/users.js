@@ -5,24 +5,30 @@ var mongoose = require('mongoose');
 var User = require('../models/users.js');
 var passportLocalMongoose = require('passport-local-mongoose');
 
-//handlers for calls to api/users
-/*router.get('/users/', function(req, res) {
-  
-});
+// ----- HANDLERS FOR CALLS TO API/USERS -----
+router.get('user/:userEmail', function (req, res) {
+  var userEmail = req.params.email;
 
-router.put('/', function(req, res) {
-  
-});
+    console.log("HIT GET USER ENDPOINT, EMAIL:", userEmail);
+    console.log("HIT GET USER ENDPOINT:", req);
 
-router.delete('/', function(req, res) {
-  
-});*/
+  User.findOne({username: userEmail}, function (err, returnedUser) {
+    if (err) {
+      return res.status(500).json({'success': false, 'error': err});
+    } else {
+      return res.status(200).json({'success': true, 'user': returnedUser});
+    };
+  }); 
+});
 
 router.get('users', function (req, res){
-
   if (req.user && req.user.admin === true ) {
     User.find({}, function (err, returnedUsers){
-      res.json(returnedUsers);
+      if (err) {
+        return res.status(500).json({'success': false, 'error': err});
+      } else {
+        return res.status(200).json({'success': true, 'users': returnedUsers});
+      };
     });    
   };
 });
@@ -32,16 +38,16 @@ router.get('/getUserByEmail/', function(req, res) {
     console.log("REQBODY:", req.body)
     console.log("REQUSEr:", req.user)
 
-      if (req.params.email) {
-        User.findOne({email: req.params.email}, function (err, returnedUser) {
+  if (req.params.email) {
+    User.findOne({email: req.params.email}, function (err, returnedUser) {
 
-          if (err) {
-            return res.status(401).json({'message': 'User not found', 'error': err});
-          } else {
-            return res.status(200).json({'success': true, 'user' : returnedUser});
-          };
-        });
+      if (err) {
+        return res.status(401).json({'message': 'User not found', 'error': err});
+      } else {
+        return res.status(200).json({'success': true, 'user' : returnedUser});
       };
+    });
+  };
 });
 
 
@@ -164,6 +170,10 @@ router.put('/', function (req, res) {
   var updatedUser = req.body;
   var fieldToUpdate = req.body.fieldToUpdate;
   var currentUsername = req.body.currentUsername;
+  if (!updatedUser.username) {
+    updatedUser.username = req.body.currentUsername;
+    updatedUser.email = req.body.currentUsername;
+  };
 
     console.log("HIT EDIT USER ENDPOINT, EDITING THIS:", fieldToUpdate);
     console.log("FINDING THIS USER: ", currentUsername);
@@ -184,10 +194,10 @@ router.put('/', function (req, res) {
     } else if (fieldToUpdate === 'hospital') {
       returnedUser[hospital] = updatedUser.hospital;
     } else if (fieldToUpdate === 'password') {
-        returnedUser.setPassword(req.body.password, function (res){
+        return returnedUser.setPassword(req.body.password, function (){
 
-            console.log("CALLED SET PASSWORD: ", res);
-            console.log("CALLED SET PASSWORD: ", res.body);
+            console.log("CALLED SET PASSWORD: ");
+
 
           returnedUser.save();
           return res.status(200).json({message: 'password reset successful', user: returnedUser});

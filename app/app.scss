@@ -42,6 +42,10 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 }
 
 // APP WIDE STYLES:
+#toast-container {
+  left: auto !important;
+  left:12% !important;  
+}
 
 .clickable-element {
   cursor: pointer;

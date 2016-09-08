@@ -199,19 +199,34 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   $scope.confirmEditUser = function () {
     var updatedData = $scope.userData;
-    updatedData.currentUsername = $rootScope.user.username
+
+    if ($rootScope.user) {
+      console.log("UPDATING USER: ", $rootScope.user); 
+      updatedData.currentUsername = $rootScope.user.email
+      updatedData.email = updatedData.currentUsername;
+      updatedData.username = updatedData.currentUsername;
+    };
+
     console.log("UPDATING USER WITH THIS DATA: ", $scope.userData); 
+
 
     User.editUser(updatedData)
       .then(function(res){
 
+        console.log("EDIT USER SERVER RESPONSE: ", res);
+        if (res) {console.log("EDIT USER SERVER RESPONSE: ", res.data);};
+        
         if (res.data.success === true) {
           var returnedUser = res.data.user; 
             console.log("UPDATED USER: ", returnedUser);
 
+            if (res.data.message) {
+              console.log("SERVER MESSAGE: ", res.data.message);
+            };
+
             $scope.setDefaultState(true);
             $timeout(function(){
-                console.log("TOAST FIRED");
+                console.log("TOAST POPPIN OFF");
               Materialize.toast('Succesfully updated!', 4000);
             }, 500);
 
