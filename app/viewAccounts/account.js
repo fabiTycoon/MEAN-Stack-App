@@ -137,63 +137,64 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.validateUser = function () {
     //VALIDATES USER BEFORE SENDING TO SERVER:
     //$scope.savingUser = true - triggers loading state
-     $scope.phoneConcat();
-     var fieldToUpdate = $scope.userData.fieldToUpdate;
-           
-       if (fieldToUpdate === 'email') {  
-         if ($scope.userData.email.length < 3 || $scope.userData.email.indexOf('.') === -1 || $scope.userData.email.indexOf('@') === -1) {
-           $rootScope.registrationError = 'Please enter a valid e-mail address';
-           $rootScope.$broadcast('registrationError');
-           return;
-         } else if ($scope.userData.email !== $scope.userData.emailConfirm) {
-            $rootScope.registrationError = 'E-mail addresses do not match';
-            $rootScope.$broadcast('registrationError');
-            return;
-         } else {
-          $scope.userData.username = $scope.userData.email;
-         };
-       } else if (fieldToUpdate === 'phone') {
-         if ($scope.userData.phone.length !== 10) {
-              console.log("PHONE: ", $scope.userData.phone)
-          $rootScope.registrationError = 'Please enter a valid phone number';
+    $rootScope.registrationError = '';
+    $scope.phoneConcat();
+    var fieldToUpdate = $scope.userData.fieldToUpdate;
+         
+     if (fieldToUpdate === 'email') {  
+       if ($scope.userData.email.length < 3 || $scope.userData.email.indexOf('.') === -1 || $scope.userData.email.indexOf('@') === -1) {
+         $rootScope.registrationError = 'Please enter a valid e-mail address';
+         $rootScope.$broadcast('registrationError');
+         return;
+       } else if ($scope.userData.email !== $scope.userData.emailConfirm) {
+          $rootScope.registrationError = 'E-mail addresses do not match';
           $rootScope.$broadcast('registrationError');
           return;
-         };
-       } else if (fieldToUpdate === 'address') {
-        if ($scope.userData.address.length < 4) {
-          $rootScope.registrationError = 'Please enter a valid street address';
-          $rootScope.$broadcast('registrationError');
-          return;
-        } else if ($scope.userData.city.length < 3) {
-          $rootScope.registrationError = 'Please enter a valid city or town';
-          $rootScope.$broadcast('registrationError');
-          return;
-        } /*else if ($scope.userData.state.length > 0) {
-          //FIGURE OUT HOW TO DO THIS
-        }*/
-          else if ($scope.userData.zip.length !== 5) {
-            $rootScope.registrationError = 'Please enter a valid zip code';
-            $rootScope.$broadcast('registrationError');
-            return;
-          };
-      } else if (fieldToUpdate === 'hospital') {
-          if ($scope.userData.hospital.length < 3) {
-            $rootScope.registrationError = 'Please enter a valid hospital name';
-            $rootScope.$broadcast('registrationError');
-            return;
-          };
-          return;
-      } else if (fieldToUpdate === 'password') {
-        if ($scope.userData.password.length < 8) {
-          $rootScope.registrationError = 'Password must be at least 8 characters';
-          $rootScope.$broadcast('registrationError');
-          return;
-        } else if ($scope.userData.password !== $scope.userData.passwordConfirm) {
-          $rootScope.registrationError = 'Passwords do not match';
+       } else {
+        $scope.userData.username = $scope.userData.email;
+       };
+     } else if (fieldToUpdate === 'phone') {
+       if ($scope.userData.phone.length !== 10) {
+            console.log("PHONE: ", $scope.userData.phone)
+        $rootScope.registrationError = 'Please enter a valid phone number';
+        $rootScope.$broadcast('registrationError');
+        return;
+       };
+     } else if (fieldToUpdate === 'address') {
+      if ($scope.userData.address.length < 4) {
+        $rootScope.registrationError = 'Please enter a valid street address';
+        $rootScope.$broadcast('registrationError');
+        return;
+      } else if ($scope.userData.city.length < 3) {
+        $rootScope.registrationError = 'Please enter a valid city or town';
+        $rootScope.$broadcast('registrationError');
+        return;
+      } /*else if ($scope.userData.state.length > 0) {
+        //FIGURE OUT HOW TO DO THIS
+      }*/
+        else if ($scope.userData.zip.length !== 5) {
+          $rootScope.registrationError = 'Please enter a valid zip code';
           $rootScope.$broadcast('registrationError');
           return;
         };
+    } else if (fieldToUpdate === 'hospital') {
+        if ($scope.userData.hospital.length < 3) {
+          $rootScope.registrationError = 'Please enter a valid hospital name';
+          $rootScope.$broadcast('registrationError');
+          return;
+        };
+        return;
+    } else if (fieldToUpdate === 'password') {
+      if ($scope.userData.password.length < 8) {
+        $rootScope.registrationError = 'Password must be at least 8 characters';
+        $rootScope.$broadcast('registrationError');
+        return;
+      } else if ($scope.userData.password !== $scope.userData.passwordConfirm) {
+        $rootScope.registrationError = 'Passwords do not match';
+        $rootScope.$broadcast('registrationError');
+        return;
       };
+    };
     $scope.confirmEditUser();
   };
 

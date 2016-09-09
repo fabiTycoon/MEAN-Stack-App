@@ -112,9 +112,9 @@
                 <label for="phone-field">Contact Phone:</label>
                 <div class="row">
                   <div class="col s10 offset-s1">
-                    (<input type="number" style="width: 3em;" maxlength="3" ng-model="userData.area"></input>)&nbsp;&nbsp;-&nbsp;&nbsp;
-                    <input type="number" style="width: 3em;" maxlength="3" ng-model="userData.ph1"></input>&nbsp;&nbsp;-&nbsp;&nbsp;
-                    <input type="number" style="width: 4em;" maxlength="4" ng-model="userData.ph2"></input>
+                    (<input type="text" pattern="\d*" style="width: 3em;" maxlength="3" ng-model="userData.area"></input>)&nbsp;&nbsp;-&nbsp;&nbsp;
+                    <input type="text" pattern="\d*" style="width: 3em;" maxlength="3" ng-model="userData.ph1"></input>&nbsp;&nbsp;-&nbsp;&nbsp;
+                    <input type="text" pattern="\d*" style="width: 4em;" maxlength="4" ng-model="userData.ph2"></input>
                   </div>
                 </div>
               </div>
