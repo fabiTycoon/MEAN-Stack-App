@@ -225,6 +225,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   
   $scope.goHome = function () {
     if ($rootScope.user) {
+      $scope.defaultState(true);
       $scope.viewModelState.returningUser = true;
     } else {
       $scope.defaultState();
