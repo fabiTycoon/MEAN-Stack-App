@@ -28,7 +28,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     emailConfirm: '',
     username: '',
     phone: '',
-    address: '',
+    street: '',
     city: '',
     state: '',
     zip: '',
@@ -165,7 +165,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
        };
        $scope.editSuccessMessage = "Succesfully updated your phone number!";
      } else if (fieldToUpdate === 'address') {
-      if ($scope.userData.address.length < 4) {
+      if ($scope.userData.street.length < 4) {
         $rootScope.registrationError = 'Please enter a valid street address';
         $rootScope.$broadcast('registrationError');
         return;
@@ -227,7 +227,8 @@ angular.module('myApp.viewAccount', ['ngRoute'])
         if (res.data.success === true) {
           var returnedUser = res.data.user; 
           $rootScope.user = returnedUser;
-            console.log("UPDATED USER: ", returnedUser);
+          init();
+          console.log("UPDATED USER: ", returnedUser);
 
             if (res.data.message) {
               console.log("SERVER MESSAGE: ", res.data.message);

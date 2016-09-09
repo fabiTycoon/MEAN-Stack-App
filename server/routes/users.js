@@ -202,7 +202,7 @@ router.put('/', function (req, res) {
     };
     console.log("SAVING THIS USER: ", returnedUser);
     returnedUser.save();
-    return res.status(200).json({'user': user, 'success': true});
+    return res.status(200).json({'user': returnedUser, 'success': true});
   });  
 });
 
