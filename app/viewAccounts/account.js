@@ -18,6 +18,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.refresh = false;
   $scope.editUserTitle = '';
   $scope.updatingUsername = false;
+  $scope.editSuccessMessage = "Succesfully updated your information!";
 
   //IF USER CLICKS EDIT BUTTON, SHOW EDITABLE TEXT AREAS:
   $scope.userData = {
@@ -94,52 +95,53 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      ph1 += $scope.userData.ph1;
      ph2 += $scope.userData.ph2;
 
-    $scope.userData.phone = area + ph1 + ph2;
+    $scope.userData.phone = (area + ph1 + ph2);
       console.log("PHONE CONCAT: ", $scope.userData.phone);
-      console.log("PHONE CONCAT: ", $scope.userData.ph2);
   };
 
   $scope.showEditUserField = function (editedUserField) {
      $scope.setDefaultState(); 
      $scope.accountViewModelState.editingUser = true;
 
-     //animate transition
-
-
+     //animate transition:
      $('#edit-container').addClass('animated flipOutY');
      $scope.refresh = true;
      $scope.refresh = false;
      $('#edit-container').removeClass('animated flipOutY');
      
      if (editedUserField === 'email') {
-      $scope.displayName = 'EDIT MY CONTACT INFO:';
-      $scope.accountViewModelState.userField = 'email-fields';
-      $scope.userData.fieldToUpdate = 'email';
+        $scope.displayName = 'EDIT MY CONTACT INFO:';
+        $scope.accountViewModelState.userField = 'email-fields';
+        $scope.userData.fieldToUpdate = 'email';
      } else if (editedUserField === 'phone') {
-     $scope.displayName = 'EDIT MY CONTACT INFO:';
-     $scope.accountViewModelState.userField = 'phone-fields';
-     $scope.userData.fieldToUpdate = 'phone';
+       $scope.displayName = 'EDIT MY CONTACT INFO:';
+       $scope.accountViewModelState.userField = 'phone-fields';
+       $scope.userData.fieldToUpdate = 'phone';
       } else if (editedUserField === 'address' || editedUserField === 'city' || editedUserField === 'state' || editedUserField === 'zip') {
-      $scope.displayName = 'EDIT MY ADDRESS INFO:';
-      $scope.accountViewModelState.userField = 'address-fields';
-      $scope.userData.fieldToUpdate = 'address';
-     } else if (editedUserField === 'hospital') {
-      $scope.displayName = 'EDIT MY MEDICAL PROVIDER INFORMATION:';
-      $scope.accountViewModelState.userField = 'medical-fields';
-      $scope.userData.fieldToUpdate = 'hospital';
-     } else if (editedUserField === 'password') {
-      $scope.displayName = 'UPDATE MY PASSWORD:';
-      $scope.accountViewModelState.userField = 'password-fields';
-      $scope.userData.fieldToUpdate = 'password';
-     };
+        $scope.displayName = 'EDIT MY ADDRESS INFO:';
+        $scope.accountViewModelState.userField = 'address-fields';
+        $scope.userData.fieldToUpdate = 'address';
+      } else if (editedUserField === 'hospital') {
+        $scope.displayName = 'EDIT MY MEDICAL PROVIDER INFORMATION:';
+        $scope.accountViewModelState.userField = 'medical-fields';
+        $scope.userData.fieldToUpdate = 'hospital';
+      } else if (editedUserField === 'password') {
+        $scope.displayName = 'UPDATE MY PASSWORD:';
+        $scope.accountViewModelState.userField = 'password-fields';
+        $scope.userData.fieldToUpdate = 'password';
+      };
   };
 
   $scope.validateUser = function () {
     //VALIDATES USER BEFORE SENDING TO SERVER:
     //$scope.savingUser = true - triggers loading state
-    $rootScope.registrationError = '';
     $scope.phoneConcat();
+    $rootScope.registrationError = '';
     var fieldToUpdate = $scope.userData.fieldToUpdate;
+    $scope.editSuccessMessage = "Succesfully updated your information!";
+
+      console.log("CALLED VALIDATE USER, VALIDATING THIS: ", $scope.userData);
+      console.log("CALLED VALIDATE USER, UPDATING THIS FIELD: ", fieldToUpdate);
          
      if (fieldToUpdate === 'email') {  
        if ($scope.userData.email.length < 3 || $scope.userData.email.indexOf('.') === -1 || $scope.userData.email.indexOf('@') === -1) {
@@ -151,6 +153,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
           $rootScope.$broadcast('registrationError');
           return;
        } else {
+        $scope.editSuccessMessage = "Succesfully updated your e-mail!";
         $scope.userData.username = $scope.userData.email;
        };
      } else if (fieldToUpdate === 'phone') {
@@ -160,6 +163,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
         $rootScope.$broadcast('registrationError');
         return;
        };
+       $scope.editSuccessMessage = "Succesfully updated your phone number!";
      } else if (fieldToUpdate === 'address') {
       if ($scope.userData.address.length < 4) {
         $rootScope.registrationError = 'Please enter a valid street address';
@@ -177,12 +181,14 @@ angular.module('myApp.viewAccount', ['ngRoute'])
           $rootScope.$broadcast('registrationError');
           return;
         };
+        $scope.editSuccessMessage = "Succesfully updated your address!";
     } else if (fieldToUpdate === 'hospital') {
         if ($scope.userData.hospital.length < 3) {
           $rootScope.registrationError = 'Please enter a valid hospital name';
           $rootScope.$broadcast('registrationError');
           return;
         };
+        $scope.editSuccessMessage = "Succesfully updated your veterinary info!";
         return;
     } else if (fieldToUpdate === 'password') {
       if ($scope.userData.password.length < 8) {
@@ -194,6 +200,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
         $rootScope.$broadcast('registrationError');
         return;
       };
+      $scope.editSuccessMessage = "Succesfully updated your password!";
     };
     $scope.confirmEditUser();
   };
@@ -219,6 +226,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
         
         if (res.data.success === true) {
           var returnedUser = res.data.user; 
+          $rootScope.user = returnedUser;
             console.log("UPDATED USER: ", returnedUser);
 
             if (res.data.message) {
@@ -228,7 +236,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
             $scope.setDefaultState(true);
             $timeout(function(){
                 console.log("TOAST POPPIN OFF");
-              Materialize.toast('Succesfully updated!', 4000);
+              Materialize.toast($scope.editSuccessMessage, 4000);
             }, 500);
 
         } else {
