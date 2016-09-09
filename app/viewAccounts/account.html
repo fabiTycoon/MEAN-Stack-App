@@ -178,15 +178,12 @@
           <div ng-if="accountViewModelState.petInfo === true">       
             <ul class="collapsible" data-collapsible="accordion">
               <li ng-repeat="pet in user.pets">
-                <div class="collapsible-header">{{pet.name}}</div>
+                <div class="collapsible-header">
+                  <span ng-if="pet.type === 'dog'" id="account-pets-header-icon"> <!-- SMALL DOG ICON HERE --> </span>
+                  <span ng-if="pet.type === 'cat'" id="account-pets-header-icon"> <!-- SMALL CAT ICON HERE --> </span>
+                  &nbsp;&nbsp;&nbsp;{{pet.name}}
+                </div>
                 <div class="collapsible-body">
-                  <div class="col s6" id="account-pet-name">
-                    <label for="account-pet-name">Name:</label><p> {{pet.name}}</p>
-                  </div>
-                  <div class="col s6">
-                    <span class="pet-icon-new-dark" ng-if="pet.type === 'dog'"><add-dog-icon></add-dog-icon></span>
-                    <span class="pet-icon-new-dark"ng-if="pet.type === 'cat'"><add-cat-icon></add-cat-icon></span>
-                  </div>
                   <div class="col s6" id="account-pet-color" ng-if="pet.color !== ''"><label for="account-pet-color">Color:</label><p>{{pet.color}}</p></div>
                   <div class="col s6" id="account-pet-breed" ng-if="pet.breed !== ''"><label for="account-pet-breed">Breed:</label><p>{{pet.breed}}</p></div>
                   <div class="col s6" id="account-pet-weight"ng-if="pet.weight !== ''"><label for="account-pet-weight">Weight:</label><p>{{pet.weight}}</p></div>

@@ -257,9 +257,11 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.profileTitle = "MY SAVED PETS:";
     $scope.accountViewModelState.petInfo = true;
 
-    $('.collapsible').collapsible({
-      accordion : false
-    });
+    $timeout(function(){
+      $('.collapsible').collapsible({
+        accordion : false
+      });
+    }, 200);
   };
 
 
