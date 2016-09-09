@@ -81,5 +81,12 @@
   <script src="services/basicServices.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
+  <script id="cdn-fallback">
+  if (typeof angular === undefined) {
+    //CDN failed, load angular locally:
+  } else if (typeof Materialize === undefined) {
+    //CDN failed, load Materialize locally:
+  };
+  </script
 </body>
 </html>
