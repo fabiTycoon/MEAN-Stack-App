@@ -21,21 +21,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.editSuccessMessage = "Succesfully updated your information!";
 
   //IF USER CLICKS EDIT BUTTON, SHOW EDITABLE TEXT AREAS:
-  $scope.userData = {
-    first: '',
-    last: '',
-    email: '',
-    emailConfirm: '',
-    username: '',
-    phone: '',
-    street: '',
-    city: '',
-    state: '',
-    zip: '',
-    hospital: '',
-    password: '',
-    passwordConfirm: ''
-  };  
+  $scope.userData = $scope.userData || {};  
 
   $scope.accountViewModelState = {
     userInfo: true,
@@ -117,7 +103,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
        $scope.displayName = 'EDIT MY CONTACT INFO:';
        $scope.accountViewModelState.userField = 'phone-fields';
        $scope.userData.fieldToUpdate = 'phone';
-      } else if (editedUserField === 'address' || editedUserField === 'city' || editedUserField === 'state' || editedUserField === 'zip') {
+      } else if (editedUserField === 'street' || editedUserField === 'city' || editedUserField === 'state' || editedUserField === 'zip') {
         $scope.displayName = 'EDIT MY ADDRESS INFO:';
         $scope.accountViewModelState.userField = 'address-fields';
         $scope.userData.fieldToUpdate = 'address';
@@ -132,58 +118,63 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       };
   };
 
-  $scope.validateUser = function () {
+  $scope.validateUser = function (userData) {
+
+    
     //VALIDATES USER BEFORE SENDING TO SERVER:
     //$scope.savingUser = true - triggers loading state
+
+      console.log("ANGULAR ERASES ALL OF MY DATA HERE:", userData);
+
     $scope.phoneConcat();
     $rootScope.registrationError = '';
-    var fieldToUpdate = $scope.userData.fieldToUpdate;
+    var fieldToUpdate = userData.fieldToUpdate;
     $scope.editSuccessMessage = "Succesfully updated your information!";
 
-      console.log("CALLED VALIDATE USER, VALIDATING THIS: ", $scope.userData);
+      console.log("CALLED VALIDATE USER, VALIDATING THIS: ", userData);
       console.log("CALLED VALIDATE USER, UPDATING THIS FIELD: ", fieldToUpdate);
          
      if (fieldToUpdate === 'email') {  
-       if ($scope.userData.email.length < 3 || $scope.userData.email.indexOf('.') === -1 || $scope.userData.email.indexOf('@') === -1) {
+       if (userData.email.length < 3 || userData.email.indexOf('.') === -1 || userData.email.indexOf('@') === -1) {
          $rootScope.registrationError = 'Please enter a valid e-mail address';
          $rootScope.$broadcast('registrationError');
          return;
-       } else if ($scope.userData.email !== $scope.userData.emailConfirm) {
+       } else if (userData.email !== userData.emailConfirm) {
           $rootScope.registrationError = 'E-mail addresses do not match';
           $rootScope.$broadcast('registrationError');
           return;
        } else {
         $scope.editSuccessMessage = "Succesfully updated your e-mail!";
-        $scope.userData.username = $scope.userData.email;
+        userData.username = $scope.userData.email;
        };
      } else if (fieldToUpdate === 'phone') {
-       if ($scope.userData.phone.length !== 10) {
-            console.log("PHONE: ", $scope.userData.phone)
+       if (userData.phone.length !== 10) {
+            console.log("PHONE: ", userData.phone)
         $rootScope.registrationError = 'Please enter a valid phone number';
         $rootScope.$broadcast('registrationError');
         return;
        };
        $scope.editSuccessMessage = "Succesfully updated your phone number!";
      } else if (fieldToUpdate === 'address') {
-      if ($scope.userData.street.length < 4) {
-        $rootScope.registrationError = 'Please enter a valid street address';
+      if (userData.street.length < 4) {
+        $rootScope.registrationError = 'Please enter a valid street userData';
         $rootScope.$broadcast('registrationError');
         return;
-      } else if ($scope.userData.city.length < 3) {
+      } else if (userData.city.length < 3) {
         $rootScope.registrationError = 'Please enter a valid city or town';
         $rootScope.$broadcast('registrationError');
         return;
-      } /*else if ($scope.userData.state.length > 0) {
+      } /*else if (userData.state.length > 0) {
         //FIGURE OUT HOW TO DO THIS
       }*/
-        else if ($scope.userData.zip.length !== 5) {
+        else if (userData.zip.length !== 5) {
           $rootScope.registrationError = 'Please enter a valid zip code';
           $rootScope.$broadcast('registrationError');
           return;
         };
         $scope.editSuccessMessage = "Succesfully updated your address!";
     } else if (fieldToUpdate === 'hospital') {
-        if ($scope.userData.hospital.length < 3) {
+        if (userData.hospital.length < 3) {
           $rootScope.registrationError = 'Please enter a valid hospital name';
           $rootScope.$broadcast('registrationError');
           return;
@@ -191,36 +182,37 @@ angular.module('myApp.viewAccount', ['ngRoute'])
         $scope.editSuccessMessage = "Succesfully updated your veterinary info!";
         return;
     } else if (fieldToUpdate === 'password') {
-      if ($scope.userData.password.length < 8) {
+      if (userData.password.length < 8) {
         $rootScope.registrationError = 'Password must be at least 8 characters';
         $rootScope.$broadcast('registrationError');
         return;
-      } else if ($scope.userData.password !== $scope.userData.passwordConfirm) {
+      } else if (userData.password !== $scope.userData.passwordConfirm) {
         $rootScope.registrationError = 'Passwords do not match';
         $rootScope.$broadcast('registrationError');
         return;
       };
       $scope.editSuccessMessage = "Succesfully updated your password!";
     };
-    $scope.confirmEditUser();
+      console.log("CALLING CONFIRM EDIT USER, END OF VALIDATE FN: ", JSON.stringify(userData));
+    $scope.confirmEditUser(userData);
   };
 
-  $scope.confirmEditUser = function () {
-    var updatedData = $scope.userData;
+  $scope.confirmEditUser = function (userData) {
 
-          console.log("CALLED CONFIRM EDIT USER, THIS IS FORM USER DATA:", $scope.userData);
+        
+          console.log("CALLED CONFIRM EDIT USER, THIS IS FORM USER DATA:", JSON.stringify(userData));
 
     if ($rootScope.user) {
       console.log("UPDATING USER (rootscope): ", $rootScope.user); 
-      updatedData.currentUsername = $rootScope.user.email
-      updatedData.email = updatedData.currentUsername;
-      updatedData.username = updatedData.currentUsername;
+      userData.currentUsername = $rootScope.user.email;
+      userData.email = $rootScope.user.email;
+      userData.username = $rootScope.user.email;
     };
 
-    console.log("UPDATING USER WITH THIS DATA: ", $scope.userData); 
 
+      console.log("UPDATING USER WITH THIS DATA: ", JSON.stringify(userData)); 
 
-    User.editUser(updatedData)
+    User.editUser(userData)
       .then(function(res){
 
         console.log("EDIT USER SERVER RESPONSE: ", res);

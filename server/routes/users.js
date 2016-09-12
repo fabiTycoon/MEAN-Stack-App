@@ -163,9 +163,18 @@ router.post('/update/', function (req, res){
   });
 });
 
+var updateUserData = function (updatedData, databaseUser) {
+
+  console.log(JSON.stringify(databaseUser));
+  console.log(databaseUser);
+
+};
+
 
 router.put('/', function (req, res) {
     console.log("HIT EDIT USER ENDPOINT: ", req.body);
+
+  
 
   var updatedUser = req.body;
       console.log("THESE ARE THE FIELDS BEING UPDATED: ", updatedUser);
@@ -181,14 +190,17 @@ router.put('/', function (req, res) {
 
   User.findOne({username: currentUsername}, function (err, returnedUser) { 
     console.log("FIND USER CALLED: ", returnedUser);
-    if (err) {console.log("FIND USER CALLED ERROR: ", err);}
+    if (err || !returnedUser) {
+      console.log("FIND USER CALLED ERROR: ", err)
+      return res.status(500).json({'message': 'Cannot find a user by that e-mail.', 'success': false, 'err': err})
+    ;}
 
     if (fieldToUpdate === 'email') {
       //need to do someething to avoid duplicate key error
     } else if (fieldToUpdate === 'phone') {
       returnedUser.phone = updatedUser.phone;
     } else if (fieldToUpdate === 'address') {
-      returnedUser.address = updatedUser.address;
+      returnedUser.street = updatedUser.street;
       returnedUser.city = updatedUser.city;
       returnedUser.state = updatedUser.state;
       returnedUser.zip = updatedUser.zip;
@@ -200,7 +212,7 @@ router.put('/', function (req, res) {
           return res.status(200).json({message: 'password reset successful', success: true, user: returnedUser});
         });
     };
-    console.log("SAVING THIS USER: ", returnedUser);
+    console.log("SAVING THIS USER: ", JSON.stringify(returnedUser));
     returnedUser.save();
     return res.status(200).json({'user': returnedUser, 'success': true});
   });  

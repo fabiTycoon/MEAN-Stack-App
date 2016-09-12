@@ -58,7 +58,7 @@
             <div id="address-fields" class="account-edit">
               <div class="row" ng-if="user.address !== ''" id="address-field">
                 <div class="col s6 l4 offset-l1" id="address-field">
-                  <label for="address-field">Address:</label><p>{{user.address}} <a ng-click="showEditUserField('address');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+                  <label for="address-field">Address:</label><p>{{user.street}} <a ng-click="showEditUserField('street');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                 </div>
                 <div class="col s6 l4 offset-l1" id="city-field">
                   <label for="city-field">City/Town:</label><p>{{user.city}} <a ng-click="showEditUserField('city');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
@@ -123,24 +123,28 @@
 
             <div class="row" id="address-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'address-fields'">
               <div class="col s6" id="address-field">
-                <label for="address-field">Address:</label><input type="text" ng-model="userData.street"></input>
+                <label for="address-field">Address:</label><input type="text" pattern="" ng-model="userData.street"></input>
+                <pre>{{userData.street}}<pre>
               </div>
               <div class="col s6" id="city-field">
-                <label for="city-field">City/Town:</label><input type="text" ng-model="userData.city"></input>
+                <label for="city-field">City/Town:</label><input type="text" pattern="" ng-model="userData.city"></input>
+                <pre>{{userData.city}}<pre>
               </div>
             </div>
             <div class="row" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'address-fields'">
               <div class="col s6" id="state-field">
-                <label for="state-field">State:</label><input type="text" ng-model="userData.state"></input>
+                <label for="state-field">State:</label><input type="text" pattern="" ng-model="userData.state"></input>
+                <pre>{{userData.state}}<pre>
               </div>
               <div class="col s6" id="zip-field">
-                <label for="zip-field">ZIP:</label><input type="text" ng-model="userData.zip"></input>
+                <label for="zip-field">ZIP:</label><input type="text" pattern="" ng-model="userData.zip"></input>
+                <pre>{{userData.zip}}<pre>
               </div>
             </div>
 
             <div class="row" id="medical-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'medical-fields'">
               <div class="col s12" id="hospital-field">
-                <label for="hospital-field">Animal Hospital:</label><input type="text" ng-model="userData.hospital"></input>
+                <label for="hospital-field">Animal Hospital:</label><input type="text" pattern="" ng-model="userData.hospital"></input>
               </div>
             </div>
 
@@ -163,7 +167,7 @@
 
           <div class="row" ng-if="accountViewModelState.editingUser === true">
             <div class="col s4 offset-s1" >
-              <a class="waves-effect waves-light left btn" ng-click="validateUser();">CONFIRM CHANGES</a>
+              <a class="waves-effect waves-light left btn" ng-click="validateUser(userData);">CONFIRM CHANGES</a>
             </div>
             <div class="col s4 offset-s1">
               <a class="waves-effect waves-light red left btn" ng-click="cancelEdit();">DISCARD CHANGES<i id="about-icon" class=" material-icons right">highlight_off</i></a>
