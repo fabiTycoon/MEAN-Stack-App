@@ -180,7 +180,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
           return;
         };
         $scope.editSuccessMessage = "Succesfully updated your veterinary info!";
-        return;
     } else if (fieldToUpdate === 'password') {
       if (userData.password.length < 8) {
         $rootScope.registrationError = 'Password must be at least 8 characters';
@@ -199,9 +198,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   $scope.confirmEditUser = function (userData) {
 
-        
-          console.log("CALLED CONFIRM EDIT USER, THIS IS FORM USER DATA:", JSON.stringify(userData));
-
     if ($rootScope.user) {
       console.log("UPDATING USER (rootscope): ", $rootScope.user); 
       userData.currentUsername = $rootScope.user.email;
@@ -209,13 +205,11 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       userData.username = $rootScope.user.email;
     };
 
-
-      console.log("UPDATING USER WITH THIS DATA: ", JSON.stringify(userData)); 
+      console.log("CALLING confirmEditUser:", userData);
 
     User.editUser(userData)
       .then(function(res){
-
-        console.log("EDIT USER SERVER RESPONSE: ", res);
+        
         if (res) {console.log("EDIT USER SERVER RESPONSE: ", res.data);};
         
         if (res.data.success === true) {
