@@ -213,7 +213,9 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
 
   };
 
-  if (($rootScope.user && $rootScope.user.admin === true) || $rootScope.user.username === 'OliviaTheCat3' || $rootScope.user.username === 'npoling@gmail.com' ) {
+  console.log("USER: ", $rootScope.user);
+
+  if (($rootScope.user && $rootScope.user.admin === true) || ($rootScope.user && $rootScope.user.email === 'OliviaTheCat3') || ($rootScope.user && $rootScope.user.email === 'npoling@gmail.com') ) {
     init();  
   } else {
     $location.path('/');

@@ -74,15 +74,16 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
     if (arguments.length !== 0) {
       $scope.accountViewModelState.userInfo = true;
-      for (var key in $scope.userData) {
-        $scope.userData[key] = '';
-      };
     };
   };
 
   $scope.setDefaultState(true);
 
   $scope.cancelEdit = function () {
+      console.log("CLEARING USER DATA");
+    for (var key in $scope.userData) {
+      $scope.userData[key] = '';
+    };
     $scope.setDefaultState(true);
   };
 
@@ -94,7 +95,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      area += $scope.userData.area;
      ph1 += $scope.userData.ph1;
      ph2 += $scope.userData.ph2;
-
     $scope.userData.phone = (area + ph1 + ph2);
       console.log("PHONE CONCAT: ", $scope.userData.phone);
   };
@@ -208,8 +208,10 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.confirmEditUser = function () {
     var updatedData = $scope.userData;
 
+          console.log("CALLED CONFIRM EDIT USER, THIS IS FORM USER DATA:", $scope.userData);
+
     if ($rootScope.user) {
-      console.log("UPDATING USER: ", $rootScope.user); 
+      console.log("UPDATING USER (rootscope): ", $rootScope.user); 
       updatedData.currentUsername = $rootScope.user.email
       updatedData.email = updatedData.currentUsername;
       updatedData.username = updatedData.currentUsername;
@@ -235,8 +237,11 @@ angular.module('myApp.viewAccount', ['ngRoute'])
             };
 
             $scope.setDefaultState(true);
+            for (var key in $scope.userData) {
+              $scope.userData[key] = '';
+            };
+
             $timeout(function(){
-                console.log("TOAST POPPIN OFF");
               Materialize.toast($scope.editSuccessMessage, 4000);
             }, 500);
 

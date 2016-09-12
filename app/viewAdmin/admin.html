@@ -1,4 +1,22 @@
+<!--NO USER BOX-->
 <div class="container">
+  <div class="row" ng-if="user.isLoggedIn === false || !user">
+    <div class="col s10 offset-s1 m6 offset-s3 l6 offset-s3">
+      <br><br><br>
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">WOOPS!</span>
+          <br>
+          <span class="alt-contact-text center-text">There's nothing here.  If you are an administrator, please <a href="#/login">log in</a> to access your administrator account.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--END NO USER BOX-->
+
+
+<div class="container" ng-if="user.isLoggedIn === true || user.email.length > 0">
 
   <br>
   <nav>
@@ -35,8 +53,8 @@
             <td>{{user.last}}, {{user.first</td>
             <td>{{displayPhone}}</td>
             <td><a href="mailto:{{user.email}}">{{user.email}}<a></td>
-            <td><a ng-click="showUserPets({{user.email}})" ng-if="user.pets.length > 0">PETS</a><a ng-if="user.pets.length === 0"><!--DISABLED BUTTON--></a></td>
-            <td><a ng-click="showUserReservations({{user.email}})" ng-if="user.reservations.length > 0">RESERVATIONS</a><a ng-if="user.reservations.length === 0"><!--GREYED OUT PETS BUTTON--></a></td>
+            <td><a ng-click="showUserPets(user.email)" ng-if="user.pets.length > 0">PETS</a><a ng-if="user.pets.length === 0"><!--DISABLED BUTTON--></a></td>
+            <td><a ng-click="showUserReservations(user.email)" ng-if="user.reservations.length > 0">RESERVATIONS</a><a ng-if="user.reservations.length === 0"><!--GREYED OUT PETS BUTTON--></a></td>
             <td><!--<ban-user-button></ban-user-button>--></td>
           </tr>
         </tbody>

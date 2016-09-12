@@ -77,7 +77,7 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var getUsers = function (user) {
-    if (user.admin === false) {
+    if (user.admin === false || user.username !== 'OliviaTheCat3') {
       return;
     } else {
       return $http.get('/api/users/', user);

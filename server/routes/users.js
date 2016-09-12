@@ -197,7 +197,7 @@ router.put('/', function (req, res) {
     } else if (fieldToUpdate === 'password') {
         return returnedUser.setPassword(req.body.password, function (){
           returnedUser.save();
-          return res.status(200).json({message: 'password reset successful', user: returnedUser});
+          return res.status(200).json({message: 'password reset successful', success: true, user: returnedUser});
         });
     };
     console.log("SAVING THIS USER: ", returnedUser);
