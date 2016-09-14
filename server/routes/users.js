@@ -133,6 +133,18 @@ router.post('/login', passport.authenticate('local'), function(req, res){
   console.log("LOGIN: ", req.user);
 
   var currentTime = Date.now();
+  var registeredTime = req.user.created_at;
+
+  if (req.user.verified === false) {
+
+    if (currentTime - registeredTime > 100000000000000000000000) {
+      //deactivate account
+
+      return res. status(401).json({'success': false, err: 'Woops!  You didn\'t verify your e-mail address within 48 hours of registering.  TODO: Add way for user to resend verification email.'})
+    };
+  } else if (req.user.deactivated === true) {
+    return res. status(401).json({'success': false, err: 'This account has been deactivated  Please contact us for more information.'})
+  };
 
 
   var returnedUser = {
@@ -150,7 +162,9 @@ router.post('/login', passport.authenticate('local'), function(req, res){
     admin: req.user.admin,
     isLoggedIn: true,
     last_login: currentTime,
-    created_at: req.user.created_at
+    created_at: req.user.created_at,
+    deactivated: false,
+    verified: true
   };
   return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
 });
@@ -184,8 +198,6 @@ var updateUserData = function (updatedData, databaseUser) {
 router.put('/', function (req, res) {
     console.log("HIT EDIT USER ENDPOINT: ", req.body);
 
-  
-
   var updatedUser = req.body;
       console.log("THESE ARE THE FIELDS BEING UPDATED: ", updatedUser);
   var fieldToUpdate = req.body.fieldToUpdate;
@@ -199,14 +211,14 @@ router.put('/', function (req, res) {
     console.log("FINDING THIS USER: ", currentUsername);
 
   User.findOne({username: currentUsername}, function (err, returnedUser) { 
-    console.log("FIND USER CALLED: ", returnedUser);
+    console.log("FIND USER RETURNED THIS USER: ", returnedUser);
     if (err || !returnedUser) {
-      console.log("FIND USER CALLED ERROR: ", err)
+      console.log("FIND USER RETURNED THIS ERROR: ", err)
       return res.status(500).json({'message': 'Cannot find a user by that e-mail.', 'success': false, 'err': err})
     ;}
 
     if (fieldToUpdate === 'email') {
-      //need to do someething to avoid duplicate key error
+      //need to do someething to avoid mongoose throwing duplicate key error
     } else if (fieldToUpdate === 'phone') {
       returnedUser.phone = updatedUser.phone;
     } else if (fieldToUpdate === 'address') {
