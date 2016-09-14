@@ -6,11 +6,14 @@ var User = require('../models/users.js');
 var passportLocalMongoose = require('passport-local-mongoose');
 var nodemailer = require('nodemailer');
 
+var emailAccountString = 'info@hollisonmeadows.com'
+//var passwordString = process.env.EMAIL_PASSWORD;
+
 var transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'gmail.user@gmail.com',
-    pass: 'userpass'
+    user: emailAccountString,
+    pass: 'userpass' //
   }
 });
 
@@ -60,6 +63,25 @@ router.get('/getUserByEmail/', function(req, res) {
   };
 });
 
+var sendNewUserEmail = function (email) {
+
+  var mailOptions = {
+    from: emailAccountString
+    to: email
+    subject: "Welcome to Holliston Meadows!",
+    generateTextFromHTML: true,
+    html: "<h3>WELCOME!</h3<br><p>We're excited to have your pets stay with us!</p><br><p>Please click <a href='' target='_blank'>here</a> to verify your email!</p><br><br><p>&nbsp;&nbsp;&nbsp;Regards,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Holliston Meadows</p>"
+  };
+
+  smtpTransport.sendMail(mailOptions, function(error, res) {
+    if (error) {
+      console.log("FAILED TO SEND NEW USER EMAIL: ", error);
+    } else {
+      console.log("SENT NEW USER EMAIL: ", res);
+    }
+    smtpTransport.close();
+  });
+};
 
 router.post('/register', function(req, res) {
   
@@ -94,6 +116,8 @@ router.post('/register', function(req, res) {
       });
     } else {
 
+      sendNewUserEmail(user.email);
+
       var returnedUser = {
         _id: user._id,
         first: user.first,
@@ -119,6 +143,23 @@ router.post('/register', function(req, res) {
       });
     };
   });
+});
+
+router.post('/verify/:userId', function (req, res) {
+  var userId = req.params.userId;
+  //TO DO: MAKE SURE THIS ISNT A BANNED EMAIL
+
+  User.findOne({_id: userId}, function (err, returnedUser) { 
+
+    if (err) {
+      return res.status(500).json('success': false, 'err': err)
+    };
+
+    returnedUser.verified = true;
+    returnedUser.save();
+    return res.status(201).json('success': true, 'user': returnedUser);
+  });
+
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res){
