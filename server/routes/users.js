@@ -66,8 +66,8 @@ router.get('/getUserByEmail/', function(req, res) {
 var sendNewUserEmail = function (email) {
 
   var mailOptions = {
-    from: emailAccountString
-    to: email
+    from: emailAccountString,
+    to: email,
     subject: "Welcome to Holliston Meadows!",
     generateTextFromHTML: true,
     html: "<h3>WELCOME!</h3<br><p>We're excited to have your pets stay with us!</p><br><p>Please click <a href='' target='_blank'>here</a> to verify your email!</p><br><br><p>&nbsp;&nbsp;&nbsp;Regards,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Holliston Meadows</p>"
@@ -152,14 +152,19 @@ router.post('/verify/:userId', function (req, res) {
   User.findOne({_id: userId}, function (err, returnedUser) { 
 
     if (err) {
-      return res.status(500).json('success': false, 'err': err)
+      return res.status(500).json({'success': false, 'err': err});
     };
 
-    returnedUser.verified = true;
-    returnedUser.save();
-    return res.status(201).json('success': true, 'user': returnedUser);
-  });
+    if (returnedUser) {
+      returnedUser.verified = true;
+      returnedUser.save();
+      return res.status(201).json({'success': true, 'user': returnedUser});      
+    } else {
+      return res.status(500).json({'success': false, 'err': err, 'message': 'Failed to locate a user with this email.'});
+    };
 
+
+  });
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res){
