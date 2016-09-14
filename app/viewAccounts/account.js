@@ -59,6 +59,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     };
 
     if (arguments.length !== 0) {
+      $('ul.tabs').tabs('select_tab', 'user-tab');
       $scope.accountViewModelState.userInfo = true;
     };
   };
@@ -239,15 +240,14 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   };
 
   $scope.showUserInfo = function () {
-    $scope.profileTitle = "MY ACCOUNT:";
     $scope.setDefaultState(true);
+    $('ul.tabs').tabs('select_tab', 'user-tab');
   };
 
   $scope.showProfilePets = function () {
     $scope.setDefaultState();
-    $scope.profileTitle = "MY SAVED PETS:";
+    $('ul.tabs').tabs('select_tab', 'pets-tab');
     $scope.accountViewModelState.petInfo = true;
-
     $timeout(function(){
       $('.collapsible').collapsible({
         accordion : false
@@ -258,6 +258,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   $scope.showProfileReservations = function () {
     $scope.setDefaultState();
+    $('ul.tabs').tabs('select_tab', 'reservations-tab');
     $scope.profileTitle = "MY RESERVATIONS:";
     $scope.accountViewModelState.reservationInfo = true;
       console.log("WTF? ", $scope.accountViewModelState)
@@ -268,7 +269,14 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.accountViewModelState.editingPet = true;
   };
 
-  $scope.editPet = function () {
+  $scope.validatePetEdits = function () {
+
+
+
+    $scope.confirmPetEdits();
+  };
+
+  $scope.confirmPetEdits = function () {
 
   };
 

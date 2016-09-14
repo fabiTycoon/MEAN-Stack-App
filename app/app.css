@@ -258,3 +258,6 @@ video {
   font-size: 0.8em !important;
   color: black;
   margin-left: 1em; }
+
+.account-summary-reservation-item:hover {
+  fill: #c2c2c2; }

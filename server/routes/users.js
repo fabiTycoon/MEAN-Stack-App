@@ -4,6 +4,16 @@ var passport = require('passport');
 var mongoose = require('mongoose');
 var User = require('../models/users.js');
 var passportLocalMongoose = require('passport-local-mongoose');
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'gmail.user@gmail.com',
+    pass: 'userpass'
+  }
+});
+
 
 // ----- HANDLERS FOR CALLS TO API/USERS -----
 router.get('user/:userEmail', function (req, res) {

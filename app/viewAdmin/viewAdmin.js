@@ -141,7 +141,7 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
     };
   };
 
-  var getUsers = function () {
+  var getAllUsers = function () {
     $scope.loadingData = true;
 
     User.getUsers($rootScope.user)
@@ -195,7 +195,7 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
     $rootScope.errorMessage = '';
     //Pull all reservations from DB
     //TO DO: ADD NEW TAGS TO ALL THAT HAVENT BEEN SEEN BEFORE 
-    getUsers();
+    getAllUsers();
 
     if ($rootScope.errorMessage !== '') {
       return;      

@@ -1,6 +1,6 @@
 <!--NO USER BOX-->
-<div class="container">
-  <div class="row" ng-if="user.isLoggedIn === false || !user">
+<!--<div class="container">
+  <div class="row" ng-if="user && user.isLoggedIn === false">
     <div class="col s10 offset-s1 m6 offset-s3 l6 offset-s3">
       <br><br><br>
       <div class="card">
@@ -12,12 +12,11 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 <!--END NO USER BOX-->
 
-
-<div class="container" ng-if="user.isLoggedIn === true || user.email.length > 0">
-
+<!--<div class="container" ng-if="(user && user.isLoggedIn === true) || (user && user.email.length > 0)"> -->
+<div class="container">
   <br>
   <nav>
     <div class="nav-wrapper">
@@ -38,13 +37,13 @@
       <table ng-if="accountViewModelState.viewUsers">
         <thead>
           <tr>
-          <th data-field="name">Name</th>
-          <th data-field="phone">Phone</th>
-          <th data-field="email">Email</th>
-          <th data-field="pets">View Pets</th>
-          <th data-field="reservations">View Reservations</th>
-          <th data-field="price">View Data</th>
-          <th data-field="ban">Ban User</th>
+            <th data-field="name">Name</th>
+            <th data-field="phone">Phone</th>
+            <th data-field="email">Email</th>
+            <th data-field="pets">View Pets</th>
+            <th data-field="reservations">View Reservations</th>
+            <th data-field="price">View Data</th>
+            <th data-field="ban">Ban User</th>
           </tr>
         </thead>
 
