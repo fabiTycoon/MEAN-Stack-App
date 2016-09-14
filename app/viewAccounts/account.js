@@ -252,6 +252,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       $('.collapsible').collapsible({
         accordion : false
       });
+      return;
     }, 200);
   };
 
@@ -261,7 +262,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $('ul.tabs').tabs('select_tab', 'reservations-tab');
     $scope.profileTitle = "MY RESERVATIONS:";
     $scope.accountViewModelState.reservationInfo = true;
-      console.log("WTF? ", $scope.accountViewModelState)
   };
 
   $scope.showEditPet = function () {
