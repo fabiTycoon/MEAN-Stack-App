@@ -69,7 +69,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     preferredContact: 'email',
     comments: '',
     owner: '',
-    pets: []
+    pets: [],
+    reminder: true,
+    reminderMethod: 'email'
   };
 
   $scope.newPet = {

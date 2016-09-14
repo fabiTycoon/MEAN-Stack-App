@@ -148,6 +148,9 @@ router.post('/register', function(req, res) {
 router.post('/verify/:userId', function (req, res) {
   var userId = req.params.userId;
   //TO DO: MAKE SURE THIS ISNT A BANNED EMAIL
+  if (userId) {
+    console.log("HIT VERIFY USER ENDPOINT: ", userId);
+  };
 
   User.findOne({_id: userId}, function (err, returnedUser) { 
 
@@ -160,10 +163,8 @@ router.post('/verify/:userId', function (req, res) {
       returnedUser.save();
       return res.status(201).json({'success': true, 'user': returnedUser});      
     } else {
-      return res.status(500).json({'success': false, 'err': err, 'message': 'Failed to locate a user with this email.'});
+      return res.status(401).json({'success': false, 'err': err, 'message': 'Failed to locate a user with this email.'});
     };
-
-
   });
 });
 
@@ -175,22 +176,33 @@ router.post('/login', passport.authenticate('local'), function(req, res){
     console.log("BAD CREDENTIALS", res);
     return res.status(401).json({'success': false, 'message': 'Invalid username or password.', 'isLoggedIn': false});
   };
-
   console.log("LOGIN: ", req.user);
 
   var currentTime = Date.now();
   var registeredTime = req.user.created_at;
 
   if (req.user.verified === false) {
-
-    if (currentTime - registeredTime > 100000000000000000000000) {
+    if (currentTime - registeredTime > 10000000000000000000000000) {
       //deactivate account
-
       return res. status(401).json({'success': false, err: 'Woops!  You didn\'t verify your e-mail address within 48 hours of registering.  TODO: Add way for user to resend verification email.'})
     };
   } else if (req.user.deactivated === true) {
     return res. status(401).json({'success': false, err: 'This account has been deactivated  Please contact us for more information.'})
   };
+
+  //UPDATE LAST LOGIN VALUE:
+  User.findOne({username: req.user.email}, function (err, returnedUser) { 
+    if (err) {
+      return res.status(500).json({'success': false, 'err': err});
+    };
+
+    if (returnedUser) {
+      returnedUser.last_login = currentTime;
+      returnedUser.save();     
+    } else {
+      return res.status(401).json({'success': false, 'err': err, 'message': 'Failed to locate a user with this email.'});
+    };
+  });
 
 
   var returnedUser = {

@@ -13,7 +13,9 @@ var ReservationSchema = new Schema({
   adminApproved: {type: Boolean, default: null},
   checkOutTime: String,
   owner: {type: String, required: true},
-  pets: {type: Array, required: true}
+  pets: {type: Array, required: true},
+  reminder: {type: Boolean, default: true}, 
+  reminderMethod: String
 });
 
 var Reservation = mongoose.model('Reservation', ReservationSchema);

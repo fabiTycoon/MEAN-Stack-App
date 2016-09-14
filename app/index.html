@@ -32,16 +32,18 @@
     <ul id="nav-mobile" class="right hide-on-med-and-down red darken-4">
       <li class="action-item"><a href="#/book">BOOK NOW</a></li> 
       <li><a href="#/viewAbout">About</a></li>
-      <!--<li><a href="#/view2">Gallery</a></li>
-      <li><a href="#/login">Log In</a></li>
-      <li><a ng-click="logOut()">Log Out</a></li>-->
+      <!--<li><a href="#/view2">Gallery</a></li>-->
+      <li ng-if="!user"><a href="#/login">Log In</a></li>
+      <li ng-if="user && user.username.length > 0"><a href="#/account">My Account</a></li>
+      <li ng-if="user && user.username.length > 0"><a href="#/logout">Log Out</a></li>
     </ul>
      <ul class="side-nav" id="mobile-menu">
        <li class="action-item"><a href="#/book">BOOK NOW</a></li> 
         <li><a href="#/viewAbout">About</a></li>
-        <!--<li><a href="#/view2">Gallery</a></li>
-        <li><a href="#/login">Log In</a></li>
-        <li ng-click="logOut()">Log Out</li>-->
+        <!--<li><a href="#/view2">Gallery</a></li>-->
+        <li ng-if="!user"><a href="#/login">Log In</a></li>
+        <li ng-if="user && user.username.length > 0"><a href="#/account">My Account</a></li>
+        <li ng-if="user && user.username.length > 0"><a href="#/logout">Log Out</a></li>
     </ul>
    </div>
   </nav>
