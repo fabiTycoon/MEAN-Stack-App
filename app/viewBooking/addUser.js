@@ -290,6 +290,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         $rootScope.registrationError = "Please select valid check-in and check-out dates";
         $rootScope.$broadcast('registrationError');
         return;
+      } else if ($scope.serviceSelected === 'boarding' && ($scope.newReservation.checkInDate === $scope.newReservation.checkOutDate)) {
+        //TO DO: MAKE THIS LINK CLICKABLE
+        $rootScope.registrationError = "Woops!  You've selected the same dates for check-in and check-out for your boarding stay.<br><br>  Did you mean to book a daycare stay?  If so, please click the 'Go Back' button.";
+        $rootScope.$broadcast('registrationError');
+        return;
       } else if ($scope.serviceSelected === 'boarding' && $scope.newReservation.checkInDate === '' && $scope.newReservation.checkOutDate === '') {
         $rootScope.registrationError = "Please select a check-in and check-out date";
         $rootScope.$broadcast('registrationError');
