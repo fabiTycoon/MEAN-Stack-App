@@ -204,7 +204,6 @@ router.post('/login', passport.authenticate('local'), function(req, res){
     };
   });
 
-
   var returnedUser = {
     _id: req.user._id,
     first: req.user.first,
@@ -244,13 +243,6 @@ router.post('/update/', function (req, res){
     }; 
   });
 });
-
-var updateUserData = function (updatedData, databaseUser) {
-
-  console.log(JSON.stringify(databaseUser));
-  console.log(databaseUser);
-
-};
 
 
 router.put('/', function (req, res) {
