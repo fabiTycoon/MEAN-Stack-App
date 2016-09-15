@@ -1,3 +1,4 @@
+
 <!--NO USER BOX-->
 <div class="container">
   <div class="row" ng-if="user.isLoggedIn === false || !user">
@@ -180,8 +181,28 @@
           </div>
           <!-- END EDIT USER INFO VIEW -->
 
+          <!-- NO RESERVATIONS PLACEHOLDER -->
+          <div ng-if="accountViewModelState.reservationInfo === true && user.reservations.length === 0">
+            <div class="container">
+              <div class="row" ng-if="user.isLoggedIn === false || !user">
+                <div class="col s10 offset-s1 m6 offset-s3 l6 offset-s3">
+                  <br><br><br>
+                  <div class="card">
+                    <div class="card-content">
+                      <span class="card-title">WOOPS!</span>
+                      <br>
+                      <span class="alt-contact-text center-text">You currently don't have any saved reservations.</span>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>   
+          </div>
+          <!-- END NO RESERVATIONS PLACEHOLDER -->
+
           <!-- RESERVATION INFO VIEW-->   <!-- ADD DIVIDER B/W PREVIOUS & UPCOMING RESERVATIONS -->
-          <div ng-if="accountViewModelState.reservationInfo === true">
+          <div ng-if="accountViewModelState.reservationInfo === true && user.reservations.length > 0">
             <div class="row account-summary-reservation-item" ng-repeat="res in user.reservations">
               <div class="col s10 offset-s1">
               <!-- DAYCARE ITEM -->
@@ -226,8 +247,28 @@
   <!-- END USER CARD -->
 </div>
 
+<!-- NO PET PLACEHOLDER -->
+<div ng-if="accountViewModelState.petInfo === true && user.pets.length === 0">
+  <div class="container">
+    <div class="row" ng-if="user.isLoggedIn === false || !user">
+      <div class="col s10 offset-s1 m6 offset-s3 l6 offset-s3">
+        <br><br><br>
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">WOOPS!</span>
+            <br>
+            <span class="alt-contact-text center-text">You currently don't have any pets saved to your accounts.</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>   
+</div>
+<!-- END NO PET PLACEHOLDER -->
+
 <!-- PET INFO VIEW -->
-<div class="container row" ng-if="accountViewModelState.petInfo === true">       
+<div class="container row" ng-if="accountViewModelState.petInfo === true && user.pets.length > 0">       
   <ul class="collapsible" data-collapsible="accordion">
     <li ng-repeat="pet in user.pets">
       <div class="collapsible-header">
