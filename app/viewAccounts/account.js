@@ -208,7 +208,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
     User.editUser(userData)
       .then(function(res){
-        
+
         if (res) {console.log("EDIT USER SERVER RESPONSE: ", res.data);};
         
         if (res.data.success === true) {
