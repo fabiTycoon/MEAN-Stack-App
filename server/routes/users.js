@@ -9,7 +9,7 @@ var nodemailer = require('nodemailer');
 var emailAccountString = 'info@hollisonmeadows.com'
 //var passwordString = process.env.EMAIL_PASSWORD;
 
-var transporter = nodemailer.createTransport({
+var smtpTransport = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
     user: emailAccountString,
