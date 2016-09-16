@@ -613,6 +613,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
           $rootScope.loading = false;
           $scope.setDefaultUser();
           $scope.viewModelState.returningUser = true;
+
+          $timeout(function(){
+            Materialize.toast("<strong>You've succesfully registered!</strong><br>Now let's book a stay!", 4000);
+          }, 500);
+
+
         } else {
           if (res.data.error.message) {
             $rootScope.registrationError = res.data.error.message;
