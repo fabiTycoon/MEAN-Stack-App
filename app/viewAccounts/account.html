@@ -180,52 +180,52 @@
             </div>
           </div>
           <!-- END EDIT USER INFO VIEW -->
-
-          <!-- RESERVATION INFO VIEW-->   <!-- ADD DIVIDER B/W PREVIOUS & UPCOMING RESERVATIONS -->
-          <div ng-if="accountViewModelState.reservationInfo === true && user.reservations.length > 0">
-            <div class="row account-summary-reservation-item" ng-repeat="res in user.reservations">
-              <div class="col s10 offset-s1">
-              <!-- DAYCARE ITEM -->
-                <div ng-if="res.service === 'daycare'">
-                  <div class="row">
-                    <div class="col s6">
-                      <label for="account-res-date">Date: </label><p id="account-res-date">{{res.displayCheckInDate}}</p>
-                    </div>
-                    <div class="col s6">
-                    </div>
-                  </div>
-                </div>
-                <!-- END DAYCARE ITEM -->
-                <!-- BOARDING ITEM -->
-                <div ng-if="res.service === 'boarding'">
-                  <div class="row">
-                    <div class="col s4">
-                      <label for="account-res-dates">Dates: </label><p id="account-res-dates">{{res.displayCheckInDate}} - {{res.displayCheckOutDate}}</p>
-                    </div>
-                    <div class="col s4">
-                    <label for="account-res-petstring">Pets: </label>
-                      <p id="account-res-petstring">{{res.displayPetString}}</p>
-                    </div>
-                    <div class="col s4">
-                      <label for="account-res-service">Service: </label>
-                      <div id="account-res-service">
-                        <p ng-if="res.service === 'daycare'">Daycare</p>
-                        <p ng-if="res.service === 'boarding'">Boarding</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- END BOARDING ITEM -->
-              </div>
-            </div>
-          </div>
-          <!-- END RESERVATION INFO VIEW-->
         </div> 
       </div>
     </div>
   </div>
   <!-- END USER CARD -->
 </div>
+
+<!-- RESERVATION INFO VIEW-->   <!-- ADD DIVIDER B/W PREVIOUS & UPCOMING RESERVATIONS -->
+<div ng-if="accountViewModelState.reservationInfo === true && user.reservations.length !== 0">
+  <div class="row account-summary-reservation-item" ng-repeat="res in user.reservations">
+    <div class="col s10 offset-s1">
+    <!-- DAYCARE ITEM -->
+      <div ng-if="res.service === 'daycare'">
+        <div class="row">
+          <div class="col s6">
+            <label for="account-res-date">Date: </label><p id="account-res-date">{{res.displayCheckInDate}}</p>
+          </div>
+          <div class="col s6">
+          </div>
+        </div>
+      </div>
+      <!-- END DAYCARE ITEM -->
+      <!-- BOARDING ITEM -->
+      <div ng-if="res.service === 'boarding'">
+        <div class="row">
+          <div class="col s4">
+            <label for="account-res-dates">Dates: </label><p id="account-res-dates">{{res.displayCheckInDate}} - {{res.displayCheckOutDate}}</p>
+          </div>
+          <div class="col s4">
+          <label for="account-res-petstring">Pets: </label>
+            <p id="account-res-petstring">{{res.displayPetString}}</p>
+          </div>
+          <div class="col s4">
+            <label for="account-res-service">Service: </label>
+            <div id="account-res-service">
+              <p ng-if="res.service === 'daycare'">Daycare</p>
+              <p ng-if="res.service === 'boarding'">Boarding</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END BOARDING ITEM -->
+    </div>
+  </div>
+</div>
+<!-- END RESERVATION INFO VIEW-->
 
 <!-- NO RESERVATIONS PLACEHOLDER -->
 <div ng-if="accountViewModelState.reservationInfo === true && user.reservations.length === 0">

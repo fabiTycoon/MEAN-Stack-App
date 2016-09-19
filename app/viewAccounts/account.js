@@ -262,6 +262,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $('ul.tabs').tabs('select_tab', 'reservations-tab');
     $scope.profileTitle = "MY RESERVATIONS:";
     $scope.accountViewModelState.reservationInfo = true;
+      console.log("VM STATE: ", $scope.accountViewModelState);
   };
 
   $scope.showEditPet = function () {
