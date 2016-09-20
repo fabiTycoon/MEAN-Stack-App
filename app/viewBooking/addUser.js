@@ -9,7 +9,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   });
 }])
 
-.controller('AddUserCtrl', ['$scope', '$rootScope', '$timeout', 'User', function($scope, $rootScope, $timeout, User) {
+.controller('AddUserCtrl', ['$scope', '$rootScope', '$timeout', '$location', 'User', function($scope, $rootScope, $timeout, $location, User) {
 
   $scope.viewModelState = {
     intro: true,
@@ -26,6 +26,8 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     addPetStep: 1,
     finalConfirm: false
   };
+
+  console.log("LOADED: ", $scope.viewModelState);
 
   $scope.loginUserObject = {
     username: '',
@@ -226,6 +228,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   };
   
   $scope.goHome = function () {
+
+    if ($scope.viewModelState.intro === true) {
+      return $location.path('/');
+    };
+
     if ($rootScope.user) {
       $scope.defaultState(true);
       $scope.viewModelState.returningUser = true;

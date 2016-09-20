@@ -63,6 +63,10 @@ angular.module('myApp.viewLogin', ['ngRoute'])
     };  
   };
 
+  $scope.goHome = function () {
+    $location.path('/');
+  };
+
   $scope.recoverPassword = function () {
     return;
   };
