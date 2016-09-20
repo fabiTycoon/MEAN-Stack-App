@@ -6,11 +6,14 @@ var User = require('../models/users.js');
 var passportLocalMongoose = require('passport-local-mongoose');
 var nodemailer = require('nodemailer');
 
-var transporter = nodemailer.createTransport({
+var emailAccountString = 'info@hollisonmeadows.com'
+//var passwordString = process.env.EMAIL_PASSWORD;
+
+var smtpTransport = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'gmail.user@gmail.com',
-    pass: 'userpass'
+    user: emailAccountString,
+    pass: 'userpass' //
   }
 });
 
@@ -60,19 +63,40 @@ router.get('/getUserByEmail/', function(req, res) {
   };
 });
 
+var sendNewUserEmail = function (email) {
 
+  var mailOptions = {
+    from: emailAccountString,
+    to: email,
+    subject: "Welcome to Holliston Meadows!",
+    generateTextFromHTML: true,
+    html: "<h3>WELCOME!</h3<br><p>We're excited to have your pets stay with us!</p><br><p>Please click <a href='' target='_blank'>here</a> to verify your email!</p><br><br><p>&nbsp;&nbsp;&nbsp;Regards,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Holliston Meadows</p>"
+  };
+
+  smtpTransport.sendMail(mailOptions, function(error, res) {
+    if (error) {
+      console.log("FAILED TO SEND NEW USER EMAIL: ", error);
+    } else {
+      console.log("SENT NEW USER EMAIL: ", res);
+    }
+    smtpTransport.close();
+  });
+};
+
+// ---------- NEW USER REGISTRATION FUNCTION ----------
 router.post('/register', function(req, res) {
   
   console.log("registering user", req.body);
+  console.log("THIS IS THE ZIP CODE: ", req.body.zip)
 
   if (req.body.password !== req.body.passwordConfirm) {
     console.log('error, passwords do not match');
     res.status(501).json({'message': 'Passwords do not match'});
     return;
   };
+  //TO DO: ADDITIONAL USER VALIDATION
 
   var password = req.body.password;
-
   //Passport local mongoose takes care of hashing etc;
   User.register(new User({
     username: req.body.username,
@@ -84,7 +108,10 @@ router.post('/register', function(req, res) {
     city: req.body.city,
     state: req.body.state,
     zip: req.body.zip,
-    hospital: req.body.hospital
+    hospital: req.body.hospital,
+    admin: req.body.admin,
+    pets: [],
+    reservations: []
   }), password, function (err, user){
 
     if (err) {
@@ -94,6 +121,8 @@ router.post('/register', function(req, res) {
       });
     } else {
 
+      sendNewUserEmail(user.email);
+
       var returnedUser = {
         _id: user._id,
         first: user.first,
@@ -101,6 +130,7 @@ router.post('/register', function(req, res) {
         email: user.email,
         phone: user.phone,
         street: user.street,
+        city: user.city,
         state: user.state,
         zip: user.zip,
         hospital: user.hospital,
@@ -121,6 +151,29 @@ router.post('/register', function(req, res) {
   });
 });
 
+router.post('/verify/:userId', function (req, res) {
+  var userId = req.params.userId;
+  //TO DO: MAKE SURE THIS ISNT A BANNED EMAIL
+  if (userId) {
+    console.log("HIT VERIFY USER ENDPOINT: ", userId);
+  };
+
+  User.findOne({_id: userId}, function (err, returnedUser) { 
+
+    if (err) {
+      return res.status(500).json({'success': false, 'err': err});
+    };
+
+    if (returnedUser) {
+      returnedUser.verified = true;
+      returnedUser.save();
+      return res.status(201).json({'success': true, 'user': returnedUser});      
+    } else {
+      return res.status(401).json({'success': false, 'err': err, 'message': 'Failed to locate a user with this email.'});
+    };
+  });
+});
+
 router.post('/login', passport.authenticate('local'), function(req, res){
 
   console.log("LOGIN RESPONSE:", res);
@@ -129,16 +182,39 @@ router.post('/login', passport.authenticate('local'), function(req, res){
     console.log("BAD CREDENTIALS", res);
     return res.status(401).json({'success': false, 'message': 'Invalid username or password.', 'isLoggedIn': false});
   };
-
   console.log("LOGIN: ", req.user);
 
   var currentTime = Date.now();
+  var registeredTime = req.user.created_at;
 
+  if (req.user.verified === false) {
+    if (currentTime - registeredTime > 10000000000000000000000000) {
+      //deactivate account
+      return res. status(401).json({'success': false, err: 'Woops!  You didn\'t verify your e-mail address within 48 hours of registering.  TODO: Add way for user to resend verification email.'})
+    };
+  } else if (req.user.deactivated === true) {
+    return res. status(401).json({'success': false, err: 'This account has been deactivated  Please contact us for more information.'})
+  };
+
+  //UPDATE LAST LOGIN VALUE:
+  User.findOne({username: req.user.email}, function (err, returnedUser) { 
+    if (err) {
+      return res.status(500).json({'success': false, 'err': err});
+    };
+
+    if (returnedUser) {
+      returnedUser.last_login = currentTime;
+      returnedUser.save();     
+    } else {
+      return res.status(401).json({'success': false, 'err': err, 'message': 'Failed to locate a user with this email.'});
+    };
+  });
 
   var returnedUser = {
     _id: req.user._id,
     first: req.user.first,
     last: req.user.last,
+    username: req.user.username,
     email: req.user.email,
     phone: req.user.phone,
     street: req.user.street,
@@ -150,7 +226,9 @@ router.post('/login', passport.authenticate('local'), function(req, res){
     admin: req.user.admin,
     isLoggedIn: true,
     last_login: currentTime,
-    created_at: req.user.created_at
+    created_at: req.user.created_at,
+    deactivated: false,
+    verified: true
   };
   return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
 });
@@ -173,18 +251,9 @@ router.post('/update/', function (req, res){
   });
 });
 
-var updateUserData = function (updatedData, databaseUser) {
-
-  console.log(JSON.stringify(databaseUser));
-  console.log(databaseUser);
-
-};
-
 
 router.put('/', function (req, res) {
     console.log("HIT EDIT USER ENDPOINT: ", req.body);
-
-  
 
   var updatedUser = req.body;
       console.log("THESE ARE THE FIELDS BEING UPDATED: ", updatedUser);
@@ -199,14 +268,14 @@ router.put('/', function (req, res) {
     console.log("FINDING THIS USER: ", currentUsername);
 
   User.findOne({username: currentUsername}, function (err, returnedUser) { 
-    console.log("FIND USER CALLED: ", returnedUser);
+    console.log("FIND USER RETURNED THIS USER: ", returnedUser);
     if (err || !returnedUser) {
-      console.log("FIND USER CALLED ERROR: ", err)
+      console.log("FIND USER RETURNED THIS ERROR: ", err)
       return res.status(500).json({'message': 'Cannot find a user by that e-mail.', 'success': false, 'err': err})
     ;}
 
     if (fieldToUpdate === 'email') {
-      //need to do someething to avoid duplicate key error
+      //need to do someething to avoid mongoose throwing duplicate key error
     } else if (fieldToUpdate === 'phone') {
       returnedUser.phone = updatedUser.phone;
     } else if (fieldToUpdate === 'address') {

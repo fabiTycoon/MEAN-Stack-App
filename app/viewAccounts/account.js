@@ -13,7 +13,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   $scope.displayName = '';
   $scope.displayPhone = '';
-  $scope.profileTitle = 'MY ACCOUNT';
+  $scope.displayTitle = '';
   $rootScope.registrationError = '';
   $scope.refresh = false;
   $scope.editUserTitle = '';
@@ -34,7 +34,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   if ($rootScope.user) {
     $scope.displayName = $rootScope.user.first + " " + $rootScope.user.last;
-    console.log("SET DISPLAY NAME: ", $scope.displayName);
 
     if ($rootScope.user.pets) {
       for (var i = 0; i < $rootScope.user.pets; i++) {
@@ -60,6 +59,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
     if (arguments.length !== 0) {
       $('ul.tabs').tabs('select_tab', 'user-tab');
+      $scope.displayTitle = "MY ACCOUNT INFO:";
       $scope.accountViewModelState.userInfo = true;
     };
   };
@@ -67,7 +67,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.setDefaultState(true);
 
   $scope.cancelEdit = function () {
-      console.log("CLEARING USER DATA");
     for (var key in $scope.userData) {
       $scope.userData[key] = '';
     };
@@ -83,7 +82,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      ph1 += $scope.userData.ph1;
      ph2 += $scope.userData.ph2;
     $scope.userData.phone = (area + ph1 + ph2);
-      console.log("PHONE CONCAT: ", $scope.userData.phone);
   };
 
   $scope.showEditUserField = function (editedUserField) {
@@ -210,7 +208,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
     User.editUser(userData)
       .then(function(res){
-        
+
         if (res) {console.log("EDIT USER SERVER RESPONSE: ", res.data);};
         
         if (res.data.success === true) {
@@ -246,6 +244,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   $scope.showProfilePets = function () {
     $scope.setDefaultState();
+    $scope.displayTitle = "MY SAVED PETS";
     $('ul.tabs').tabs('select_tab', 'pets-tab');
     $scope.accountViewModelState.petInfo = true;
     $timeout(function(){
@@ -259,9 +258,11 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   $scope.showProfileReservations = function () {
     $scope.setDefaultState();
+    $scope.displayTitle = "MY RESERVATIONS";
     $('ul.tabs').tabs('select_tab', 'reservations-tab');
     $scope.profileTitle = "MY RESERVATIONS:";
     $scope.accountViewModelState.reservationInfo = true;
+      console.log("VM STATE: ", $scope.accountViewModelState);
   };
 
   $scope.showEditPet = function () {

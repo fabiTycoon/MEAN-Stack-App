@@ -69,7 +69,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     preferredContact: 'email',
     comments: '',
     owner: '',
-    pets: []
+    pets: [],
+    reminder: true,
+    reminderMethod: 'email'
   };
 
   $scope.newPet = {
@@ -286,6 +288,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       if ($scope.serviceSelected === 'boarding' && ($scope.newReservation.checkInDate > $scope.newReservation.checkOutDate)) {
         //validate dates
         $rootScope.registrationError = "Please select valid check-in and check-out dates";
+        $rootScope.$broadcast('registrationError');
+        return;
+      } else if ($scope.serviceSelected === 'boarding' && ($scope.newReservation.checkInDate === $scope.newReservation.checkOutDate)) {
+        //TO DO: MAKE THIS LINK CLICKABLE
+        $rootScope.registrationError = "Woops!  You've selected the same dates for check-in and check-out for your boarding stay.<br><br>  Did you mean to book a daycare stay?  If so, please click the 'Go Back' button.";
         $rootScope.$broadcast('registrationError');
         return;
       } else if ($scope.serviceSelected === 'boarding' && $scope.newReservation.checkInDate === '' && $scope.newReservation.checkOutDate === '') {
@@ -590,8 +597,10 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.phoneConcat();
     $scope.newUser.email = $scope.newUser.username;
 
-    if ($scope.newUser.email === "npoling@gmail.com" || $scope.newUser.email === "info@hollistonmeadows.com" || $scope.newUser.email === "lhpoling@hotmail.com") {
+    if ($scope.newUser.email === "npoling@gmail.com" || $scope.newUser.email === "info@hollistonmeadows.com" || $scope.newUser.email === "lhpoling@hotmail.com" || $scope.newUser.email === "adminTest@gmail.com") {
       $scope.newUser.admin = true;
+    } else {
+      $scope.newUser.admin = false;
     };
 
     User.register($scope.newUser)
@@ -604,6 +613,12 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
           $rootScope.loading = false;
           $scope.setDefaultUser();
           $scope.viewModelState.returningUser = true;
+
+          $timeout(function(){
+            Materialize.toast("<strong>You've succesfully registered!</strong><br>Now let's book a stay!", 4000);
+          }, 500);
+
+
         } else {
           if (res.data.error.message) {
             $rootScope.registrationError = res.data.error.message;

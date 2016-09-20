@@ -16,7 +16,7 @@ var UserSchema = new Schema({
   street: String,
   city: String,
   state: String,
-  zip: Number,
+  zip: String,
   hospital: String,
   pets: Array,
   reservations: Array,
@@ -24,7 +24,8 @@ var UserSchema = new Schema({
   updated_at: {type: Date, default: Date.now},
   last_login: Date,
   deactivated: {type: Boolean, default: false},
-  admin: {type: Boolean, default: false}
+  admin: Boolean,
+  verified: {type: Boolean, default: false}
 });
 
 UserSchema.plugin(passportLocalMongoose); 
