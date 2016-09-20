@@ -180,13 +180,6 @@ video {
   frameborder: 0px;
   style: "border:0"; }
 
-#more-info-button {
-  width: 30em;
-  height: 2.5em;
-  vertical-align: center;
-  font-size: 2em;
-  transform: translateX(0.5em); }
-
 .more-info-text {
   position: relative;
   bottom: 0.1em; }

@@ -15,6 +15,7 @@ angular.module('myApp', [
   'myApp.viewConfirm',
   'myApp.viewAdmin',
   'myApp.viewLogin',
+  'myApp.logOut',
   'myApp.version',
   //'myApp.basicServices',
   'myApp.directivesModule',

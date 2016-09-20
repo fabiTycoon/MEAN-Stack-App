@@ -34,6 +34,15 @@ angular.module('myApp.viewMain', ['ngRoute'])
   init();
 }])
 
+/*.directive('loading-wheel', [function(){
+  return  {
+    restrict: 'E',
+    templateUrl: 'viewMain/loadingWheel.html',
+    replace: true,
+  }
+}]) */
+
+
 .directive('footer', [function(){
   return  {
     restrict: 'E',
