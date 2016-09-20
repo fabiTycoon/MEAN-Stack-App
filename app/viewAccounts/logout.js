@@ -9,9 +9,7 @@ angular.module('myApp.logOut', ['ngRoute'])
   });
 }])
 
-.controller('logoutCtrl', [ '$scope', '$rootScope', '$http', 'User', function($scope, $rootScope, $http, User) {
-
-    alert("FUCK YOU");
+.controller('logoutCtrl', [ '$scope', '$rootScope', '$http', '$location', 'User', function($scope, $rootScope, $http, $location, User) {
 
   console.log("HIT LOGOUT CONTROLLER: ", $rootScope.user);
 
@@ -25,6 +23,8 @@ angular.module('myApp.logOut', ['ngRoute'])
         $location.path('#/')
         console.log("LOGGED OUT: ", $rootScope.user);
       });
+  } else {
+    $location.path('#/')
   };
 
 }]);
