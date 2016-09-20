@@ -16,7 +16,7 @@ var UserSchema = new Schema({
   street: String,
   city: String,
   state: String,
-  zip: Number,
+  zip: String,
   hospital: String,
   pets: Array,
   reservations: Array,

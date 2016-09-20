@@ -35,65 +35,70 @@
   <div class="row">
     <div class="col s10 offset-s1">
 
-      <div class="card" id="edit-container" ng-if="accountViewModelState.userInfo === true">
+      <div class="card" id="edit-container" ng-if="accountViewModelState.userInfo === true || accountViewModelState.editingUser === true">
         <div class="card-content">
 
           <span class="card-title thin">{{displayTitle}}</span>
           <div class="row">&nbsp;</div>
 
-          <!-- USER INFO VIEW -->
-          <div ng-if="accountViewModelState.userInfo === true">
-            <div class="row" ng-if="accountViewModelState.userField === ''">
-              <div class="col s6">
-                <h4>{{displayName}}</h4>
-              </div>
-            </div>
-            <span><h6 class="thin">CONTACT INFO:</h6></span>
-            <div class="row" id="contact-fields">
-              <div class="col s6 l4 offset-l1" id="email-field">
-                <label for="email-field">E-Mail:</label><p class="account-edit">{{user.email}} &nbsp;&nbsp; <a ng-click="showEditUserField('email');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
-              </div>
-              <div class="col s6 l4 offset-l1" id="phone-field">
-                <label for="phone-field">Contact Phone:</label><p class="account-edit">{{displayPhone}} &nbsp;&nbsp; <a ng-click="showEditUserField('phone');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
-              </div>
-            </div>
-
-            <span><h6 class="thin">ADDRESS:</h6></span>
-
-            <div id="address-fields" class="account-edit">
-              <div class="row" ng-if="user.address !== ''" id="address-field">
-                <div class="col s6 l4 offset-l1" id="address-field">
-                  <label for="address-field">Address:</label><p>{{user.street}} <a ng-click="showEditUserField('street');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
-                </div>
-                <div class="col s6 l4 offset-l1" id="city-field">
-                  <label for="city-field">City/Town:</label><p>{{user.city}} <a ng-click="showEditUserField('city');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+            <!-- USER INFO VIEW -->
+            <div ng-if="accountViewModelState.userInfo === true">
+              <div class="row" ng-if="accountViewModelState.userField === ''">
+                <div class="col s6">
+                  <h4>{{displayName}}</h4>
                 </div>
               </div>
-              <div class="row" ng-if="user.address !== ''">
-                <div class="col s6 l4 offset-l1" id="state-field">
-                  <label for="state-field">State:</label><p>{{user.state}} <a ng-click="showEditUserField('state');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+              <span><h6 class="thin">CONTACT INFO:</h6></span>
+              <div class="row" id="contact-fields">
+                <div class="col s6 l4 offset-l1" id="email-field">
+                  <label for="email-field">E-Mail:</label><p class="account-edit">{{user.email}} &nbsp;&nbsp; <a ng-click="showEditUserField('email');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                 </div>
-                <div class="col s6 l4 offset-l1" id="zip-field">
-                  <label for="zip-field">ZIP:</label><p>{{user.zip}} <a ng-click="showEditUserField('zip');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+                <div class="col s6 l4 offset-l1" id="phone-field">
+                  <label for="phone-field">Contact Phone:</label><p class="account-edit">{{displayPhone}} &nbsp;&nbsp; <a ng-click="showEditUserField('phone');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
                 </div>
               </div>
-            </div>  
 
-            <span><h6 class="thin">MEDICAL INFO:</h6></span>
+              <span><h6 class="thin">ADDRESS:</h6></span>
 
-            <div class="row" ng-if="user.hospital !== ''">
-              <div class="col s12 l10 offset-l1" id="hospital-field">
-                <label for="hospital-field">Animal Hospital:</label><p class="account-edit">{{user.hospital}} <a ng-click="showEditUserField('hospital');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+              <!-- ADDRESS FIELDS -->
+              <div id="address-fields" class="account-edit">
+                <div class="row" ng-if="user.address !== ''" id="address-field">
+                  <div class="col s6 l4 offset-l1" id="address-field">
+                    <label for="address-field">Address:</label><p>{{user.street}} <a ng-click="showEditUserField('street');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+                  </div>
+                  <div class="col s6 l4 offset-l1" id="city-field">
+                    <label for="city-field">City/Town:</label><p>{{user.city}} <a ng-click="showEditUserField('city');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+                  </div>
+                </div>
+                <div class="row" ng-if="user.address !== ''">
+                  <div class="col s6 l4 offset-l1" id="state-field">
+                    <label for="state-field">State:</label><p>{{user.state}} <a ng-click="showEditUserField('state');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+                  </div>
+                  <div class="col s6 l4 offset-l1" id="zip-field">
+                    <label for="zip-field">ZIP:</label><p>{{user.zip}} <a ng-click="showEditUserField('zip');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+                  </div>
+                </div>
+              </div>  
+              <!-- END ADDRESS FIELDS -->
+
+              <!-- MEDICAL FIELDS -->
+              <span><h6 class="thin">MEDICAL INFO:</h6></span>
+              <div class="row" ng-if="user.hospital !== ''">
+                <div class="col s12 l10 offset-l1" id="hospital-field">
+                  <label for="hospital-field">Animal Hospital:</label><p class="account-edit">{{user.hospital}} <a ng-click="showEditUserField('hospital');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p>
+                </div>
               </div>
+              <!-- END MEDICAL FIELDS -->
+
+              <br>
+
+              <!-- EDIT PASSWORD BUTTON -->
+              <div class="row" ng-if="accountViewModelState.editingUser === false">
+                  <a class="waves-effect waves-light btn" ng-click="showEditUserField('password');">EDIT PASSWORD</a>  
+              </div>
+              <!-- END EDIT PASSWORD BUTTON -->
             </div>
-            <br>
-            <div class="row" ng-if="accountViewModelState.editingUser === false">
-              
-                <a class="waves-effect waves-light btn" ng-click="showEditUserField('password');">EDIT PASSWORD</a>
-              
-            </div>
-          </div>
-          <!-- END USER INFO VIEW -->
+            <!-- END USER INFO VIEW -->
 
           <!-- EDIT USER INFO VIEW -->
           <div ng-if="accountViewModelState.editingUser === true">
@@ -129,21 +134,17 @@
             <div class="row" id="address-fields" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'address-fields'">
               <div class="col s6" id="address-field">
                 <label for="address-field">Address:</label><input type="text" pattern="" ng-model="userData.street"></input>
-                <pre>{{userData.street}}<pre>
               </div>
               <div class="col s6" id="city-field">
                 <label for="city-field">City/Town:</label><input type="text" pattern="" ng-model="userData.city"></input>
-                <pre>{{userData.city}}<pre>
               </div>
             </div>
             <div class="row" ng-if="accountViewModelState.editingUser === true && accountViewModelState.userField === 'address-fields'">
               <div class="col s6" id="state-field">
                 <label for="state-field">State:</label><input type="text" pattern="" ng-model="userData.state"></input>
-                <pre>{{userData.state}}<pre>
               </div>
               <div class="col s6" id="zip-field">
                 <label for="zip-field">ZIP:</label><input type="text" pattern="" ng-model="userData.zip"></input>
-                <pre>{{userData.zip}}<pre>
               </div>
             </div>
 
@@ -187,6 +188,7 @@
   <!-- END USER CARD -->
 </div>
 
+
 <!-- RESERVATION INFO VIEW-->   <!-- ADD DIVIDER B/W PREVIOUS & UPCOMING RESERVATIONS -->
 <div ng-if="accountViewModelState.reservationInfo === true && user.reservations.length !== 0">
   <div class="row account-summary-reservation-item" ng-repeat="res in user.reservations">
@@ -227,6 +229,8 @@
 </div>
 <!-- END RESERVATION INFO VIEW-->
 
+
+
 <!-- NO RESERVATIONS PLACEHOLDER -->
 <div ng-if="accountViewModelState.reservationInfo === true && user.reservations.length === 0">
   <div class="container">
@@ -245,6 +249,7 @@
   </div>   
 </div>
 <!-- END NO RESERVATIONS PLACEHOLDER -->
+
 
 <!-- NO PET PLACEHOLDER -->
 <div ng-if="accountViewModelState.petInfo === true && user.pets.length === 0">
@@ -265,6 +270,7 @@
   </div>   
 </div>
 <!-- END NO PET PLACEHOLDER -->
+
 
 <!-- PET INFO VIEW -->
 <div class="container row" ng-if="accountViewModelState.petInfo === true && user.pets.length > 0">       

@@ -83,18 +83,20 @@ var sendNewUserEmail = function (email) {
   });
 };
 
+// ---------- NEW USER REGISTRATION FUNCTION ----------
 router.post('/register', function(req, res) {
   
   console.log("registering user", req.body);
+  console.log("THIS IS THE ZIP CODE: ", req.body.zip)
 
   if (req.body.password !== req.body.passwordConfirm) {
     console.log('error, passwords do not match');
     res.status(501).json({'message': 'Passwords do not match'});
     return;
   };
+  //TO DO: ADDITIONAL USER VALIDATION
 
   var password = req.body.password;
-
   //Passport local mongoose takes care of hashing etc;
   User.register(new User({
     username: req.body.username,
@@ -106,7 +108,10 @@ router.post('/register', function(req, res) {
     city: req.body.city,
     state: req.body.state,
     zip: req.body.zip,
-    hospital: req.body.hospital
+    hospital: req.body.hospital,
+    admin: req.body.admin,
+    pets: [],
+    reservations: []
   }), password, function (err, user){
 
     if (err) {
@@ -125,6 +130,7 @@ router.post('/register', function(req, res) {
         email: user.email,
         phone: user.phone,
         street: user.street,
+        city: user.city,
         state: user.state,
         zip: user.zip,
         hospital: user.hospital,
@@ -208,6 +214,7 @@ router.post('/login', passport.authenticate('local'), function(req, res){
     _id: req.user._id,
     first: req.user.first,
     last: req.user.last,
+    username: req.user.username,
     email: req.user.email,
     phone: req.user.phone,
     street: req.user.street,
