@@ -174,63 +174,73 @@ router.post('/verify/:userId', function (req, res) {
   });
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res){
 
-  console.log("LOGIN RESPONSE:", res);
+router.post('/login', function (req, res, next) {
+    console.log("HIT THIS ENDPOINT", req.body);
 
-  if (res.status === 401) {
-    console.log("BAD CREDENTIALS", res);
-    return res.status(401).json({'success': false, 'message': 'Invalid username or password.', 'isLoggedIn': false});
-  };
-  console.log("LOGIN: ", req.user);
+  passport.authenticate('local', function (err, user, info) {
 
-  var currentTime = Date.now();
-  var registeredTime = req.user.created_at;
+    if (!user) {
+      console.log("NO USER: ")
+      return res.status(401).json({'success': false, 'message': 'Failed to locate a user with this email.'});
+    } else if (err) {
+      return res.status(401).json({'success': false, 'err': err, 'message': 'Login failed.'});
+    }; 
 
-  if (req.user.verified === false) {
-    if (currentTime - registeredTime > 10000000000000000000000000) {
-      //deactivate account
-      return res. status(401).json({'success': false, err: 'Woops!  You didn\'t verify your e-mail address within 48 hours of registering.  TODO: Add way for user to resend verification email.'})
+
+        console.log("PASSPORT IGNORES MY RETURN")
+
+    var currentTime = Date.now();
+    var registeredTime = user.created_at;
+    var verificationGracePeriod = 10000000000000000000000000;
+
+    if (user.verified === false) {
+      if ((currentTime - registeredTime) > verificationGracePeriod) {
+        //TO DO: deactivate account
+        return res.status(401).json({'success': false, err: 'Woops!  You didn\'t verify your e-mail address within 48 hours of registering.  TODO: Add way for user to resend verification email.'})
+      };
+    } else if (user.deactivated === true) {
+      return res.status(401).json({'success': false, err: 'This account has been deactivated  Please contact us for more information.'})
     };
-  } else if (req.user.deactivated === true) {
-    return res. status(401).json({'success': false, err: 'This account has been deactivated  Please contact us for more information.'})
-  };
 
-  //UPDATE LAST LOGIN VALUE:
-  User.findOne({username: req.user.email}, function (err, returnedUser) { 
-    if (err) {
-      return res.status(500).json({'success': false, 'err': err});
+    //UPDATE LAST LOGIN VALUE:
+    User.findOne({username: user.email}, function (err, returnedUser) { 
+      if (err) {
+        return res.status(500).json({'success': false, 'err': err});
+      };
+
+      if (returnedUser) {
+        returnedUser.last_login = currentTime;
+        returnedUser.save();     
+      } else {
+        return res.status(401).json({'success': false, 'err': err, 'message': 'Update failed.'});
+      };
+    });
+
+    var returnedUser = {
+      _id: user._id,
+      first: user.first,
+      last: user.last,
+      username: user.username,
+      email: user.email,
+      phone: user.phone,
+      street: user.street,
+      state: user.state,
+      zip: user.zip,
+      hospital: user.hospital,
+      pets: user.pets,
+      reservations: user.reservations,
+      admin: user.admin,
+      isLoggedIn: true,
+      last_login: currentTime,
+      created_at: user.created_at,
+      deactivated: false,
+      verified: true
     };
 
-    if (returnedUser) {
-      returnedUser.last_login = currentTime;
-      returnedUser.save();     
-    } else {
-      return res.status(401).json({'success': false, 'err': err, 'message': 'Failed to locate a user with this email.'});
-    };
-  });
+    return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
 
-  var returnedUser = {
-    _id: req.user._id,
-    first: req.user.first,
-    last: req.user.last,
-    username: req.user.username,
-    email: req.user.email,
-    phone: req.user.phone,
-    street: req.user.street,
-    state: req.user.state,
-    zip: req.user.zip,
-    hospital: req.user.hospital,
-    pets: req.user.pets,
-    reservations: req.user.reservations,
-    admin: req.user.admin,
-    isLoggedIn: true,
-    last_login: currentTime,
-    created_at: req.user.created_at,
-    deactivated: false,
-    verified: true
-  };
-  return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
+  })(req, res, next);
 });
 
 

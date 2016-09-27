@@ -39,7 +39,19 @@ angular.module('myApp.viewLogin', ['ngRoute'])
       .then(function(res){
 
 
-        console.log("LOGGED IN:", res);
+        console.log("LOGGED IN:", res.body);
+
+        if (res.body.success === false) {
+
+          console.log("HEY ITS ACTUALLY WORKGING")
+
+          if (res.body.message.length > 0 ) {
+            $rootScope.registrationError = res.body.message            
+          } else {
+            $rootScope.registrationError = "Invalid username or password";
+            $rootScope.$broadcast('registrationError');   
+          };
+        };
 
         //$scope.loginLoading = false;
 
