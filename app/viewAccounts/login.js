@@ -33,6 +33,7 @@ angular.module('myApp.viewLogin', ['ngRoute'])
 
   $scope.login = function () {
     //$scope.loginLoading = true;
+    $rootScope.registrationError = '';
     //UPDATE DB WITH LAST LOGIN TIME
     if ($scope.loginUser.username.length > 3 && $scope.loginUser.password.length > 7) {
       User.logIn($scope.loginUser)
