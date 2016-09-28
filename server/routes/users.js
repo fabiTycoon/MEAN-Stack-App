@@ -174,27 +174,27 @@ router.post('/verify/:userId', function (req, res) {
   });
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res){
 
-  console.log("LOGIN RESPONSE:", res);
+router.post('/login', passport.authenticate('local'), function(req, res, next){
 
-  if (res.status === 401) {
-    console.log("BAD CREDENTIALS", res);
-    return res.status(401).json({'success': false, 'message': 'Invalid username or password.', 'isLoggedIn': false});
-  };
-  console.log("LOGIN: ", req.user);
+
+
+  console.log("WE GOT RESSIES:", res);
+  console.log("WE GOT RESSIES:", res.body);
+
 
   var currentTime = Date.now();
-  var registeredTime = req.user.created_at;
+/*  var registeredTime = req.user.created_at;
+  var verificationGracePeriod = 10000000000000000000000000;
 
   if (req.user.verified === false) {
-    if (currentTime - registeredTime > 10000000000000000000000000) {
+    if ((currentTime - registeredTime) > verificationGracePeriod) {
       //deactivate account
-      return res. status(401).json({'success': false, err: 'Woops!  You didn\'t verify your e-mail address within 48 hours of registering.  TODO: Add way for user to resend verification email.'})
+      return res.status(401).json({'success': false, err: 'Woops!  You didn\'t verify your e-mail address within 48 hours of registering.  TODO: Add way for user to resend verification email.'})
     };
   } else if (req.user.deactivated === true) {
-    return res. status(401).json({'success': false, err: 'This account has been deactivated  Please contact us for more information.'})
-  };
+    return res.status(401).json({'success': false, err: 'This account has been deactivated  Please contact us for more information.'})
+  };*/
 
   //UPDATE LAST LOGIN VALUE:
   User.findOne({username: req.user.email}, function (err, returnedUser) { 
@@ -231,6 +231,8 @@ router.post('/login', passport.authenticate('local'), function(req, res){
     verified: true
   };
   return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
+
+
 });
 
 
