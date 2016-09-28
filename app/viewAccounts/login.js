@@ -17,7 +17,8 @@ angular.module('myApp.viewLogin', ['ngRoute'])
 
   $scope.loginUser = {
     username: '',
-    password: ''
+    password: '',
+    failureRedirect: "/login?username"
   };
 
   $scope.$on('registrationError', function() {
@@ -39,10 +40,10 @@ angular.module('myApp.viewLogin', ['ngRoute'])
       .then(function(res){
 
 
-        console.log("LOGGED IN:", res.body);
 
-        if (res.body.success === false) {
+        if (res.body && res.body.success === false) {
 
+          console.log("LOGGED IN:", res.body);
           console.log("HEY ITS ACTUALLY WORKGING")
 
           if (res.body.message.length > 0 ) {
