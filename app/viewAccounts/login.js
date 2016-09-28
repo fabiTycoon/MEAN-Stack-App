@@ -17,8 +17,7 @@ angular.module('myApp.viewLogin', ['ngRoute'])
 
   $scope.loginUser = {
     username: '',
-    password: '',
-    failureRedirect: "/login?username"
+    password: ''
   };
 
   $scope.$on('registrationError', function() {
