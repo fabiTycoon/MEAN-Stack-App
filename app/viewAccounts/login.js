@@ -36,39 +36,22 @@ angular.module('myApp.viewLogin', ['ngRoute'])
     //UPDATE DB WITH LAST LOGIN TIME
     if ($scope.loginUser.username.length > 3 && $scope.loginUser.password.length > 7) {
       User.logIn($scope.loginUser)
-      .then(function(res){
-
-        // ERROR HANDLING THAT MAY OR MAY NOT DO ANYTHING:
-        if (res.body && res.body.success === false || res.status && res.status === 401) {
-
-          console.log("LOGGED IN:", res.body);
-          console.log("HEY ITS ACTUALLY WORKGING")
-
-          if (res.body.message.length > 0 ) {
-            $rootScope.registrationError = res.body.message            
-          } else {
-            $rootScope.registrationError = "Invalid username or password";
-            $rootScope.$broadcast('registrationError');   
-          };
-        };
-
-        //SUCCESS PATH:
+      .then(function (res) {
+        //SUCCESS CALLBACK:
         //$scope.loginLoading = false;
-
         if (res.data.isLoggedIn === true) {
           $rootScope.user = res.data.user; 
             console.log("LOGGED IN: ", $rootScope.user);
           $location.path('/account')      
-        } else if (res.data.isLoggedIn === false) {
-
-          if (res.error) {
-            $rootScope.registrationError = res.error;
-            $rootScope.$broadcast('registrationError');  
-          } else if (!res.error || (res.message && res.message.length > 0)) {
-            $rootScope.registrationError = res.error;
-            $rootScope.$broadcast('registrationError');  
-          };
         };
+
+
+
+      },function (res) {
+        //FAILURE CALLBACK
+        console.log("ERRAR")
+        $rootScope.registrationError = "Please enter a valid username and password";
+        $rootScope.$broadcast('registrationError');     
       });
     } else {
       $rootScope.registrationError = "Please enter a valid username and password";
