@@ -33,14 +33,13 @@ angular.module('myApp.viewLogin', ['ngRoute'])
 
   $scope.login = function () {
     //$scope.loginLoading = true;
-    //UPDATE DB WITH LAST LOGIN TIME (IF MONGOOSE DOESNT DO THIS FOR ME?)
+    //UPDATE DB WITH LAST LOGIN TIME
     if ($scope.loginUser.username.length > 3 && $scope.loginUser.password.length > 7) {
       User.logIn($scope.loginUser)
       .then(function(res){
 
-
-
-        if (res.body && res.body.success === false) {
+        // ERROR HANDLING THAT MAY OR MAY NOT DO ANYTHING:
+        if (res.body && res.body.success === false || res.status && res.status === 401) {
 
           console.log("LOGGED IN:", res.body);
           console.log("HEY ITS ACTUALLY WORKGING")
@@ -53,20 +52,22 @@ angular.module('myApp.viewLogin', ['ngRoute'])
           };
         };
 
+        //SUCCESS PATH:
         //$scope.loginLoading = false;
-
-        if (res.status === 401) {
-          $rootScope.registrationError = "Invalid username or password";
-          $rootScope.$broadcast('registrationError');   
-        };
 
         if (res.data.isLoggedIn === true) {
           $rootScope.user = res.data.user; 
             console.log("LOGGED IN: ", $rootScope.user);
           $location.path('/account')      
         } else if (res.data.isLoggedIn === false) {
-          $rootScope.registrationError = res.error;
-          console.log("INVALID USERNAME OR PASSWORD:", res.data);
+
+          if (res.error) {
+            $rootScope.registrationError = res.error;
+            $rootScope.$broadcast('registrationError');  
+          } else if (!res.error || (res.message && res.message.length > 0)) {
+            $rootScope.registrationError = res.error;
+            $rootScope.$broadcast('registrationError');  
+          };
         };
       });
     } else {
@@ -80,6 +81,10 @@ angular.module('myApp.viewLogin', ['ngRoute'])
   };
 
   $scope.recoverPassword = function () {
+
+    //If e-mail exists, send recovery e-mail with temproary password
+    //Set temporary password
+    //Send success message
     return;
   };
 
