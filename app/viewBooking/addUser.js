@@ -297,6 +297,10 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
   $scope.advanceReservationStep = function () {
     if ($scope.viewModelState.resStep !== $scope.viewModelState.maxResSteps && $scope.viewModelState.resStep === 1) {
+
+      var currentDate = Date.now();
+        console.log("SET DATE: ", currentDate);
+        console.log("CHECK IN DATE: ", $scope.newReservation.checkInDate);  
   
       if ($scope.serviceSelected === 'boarding' && ($scope.newReservation.checkInDate > $scope.newReservation.checkOutDate)) {
         //validate dates
@@ -314,6 +318,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         return;
       } else if ($scope.serviceSelected === 'daycare' && $scope.newReservation.checkInDate === '') {
         $rootScope.registrationError = "Please select a date";
+        $rootScope.$broadcast('registrationError');
+        return;
+      } else if ($scope.newReservation.checkInDate - currentDate <= 172800000) {
+        //LESS THAN 48 HRS
+        $rootScope.registrationError = "For reservations with less than 48 hours in advance, please call us at 508-429-1500 to book";
         $rootScope.$broadcast('registrationError');
         return;
       } else {
