@@ -50,7 +50,6 @@ angular.module('myApp.viewLogin', ['ngRoute'])
 
       },function (res) {
         //FAILURE CALLBACK
-        console.log("ERRAR")
         $rootScope.registrationError = "Please enter a valid username and password";
         $rootScope.$broadcast('registrationError');     
       });
