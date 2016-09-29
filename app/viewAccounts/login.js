@@ -42,7 +42,6 @@ angular.module('myApp.viewLogin', ['ngRoute'])
         //$scope.loginLoading = false;
         if (res.data.isLoggedIn === true) {
           $rootScope.user = res.data.user; 
-            console.log("LOGGED IN: ", $rootScope.user);
           $location.path('/account')      
         };
 
