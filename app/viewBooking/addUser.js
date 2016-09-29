@@ -172,10 +172,15 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
   $scope.advanceNewUser = function () {
 
     console.log("CALLED advanceNewUser:", $scope.viewModelState);
+    console.log("CALLED advanceNewUser:", $scope.newUser);
 
     $scope.phoneConcat();
 
     if ($scope.viewModelState.newUserStep === 'basicInfo') {
+
+      $timeout(function(){
+        $('select').material_select(); //is this being called at the correct time?
+      }, 200);
 
       if ($scope.newUser.first.length === 0 || $scope.newUser.last.length === 0) {
         $rootScope.registrationError = 'Please enter a first and last name';
@@ -653,7 +658,6 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       selectMonths: true, // Creates a dropdown to control month
       selectYears: 15, // Creates a dropdown of 15 years to control year
     });
-    $('select').material_select(); //is this being called at the correct time?
   };
 
   init();
