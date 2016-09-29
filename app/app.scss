@@ -183,9 +183,9 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 };
 
 video {
-  
   width: 100%;
   height: %;
+  display: block;
 };
 
 .splash-img {
@@ -213,6 +213,18 @@ video {
   font-family: 'Sanchez', serif;
   font-style: italic;
   color: white;
+};
+
+#divider-text nav {
+  width: 100% !important;
+  height: 8em;
+};
+
+#divider-text p {
+  padding: 0em;
+  margin: 0em;
+  font-size: 0.65em;
+  font-style: italic;
 };
 
 .scroll-btn a {
