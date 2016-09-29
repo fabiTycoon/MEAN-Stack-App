@@ -6,6 +6,8 @@ var User = require('../models/users.js');
 var passportLocalMongoose = require('passport-local-mongoose');
 var nodemailer = require('nodemailer');
 
+
+// ---------- NODEMAILER CONFIG ------------
 var emailAccountString = 'info@hollisonmeadows.com'
 //var passwordString = process.env.EMAIL_PASSWORD;
 
@@ -16,6 +18,56 @@ var smtpTransport = nodemailer.createTransport({
     pass: 'userpass' //
   }
 });
+
+// ---------- E-MAIL HELPER FNS ----------
+var sendNewUserEmail = function (email) {
+
+  //TO DO - UPDATE PATH TO DYNAMIC VERIFICATION URL
+  var mailOptions = {
+    from: emailAccountString,
+    to: email,
+    subject: "Welcome to Holliston Meadows!",
+    generateTextFromHTML: true,
+    html: "<h3>WELCOME!</h3<br><p>We're excited to have your pets stay with us!</p><br><p>Please click <a href='' target='_blank'>here</a> to verify your email!</p><br><br><p>&nbsp;&nbsp;&nbsp;Regards,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Holliston Meadows</p>"
+  };
+
+  smtpTransport.sendMail(mailOptions, function(error, res) {
+    if (error) {
+      console.log("FAILED TO SEND NEW USER EMAIL: ", error);
+    } else {
+      console.log("SENT NEW USER EMAIL: ", res);
+    }
+    smtpTransport.close();
+  });
+};
+
+
+var sendEmail = function (toEmail, subjectString, bodyHtml) {
+  //SENT WHEN ADMIN USER CONFIRMS A RESERVATION
+
+  var mailOptions = {
+    from: toEmail, subjectStringAccountString,
+    to: email,
+    subject: subjectString,
+    generateTextFromHTML: true,
+    html: bodyHtml /*"<h3>WELCOME!</h3<br><p>We're excited to have your pets stay with us!</p><br><p>Here is a copy of your reservation for your records: </p><br><br><p>&nbsp;&nbsp;&nbsp;Regards,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Holliston Meadows</p>"*/
+  };
+
+  smtpTransport.sendMail(mailOptions, function(error, res) {
+    if (error) {
+      console.log("FAILED TO SEND NEW EMAIL: ", error);
+    } else {
+      console.log("SENT NEW USER EMAIL: ", res);
+    }
+    smtpTransport.close();
+  });
+};
+
+var sendNewReservationEmailAdmin = function () {
+  var bodyHtml = ""
+};  
+// ---------- END E-MAIL HELPER FNS ----------
+
 
 
 // ----- HANDLERS FOR CALLS TO API/USERS -----
@@ -35,7 +87,7 @@ router.get('user/:userEmail', function (req, res) {
 });
 
 router.get('users', function (req, res){
-  if (req.user && req.user.admin === true ) {
+  if (req.user && req.user.admin === true) {
     User.find({}, function (err, returnedUsers){
       if (err) {
         return res.status(500).json({'success': false, 'error': err});
@@ -63,25 +115,6 @@ router.get('/getUserByEmail/', function(req, res) {
   };
 });
 
-var sendNewUserEmail = function (email) {
-
-  var mailOptions = {
-    from: emailAccountString,
-    to: email,
-    subject: "Welcome to Holliston Meadows!",
-    generateTextFromHTML: true,
-    html: "<h3>WELCOME!</h3<br><p>We're excited to have your pets stay with us!</p><br><p>Please click <a href='' target='_blank'>here</a> to verify your email!</p><br><br><p>&nbsp;&nbsp;&nbsp;Regards,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Holliston Meadows</p>"
-  };
-
-  smtpTransport.sendMail(mailOptions, function(error, res) {
-    if (error) {
-      console.log("FAILED TO SEND NEW USER EMAIL: ", error);
-    } else {
-      console.log("SENT NEW USER EMAIL: ", res);
-    }
-    smtpTransport.close();
-  });
-};
 
 // ---------- NEW USER REGISTRATION FUNCTION ----------
 router.post('/register', function(req, res) {
@@ -177,12 +210,6 @@ router.post('/verify/:userId', function (req, res) {
 
 router.post('/login', passport.authenticate('local'), function(req, res, next){
 
-
-
-  console.log("WE GOT RESSIES:", res);
-  console.log("WE GOT RESSIES:", res.body);
-
-
   var currentTime = Date.now();
 /*  var registeredTime = req.user.created_at;
   var verificationGracePeriod = 10000000000000000000000000;
@@ -231,8 +258,6 @@ router.post('/login', passport.authenticate('local'), function(req, res, next){
     verified: true
   };
   return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
-
-
 });
 
 
@@ -359,6 +384,12 @@ router.post('/addReservation', function(req, res){
       if (err) {
         return res.status(500).json({'success': false, 'error':err});
       } else {
+
+
+        //
+
+
+
         return res.status(200).json({'success': true, 'reservation': returnedReservation});
       };
   });
