@@ -166,6 +166,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     } else if ($scope.viewModelState.newUserStep === 'passwordInfo'){
       $scope.registrationTitle = 'YOUR ADDRESS';
       $scope.viewModelState.newUserStep = 'addressInfo';
+      $scope.newUserButton = 'NEXT';
     };
   };
 
