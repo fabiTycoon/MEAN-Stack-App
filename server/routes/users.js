@@ -46,11 +46,11 @@ var sendEmail = function (toEmail, subjectString, bodyHtml) {
   //SENT WHEN ADMIN USER CONFIRMS A RESERVATION
 
   var mailOptions = {
-    from: toEmail, subjectStringAccountString,
-    to: email,
+    from: emailAccountString,
+    to: toEmail,
     subject: subjectString,
     generateTextFromHTML: true,
-    html: bodyHtml /*"<h3>WELCOME!</h3<br><p>We're excited to have your pets stay with us!</p><br><p>Here is a copy of your reservation for your records: </p><br><br><p>&nbsp;&nbsp;&nbsp;Regards,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Holliston Meadows</p>"*/
+    html: bodyHtml 
   };
 
   smtpTransport.sendMail(mailOptions, function(error, res) {
@@ -87,15 +87,35 @@ router.get('user/:userEmail', function (req, res) {
 });
 
 router.get('users', function (req, res){
-  if (req.user && req.user.admin === true) {
+  //if (req.user && req.user.admin === true) {
+
+    var submittedId = req.body.user._id;
+      console.log("USER ID: ", submittedId);
+
+    User.findOne({email: req.body.user.email}, function (err, returnedUser) {
+      if (err) {
+        return res.status(500).json({'success': false, 'message': 'Database error', 'error': err});
+      } else {
+        
+
+        if (returnedUser._id !== submittedId) {
+          return res.status(401).json({'success': false, 'error': 'ID of requesting user doesn\'t match database value'});
+        };
+      };
+    });
+
+
     User.find({}, function (err, returnedUsers){
       if (err) {
         return res.status(500).json({'success': false, 'error': err});
       } else {
+          console.log("USERS FOUND!")
         return res.status(200).json({'success': true, 'users': returnedUsers});
       };
-    });    
-  };
+    });
+
+  //};
+
 });
 
 router.get('/getUserByEmail/', function(req, res) {
@@ -238,7 +258,6 @@ router.post('/login', passport.authenticate('local'), function(req, res, next){
   });
 
   var returnedUser = {
-    _id: req.user._id,
     first: req.user.first,
     last: req.user.last,
     username: req.user.username,
@@ -385,11 +404,25 @@ router.post('/addReservation', function(req, res){
         return res.status(500).json({'success': false, 'error':err});
       } else {
 
+          console.log("Added reservation request: ", returnedReservation);
 
-        //
+        var recipient = 'info@hollisonmeadows.com';
+        var subjectString = 'New Reservation Request - ';
+        var bodyHtml = '<h4>CUSTOMER NAME:</h4><p>';
+        bodyHtml += returnedReservation.last;
+        bodyHtml += ', '
+        bodyHtml += returnedReservation.first;
+        bodyHtml += '</p><br>'
 
+        bodyHtml += '<h4>SERVICE: </h4><p>';
+        bodyHtml += returnedReservation.service;
+        bodyHtml += '</p><br>';        
+        //bodyHtml += returnedReservation.checkInDate;
 
+        // SEND EMAIL TO FRONT DESK
+        sendEmail(recipient, subjectString, bodyHtml);
 
+ 
         return res.status(200).json({'success': true, 'reservation': returnedReservation});
       };
   });
