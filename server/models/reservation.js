@@ -15,7 +15,8 @@ var ReservationSchema = new Schema({
   owner: {type: String, required: true},
   pets: {type: Array, required: true},
   reminder: {type: Boolean, default: true}, 
-  reminderMethod: String
+  reminderMethod: String,
+  created_at: {type: Date, default: Date.now}
 });
 
 var Reservation = mongoose.model('Reservation', ReservationSchema);
