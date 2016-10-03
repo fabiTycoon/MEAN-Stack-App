@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 </head>
 <body>
 
@@ -50,7 +51,6 @@
   <![endif]-->
   <div ng-view></div>
   <!-- JavaScript for: jQuery, angular, materialize, and angular-materialize. All of which are needed. -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.1/angular-materialize.min.js"></script>
@@ -78,8 +78,6 @@
   <script src="services/basicServices.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
-  <script src="ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
-  <script src="ng-file-upload.min.js"></script>
   <script id="cdn-fallback">
   if (typeof angular === undefined) {
     //CDN failed, load angular locally:

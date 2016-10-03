@@ -23,12 +23,31 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
 
   $scope.adminViewModelState = {
     viewUsers: true, 
-    viewUsersPets: false,
-    viewUsersReservations: false,
     viewReservations: false,
     viewPets: false,
     viewData: false
   };
+
+  $scope.defaultState = function () {
+
+    for (var i = 0; i < $scope.users.length; i++) {
+      $scope.users[i].showingPets = false;
+      $scope.users[i].showingReservations = false;
+    };
+
+    for (var state in $scope.adminViewModelState) {
+      $scope.adminViewModelState[state] = false;
+    };
+    $rootScope.errorMessage = '';
+
+    if (arguments.length > 0) {
+      return;
+    } else {
+      $scope.adminViewModelState.viewUsers = true;
+    };
+  };
+
+
 
   var getUsers = function () {
     $scope.loadingData = true;
@@ -43,6 +62,8 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
           $scope.users = res.data.users;
 
           for (var i = 0; i < $scope.users.length; i++) {
+            $scope.users[i].showingPets = false;
+            $scope.users[i].showingReservations = false;
             var phoneString = $scope.users[i].phone;
             var phoneArea = phoneString.slice(0, 3);
             var ph1 = phoneString.slice(3, 6);
@@ -95,42 +116,32 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   };
 
   var loadUser = function (userEmail, dataType) {
-    $scope.loadedUser = {};
-
       //TO DO: REFACTOR TO DEFAULT STATE FN:
-      $scope.adminViewModelState.viewUsersReservations = false;
-      $scope.adminViewModelState.viewUsersPets = false;
 
+      console.log("CALLED LOAD USER: ", userEmail, dataType);
 
-    $scope.userLoaded = false;
-    var query = {'email': userEmail};
-
-    User.getUserByEmail(query)
-      .then(function (res, user) {
-          console.log("FOUND USER: ", res.data);
-          console.log("USER? ", user);
-
-        if (res.data.success === true) {
-          $scope.loadedUser = res.data.user;
-          $scope.userLoaded = true;       
-
-          if (dataType === 'reservations') {
-            $scope.adminViewModelState.viewUsersReservations = true;
-          } else if (dataType === 'pets') {
-            $scope.adminViewModelState.viewUsersPets = true;
-          };
-        } else {
-          $rootScope.registrationError = "Failed to load user, please try again."
-          $rootScope.$broadcast('registrationError');
+    for (var i = 0; i < $scope.users.length; i++) {
+      if ($scope.users[i].email === userEmail) {
+        if (dataType === 'pets') {
+          $scope.users[i].showingPets = true;
+        } else if (dataType === 'reservations') {
+          $scope.users[i].showingReservations = true;
         };
-      })
+      } else {
+          //TO DO - MAY WANT TO CHANGE THIS SO YOU CAN LOAD MORE THAN ONE USER AT ONCE
+        $scope.users[i].showingReservations = false;
+        $scope.users[i].showingPets = false;
+      };
+    };
   };
 
   $scope.loadUserReservations = function (userEmail) {
+      console.log("CALLED loadUserReservations: ", userEmail);
     loadUser(userEmail, 'reservations');
   };
 
   $scope.loadUserPets = function (userEmail) {
+      console.log("CALLED loadUserPets: ", userEmail);
     loadUser(userEmail, 'pets');
   };
 
@@ -178,19 +189,7 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
     $scope.defaultState();
   };
 
-  $scope.defaultState = function () {
-    for (var state in $scope.adminViewModelState) {
-      $scope.adminViewModelState[state] = false;
-    };
-    $rootScope.errorMessage = '';
-    $scope.adminViewModelState.viewUsers = true;
-
-    if (arguments.length > 0) {
-      return;
-    } else {
-      $scope.adminViewModelState.intro = true;
-    };
-  };
+  
 
 
   var flagReservations = function () {

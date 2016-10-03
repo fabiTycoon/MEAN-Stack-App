@@ -35,7 +35,7 @@
   <div class="row" ng-if="adminViewModelState.viewUsers">
     <div class="col s12">
 
-      <table>
+      <table class="striped">
         <!-- USER TABLE - HEAD -->
         <thead>
           <tr>
@@ -56,10 +56,53 @@
             <td>{{user.last}}, {{user.first}}</td>
             <td>{{user.displayPhone}}</td>
             <td><a href="mailto:{{user.email}}">{{user.email}}<a></td>
-            <td><a ng-click="showUserPets(user.email)" ng-if="user.pets.length > 0">PETS</a><a ng-if="user.pets.length === 0"><!--DISABLED BUTTON--></a></td>
-            <td><a ng-click="showUserReservations(user.email)" ng-if="user.reservations.length > 0">RESERVATIONS</a><a ng-if="user.reservations.length === 0"><!--GREYED OUT PETS BUTTON--></a></td>
+            <td><a ng-click="loadUserPets(user.email)" ng-if="user.pets.length > 0">PETS</a><a ng-if="user.pets.length === 0"><!--DISABLED BUTTON--></a></td>
+            <td><a ng-click="loadUserReservations(user.email)" ng-if="user.reservations.length > 0">RESERVATIONS</a><a ng-if="user.reservations.length === 0"><!--GREYED OUT PETS BUTTON--></a></td>
+            <td><!-- VIEW DATA BTN --></td>
             <td><!--<ban-user-button></ban-user-button>--></td>
           </tr>
+          
+
+          <!-- 
+            <div ng-if="user.showingPets === true">
+              <table>
+                <thead>
+                  <tr class="pet-header">
+                    <td data-field="name">NAME</td>
+                    <td data-field="owner">OWNER</td>
+                    <td data-field="species">SPECIES</td>
+                    <td data-field="breed">BREED</td>
+                    <td data-field="color">COLOR</td>
+                    <td data-field="age">AGE</td>
+                    <td data-field="foodBrand">FOOD BRAND</td>
+                    <td data-field="foodServings">FOOD SERVINGS</td>
+                    <td data-field="foodAllergies">FOOD ALLERGIES</td>
+                    <td data-field="comments">COMMENTS</td>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr class="pet-data" ng-repeat="pet in user.pets">
+                    <td>{{pet.name}}</td>
+                    <td>{{pet.owner}}</td>
+                    <td>{{pet.type}}</td>
+                    <td>{{pet.breed}}</td>
+                    <td>{{pet.color}}</td>
+                    <td>{{pet.age}}</td>
+                    <td>{{pet.foodBrand}}</td>
+                    <td>{{pet.foodServings}}</td>
+                    <td>{{pet.foodAllergies}}</td>
+                    <td>{{pet.comments}}</td>
+                  </tr>
+                </tbody>
+
+              </table>
+            </div>
+
+-->
+
+
+
         </tbody>
         <!-- END USER TABLE - BODY -->
 
@@ -94,7 +137,7 @@
       </tr>
       </thead>
 
-      <tbody ng-if="dataLoading === false;">
+      <tbody ng-if="loadingData === false;">
         <tr ng-repeat="reservation in loadedUser.reservations" id="{{reservation.email}}">
           <td>{{reservation.last}}, {{reservation.first</td>
           <td>{{displayPhone}}</td>
@@ -106,7 +149,7 @@
         </tr>
       </tbody>
 
-      <div class="row" ng-if="dataLoading === true">
+      <div class="row" ng-if="loadingData === true">
         <div class="col s12" id="admin-loading-wheel">
           <!-- <admin-loading-wheel></admin-loading-wheeel-->
         </div>
