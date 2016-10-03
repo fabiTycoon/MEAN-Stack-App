@@ -44,8 +44,8 @@ config(['$routeProvider', function($routeProvider) {
     return $http.post('/api/bookings/new', reservation);
   };
 
-  var getReservations = function () {
-    return $http.get('/api/reservations');
+  var getReservations = function (user) {
+    return $http.get('/api/reservations', user);
   };
 
   var deleteReservation = function (reservationIndex) {

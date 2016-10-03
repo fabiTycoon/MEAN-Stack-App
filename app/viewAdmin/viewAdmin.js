@@ -78,20 +78,43 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   };
 
   var getReservations = function () {
-    $scope.defaultState(true);
-    $scope.adminViewModelState.viewReservations = true;
-
-    if ($scope.initialLoad === false) {
-      $scope.loadingData = true;
-    } else {
-      $scope.loadingData = false;
-    };
-
-    User.getReservations()
+   
+    User.getReservations($rootScope.user)
       .then(function (res) {
         $scope.loadingData = false;
         if (res.data.success) {
           $scope.reservations = res.data.reservations;
+
+
+          for (var i = 0; i < $scope.reservations.length; i++) {
+
+            var petString = '';
+
+            
+
+              if ($scope.reservations[i].pets.length === 1) {
+                petString += $scope.reservations[i].pets[0].name;
+              } else if ($scope.reservations.pets.length > 1) {
+
+
+                for (var j = 0; j < $scope.reservations[i].pets.length; j++) {
+                  //ADD EACH PETS NAME TO STRING
+                  var concatString = '';
+
+                  if (j !== 0) {
+                    concatString += ', '
+                  };
+                  concatString += $scope.reservations[i].pets[j].name;
+                  petString += concatString;
+                };
+              };
+
+            $scope.reservations[i].displayPetString = petString;
+ 
+
+          };
+
+          //TO DO: FORMAT DATE STRINGS INTO HUMAN READABLE FORMAT, CREATE PETSTRING
         } else {
           $rootScope.errorMessage = res.data.err;
           $rootScope.$broadcast('errorMessage');
@@ -136,13 +159,23 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   };
 
   $scope.loadUserReservations = function (userEmail) {
+    $scope.defaultState();
       console.log("CALLED loadUserReservations: ", userEmail);
     loadUser(userEmail, 'reservations');
   };
 
   $scope.loadUserPets = function (userEmail) {
+    $scope.defaultState();
       console.log("CALLED loadUserPets: ", userEmail);
     loadUser(userEmail, 'pets');
+  };
+
+  $scope.hideUserReservations = function (userEmail) {
+
+  };
+
+  $scope.hideUserPets = function () {
+    $scope.defaultState();
   };
 
   $scope.approveReservation = function (reservationId) {
@@ -167,6 +200,11 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
 */
   };
 
+  $scope.showUsers = function () {
+    getUsers();
+    $scope.defaultState();
+  };  
+
   $scope.showReservations = function () {
     getReservations();
     $scope.defaultState(true);
@@ -186,7 +224,8 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   };
 
   $scope.goBack = function () {
-    $scope.defaultState();
+    getUsers();
+    $scope.defaultState(true);
   };
 
   

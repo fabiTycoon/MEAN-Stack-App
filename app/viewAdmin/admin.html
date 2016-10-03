@@ -61,11 +61,11 @@
             <td><!-- VIEW DATA BTN --></td>
             <td><!--<ban-user-button></ban-user-button>--></td>
           </tr>
-          
 
-          <!-- 
-            <div ng-if="user.showingPets === true">
-              <table>
+          <tr ng-repeat="user in users" ng-if="user.showingPets === true">
+
+            <td>
+              <table id="pets-table">
                 <thead>
                   <tr class="pet-header">
                     <td data-field="name">NAME</td>
@@ -78,6 +78,7 @@
                     <td data-field="foodServings">FOOD SERVINGS</td>
                     <td data-field="foodAllergies">FOOD ALLERGIES</td>
                     <td data-field="comments">COMMENTS</td>
+                    <td><a ng-click="hideUserPets()"><remove-item-icon></remove-item-icon>&nbsp;CLOSE</a></td>
                   </tr>
                 </thead>
 
@@ -93,13 +94,16 @@
                     <td>{{pet.foodServings}}</td>
                     <td>{{pet.foodAllergies}}</td>
                     <td>{{pet.comments}}</td>
+                    <td><p></p></td>
                   </tr>
                 </tbody>
 
               </table>
-            </div>
+             
 
--->
+            </td>
+          </tr>
+          
 
 
 
@@ -121,31 +125,31 @@
   <!-- END USERS VIEW -->
 
   <!--RESERVATIONS VIEW -->
-  <div class="row">
+  <div class="row" ng-if="adminViewModelState.viewReservations">
     <div class="col s12">
 
-    <table ng-if="adminViewModelState.viewReservations">
+    <table>
       <thead>
       <tr>
-      <th data-field="name">Date</th>
+      <th data-field="name">Check-In Date</th>
+      <th data-field="name">Check-Out Date</th>
       <th data-field="phone">Service</th>
       <th data-field="email">Name</th>
       <th data-field="pets">Pets</th>
       <th data-field="reservations">Booked On</th>
-      <th data-field="price">View Data</th>
       <th data-field="ban">Approve/Reject Reservation</th>
       </tr>
       </thead>
 
       <tbody ng-if="loadingData === false;">
-        <tr ng-repeat="reservation in loadedUser.reservations" id="{{reservation.email}}">
-          <td>{{reservation.last}}, {{reservation.first</td>
-          <td>{{displayPhone}}</td>
-          <td><a href="mailto:{{reservation.email}}">{{reservation.email}}<a></td>
-          <td><a ng-click="" ng-if="reservation.pets.length > 0">PETS</a><a ng-if="reservation.pets.length === 0"><!--DISABLED BUTTON--></a></td>
-          <td><a ng-click="" ng-if="reservation.reservations.length > 0">RESERVATIONS</a><a ng-if="reservation.reservations.length === 0"><!--DISABLED BUTTON--></a></td>
-          <td> 
-          <!--<ban-user-button></ban-user-button>--></td>
+        <tr ng-repeat="reservation in reservations" id="{{reservation.email}}">
+          <td>{{reservation.checkInDate}}</td>
+          <td>{{reservation.checkOutDate}}</td>
+          <td>{{reservation.service}}</td>
+          <td>{{reservation.owner}}</td>
+          <td>{{reservation.dispalyPetString}}</td>
+          <td>{{reservation.created_at}}</td>
+          <td>APPROVE REJECT BUTTON</td>
         </tr>
       </tbody>
 

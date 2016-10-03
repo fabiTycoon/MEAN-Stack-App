@@ -101,7 +101,6 @@ router.get('/', function (req, res){
         };
       };
     });*/
-    console.log("HIT END POINT")
 
     User.find({}, function (err, returnedUsers){
       if (err) {
