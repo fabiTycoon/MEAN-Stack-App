@@ -17,6 +17,7 @@
 
 <!--<div class="container" ng-if="(user && user.isLoggedIn === true) || (user && user.email.length > 0)"> -->
 <div class="container">
+
   <br>
   <nav>
     <div class="nav-wrapper">
@@ -31,10 +32,11 @@
   <br>
 
   <!--USERS VIEW -->
-  <div class="row">
+  <div class="row" ng-if="adminViewModelState.viewUsers">
     <div class="col s12">
 
-      <table ng-if="accountViewModelState.viewUsers">
+      <table>
+        <!-- USER TABLE - HEAD -->
         <thead>
           <tr>
             <th data-field="name">Name</th>
@@ -46,10 +48,12 @@
             <th data-field="ban">Ban User</th>
           </tr>
         </thead>
+        <!-- END USER TABLE - HEAD -->
 
-        <tbody ng-if="dataLoading === false;">
+        <!-- USER TABLE - BODY -->
+        <tbody ng-show="loadingData === false;">
           <tr ng-repeat="user in users" id="{{user.email}}">
-            <td>{{user.last}}, {{user.first</td>
+            <td>{{user.last}}, {{user.first}}</td>
             <td>{{displayPhone}}</td>
             <td><a href="mailto:{{user.email}}">{{user.email}}<a></td>
             <td><a ng-click="showUserPets(user.email)" ng-if="user.pets.length > 0">PETS</a><a ng-if="user.pets.length === 0"><!--DISABLED BUTTON--></a></td>
@@ -57,23 +61,27 @@
             <td><!--<ban-user-button></ban-user-button>--></td>
           </tr>
         </tbody>
+        <!-- END USER TABLE - BODY -->
 
-        <div class="row" ng-if="dataLoading === true">
+        <!-- LOADING ICON PLACEHOLDER -->
+        <div class="row" ng-show="loadingData === true">
           <div class="col s12" id="admin-loading-wheel">
             <!-- <admin-loading-wheel></admin-loading-wheeel-->
           </div>
         </div>
+        <!-- END LOADING ICON PLACEHOLDER -->
 
       </table>
       
     </div>
   </div>
+  <!-- END USERS VIEW -->
 
   <!--RESERVATIONS VIEW -->
   <div class="row">
     <div class="col s12">
 
-    <table ng-if="accountViewModelState.viewReservations">
+    <table ng-if="adminViewModelState.viewReservations">
       <thead>
       <tr>
       <th data-field="name">Date</th>

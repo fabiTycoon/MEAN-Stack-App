@@ -86,9 +86,9 @@ router.get('user/:userEmail', function (req, res) {
   }); 
 });
 
-router.get('users', function (req, res){
+router.get('/', function (req, res){
   //if (req.user && req.user.admin === true) {
-
+/*
     var submittedId = req.body.user._id;
       console.log("USER ID: ", submittedId);
 
@@ -96,20 +96,18 @@ router.get('users', function (req, res){
       if (err) {
         return res.status(500).json({'success': false, 'message': 'Database error', 'error': err});
       } else {
-        
-
         if (returnedUser._id !== submittedId) {
           return res.status(401).json({'success': false, 'error': 'ID of requesting user doesn\'t match database value'});
         };
       };
-    });
-
+    });*/
+    console.log("HIT END POINT")
 
     User.find({}, function (err, returnedUsers){
       if (err) {
         return res.status(500).json({'success': false, 'error': err});
       } else {
-          console.log("USERS FOUND!")
+          console.log("USERS FOUND!: ", returnedUsers)
         return res.status(200).json({'success': true, 'users': returnedUsers});
       };
     });

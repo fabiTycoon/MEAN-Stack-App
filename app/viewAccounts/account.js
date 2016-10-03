@@ -38,8 +38,8 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     if ($rootScope.user.pets) {
       for (var i = 0; i < $rootScope.user.pets; i++) {
 
-      }
-    }
+      };
+    };
 
   };
 
@@ -58,7 +58,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     };
 
     if (arguments.length !== 0) {
-      $('ul.tabs').tabs('select_tab', 'user-tab');
+      $('.tabs').tabs('select_tab', 'user-tab');
       $scope.displayTitle = "MY ACCOUNT INFO:";
       $scope.accountViewModelState.userInfo = true;
     };

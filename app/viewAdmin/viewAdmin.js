@@ -16,11 +16,10 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   $scope.reservations = $scope.reservations || [];
   $scope.displayPhone = '';
   $rootScope.errorMessage = '';
-  $scope.loadingData = true;
+  $scope.loadingData = false;
   $scope.initialLoad = true;
   $scope.userLoaded = false;
   $scope.loadedUser = {};
-
 
   $scope.adminViewModelState = {
     viewUsers: true, 
@@ -29,6 +28,49 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
     viewReservations: false,
     viewPets: false,
     viewData: false
+  };
+
+  var getUsers = function () {
+    $scope.loadingData = true;
+
+      console.log("FN: ", User.getUsers);
+
+    User.getUsers($rootScope.user)
+      .then(function (res) {
+        $scope.loadingData = false;
+
+          console.log("RETURNED USERS:", res);
+
+        if (res.data.success === true) {
+          $scope.users = res.data.users;
+            console.log("SET USERS: ", $scope.users);
+            console.log("SET USERS VM STATE: ", $scope.adminViewModelState)
+        } else {
+          $rootScope.errorMessage = res.data.err;
+        };
+      });
+  };
+
+  var getReservations = function () {
+    $scope.defaultState(true);
+    $scope.adminViewModelState.viewReservations = true;
+
+    if ($scope.initialLoad === false) {
+      $scope.loadingData = true;
+    } else {
+      $scope.loadingData = false;
+    };
+
+    User.getReservations()
+      .then(function (res) {
+        $scope.loadingData = false;
+        if (res.data.success) {
+          $scope.reservations = res.data.reservations;
+        } else {
+          $rootScope.errorMessage = res.data.err;
+          $rootScope.$broadcast('errorMessage');
+        };
+      });
   };
 
   $scope.banUser = function (userEmail) {
@@ -49,8 +91,12 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
 
   var loadUser = function (userEmail, dataType) {
     $scope.loadedUser = {};
-    $scope.adminViewModelState.viewUsersReservations = false;
-    $scope.adminViewModelState.viewUsersPets = false;
+
+      //TO DO: REFACTOR TO DEFAULT STATE FN:
+      $scope.adminViewModelState.viewUsersReservations = false;
+      $scope.adminViewModelState.viewUsersPets = false;
+
+
     $scope.userLoaded = false;
     var query = {'email': userEmail};
 
@@ -106,7 +152,7 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   };
 
   $scope.showReservations = function () {
-    $scope.getReservations();
+    getReservations();
     $scope.defaultState(true);
     $scope.adminViewModelState.viewReservations = true;
   };
@@ -141,45 +187,12 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
     };
   };
 
-  var getAllUsers = function () {
-    $scope.loadingData = true;
-
-    User.getUsers($rootScope.user)
-      .then(function(res){
-        $scope.loadingData = false;
-        if (res.data.success === true) {
-          $scope.users = res.data.users;
-        } else {
-          $rootScope.errorMessage = res.data.err;
-        };
-      });
-  };
 
   var flagReservations = function () {
     return;
   };
 
-  var getReservations = function () {
-    $scope.defaultState(true);
-    $scope.adminViewModelState.viewReservations = true;
 
-    if ($scope.initialLoad === false) {
-      $scope.loadingData = true;
-    } else {
-      $scope.loadingData = false;
-    };
-
-    User.getReservations()
-      .then(function (res) {
-        $scope.loadingData = false;
-        if (res.data.success) {
-          $scope.reservations = res.data.reservations;
-        } else {
-          $rootScope.errorMessage = res.data.err;
-          $rootScope.$broadcast('errorMessage');
-        };
-      });
-  };
 
   var init = function () {
 
@@ -195,7 +208,7 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
     $rootScope.errorMessage = '';
     //Pull all reservations from DB
     //TO DO: ADD NEW TAGS TO ALL THAT HAVENT BEEN SEEN BEFORE 
-    getAllUsers();
+    getUsers();
 
     if ($rootScope.errorMessage !== '') {
       return;      
@@ -204,18 +217,15 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
     getReservations();
 
     var today = Date.now();
-
-
-
     //var compareDate = $rootScope.user.lastLoggedIn
     $scope.initialLoad = false;
-
-
+    for (var key in $scope.adminViewModelState) {$scope.adminViewModelState[key] = false};
+    $scope.adminViewModelState.viewUsers = true;
   };
 
   console.log("USER: ", $rootScope.user);
 
-  if (($rootScope.user && $rootScope.user.admin === true) || ($rootScope.user && $rootScope.user.email === 'OliviaTheCat3') || ($rootScope.user && $rootScope.user.email === 'npoling@gmail.com') ) {
+  if (($rootScope.user && $rootScope.user.admin === true) || ($rootScope.user && ($rootScope.user.email === 'OliviaTheCat3' || $rootScope.user.username === 'OliviaTheCat3')) || ($rootScope.user && $rootScope.user.email === 'npoling@gmail.com') ) {
     init();  
   } else {
     $location.path('/');
