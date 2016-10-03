@@ -39,12 +39,17 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
       .then(function (res) {
         $scope.loadingData = false;
 
-          console.log("RETURNED USERS:", res);
-
         if (res.data.success === true) {
           $scope.users = res.data.users;
+
+          for (var i = 0; i < $scope.users.length; i++) {
+            var phoneString = $scope.users[i].phone;
+            var phoneArea = phoneString.slice(0, 3);
+            var ph1 = phoneString.slice(3, 6);
+            var ph2 = phoneString.slice(6, 10);
+            $scope.users[i].displayPhone = "(" + phoneArea + ") " + ph1 + " - " + ph2;
+          };
             console.log("SET USERS: ", $scope.users);
-            console.log("SET USERS VM STATE: ", $scope.adminViewModelState)
         } else {
           $rootScope.errorMessage = res.data.err;
         };

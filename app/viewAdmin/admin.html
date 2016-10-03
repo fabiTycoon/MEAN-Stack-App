@@ -54,7 +54,7 @@
         <tbody ng-show="loadingData === false;">
           <tr ng-repeat="user in users" id="{{user.email}}">
             <td>{{user.last}}, {{user.first}}</td>
-            <td>{{displayPhone}}</td>
+            <td>{{user.displayPhone}}</td>
             <td><a href="mailto:{{user.email}}">{{user.email}}<a></td>
             <td><a ng-click="showUserPets(user.email)" ng-if="user.pets.length > 0">PETS</a><a ng-if="user.pets.length === 0"><!--DISABLED BUTTON--></a></td>
             <td><a ng-click="showUserReservations(user.email)" ng-if="user.reservations.length > 0">RESERVATIONS</a><a ng-if="user.reservations.length === 0"><!--GREYED OUT PETS BUTTON--></a></td>

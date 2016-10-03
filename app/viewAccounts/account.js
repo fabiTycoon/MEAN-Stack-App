@@ -58,7 +58,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     };
 
     if (arguments.length !== 0) {
-      $('.tabs').tabs('select_tab', 'user-tab');
+      $('ul.tabs').tabs('select_tab', 'user-tab');
       $scope.displayTitle = "MY ACCOUNT INFO:";
       $scope.accountViewModelState.userInfo = true;
     };
