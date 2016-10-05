@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Reservation = require('../models/reservation.js');
 
 
-//handler for calls to api/reservations
+//handler for calls to api/bookings
 router.get('/', function(req, res) {
 
     //if (req.user && req.user.admin === true) {

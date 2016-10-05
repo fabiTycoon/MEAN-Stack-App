@@ -8,14 +8,14 @@ var nodemailer = require('nodemailer');
 
 
 // ---------- NODEMAILER CONFIG ------------
-var emailAccountString = 'info@hollisonmeadows.com'
-//var passwordString = process.env.EMAIL_PASSWORD;
+var emailAccountString = 'npoling@gmail.com';
+var passwordString = process.env.EMAIL_PASSWORD;
 
 var smtpTransport = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
     user: emailAccountString,
-    pass: 'userpass' //
+    pass: passwordString //
   }
 });
 
@@ -42,15 +42,15 @@ var sendNewUserEmail = function (email) {
 };
 
 
-var sendEmail = function (toEmail, subjectString, bodyHtml) {
+var sendEmail = function (emailConfig) {
   //SENT WHEN ADMIN USER CONFIRMS A RESERVATION
 
   var mailOptions = {
     from: emailAccountString,
-    to: toEmail,
-    subject: subjectString,
+    to: emailConfig.toEmail,
+    subject: emailConfig.subjectString,
     generateTextFromHTML: true,
-    html: bodyHtml 
+    html: emailConfig.bodyHtml  
   };
 
   smtpTransport.sendMail(mailOptions, function(error, res) {
@@ -63,11 +63,72 @@ var sendEmail = function (toEmail, subjectString, bodyHtml) {
   });
 };
 
-var sendNewReservationEmailAdmin = function () {
-  var bodyHtml = ""
+var sendNewReservationEmail = function (reservation) {return};
+
+var sendNewReservationEmailAdmin = function (reservation) {
+
+    console.log("SENDING EMAIL FOR THIS RES: ", reservation);
+
+  var serviceString = "",
+   petString = "",
+   reminderString = "";
+
+  if (reservation.service === 'boarding') {
+    serviceString = "Boarding";
+  } else if (reservation.service === 'daycare') {
+    serviceString = "Daycare";
+  };
+
+  if (reservation.reminder === true) {
+    reminderString = "YES";
+  } else if (reservation.reminder === false) {
+    reminderString = "NO";
+  };
+
+  if (reservation.pets.length = 1) {
+    petString += reservation.pets[0].name
+  } else if (reservation.pets.length > 1) {
+
+    for (var i = 0; i < reservation.pets.length; i++) {
+      if (petString === "") {
+        petString += reservation.pets[0].name;
+      } else {
+        petString += ", ";
+        petString += reservation.pets[i].name;
+      };
+    };
+  };
+
+    console.log("SET PETSTRING: ", petString);
+
+  var toEmail = emailAccountString;
+  var subject = "NEW RESERVATION REQUEST - " + reservation.owner + " - " + reservation.serviceString;
+  var bodyHtml = "<h4>NEW RESERVATION REQUEST: " + serviceString +"</h4><br><p><strong>";
+
+    if (reservation.service === 'boarding') {
+      bodyHtml += "DATES: </strong>" + reservation.checkInDate + " - " + reservation.checkOutDate + "</p>";
+    } else if (reservation.service === 'daycare') {
+      bodyHtml += "DATE: </strong>" + reservation.checkInDate + "</p>";
+    };
+
+    bodyHtml += "<br><p><strong>EST. CHECK-IN TIME: </strong>" + reservation.checkInTime + "</p>";
+    bodyHtml += "<br><p><strong>EST CHECK-OUT TIME: </strong>" + reservation.checkOutTime + "</p>";
+    bodyHtml += "<br><p><strong>OWNER: </strong>" + reservation.owner + "</p>";
+    bodyHtml += "<br><p><strong>PETS: </strong>" + petString  + "</p>"
+    bodyHtml += "<br><p><strong>REMIND 24HRS IN ADVANCE?: </strong>" + reminderString + "</p>";
+    bodyHtml += "<br><p><strong>PREFERRED CONTACT METHOD: </strong>" + reservation.reminderMethod + "</p>";
+
+      console.log("SENDING EMAIL: ", toEmail, subject, bodyHtml);
+
+      var emailConfig = {
+        toEmail: '',
+        subjectString: '',
+        bodyHtml: ''
+      };
+
+    sendEmail(emailConfig);
 };  
 // ---------- END E-MAIL HELPER FNS ----------
-
 
 
 // ----- HANDLERS FOR CALLS TO API/USERS -----
@@ -172,6 +233,7 @@ router.post('/register', function(req, res) {
     } else {
 
       sendNewUserEmail(user.email);
+      sendNewAdminUserEmail(user.email);
 
       var returnedUser = {
         _id: user._id,
@@ -401,23 +463,8 @@ router.post('/addReservation', function(req, res){
         return res.status(500).json({'success': false, 'error':err});
       } else {
 
-          console.log("Added reservation request: ", returnedReservation);
-
-        var recipient = 'info@hollisonmeadows.com';
-        var subjectString = 'New Reservation Request - ';
-        var bodyHtml = '<h4>CUSTOMER NAME:</h4><p>';
-        bodyHtml += returnedReservation.last;
-        bodyHtml += ', '
-        bodyHtml += returnedReservation.first;
-        bodyHtml += '</p><br>'
-
-        bodyHtml += '<h4>SERVICE: </h4><p>';
-        bodyHtml += returnedReservation.service;
-        bodyHtml += '</p><br>';        
-        //bodyHtml += returnedReservation.checkInDate;
-
-        // SEND EMAIL TO FRONT DESK
-        sendEmail(recipient, subjectString, bodyHtml);
+        sendNewReservationEmailAdmin(returnedReservation);
+        sendNewReservationEmail(returnedReservation);
 
  
         return res.status(200).json({'success': true, 'reservation': returnedReservation});
