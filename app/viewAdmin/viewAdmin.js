@@ -202,6 +202,11 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
     $scope.adminViewModelState.viewReservations = true;
   };
 
+  $scope.showReservationDetails = function (reservationId) {
+    console.log("CALLED showReservationDetails: ", reservationId);
+    return;
+  };
+
   $scope.showPets = function (userEmail) {
     $scope.getPets();
     $scope.defaultState(true);

@@ -263,6 +263,9 @@ video {
 #dummy-table-row {
   height: 5em; }
 
+.reservation-success-box {
+  height: 19em !important; }
+
 .account-edit i {
   font-size: 0.8em !important;
   color: black;

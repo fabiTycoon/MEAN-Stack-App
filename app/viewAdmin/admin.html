@@ -148,7 +148,13 @@
           <td>{{reservation.service}}</td>
           <td>{{reservation.owner}}</td>
           <td>{{reservation.created_at}}</td>
-          <td>VIEW DETAILS BUTTON</td>
+          <td>
+            <div class="fixed-action-btn">
+              <a class="btn-floating btn-small red" ng-click="showReservationDetails(reservation.id)">
+                <i>contact_phone</i> VIEW DETAILS
+              </a>
+            </div>
+          </td>
           <td>APPROVE REJECT BUTTON</td>
         </tr>
       </tbody>
