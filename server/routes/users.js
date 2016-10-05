@@ -65,7 +65,7 @@ var sendEmail = function (emailConfig) {
 
 var sendNewReservationEmail = function (reservation) {return};
 
-var sendNewReservationEmailAdmin = function (reservation) {
+/*var sendNewReservationEmailAdmin = function (reservation) {
 
     console.log("SENDING EMAIL FOR THIS RES: ", reservation);
 
@@ -127,7 +127,7 @@ var sendNewReservationEmailAdmin = function (reservation) {
       };
 
     sendEmail(emailConfig);
-};  
+};*/  
 // ---------- END E-MAIL HELPER FNS ----------
 
 
@@ -462,11 +462,7 @@ router.post('/addReservation', function(req, res){
       if (err) {
         return res.status(500).json({'success': false, 'error':err});
       } else {
-
-        sendNewReservationEmailAdmin(returnedReservation);
         sendNewReservationEmail(returnedReservation);
-
- 
         return res.status(200).json({'success': true, 'reservation': returnedReservation});
       };
   });
