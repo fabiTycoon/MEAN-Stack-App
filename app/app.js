@@ -45,7 +45,7 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var getReservations = function (user) {
-    return $http.get('/api/reservations', user);
+    return $http.get('/api/bookings', user);
   };
 
   var deleteReservation = function (reservationIndex) {

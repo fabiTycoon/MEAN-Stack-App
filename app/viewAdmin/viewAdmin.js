@@ -78,6 +78,8 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   };
 
   var getReservations = function () {
+
+    console.log("CALLED GET RESERVATIONS")
    
     User.getReservations($rootScope.user)
       .then(function (res) {
@@ -85,35 +87,32 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
         if (res.data.success) {
           $scope.reservations = res.data.reservations;
 
+            console.log("SET RESERVATIONS: ", $scope.reservations);
 
           for (var i = 0; i < $scope.reservations.length; i++) {
 
             var petString = '';
 
-            
+            if ($scope.reservations[i].pets.length === 1) {
+              petString += $scope.reservations[i].pets[0].name;
+            } else if ($scope.reservations[i].pets.length > 1) {
 
-              if ($scope.reservations[i].pets.length === 1) {
-                petString += $scope.reservations[i].pets[0].name;
-              } else if ($scope.reservations.pets.length > 1) {
+              for (var j = 0; j < $scope.reservations[i].pets.length; j++) {
+                //ADD EACH PETS NAME TO STRING
+                var concatString = '';
 
-
-                for (var j = 0; j < $scope.reservations[i].pets.length; j++) {
-                  //ADD EACH PETS NAME TO STRING
-                  var concatString = '';
-
-                  if (j !== 0) {
-                    concatString += ', '
-                  };
-                  concatString += $scope.reservations[i].pets[j].name;
-                  petString += concatString;
+                if (j !== 0) {
+                  concatString += ', '
                 };
+                concatString += $scope.reservations[i].pets[j].name;
+                petString += concatString;
               };
+            };
 
             $scope.reservations[i].displayPetString = petString;
- 
-
           };
 
+            console.log("SET RESERVATION STRINGS: ", $scope.reservations);
           //TO DO: FORMAT DATE STRINGS INTO HUMAN READABLE FORMAT, CREATE PETSTRING
         } else {
           $rootScope.errorMessage = res.data.err;
@@ -140,7 +139,6 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
 
   var loadUser = function (userEmail, dataType) {
       //TO DO: REFACTOR TO DEFAULT STATE FN:
-
       console.log("CALLED LOAD USER: ", userEmail, dataType);
 
     for (var i = 0; i < $scope.users.length; i++) {
@@ -171,33 +169,25 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   };
 
   $scope.hideUserReservations = function (userEmail) {
-
+    $scope.defaultState();
   };
 
   $scope.hideUserPets = function () {
     $scope.defaultState();
   };
 
-  $scope.approveReservation = function (reservationId) {
- /*   for (var i = 0; i < $scope.reservations.length; i++) {
+  $scope.approveReservation = function (reservationId, approval) {
+
+    for (var i = 0; i < $scope.reservations.length; i++) {
       if ($scope.reservations[i]._id === reservationId) {
-        $scope.reservations[i].adminApproved = true;
+
+        if (approval === true) {
+          $scope.reservations[i].adminApproved = true;
+        } else if (approval === false) {
+          $scope.reservations[i].adminApproved = false;
+        };        
       };
     };
-
-
-
-    $timeout(function(){
-      //TO DO: IF THEY DONT CLICK CONFIRM MODAL, WARN & CLOSE:
-      if () {
-
-      } else {
-
-      };
-
-
-    }, 10000);
-*/
   };
 
   $scope.showUsers = function () {
@@ -206,6 +196,7 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
   };  
 
   $scope.showReservations = function () {
+      console.log("CALLED showReservations")
     getReservations();
     $scope.defaultState(true);
     $scope.adminViewModelState.viewReservations = true;
@@ -228,14 +219,9 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
     $scope.defaultState(true);
   };
 
-  
-
-
   var flagReservations = function () {
     return;
   };
-
-
 
   var init = function () {
 
@@ -274,5 +260,4 @@ angular.module('myApp.viewAdmin', ['ngRoute'])
     $location.path('/');
   };
 
-  
 }]);

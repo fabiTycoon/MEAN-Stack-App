@@ -128,15 +128,15 @@
   <div class="row" ng-if="adminViewModelState.viewReservations">
     <div class="col s12">
 
-    <table>
+    <table class="striped">
       <thead>
       <tr>
       <th data-field="name">Check-In Date</th>
       <th data-field="name">Check-Out Date</th>
       <th data-field="phone">Service</th>
       <th data-field="email">Name</th>
-      <th data-field="pets">Pets</th>
       <th data-field="reservations">Booked On</th>
+      <th data-field="details">View Details</th>
       <th data-field="ban">Approve/Reject Reservation</th>
       </tr>
       </thead>
@@ -147,8 +147,8 @@
           <td>{{reservation.checkOutDate}}</td>
           <td>{{reservation.service}}</td>
           <td>{{reservation.owner}}</td>
-          <td>{{reservation.dispalyPetString}}</td>
           <td>{{reservation.created_at}}</td>
+          <td>VIEW DETAILS BUTTON</td>
           <td>APPROVE REJECT BUTTON</td>
         </tr>
       </tbody>
