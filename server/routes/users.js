@@ -63,71 +63,28 @@ var sendEmail = function (emailConfig) {
   });
 };
 
-var sendNewReservationEmail = function (reservation) {return};
+var sendNewUserEmailAdmin = function (user) {
 
-/*var sendNewReservationEmailAdmin = function (reservation) {
-
-    console.log("SENDING EMAIL FOR THIS RES: ", reservation);
-
-  var serviceString = "",
-   petString = "",
-   reminderString = "";
-
-  if (reservation.service === 'boarding') {
-    serviceString = "Boarding";
-  } else if (reservation.service === 'daycare') {
-    serviceString = "Daycare";
+  var emailConfig = {
+    toEmail: emailAccountString,
+    subjectString: 'NEW USER REGISTERED - ' + user.username + " - " + user.last + ", " + user.first;
+    bodyHtml: "<h4>NEW USER: " + user.username +"</h4><br><p><strong>" + user.last + ", " + user.first + "</strong></p><br>"; 
   };
 
-  if (reservation.reminder === true) {
-    reminderString = "YES";
-  } else if (reservation.reminder === false) {
-    reminderString = "NO";
-  };
+  emailConfig.bodyHtml += "<p>A new user has registered on HollistonMeadows.com!<br>Here's their information for your reference:</p>"
 
-  if (reservation.pets.length = 1) {
-    petString += reservation.pets[0].name
-  } else if (reservation.pets.length > 1) {
+  emailConfig.bodyHtml += "<br><p><strong>PHONE: </strong>" + user.phone + "</p>";
+  emailConfig.bodyHtml += "<p><strong>ADDRESS: </strong>" + user.street + "</p>";
+  emailConfig.bodyHtml += "<p><strong>CITY: </strong>" + user.city + "</p>";
+  emailConfig.bodyHtml += "<p><strong>STATE: </strong>" + user.state  + "</p>"
+  emailConfig.bodyHtml += "<p><strong>ZIP: </strong>" + user.zip + "</p>";
+  emailConfig.bodyHtml += "<p><strong>HOSPITAL: </strong>" + user.hospital + "</p>";
+  emailConfig.bodyHtml += "<p><strong>REGISTERED AT: </strong>" + user.created_at + "</p>";
 
-    for (var i = 0; i < reservation.pets.length; i++) {
-      if (petString === "") {
-        petString += reservation.pets[0].name;
-      } else {
-        petString += ", ";
-        petString += reservation.pets[i].name;
-      };
-    };
-  };
+  sendEmail(emailConfig);
 
-    console.log("SET PETSTRING: ", petString);
+};
 
-  var toEmail = emailAccountString;
-  var subject = "NEW RESERVATION REQUEST - " + reservation.owner + " - " + reservation.serviceString;
-  var bodyHtml = "<h4>NEW RESERVATION REQUEST: " + serviceString +"</h4><br><p><strong>";
-
-    if (reservation.service === 'boarding') {
-      bodyHtml += "DATES: </strong>" + reservation.checkInDate + " - " + reservation.checkOutDate + "</p>";
-    } else if (reservation.service === 'daycare') {
-      bodyHtml += "DATE: </strong>" + reservation.checkInDate + "</p>";
-    };
-
-    bodyHtml += "<br><p><strong>EST. CHECK-IN TIME: </strong>" + reservation.checkInTime + "</p>";
-    bodyHtml += "<br><p><strong>EST CHECK-OUT TIME: </strong>" + reservation.checkOutTime + "</p>";
-    bodyHtml += "<br><p><strong>OWNER: </strong>" + reservation.owner + "</p>";
-    bodyHtml += "<br><p><strong>PETS: </strong>" + petString  + "</p>"
-    bodyHtml += "<br><p><strong>REMIND 24HRS IN ADVANCE?: </strong>" + reminderString + "</p>";
-    bodyHtml += "<br><p><strong>PREFERRED CONTACT METHOD: </strong>" + reservation.reminderMethod + "</p>";
-
-      console.log("SENDING EMAIL: ", toEmail, subject, bodyHtml);
-
-      var emailConfig = {
-        toEmail: '',
-        subjectString: '',
-        bodyHtml: ''
-      };
-
-    sendEmail(emailConfig);
-};*/  
 // ---------- END E-MAIL HELPER FNS ----------
 
 
@@ -233,7 +190,7 @@ router.post('/register', function(req, res) {
     } else {
 
       sendNewUserEmail(user.email);
-      sendNewAdminUserEmail(user.email);
+      sendNewUserEmailAdmin(user);
 
       var returnedUser = {
         _id: user._id,

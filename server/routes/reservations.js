@@ -76,21 +76,23 @@ var sendNewReservationEmailAdmin = function (reservation) {
     console.log("SET PETSTRING: ", petString);
 
   var recipientEmail = emailAccountString;
-  var subject = "NEW RESERVATION REQUEST - " + reservation.owner + " - " + serviceString;
+  var subject = "NEW RESERVATION REQUEST - " + reservation.ownerName + " - " + serviceString;
   var bodyText = "<h4>NEW RESERVATION REQUEST: " + serviceString +"</h4><br><p><strong>";
 
     if (reservation.service === 'boarding') {
-      bodyText += "DATES: </strong>" + reservation.checkInDate + " - " + reservation.checkOutDate + "</p>";
+      bodyText += "REQUESTED DATES: </strong>" + reservation.checkInDate + " - " + reservation.checkOutDate + "</p>";
     } else if (reservation.service === 'daycare') {
-      bodyText += "DATE: </strong>" + reservation.checkInDate + "</p>";
+      bodyText += "REQUESTED DATE: </strong>" + reservation.checkInDate + "</p>";
     };
 
     bodyText += "<br><p><strong>EST. CHECK-IN TIME: </strong>" + reservation.checkInTime + "</p>";
     bodyText += "<br><p><strong>EST CHECK-OUT TIME: </strong>" + reservation.checkOutTime + "</p>";
-    bodyText += "<br><p><strong>OWNER: </strong>" + reservation.owner + "</p>";
+    bodyText += "<br><p><strong>OWNER NAME: </strong>" + reservation.ownerName + "</p>";
     bodyText += "<br><p><strong>PETS: </strong>" + petString  + "</p>"
     bodyText += "<br><p><strong>REMIND 24HRS IN ADVANCE?: </strong>" + reminderString + "</p>";
     bodyText += "<br><p><strong>PREFERRED CONTACT METHOD: </strong>" + reservation.reminderMethod + "</p>";
+    bodyText += "<br><p><strong>CONTACT PHONE: </strong>" + reservation.reminderMethod + "</p>";
+    bodyText += "<br><p><strong>CONTACT EMAIL: </strong>" + reservation.owner + "</p>";
 
       console.log("SENDING EMAIL: ", recipientEmail, subject, bodyText);
 

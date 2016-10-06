@@ -538,9 +538,10 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       $scope.newReservation.checkOutDate = $scope.newReservation.checkInDate;
     };
 
-      console.log("CALLED CREATE NEW RESERVATION: ", $scope.newReservation);
     var reservation = $scope.newReservation;
     reservation.owner = $rootScope.user.email;
+    reservation.ownerName = "";
+    reservation.ownerName += $rootScope.user.last + ", " + $rootScope.user.first;
     reservation.existingReservations = $rootScope.user.reservations;
       console.log("RESERVATION ASSIGNMENTS: ", reservation);
 
@@ -640,21 +641,17 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         } else {
           if (res.data.error.message) {
             $rootScope.registrationError = res.data.error.message;
-            console.log("registrationError1:", $rootScope.registrationError);
           } else if (res.data.message) {
             $rootScope.registrationError = res.data.message;
-            console.log("registrationError2:", $rootScope.registrationError);
-          }
-
-          else if (res.data.error.code === 11000) {
+          } else if (res.data.error.code === 11000) {
             $rootScope.registrationError = "A user with this e-mail address has already registered.";
-            console.log("registrationError3:", $rootScope.registrationError);
           };
           $rootScope.$broadcast('registrationError');
         };
-      }), function (errorCallback) {
-        console.log("ERROR: ", res);
-        // TO DO: Server side error handling
+      }), function (error) {
+        console.log("ERROR: ", error);
+        $rootScope.registrationError = "There was an error while registering.  Please double-check your information and try again.";
+        $rootScope.$broadcast('registrationError');
       };
   };
 
