@@ -43,6 +43,7 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 }
 
 // APP WIDE STYLES:
+
 #toast-container {
   left: auto !important;
   left:12% !important;  
@@ -62,6 +63,7 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 
 .matcard-action-text {
   font-size: 1.5em;
+  cursor: pointer;
 };
 
 .grow:hover {

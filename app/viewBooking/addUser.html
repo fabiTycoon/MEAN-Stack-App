@@ -5,30 +5,34 @@
 
     <!--INTRO CARDS-->
     <div class="row center-text" ng-show="viewModelState.intro === true">
-      <div class="col s6 grow">
-        <div class="card blue-grey lighten-1">
-          <div class="card-content white-text matcard-intro">
-            <span class="card-title">RETURNING GUESTS</span>
-            <p class="thin matcard-desc-text">Login &amp; book a stay</p>
-            <new-user-icon></new-user-icon>
-          </div>
-          <div class="card-action thin white-text">
-            <a ng-click="returningUser();" class="matcard-action-text" id="actionButtonReturningUser">&nbsp;&nbsp;BOOK NOW</a>
-          </div>
-        </div>
-      </div>
-      <div class="col s6 grow">
+      <a ng-click="returningUser();" style="cursor: pointer;">
+        <div class="col s6 grow">
           <div class="card blue-grey lighten-1">
             <div class="card-content white-text matcard-intro">
-              <span class="card-title">FIRST TIMERS</span>
-              <p class="thin matcard-desc-text">Sign up &amp; book in minutes</p>
-              <returning-user-icon></returning-user-icon>
+              <span class="card-title">RETURNING GUESTS</span>
+              <p class="thin matcard-desc-text">Login &amp; book a stay</p>
+              <new-user-icon></new-user-icon>
             </div>
             <div class="card-action thin white-text">
-              <a ng-click="addNewUser()" class="matcard-action-text" id="actionButtonNewUser">&nbsp;&nbsp;BOOK NOW</a>
+              <a ng-click="returningUser();" class="matcard-action-text" id="actionButtonReturningUser">&nbsp;&nbsp;BOOK NOW</a>
             </div>
           </div>
         </div>
+      </a>
+      <a ng-click="addNewUser();" style="cursor: pointer;">
+        <div class="col s6 grow">
+            <div class="card blue-grey lighten-1">
+              <div class="card-content white-text matcard-intro">
+                <span class="card-title">FIRST TIMERS</span>
+                <p class="thin matcard-desc-text">Sign up &amp; book in minutes</p>
+                <returning-user-icon></returning-user-icon>
+              </div>
+              <div class="card-action thin white-text">
+                <a ng-click="addNewUser()" class="matcard-action-text" id="actionButtonNewUser">&nbsp;&nbsp;BOOK NOW</a>
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
 
       <!--LOGIN CARD  -->
@@ -84,30 +88,35 @@
 
       <!-- RETURNING USER CARDS -->
       <div class="row center-text" ng-show="viewModelState.returningUser === true">
-        <div class="col s6 grow" id="matcard-action-returning">
-          <div class="card blue-grey lighten-1">
-            <div class="card-content white-text matcard-intro">
-              <span class="card-title">BOARDING</span>
-              <p class="thin matcard-desc-text">Overnight stays starting from $35/night.<br></p>
-              <boarding-icon></boarding-icon>
-            </div>
-            <div class="card-action thin white-text">
-              <a ng-click="serviceSelect('boarding');" class="matcard-action-text" id="actionButtonReturningUser">BOOK NOW</a>
-            </div>
-          </div>
-        </div>
-        <div class="col s6 grow" id="matcard-action-new">
-          <div class="card blue-grey lighten-1">
-            <div class="card-content white-text matcard-intro">
-              <span class="card-title">DAYCARE</span>
-              <p class="thin matcard-desc-text" style="padding-top: 0.75em;">Drop-off or pick-up all-day play &amp; stay.</p>
-              <daycare-icon></daycare-icon>
-            </div>
-            <div class="card-action thin white-text">
-              <a ng-click="serviceSelect('daycare');" class="matcard-action-text" id="actionButtonNewUser">BOOK NOW</a>
+
+        <a ng-click="serviceSelect('boarding');" style="cursor: pointer;">
+          <div class="col s6 grow" id="matcard-action-returning">
+            <div class="card blue-grey lighten-1">
+              <div class="card-content white-text matcard-intro">
+                <span class="card-title">BOARDING</span>
+                <p class="thin matcard-desc-text">Overnight stays starting from $35/night.<br></p>
+                <boarding-icon></boarding-icon>
+              </div>
+              <div class="card-action thin white-text">
+                <a ng-click="serviceSelect('boarding');" class="matcard-action-text" id="actionButtonReturningUser">BOOK NOW</a>
+              </div>
             </div>
           </div>
-        </div>
+        </a>
+        <a ng-click="serviceSelect('daycare');" style="cursor: pointer;">
+          <div class="col s6 grow" id="matcard-action-new">
+            <div class="card blue-grey lighten-1">
+              <div class="card-content white-text matcard-intro">
+                <span class="card-title">DAYCARE</span>
+                <p class="thin matcard-desc-text" style="padding-top: 0.75em;">Drop-off or pick-up all-day play &amp; stay.</p>
+                <daycare-icon></daycare-icon>
+              </div>
+              <div class="card-action thin white-text">
+                <a ng-click="serviceSelect('daycare');" class="matcard-action-text" id="actionButtonNewUser">BOOK NOW</a>
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
 
       <!-- NEW USER VIEWS -->
@@ -645,30 +654,35 @@
         <br>
         <div class="row">
           <div class="row center-text">
-            <div class="col s6 grow">
-              <div class="card blue-grey lighten-1" id="add-dog-card">
-                <div class="card-content white-text matcard-intro">
-                  <span class="card-title">DOG</span>
-                  <p class="thin matcard-desc-text">Man's Best Friend</p>
-                  <i class="pet-icon-new"><add-dog-icon></add-dog-icon></i>
-                </div>
-                <div class="card-action thin white-text">
-                  <a ng-click="setSpecies('dog');" class="matcard-action-text" id="actionButtonReturningUser">&nbsp;&nbsp;ADD DOG</a>
-                </div>
-              </div>
-            </div>
-            <div class="col s6 grow">
-                <div class="card blue-grey lighten-1" id="add-cat-card">
+            <a ng-click="setSpecies('dog');" style="cursor: pointer;">
+              <div class="col s6 grow">
+                <div class="card blue-grey lighten-1" id="add-dog-card">
                   <div class="card-content white-text matcard-intro">
-                    <span class="card-title">CAT</span>
-                    <p class="thin matcard-desc-text">Finicky But Friendly</p>
-                    <i class="pet-icon-new"><add-cat-icon></add-cat-icon></i>
+                    <span class="card-title">DOG</span>
+                    <p class="thin matcard-desc-text">Man's Best Friend</p>
+                    <i class="pet-icon-new"><add-dog-icon></add-dog-icon></i>
                   </div>
                   <div class="card-action thin white-text">
-                    <a ng-click="setSpecies('cat')" class="matcard-action-text" id="actionButtonNewUser">&nbsp;&nbsp;ADD CAT</a>
+                    <a ng-click="setSpecies('dog');" class="matcard-action-text" id="actionButtonReturningUser">&nbsp;&nbsp;ADD DOG</a>
                   </div>
                 </div>
               </div>
+            </a>
+
+            <a ng-click="setSpecies('cat');" style="cursor: pointer;">
+              <div class="col s6 grow">
+                  <div class="card blue-grey lighten-1" id="add-cat-card">
+                    <div class="card-content white-text matcard-intro">
+                      <span class="card-title">CAT</span>
+                      <p class="thin matcard-desc-text">Finicky But Friendly</p>
+                      <i class="pet-icon-new"><add-cat-icon></add-cat-icon></i>
+                    </div>
+                    <div class="card-action thin white-text">
+                      <a ng-click="setSpecies('cat')" class="matcard-action-text" id="actionButtonNewUser">&nbsp;&nbsp;ADD CAT</a>
+                    </div>
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
         </div>

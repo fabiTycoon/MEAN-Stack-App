@@ -29,7 +29,8 @@
   font-size: 1.25em; }
 
 .matcard-action-text {
-  font-size: 1.5em; }
+  font-size: 1.5em;
+  cursor: pointer; }
 
 .grow:hover {
   -ms-transition: 1s;
