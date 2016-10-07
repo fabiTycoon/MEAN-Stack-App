@@ -67,8 +67,8 @@ var sendNewUserEmailAdmin = function (user) {
 
   var emailConfig = {
     toEmail: emailAccountString,
-    subjectString: 'NEW USER REGISTERED - ' + user.username + " - " + user.last + ", " + user.first;
-    bodyHtml: "<h4>NEW USER: " + user.username +"</h4><br><p><strong>" + user.last + ", " + user.first + "</strong></p><br>"; 
+    subjectString: 'NEW USER REGISTERED - ' + user.username + " - " + user.last + ", " + user.first,
+    bodyHtml: "<h4>NEW USER: " + user.username +"</h4><br><p><strong>" + user.last + ", " + user.first + "</strong></p><br>"
   };
 
   emailConfig.bodyHtml += "<p>A new user has registered on HollistonMeadows.com!<br>Here's their information for your reference:</p>"

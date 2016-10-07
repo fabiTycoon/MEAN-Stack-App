@@ -1,9 +1,19 @@
 <div class="push"></div>
+
 <div class="container">
+
+<div class="row align center">
+  <div class="col s12">
+    <img class="responsive-img" src="http://i.imgur.com/1d2VE3v.jpg">
+  </div>
+</div>
+  
+
   <div class="collection">
-    <a href="#/" class="collection-item">Go Back<i id="about-icon" class=" material-icons right">highlight_off</i>
-</a>
-    <a href="#!" class="collection-item active" id="facil" ng-click="selector('facil')">Our Facility</a>
+    <a href="#/" class="collection-item" style="background-color: #e0e0e0;">Go Back
+    <i id="about-icon" class=" material-icons right">highlight_off</i>
+    </a>
+    <a class="collection-item active" id="facil" ng-click="selector('facil')">Our Facility</a>
     <a ng-click="selector('team')" class="collection-item" id="team">Our Team</a>
     <a ng-click="selector('faq')" class="collection-item" id="faq">FAQ</a>
     <a ng-click="selector('contact')" class="collection-item" id="contact">Contact Us</a>
@@ -12,13 +22,34 @@
   <div class="facil-text" ng-if="select.facil">
     <h4 id="about-facil">About Our Facility:</h4>
     <hr>
-    <p>A healthy, safe, and comfortable home away from home for your pet</p>
+    <p>A X,XXX square foot puppy palace for your furry friend.</p>
+    <br>
+    <p>Join us for an upcoming Yappy Hour, or give us a call at 508-429-1500 to schedule a vist.</p>
+     <br>
+     <div class="row align center">
+       <div class="col s4"><img class="responsive-img" src="http://imgur.com/noHqGWr.jpg"></div>
+       <div class="col s4"><img class="responsive-img" src="http://imgur.com/X4rcGNu.jpg"></div>
+       <div class="col s4"><img class="responsive-img" src="http://i.imgur.com/jI4erZB.jpg"></div>
+     </div>
+
+     <div class="row align center">
+       <div class="col s4"><img class="responsive-img" src="http://i.imgur.com/hmubREd.jpg"></div>
+       <div class="col s4"><img class="responsive-img" src="http://i.imgur.com/PhewRte.jpg"></div>
+       <div class="col s4"><img class="responsive-img" src="http://i.imgur.com/WfLZnwy.jpg"></div>
+     </div>
+
+     <div class="row align center">
+       <div class="col s4"><img class="responsive-img" src="http://i.imgur.com/esoo74D.jpg"></div>
+       <div class="col s4"><img class="responsive-img" src="http://i.imgur.com/XveA7HV.jpg"></div>
+       <div class="col s4"><img class="responsive-img" src="http://i.imgur.com/8uRLYW8.jpg"></div>
+     </div>
   </div>
 
   <div class="team-text" ng-if="select.team">
     <h4 id="about-team">About Our Team:</h4>
     <hr>
     <p>A healthy, safe, and comfortable home away from home for your pet</p>
+   
   </div>
 
   <div class="faq-text" ng-if="select.faq">
