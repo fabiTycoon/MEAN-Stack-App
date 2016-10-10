@@ -471,6 +471,10 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     $scope.viewModelState.resStep = 2;
     $scope.viewModelState.addPet = true;
     $scope.viewModelState.addPetStep = 2;
+
+    $timeout(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    }, 150);
   };
 
   $scope.addPet = function () {

@@ -20,7 +20,7 @@ angular.module('myApp', [
   //'myApp.basicServices',
   'myApp.directivesModule',
   'ngMessages',
-  'ngSanitize'
+  'ngSanitize',
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/main'});
