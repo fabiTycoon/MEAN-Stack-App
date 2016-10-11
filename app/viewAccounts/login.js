@@ -15,6 +15,8 @@ angular.module('myApp.viewLogin', ['ngRoute'])
   $scope.loginLoading = false;
   $rootScope.signingUp = false;
 
+  $rootScope.registrationError = '';
+
   $scope.loginUser = {
     username: '',
     password: ''
