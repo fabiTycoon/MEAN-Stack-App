@@ -60,6 +60,10 @@ config(['$routeProvider', function($routeProvider) {
     return $http.post('/api/pets', pet);
   };
 
+  var editPet = function (pet) {
+    return $http.put('/api/pets', pet);
+  };
+
   var addPetToUser = function (updatedUser) {
     return $http.post('/api/users/addPet', updatedUser);
   };

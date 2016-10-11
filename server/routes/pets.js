@@ -42,9 +42,48 @@ router.post('/', function(req, res) {
   });
 });
 
-router.put('/', function(req, res) {
+router.put('/', function (req, res) {
+    console.log("HIT EDIT PET ENDPOINT: ", req.body);
 
+  var updatedPet = req.body;
+      console.log("THESE ARE THE FIELDS BEING UPDATED: ", updatedPet);
+  var fieldToUpdate = req.body.fieldToUpdate;
+  var currentUsername = req.body.currentUsername;
+  if (!updatedPet.username) {
+    updatedPet.username = req.body.currentUsername;
+    updatedPet.email = req.body.currentUsername;
+  };
 
+    console.log("HIT EDIT PET ENDPOINT, EDITING THIS:", fieldToUpdate);
+    console.log("FINDING THIS USER: ", currentUsername);
+
+  User.findOne({username: currentUsername}, function (err, returnedPet) { 
+    console.log("FIND USER RETURNED THIS USER: ", returnedPet);
+    if (err || !returnedPet) {
+      console.log("FIND USER RETURNED THIS ERROR: ", err)
+      return res.status(500).json({'message': 'Cannot find a user by that e-mail.', 'success': false, 'err': err})
+    ;}
+
+    if (fieldToUpdate === 'email') {
+      //need to do someething to avoid mongoose throwing duplicate key error
+    } else if (fieldToUpdate === 'weight') {
+      returnedPet.weight = updatedPet.weight;
+    } else if (fieldToUpdate === 'age') {
+      returnedPet.age = updatedPet.age;
+    } else if (fieldToUpdate === 'food-brand') {
+      returnedPet.foodBrand = updatedPet.foodBrand;
+    } else if (fieldToUpdate === 'food-servings') {
+      returnedPet.foodServings = updatedPet.foodServings;
+    } else if (fieldToUpdate === 'food-allergies') {
+      returnedPet.foodAllergies = updatedPet.foodAllergies;
+    } else if (fieldToUpdate === 'comments') {
+      returnedPet.comments = updatedPet.comments;
+    };
+
+    console.log("SAVING THIS PET: ", JSON.stringify(returnedPet));
+    returnedPet.save();
+    return res.status(200).json({'user': returnedPet, 'success': true});
+  });  
 });
 
 router.delete('/', function(req, res) {
