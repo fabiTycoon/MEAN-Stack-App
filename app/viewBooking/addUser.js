@@ -309,7 +309,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         return;
       } else if ($scope.serviceSelected === 'boarding' && ($scope.newReservation.checkInDate === $scope.newReservation.checkOutDate)) {
         //TO DO: MAKE THIS LINK CLICKABLE
-        $rootScope.registrationError = "Woops!  You've selected the same dates for check-in and check-out for your boarding stay.<br><br>  Did you mean to book a daycare stay?  If so, please click the 'Go Back' button.";
+        $rootScope.registrationError = "Woops!  You've selected the same dates for check-in and check-out for your boarding stay.  Did you mean to book a daycare stay?  If so, please click the 'Go Back' button.";
         $rootScope.$broadcast('registrationError');
         return;
       } else if ($scope.serviceSelected === 'boarding' && $scope.newReservation.checkInDate === '' && $scope.newReservation.checkOutDate === '') {
@@ -328,10 +328,17 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
       } else {
         //RADIO VALIDATION & BINDING:
         var bringingFoodYes = $('#bringingFoodYes').prop('checked');
+        var bringingFoodYes1 = $('#bringingFoodYes1').prop('checked');
         var bringingFoodNo = $('#bringingFoodNo').prop('checked');
+        var bringingFoodNo1 = $('#bringingFoodNo1').prop('checked');
         var returningGuestYes = $('#returningGuestYes').prop('checked');
         var returningGuestNo = $('#returningGuestNo').prop('checked');
     
+        if ($scope.serviceSelected === 'daycare') {
+          bringingFoodYes = bringingFoodYes1;
+          bringingFoodNo = bringingFoodNo1
+        };
+
         if ($scope.serviceSelected === 'boarding' && (bringingFoodYes === false && bringingFoodNo === false)) {
           $rootScope.registrationError = "Please select whether or not you'll be bringing food from home for your pets.";
           $rootScope.$broadcast('registrationError');

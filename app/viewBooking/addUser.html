@@ -376,30 +376,29 @@
                 <label for="check-out-time" class="active">Est. Pick-Up Time</label>
               </div>  
 
+
               <div class="row">
-                <div class="col s12" id="foodRadioButtons">
-                  <label for="foodRadioButtons">Are You Bringing Your Own Food?</label>
-                    <div class="row">
-                      <div class="col s6">
-                        <p>
-                          <input class="with-gap" name="foodRadios" type="radio" id="bringingFoodYes"/>
-                          <label for="bringingFoodYes">Yes</label>
-                        </p>
-                        <p>
-                          <input class="with-gap" name="foodRadios" type="radio" id="bringingFoodNo"/>
-                          <label for="bringingFoodNo">No</label>
-                        </p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col s12">
-                        <label for="textarea1">Additional Notes &amp; Comments</label>
-                        <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
-                      </div>
-                    </div>
-                  </div>
+                <div class="col s6" id="foodRadioButtons2">
+                  <label for="foodRadioButtons2">Will You Be Bringing Your Own Food?</label>
+                  <p>
+                    <input class="with-gap" name="foodRadios" type="radio" id="bringingFoodYes1"/>
+                    <label for="bringingFoodYes1">Yes</label>
+                  </p>
+                  <p>
+                    <input class="with-gap" name="foodRadios" type="radio" id="bringingFoodNo1"/>
+                    <label for="bringingFoodNo1">No</label>
+                  </p>
                 </div>
               </div>
+
+              <div class="row">
+                <div class="col s12">
+                  <label for="textarea1">Additional Notes &amp; Comments</label>
+                  <textarea id="textarea1" class="materialize-textarea" ng-model="newReservation.comments"></textarea>
+                </div>
+              </div>
+
+            </div>
             <!--END DAYCARE SPECIFIC FIELDS-->
 
               <!-- ADD PETS TO RESERVATION VIEW -->
