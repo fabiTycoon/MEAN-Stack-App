@@ -117,13 +117,77 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       };
   };
 
-  $scope.validateUser = function (userData) {
+  $scope.showEditPetField = function (editedPetField, editedPet) {
+     $scope.setDefaultState(); 
+     $scope.accountViewModelState.editingUser = true;
 
-    
+     //animate transition:
+     $('#edit-container').addClass('animated flipOutY');
+     $scope.refresh = true;
+     $scope.refresh = false;
+     $('#edit-container').removeClass('animated flipOutY');
+     
+     //UPDATE THESE:
+     /*if (editedPetField, editedPet === 'email') {
+        $scope.displayName = 'EDIT MY CONTACT INFO:';
+        $scope.accountViewModelState.userField = 'email-fields';
+        $scope.userData.fieldToUpdate = 'email';
+     } else if (editedPetField, editedPet === 'phone') {
+       $scope.displayName = 'EDIT MY CONTACT INFO:';
+       $scope.accountViewModelState.userField = 'phone-fields';
+       $scope.userData.fieldToUpdate = 'phone';
+      } else if (editedPetField, editedPet === 'street' || editedPetField, editedPet === 'city' || editedPetField, editedPet === 'state' || editedPetField, editedPet === 'zip') {
+        $scope.displayName = 'EDIT MY ADDRESS INFO:';
+        $scope.accountViewModelState.userField = 'address-fields';
+        $scope.userData.fieldToUpdate = 'address';
+      } else if (editedPetField, editedPet === 'hospital') {
+        $scope.displayName = 'EDIT MY MEDICAL PROVIDER INFORMATION:';
+        $scope.accountViewModelState.userField = 'medical-fields';
+        $scope.userData.fieldToUpdate = 'hospital';
+      } else if (editedPetField, editedPet === 'password') {
+        $scope.displayName = 'UPDATE MY PASSWORD:';
+        $scope.accountViewModelState.userField = 'password-fields';
+        $scope.userData.fieldToUpdate = 'password';
+      };*/
+  };
+
+  $scope.validatePet = function (petDate) {
+    //VALIDATES PET BEFORE SENDING TO SERVER:
+        //$scope.savingUser = true - triggers loading state
+        $rootScope.registrationError = '';
+        var fieldToUpdate = petData.fieldToUpdate;
+        $scope.editSuccessMessage = "Succesfully updated your information!";
+
+          console.log("CALLED VALIDATE USER, VALIDATING THIS: ", petData);
+          console.log("CALLED VALIDATE USER, UPDATING THIS FIELD: ", fieldToUpdate);
+             
+         if (fieldToUpdate === 'age') {  
+
+            var petAge = Number(petData.age);
+              console.log("PET AGE TYPE NUMBER: ", petAge);
+
+           if (!petAge) {  //NEED TO VERIFY THAT THIS VALIDATES SUFFICIENTLY?
+             $rootScope.registrationError = 'Please enter a valid age for your pet';
+             $rootScope.$broadcast('registrationError');
+             return;
+           };
+           $scope.editSuccessMessage = "Succesfully updated your pet's age!";
+         } else if (fieldToUpdate === 'weight') {
+           if (petData.weight.length >= 4) {
+            $rootScope.registrationError = 'Woops! That seems awfully heavy for a house pet!';
+            $rootScope.$broadcast('registrationError');
+            return;
+           };
+           $scope.editSuccessMessage = "Succesfully updated your pet's weight!";
+         };
+
+          console.log("CALLING CONFIRM EDIT PET, END OF VALIDATE FN: ", JSON.stringify(petData));
+        $scope.confirmEditPet(petData);
+  };
+
+  $scope.validateUser = function (userData) {
     //VALIDATES USER BEFORE SENDING TO SERVER:
     //$scope.savingUser = true - triggers loading state
-
-      console.log("ANGULAR ERASES ALL OF MY DATA HERE:", userData);
 
     $scope.phoneConcat();
     $rootScope.registrationError = '';
@@ -235,6 +299,10 @@ angular.module('myApp.viewAccount', ['ngRoute'])
           $rootScope.$broadcast('registrationError');
         };  
       });
+  };
+
+  $scope.confirmEditPet = function (petData) {
+    
   };
 
   $scope.showUserInfo = function () {

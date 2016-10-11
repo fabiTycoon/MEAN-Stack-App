@@ -82,9 +82,7 @@ config(['$routeProvider', function($routeProvider) {
   };
 
   var getUsers = function (user) {
-    
     return $http.get('/api/users/', user);
-    
   };
 
   var approveRegistration = function (registrationId) {
