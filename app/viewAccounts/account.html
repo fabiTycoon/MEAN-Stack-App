@@ -323,12 +323,14 @@
         &nbsp;&nbsp;&nbsp;{{pet.name}}
       </div>
       <div>
-        <div class="col s6" id="account-pet-color" ng-if="pet.color !== ''"><label for="account-pet-color">Color:</label><p>{{pet.color}}<a ng-click="showEditUserField('city');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p></div>
-        <div class="col s6" id="account-pet-breed" ng-if="pet.breed !== ''"><label for="account-pet-breed">Breed:</label><p>{{pet.breed}}</p></div>
-        <div class="col s6" id="account-pet-weight"ng-if="pet.weight !== ''"><label for="account-pet-weight">Weight:</label><p>{{pet.weight}}</p></div>
-        <div class="col s6" id="account-pet-age" ng-if="pet.age !== ''"><label for="account-pet-age">Age:</label><p>{{pet.age}}</p></div>
-        <div class="col s6" id="account-pet-allergies" ng-if="pet.allergies !== ''"><label for="account-pet-allergies">Allergies:</label><p>{{pet.foodAllergies}}</p></div>
-        <div class="col s6" id="account-pet-notes" ng-if="pet.notes !== ''"><label for="account-pet-notes">Notes &amp; Comments:</label><p>{{pet.comments}}</p></div>
+        <div class="col s6" id="account-pet-color" ng-if="pet.color !== ''"><label for="account-pet-color">Color:</label><p>{{pet.color}}<a ng-click="showEditPetField('color');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p></div>
+        <div class="col s6" id="account-pet-breed" ng-if="pet.breed !== ''"><label for="account-pet-breed">Breed:</label><p>{{pet.breed}}<a ng-click="showEditPetField('breed');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p></div>
+        <div class="col s6" id="account-pet-weight"ng-if="pet.weight !== ''"><label for="account-pet-weight">Weight:</label><p>{{pet.weight}}<a ng-click="showEditPetField('weight');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p></div>
+        <div class="col s6" id="account-pet-age" ng-if="pet.age !== ''"><label for="account-pet-age">Age:</label><p>{{pet.age}}<a ng-click="showEditPetField('age');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p></div>
+        <div class="col s6" id="account-pet-brand" ng-if="pet.foodBrand !== ''"><label for="account-pet-brand">Food Brand:</label><p>{{pet.foodBrand}}<a ng-click="showEditPetField('food-brand');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p></div>
+        <div class="col s6" id="account-pet-servings" ng-if="pet.foodServings !== ''"><label for="account-pet-servings">Food Servings:</label><p>{{pet.foodServings}}<a ng-click="showEditPetField('food-servings');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p></div>
+        <div class="col s6" id="account-pet-allergies" ng-if="pet.allergies !== ''"><label for="account-pet-allergies">Allergies:</label><p>{{pet.foodAllergies}}<a ng-click="showEditPetField('food-allergies');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p></div>
+        <div class="col s6" id="account-pet-notes" ng-if="pet.notes !== ''"><label for="account-pet-notes">Notes &amp; Comments:</label><p>{{pet.comments}}<a ng-click="showEditPetField('comments');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p></div>
       </div>
     </li>
   </ul>
