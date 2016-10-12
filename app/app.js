@@ -37,6 +37,7 @@ config(['$routeProvider', function($routeProvider) {
 
   var logOut = function() {
     return $http.get('/api/users/logout');
+    $rootScope.user = {};
   };
 
   var addReservation = function (reservation) {
