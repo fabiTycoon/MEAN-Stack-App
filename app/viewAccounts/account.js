@@ -21,7 +21,9 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.editSuccessMessage = "Succesfully updated your information!";
 
   //IF USER CLICKS EDIT BUTTON, SHOW EDITABLE TEXT AREAS:
-  $scope.userData = $scope.userData || {};  
+  $scope.userData = $scope.userData || {}; 
+  $scope.petData = $scope.petData || {};  
+  $scope.editedPet = $scope.editedPet || {};  
 
   $scope.accountViewModelState = {
     userInfo: true,
@@ -119,7 +121,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
 
   $scope.showEditPetField = function (editedPetField, editedPet) {
      $scope.setDefaultState(); 
-     $scope.accountViewModelState.editingUser = true;
+     $scope.accountViewModelState.editingPet = true;
 
      //animate transition:
      $('#edit-container').addClass('animated flipOutY');
@@ -127,28 +129,24 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      $scope.refresh = false;
      $('#edit-container').removeClass('animated flipOutY');
      
-     //UPDATE THESE:
-     /*if (editedPetField, editedPet === 'email') {
-        $scope.displayName = 'EDIT MY CONTACT INFO:';
-        $scope.accountViewModelState.userField = 'email-fields';
-        $scope.userData.fieldToUpdate = 'email';
-     } else if (editedPetField, editedPet === 'phone') {
-       $scope.displayName = 'EDIT MY CONTACT INFO:';
-       $scope.accountViewModelState.userField = 'phone-fields';
-       $scope.userData.fieldToUpdate = 'phone';
-      } else if (editedPetField, editedPet === 'street' || editedPetField, editedPet === 'city' || editedPetField, editedPet === 'state' || editedPetField, editedPet === 'zip') {
-        $scope.displayName = 'EDIT MY ADDRESS INFO:';
-        $scope.accountViewModelState.userField = 'address-fields';
-        $scope.userData.fieldToUpdate = 'address';
-      } else if (editedPetField, editedPet === 'hospital') {
-        $scope.displayName = 'EDIT MY MEDICAL PROVIDER INFORMATION:';
-        $scope.accountViewModelState.userField = 'medical-fields';
-        $scope.userData.fieldToUpdate = 'hospital';
-      } else if (editedPetField, editedPet === 'password') {
-        $scope.displayName = 'UPDATE MY PASSWORD:';
-        $scope.accountViewModelState.userField = 'password-fields';
-        $scope.userData.fieldToUpdate = 'password';
-      };*/
+     //UPDATE THESE - NOT YET VERIFIED AS WORKING:
+     if (editedPetField === 'weight') {
+        $scope.displayName = 'EDIT MY PET\'S WEIGHT:';
+        $scope.accountViewModelState.petField = 'email-fields';
+        $scope.petData.fieldToUpdate = 'weight';
+     } else if (editedPetField === 'age') {
+       $scope.displayName = 'EDIT MY PET\'S AGE:';
+       $scope.accountViewModelState.petField = 'age-fields';
+       $scope.petData.fieldToUpdate = 'age';
+      } else if (editedPetField === 'food-brand' || editedPetField === 'food-servings' || editedPetField === 'food-allergies') {
+        $scope.displayName = 'EDIT MY PET\'S FOOD INFO:';
+        $scope.accountViewModelState.petField = 'food-fields';
+        $scope.petData.fieldToUpdate = 'food';
+      } else if (editedPetField === 'comments') {
+        $scope.displayName = 'ADD ADDITIONAL COMMENTS:';
+        $scope.accountViewModelState.petField = 'comments-fields';
+        $scope.petData.fieldToUpdate = 'comments';
+      };
   };
 
   $scope.validatePet = function (petDate) {
@@ -158,8 +156,8 @@ angular.module('myApp.viewAccount', ['ngRoute'])
         var fieldToUpdate = petData.fieldToUpdate;
         $scope.editSuccessMessage = "Succesfully updated your information!";
 
-          console.log("CALLED VALIDATE USER, VALIDATING THIS: ", petData);
-          console.log("CALLED VALIDATE USER, UPDATING THIS FIELD: ", fieldToUpdate);
+          console.log("CALLED VALIDATE PET, VALIDATING THIS: ", petData);
+          console.log("CALLED VALIDATE PET, UPDATING THIS FIELD: ", fieldToUpdate);
              
          if (fieldToUpdate === 'age') {  
 
@@ -302,7 +300,42 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   };
 
   $scope.confirmEditPet = function (petData) {
-    
+
+      console.log("CALLING confirmEditPet:", petData);
+
+    User.editPet(petData)
+      .then(function(res){
+
+        if (res) {console.log("EDIT USER SERVER RESPONSE: ", res.data);};
+        
+        if (res.data.success === true) {
+          var returnedPet = res.data.pet; 
+          
+          for (var i = 0; i < $rootScope.user.pets.length; i++) {
+            if ($rootScope.user.pets[i].name === returnedPet.name) {
+              $rootscope.user.pets[i] === returnedPet;
+            };
+          };
+
+          init();
+          console.log("UPDATED PET: ", returnedPet);
+
+            $scope.setDefaultState(true);
+            for (var key in $scope.petData) {
+              $scope.petData[key] = '';
+            };
+
+            /*
+            TO DO - SHOW UPDATE PET SUCCESS TOAST:
+            $timeout(function(){
+              Materialize.toast($scope.editSuccessMessage, 4000);
+            }, 500);*/
+
+        } else {
+          $rootScope.registrationError = res.data.err;
+          $rootScope.$broadcast('registrationError');
+        };  
+      });
   };
 
   $scope.showUserInfo = function () {
@@ -333,7 +366,22 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       console.log("VM STATE: ", $scope.accountViewModelState);
   };
 
-  $scope.showEditPet = function () {
+  $scope.showEditPet = function (petId) {
+
+    
+
+    if ($rootScope.user) {
+
+      for (var i = 0; i < $rootScope.user.pets.length; i++) {
+        //LOAD SELECTED PET
+
+
+      };
+    };
+
+
+
+
     $scope.setDefaultState(); 
     $scope.accountViewModelState.editingPet = true;
   };

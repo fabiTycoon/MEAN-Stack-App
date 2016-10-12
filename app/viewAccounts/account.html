@@ -323,7 +323,7 @@
         &nbsp;&nbsp;&nbsp;{{pet.name}}
       </div>
       <div>
-        <div class="col s6" id="account-pet-color" ng-if="pet.color !== ''"><label for="account-pet-color">Color:</label><p>{{pet.color}}</p></div>
+        <div class="col s6" id="account-pet-color" ng-if="pet.color !== ''"><label for="account-pet-color">Color:</label><p>{{pet.color}}<a ng-click="showEditUserField('city');"><i class="material-icons">mode_edit</i>&nbsp;&nbsp;&nbsp;</a></p></div>
         <div class="col s6" id="account-pet-breed" ng-if="pet.breed !== ''"><label for="account-pet-breed">Breed:</label><p>{{pet.breed}}</p></div>
         <div class="col s6" id="account-pet-weight"ng-if="pet.weight !== ''"><label for="account-pet-weight">Weight:</label><p>{{pet.weight}}</p></div>
         <div class="col s6" id="account-pet-age" ng-if="pet.age !== ''"><label for="account-pet-age">Age:</label><p>{{pet.age}}</p></div>

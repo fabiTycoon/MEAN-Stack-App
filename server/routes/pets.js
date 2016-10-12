@@ -48,25 +48,19 @@ router.put('/', function (req, res) {
   var updatedPet = req.body;
       console.log("THESE ARE THE FIELDS BEING UPDATED: ", updatedPet);
   var fieldToUpdate = req.body.fieldToUpdate;
-  var currentUsername = req.body.currentUsername;
-  if (!updatedPet.username) {
-    updatedPet.username = req.body.currentUsername;
-    updatedPet.email = req.body.currentUsername;
-  };
+  var currentId = req.body._id; //MAKE SURE THIS IS SET!
 
     console.log("HIT EDIT PET ENDPOINT, EDITING THIS:", fieldToUpdate);
-    console.log("FINDING THIS USER: ", currentUsername);
+    console.log("FINDING THIS PET: ", updatedPet);
 
-  User.findOne({username: currentUsername}, function (err, returnedPet) { 
-    console.log("FIND USER RETURNED THIS USER: ", returnedPet);
+  Pet.findById({currentId}, function (err, returnedPet) { 
+    console.log("FIND PET RETURNED THIS PET: ", returnedPet);
     if (err || !returnedPet) {
-      console.log("FIND USER RETURNED THIS ERROR: ", err)
-      return res.status(500).json({'message': 'Cannot find a user by that e-mail.', 'success': false, 'err': err})
+      console.log("FIND PET RETURNED THIS ERROR: ", err)
+      return res.status(500).json({'message': 'Cannot locate this pet.', 'success': false, 'err': err})
     ;}
 
-    if (fieldToUpdate === 'email') {
-      //need to do someething to avoid mongoose throwing duplicate key error
-    } else if (fieldToUpdate === 'weight') {
+    if (fieldToUpdate === 'weight') {
       returnedPet.weight = updatedPet.weight;
     } else if (fieldToUpdate === 'age') {
       returnedPet.age = updatedPet.age;
