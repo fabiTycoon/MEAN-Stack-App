@@ -75,6 +75,14 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.setDefaultState(true);
   };
 
+  $scope.cancelEditPet = function () {
+    for (var key in $scope.petData) {
+      $scope.petData[key] = '';
+    };
+    $scope.setDefaultState();
+    $scope.accountViewModelState.petInfo = true;
+  };
+
   $scope.phoneConcat = function () {
     var area = '',
      ph1 = '',
@@ -123,6 +131,9 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      $scope.setDefaultState(); 
      $scope.accountViewModelState.editingPet = true;
 
+
+          console.log("CALLED SHOW EDIT PET FIELD: ", editedPetField, editedPet);
+
      //animate transition:
      $('#edit-container').addClass('animated flipOutY');
      $scope.refresh = true;
@@ -132,8 +143,20 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      //UPDATE THESE - NOT YET VERIFIED AS WORKING:
      if (editedPetField === 'weight') {
         $scope.displayName = 'EDIT MY PET\'S WEIGHT:';
-        $scope.accountViewModelState.petField = 'email-fields';
+        $scope.accountViewModelState.petField = 'weight-field';
         $scope.petData.fieldToUpdate = 'weight';
+     } else if (editedPetField === 'breed') {
+      $scope.displayName = 'EDIT MY PET\'S BREED:';
+      $scope.accountViewModelState.petField = 'breed-fields';
+      $scope.petData.fieldToUpdate = 'breed';
+     } else if (editedPetField === 'color') {
+      $scope.displayName = 'EDIT MY PET\'S COLOR:';
+      $scope.accountViewModelState.petField = 'color-fields';
+      $scope.petData.fieldToUpdate = 'color';
+     } else if (editedUserField === 'name') {
+      $scope.displayName = 'EDIT MY PET\'S NAME:';
+       $scope.accountViewModelState.petField = 'name-fields';
+       $scope.petData.fieldToUpdate = 'name';
      } else if (editedPetField === 'age') {
        $scope.displayName = 'EDIT MY PET\'S AGE:';
        $scope.accountViewModelState.petField = 'age-fields';
@@ -260,7 +283,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.confirmEditUser = function (userData) {
 
     if ($rootScope.user) {
-      console.log("UPDATING USER (rootscope): ", $rootScope.user); 
+      console.log("UPDATING USER (rootScope): ", $rootScope.user); 
       userData.currentUsername = $rootScope.user.email;
       userData.email = $rootScope.user.email;
       userData.username = $rootScope.user.email;
@@ -347,6 +370,9 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.setDefaultState();
     $scope.displayTitle = "MY SAVED PETS";
     $('ul.tabs').tabs('select_tab', 'pets-tab');
+
+        console.log("PETS BE LIKE: ", $rootScope.user.pets)
+
     $scope.accountViewModelState.petInfo = true;
     $timeout(function(){
       $('.collapsible').collapsible({
