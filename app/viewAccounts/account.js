@@ -79,8 +79,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     for (var key in $scope.petData) {
       $scope.petData[key] = '';
     };
-    $scope.setDefaultState();
-    $scope.accountViewModelState.petInfo = true;
+    $scope.showProfilePets();
   };
 
   $scope.phoneConcat = function () {
@@ -130,6 +129,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
   $scope.showEditPetField = function (editedPetField, editedPet) {
      $scope.setDefaultState(); 
      $scope.accountViewModelState.editingPet = true;
+     $scope.accountViewModelState.petInfo = true;
 
 
           console.log("CALLED SHOW EDIT PET FIELD: ", editedPetField, editedPet);
@@ -143,7 +143,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      //UPDATE THESE - NOT YET VERIFIED AS WORKING:
      if (editedPetField === 'weight') {
         $scope.displayName = 'EDIT MY PET\'S WEIGHT:';
-        $scope.accountViewModelState.petField = 'weight-field';
+        $scope.accountViewModelState.petField = 'weight-fields';
         $scope.petData.fieldToUpdate = 'weight';
      } else if (editedPetField === 'breed') {
       $scope.displayName = 'EDIT MY PET\'S BREED:';
@@ -153,7 +153,7 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       $scope.displayName = 'EDIT MY PET\'S COLOR:';
       $scope.accountViewModelState.petField = 'color-fields';
       $scope.petData.fieldToUpdate = 'color';
-     } else if (editedUserField === 'name') {
+     } else if (editedPetField === 'name') {
       $scope.displayName = 'EDIT MY PET\'S NAME:';
        $scope.accountViewModelState.petField = 'name-fields';
        $scope.petData.fieldToUpdate = 'name';
@@ -374,12 +374,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
         console.log("PETS BE LIKE: ", $rootScope.user.pets)
 
     $scope.accountViewModelState.petInfo = true;
-    $timeout(function(){
-      $('.collapsible').collapsible({
-        accordion : false
-      });
-      return;
-    }, 200);
   };
 
 
@@ -390,37 +384,6 @@ angular.module('myApp.viewAccount', ['ngRoute'])
     $scope.profileTitle = "MY RESERVATIONS:";
     $scope.accountViewModelState.reservationInfo = true;
       console.log("VM STATE: ", $scope.accountViewModelState);
-  };
-
-  $scope.showEditPet = function (petId) {
-
-    
-
-    if ($rootScope.user) {
-
-      for (var i = 0; i < $rootScope.user.pets.length; i++) {
-        //LOAD SELECTED PET
-
-
-      };
-    };
-
-
-
-
-    $scope.setDefaultState(); 
-    $scope.accountViewModelState.editingPet = true;
-  };
-
-  $scope.validatePetEdits = function () {
-
-
-
-    $scope.confirmPetEdits();
-  };
-
-  $scope.confirmPetEdits = function () {
-
   };
 
   var formatDateString = function (dateString) {
