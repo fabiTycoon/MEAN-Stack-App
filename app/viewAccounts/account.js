@@ -59,6 +59,8 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       $scope.accountViewModelState[state] = false;
     };
 
+    $scope.editSuccessMessage = "Succesfully updated your information.";
+
     if (arguments.length !== 0) {
       $('ul.tabs').tabs('select_tab', 'user-tab');
       $scope.displayTitle = "MY ACCOUNT INFO:";
@@ -139,6 +141,8 @@ angular.module('myApp.viewAccount', ['ngRoute'])
      $scope.refresh = true;
      $scope.refresh = false;
      $('#edit-container').removeClass('animated flipOutY');
+
+     $scope.petData._id = editedPet;
      
      //UPDATE THESE - NOT YET VERIFIED AS WORKING:
      if (editedPetField === 'weight') {
@@ -172,12 +176,12 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       };
   };
 
-  $scope.validatePet = function (petDate) {
+  $scope.validatePet = function (petData) {
     //VALIDATES PET BEFORE SENDING TO SERVER:
         //$scope.savingUser = true - triggers loading state
         $rootScope.registrationError = '';
         var fieldToUpdate = petData.fieldToUpdate;
-        $scope.editSuccessMessage = "Succesfully updated your information!";
+        $scope.editSuccessMessage = "Succesfully updated your pet's information!";
 
           console.log("CALLED VALIDATE PET, VALIDATING THIS: ", petData);
           console.log("CALLED VALIDATE PET, UPDATING THIS FIELD: ", fieldToUpdate);
@@ -202,8 +206,10 @@ angular.module('myApp.viewAccount', ['ngRoute'])
            $scope.editSuccessMessage = "Succesfully updated your pet's weight!";
          };
 
-          console.log("CALLING CONFIRM EDIT PET, END OF VALIDATE FN: ", JSON.stringify(petData));
-        $scope.confirmEditPet(petData);
+         $scope.petData = petData;
+
+          console.log("CALLING CONFIRM EDIT PET, END OF VALIDATE FN: ", $scope.petData);
+        $scope.confirmEditPet();
   };
 
   $scope.validateUser = function (userData) {
@@ -322,9 +328,13 @@ angular.module('myApp.viewAccount', ['ngRoute'])
       });
   };
 
-  $scope.confirmEditPet = function (petData) {
+  $scope.confirmEditPet = function () {
+
+    var petData = $scope.petData;
 
       console.log("CALLING confirmEditPet:", petData);
+
+    
 
     User.editPet(petData)
       .then(function(res){
@@ -334,25 +344,38 @@ angular.module('myApp.viewAccount', ['ngRoute'])
         if (res.data.success === true) {
           var returnedPet = res.data.pet; 
           
+          //ADD PET TO USER:
           for (var i = 0; i < $rootScope.user.pets.length; i++) {
-            if ($rootScope.user.pets[i].name === returnedPet.name) {
-              $rootscope.user.pets[i] === returnedPet;
+            if ($rootScope.user.pets[i]._id === returnedPet._id) {
+              $rootScope.user.pets[i] = returnedPet;
+              console.log("SET RETURNED PET OBJECT ON USER: ", returnedPet);
+              console.log("SET RETURNED PET OBJECT ON USER: ", $rootScope.user);
             };
           };
 
-          init();
-          console.log("UPDATED PET: ", returnedPet);
+          //SAVE UPDATED USER INSTANCE:
+          User.addPetToUser($rootScope.user)
+            .then(function(res){
+              if (res.data.success === true) {
+                //$rootScope.user = res.data.updatedUser;
+                  console.log("SAVED PET BACK TO USER: ", $rootScope.user);
+              } else {
+                $rootScope.registrationError = "There was an error saving your data.  Please try again.";
+                $rootScope.$broadcast('registrationError');
+              };
+            });
 
-            $scope.setDefaultState(true);
+          console.log("UPDATED PET: ", returnedPet);
+            $scope.setDefaultState();
+            $scope.accountViewModelState.petInfo = true;
+
             for (var key in $scope.petData) {
               $scope.petData[key] = '';
             };
 
-            /*
-            TO DO - SHOW UPDATE PET SUCCESS TOAST:
             $timeout(function(){
               Materialize.toast($scope.editSuccessMessage, 4000);
-            }, 500);*/
+            }, 200);
 
         } else {
           $rootScope.registrationError = res.data.err;

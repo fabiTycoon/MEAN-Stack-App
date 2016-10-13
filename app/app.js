@@ -107,6 +107,7 @@ config(['$routeProvider', function($routeProvider) {
     logIn: logIn,
     logOut: logOut,
     addPet: addPet,
+    editPet: editPet,
     addPetToUser: addPetToUser,
     addReservationToUser: addReservationToUser,
     getPets: getPets,

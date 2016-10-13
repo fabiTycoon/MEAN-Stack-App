@@ -53,30 +53,30 @@ router.put('/', function (req, res) {
     console.log("HIT EDIT PET ENDPOINT, EDITING THIS:", fieldToUpdate);
     console.log("FINDING THIS PET: ", updatedPet);
 
-  Pet.findById({currentId}, function (err, returnedPet) { 
+  Pet.findOne({_id: currentId}, function (err, returnedPet) { 
     console.log("FIND PET RETURNED THIS PET: ", returnedPet);
     if (err || !returnedPet) {
       console.log("FIND PET RETURNED THIS ERROR: ", err)
-      return res.status(500).json({'message': 'Cannot locate this pet.', 'success': false, 'err': err})
-    ;}
+      return res.status(500).json({'message': 'Cannot locate this pet.', 'success': false, 'err': err});
+    };
 
     if (fieldToUpdate === 'weight') {
       returnedPet.weight = updatedPet.weight;
     } else if (fieldToUpdate === 'age') {
       returnedPet.age = updatedPet.age;
-    } else if (fieldToUpdate === 'food-brand') {
+    } else if (fieldToUpdate === 'breed') {
+      returnedPet.breed = updatedPet.breed;
+    } else if (fieldToUpdate === 'food-brand' || fieldToUpdate === 'food-servings' || fieldToUpdate === 'food-allergies') {
       returnedPet.foodBrand = updatedPet.foodBrand;
-    } else if (fieldToUpdate === 'food-servings') {
       returnedPet.foodServings = updatedPet.foodServings;
-    } else if (fieldToUpdate === 'food-allergies') {
-      returnedPet.foodAllergies = updatedPet.foodAllergies;
+      returnedPet.foodAllergies = updatedPet.foodAllergies; 
     } else if (fieldToUpdate === 'comments') {
       returnedPet.comments = updatedPet.comments;
     };
 
     console.log("SAVING THIS PET: ", JSON.stringify(returnedPet));
     returnedPet.save();
-    return res.status(200).json({'user': returnedPet, 'success': true});
+    return res.status(200).json({'pet': returnedPet, 'success': true});
   });  
 });
 
