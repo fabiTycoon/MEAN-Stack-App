@@ -1,4 +1,13 @@
-'use strict';
+//'use strict';  removed to fix IE11 compatibility - need something like this for a permanent fix: 
+
+/*(function (angular) {
+    "use strict";
+
+    angular.module('myApp').controller('webAddressController', function($scope) {
+        // Do things
+    });
+
+}(window.angular));​*/
 
 
 // Declare app level module which depends on views, and components
