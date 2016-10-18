@@ -52,6 +52,10 @@ router.get('/', function (req, res){
 
 });
 
+router.get('/status', function (req, res){
+  return res.status(200).json({'success': true});
+});
+
 router.get('/getUserByEmail/', function(req, res) {
     console.log("USER ID:", req)
     console.log("REQBODY:", req.body)

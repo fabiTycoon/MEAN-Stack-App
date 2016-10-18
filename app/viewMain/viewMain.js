@@ -13,6 +13,7 @@ angular.module('myApp.viewMain', ['ngRoute'])
 
   $rootScope.signingUp = false;
 
+
   $scope.logOut = function () {
     if ($rootScope.user) {
       User.logOut()
@@ -25,8 +26,20 @@ angular.module('myApp.viewMain', ['ngRoute'])
   };
 
   var init = function () {
+    //get user from session if exists and assign to rootScope, otherwise clear
+    User.userStatus()
+      .then(function (res) {
+        if (res.user) {
+          console.log("SET USER: ", res.user);
+          $rootScope.user = res.user;
+        } else {
+          console.log("CLEARED USER");
+          $rootScope.user = {};
+          $rootScope.user.username = '';
+        };
+      });
+
     $(document).ready(function(){
-      $('.parallax').parallax();
       $(".button-collapse").sideNav();    
     });
   };
