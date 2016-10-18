@@ -68,7 +68,7 @@ app.listen(port, function() {
 
 
 
-//CRON JOBS:
+//CRON JOBS & HELPER FNS:
 
 var getReservations = function (callback) {
 
@@ -96,8 +96,7 @@ var getReservations = function (callback) {
 
             // pass the relevant data back to the callback
             callback(null, {
-                email: parsed.email,
-                password: parsed.pass
+                reservations: parsed.reservations
             });
         });
     }).on('error', function(err) {
@@ -107,12 +106,17 @@ var getReservations = function (callback) {
     });
 };
 
-var reservationReminderJob = cron.job("00 00 09 * * 1-5", function (){
-  //check to see if there are upcoming reservations && they've asked for reminder
+var reservationReminderJob = new cron.CronJob("00 30 07 * * 1-5", function () {
+  //fn runs every weekday at 7:30am
+  var retrievedReservations = function (reservations) {
+    //not sure about this...
+    getReservations(reservations);
+  };
+
+}, function () {
+  //runs once job stops
 
 
-
-  //if sms or e-mail reminder, send reminders.
 });
 
 //START CRON JOBS:
