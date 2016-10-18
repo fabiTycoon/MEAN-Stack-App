@@ -18,6 +18,10 @@
 label {
   font-size: 1em !important; }
 
+.tab a {
+  font-size: 1.35em;
+  cursor: pointer; }
+
 #toast-container {
   left: auto !important;
   left: 12% !important; }
