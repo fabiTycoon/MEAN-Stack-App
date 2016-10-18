@@ -57,6 +57,11 @@ label {
   fill: #f5f5f5;
   transform: translateY(-0.5em); }
 
+.pet-icon-account svg {
+  height: 1.25em;
+  width: 1.25em;
+  transform: translateY(0.25em); }
+
 .pet-icon-returning svg {
   margin-top: 2em;
   height: 5em;

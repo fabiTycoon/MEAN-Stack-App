@@ -309,9 +309,7 @@
           <!-- PET ITEM VIEW -->
           <div ng-repeat="pet in user.pets" ng-if="accountViewModelState.editingPet === false">
             <div class="account-pets-header">
-              <span ng-if="pet.type === 'dog'" id="account-pets-header-icon"> <!-- SMALL DOG ICON HERE --> </span>
-              <span ng-if="pet.type === 'cat'" id="account-pets-header-icon"> <!-- SMALL CAT ICON HERE --> </span>
-              <h4>{{pet.name}}</h4>
+              <h4>{{pet.name}} &nbsp; <add-dog-icon ng-if="pet.type === 'dog'" class="pet-icon-account"></add-dog-icon> <add-cat-icon ng-if="pet.type === 'cat'" class="pet-icon-account"></add-cat-icon></h4>
               <hr>
             </div>
             <div class="row">
