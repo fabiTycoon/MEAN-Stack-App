@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var path = require('path');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var CronJob = require('cron');
 
 //PATHS:
 var port = process.env.PORT || 8080; 
@@ -28,7 +29,7 @@ app.use(morgan('dev'));
 // Parse incoming cookies
 app.use(cookieParser());
 app.use(require('express-session')({
-    secret: 'many cats on a keyboard typing away',
+    secret: 'many fluffly snuggle cats on a keyboard typing away',
     resave: false,
     saveUninitialized: false
 }));
@@ -64,6 +65,17 @@ app.listen(port, function() {
     console.log('Listening on port %d in mode %s', port, app.get('env'));
   });
 
+
+
+//CRON JOBS:
+
+var reservationReminderJob = cron.job("00 00 09 * * 1-5", function (){
+  //check to see if there are upcoming reservations && they've asked for reminder
+  //if sms or e-mail reminder, send reminders.
+});
+
+//START CRON JOBS:
+reservationReminderJob.start();
 
 // ERROR HANDLERS:
 // development error handler
