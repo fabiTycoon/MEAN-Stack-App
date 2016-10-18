@@ -8,7 +8,8 @@ var mongoose = require('mongoose');
 var path = require('path');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var CronJob = require('cron');
+var cron = require('cron');
+var http = require('http');
 
 //PATHS:
 var port = process.env.PORT || 8080; 
@@ -69,8 +70,48 @@ app.listen(port, function() {
 
 //CRON JOBS:
 
+var getReservations = function (callback) {
+
+    return http.get({
+        //host: 'hollistonmeadows.com',
+        path: '/bookings'
+    }, function(res) {
+        // explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
+        res.setEncoding('utf8');
+
+        // incrementally capture the incoming response body
+        var body = '';
+        res.on('data', function(d) {
+            body += d;
+        });
+
+        // do whatever we want with the response once it's done
+        res.on('end', function() {
+            try {
+                var parsed = JSON.parse(body);
+            } catch (err) {
+                console.error('Unable to parse response as JSON', err);
+                return callback(err);
+            }
+
+            // pass the relevant data back to the callback
+            callback(null, {
+                email: parsed.email,
+                password: parsed.pass
+            });
+        });
+    }).on('error', function(err) {
+        // handle errors with the request itself
+        console.error('Error with the request:', err.message);
+        callback(err);
+    });
+};
+
 var reservationReminderJob = cron.job("00 00 09 * * 1-5", function (){
   //check to see if there are upcoming reservations && they've asked for reminder
+
+
+
   //if sms or e-mail reminder, send reminders.
 });
 
