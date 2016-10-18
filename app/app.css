@@ -15,6 +15,9 @@
   #social-icon:hover {
     fill: #c2c2c2; }
 
+label {
+  font-size: 1em !important; }
+
 #toast-container {
   left: auto !important;
   left: 12% !important; }

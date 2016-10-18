@@ -106,15 +106,39 @@ var getReservations = function (callback) {
     });
 };
 
-var reservationReminderJob = new cron.CronJob("00 30 07 * * 1-5", function () {
+var reservationReminderJob = new cron.CronJob("00 30 07 * * 1-7", function () {
   //fn runs every weekday at 7:30am
-  var retrievedReservations = function (reservations) {
+  var reservations = function (reservations) {
     //not sure about this...
     getReservations(reservations);
   };
 
 }, function () {
   //runs once job stops
+
+  if (reservations.length > 0) {
+    for (var i = 0; i < reservations.length; i++) {
+
+      var today = Date.now(); 
+
+      var textReminders = [];
+      var emailReminders = [];
+
+
+      if (reservations[i].checkInDate == today && reservations[i].reminder === true) {
+        //how to make sure this checks the day and not the precise time?
+
+        if (reservations[i].reminderMethod === 'email') {
+          emailReminders.push(reservations[i]);
+        } else if (reservations[i].reminderMethod === 'text')
+        //verify this is the correct property...
+        textReminders.push(reservations[i]);
+      };
+
+
+    };
+  }; 
+
 
 
 });

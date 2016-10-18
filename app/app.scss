@@ -13,6 +13,7 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 
 // THEME FONTS:
 
+
 // NAV & FOOTER COMPONENTS:
 .menu-bar {
   $background: $primary-color;
@@ -43,6 +44,10 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 }
 
 // APP WIDE STYLES:
+
+label {
+  font-size: 1em !important;
+}
 
 #toast-container {
   left: auto !important;
