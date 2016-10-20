@@ -49,6 +49,10 @@ config(['$routeProvider', function($routeProvider) {
     $rootScope.user = {};
   };
 
+  var resetPassword = function (user) {
+    return $http.post('/api/users/reset', user);
+  };
+
   var userStatus = function () {
     return $http.get('/api/users/status');
   };
@@ -119,6 +123,7 @@ config(['$routeProvider', function($routeProvider) {
     registrationError: registrationError,
     logIn: logIn,
     logOut: logOut,
+    resetPassword: resetPassword,
     userStatus: userStatus,
     addPet: addPet,
     editPet: editPet,

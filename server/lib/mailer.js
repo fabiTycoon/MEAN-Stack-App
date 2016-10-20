@@ -40,6 +40,7 @@ var sendNewUserEmail = function (email) {
 
 var sendEmail = function (emailConfig) {
   //SENT WHEN ADMIN USER CONFIRMS A RESERVATION
+    console.log("SENDING EMAIL FROM MAILER.JS: ", emailConfig);
 
   var mailOptions = {
     from: emailAccountString,
