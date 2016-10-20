@@ -29,7 +29,7 @@
     <a href="#" class="brand-logo hide-on-med-and-down">Holliston Meadows Pet Resort</a>
     <a href="#" class="brand-logo align-center show-on-small-only">Holliston Meadows</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down red darken-4">
-      <li class="action-item"><a href="#/book">BOOK NOW</a></li> 
+      <li ng-if="accountViewModelState" class="action-item"><a href="#/book">BOOK NOW</a></li> 
       <li><a href="#/viewAbout">About</a></li>
       <!--<li><a href="#/view2">Gallery</a></li>-->
       <li ng-show="!user || (user && user.username.length == 0)"><a href="#/login">Log In</a></li>
@@ -37,7 +37,7 @@
       <li ng-show="user && user.username.length > 0"><a href="#/logout">Log Out</a></li>
     </ul>
      <ul class="side-nav" id="mobile-menu">
-       <li class="action-item"><a href="#/book">BOOK NOW</a></li> 
+       <li ng-if="accountViewModelState" class="action-item"><a href="#/book">BOOK NOW</a></li> 
         <li><a href="#/viewAbout">About</a></li>
         <!--<li><a href="#/view2">Gallery</a></li>-->
         <li ng-show="!user || user.username.length == 0"><a href="#/login">Log In</a></li>
