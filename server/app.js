@@ -8,8 +8,10 @@ var mongoose = require('mongoose');
 var path = require('path');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var request = require('request');
 var cron = require('cron');
-var http = require('http');
+var sms = ('./lib/sms.js');
+var email = ('./lib/mailer.js');
 
 //PATHS:
 var port = process.env.PORT || 8080; 
@@ -72,47 +74,43 @@ app.listen(port, function() {
 
 var getReservations = function (callback) {
 
-    return http.get({
-        //host: 'hollistonmeadows.com',
-        path: '/bookings'
-    }, function(res) {
-        // explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
-        res.setEncoding('utf8');
+  var reservationEndpoint = '';
 
-        // incrementally capture the incoming response body
-        var body = '';
-        res.on('data', function(d) {
-            body += d;
-        });
+  //NOT SURE THAT THESE ROUTES ARE 100%:
+  if (app.get('env') === 'development') {
+    reservationEndpoint = '#/reservations';
+  } else {
+    reservationEndpoint = 'http://wwww.hollistonmeadows.com/#/api/bookings';
+  };
 
-        // do whatever we want with the response once it's done
-        res.on('end', function() {
-            try {
-                var parsed = JSON.parse(body);
-            } catch (err) {
-                console.error('Unable to parse response as JSON', err);
-                return callback(err);
-            }
-
-            // pass the relevant data back to the callback
-            callback(null, {
-                reservations: parsed.reservations
-            });
-        });
-    }).on('error', function(err) {
-        // handle errors with the request itself
-        console.error('Error with the request:', err.message);
-        callback(err);
-    });
+  request(reservationEndpoint, function (error, res, body) {
+    if (!error && res.statusCode == 200) {
+        console.log("HIT RESERVATION ENDPOINT FROM GET RESERVATIONS: ", res);
+        console.log("HIT RESERVATION ENDPOINT FROM GET RESERVATIONS: ", res.reservations);
+      return res.reservations; 
+    } else if (error) {
+      return res.status(500).json({'success': false, 'error': error, 'err': err});
+    };
+  })
 };
+
+var emailPhoneReminders = function (reservations) {
+   var emailConfig = {
+        toEmail: 'info@hollistonmeadows.com',
+        subjectString: 'UPCOMING RESERVATIONS - PHONE REMINDER REQUESTED',
+        bodyHtml: '<h3>TODAY\'S REMINDERS:</h3><br><p>The following customers have requested a reminder about their upcoming stay at Holliston Meadows.  Please call these customers as soon as possible and politely remind them of their upcoming appointment:'
+      };  
+
+      //TO DO: APPEND HTML TABLE OF RESERVATIONS:
+
+      email.sendEmail(emailConfig);
+};
+
 
 var reservationReminderJob = new cron.CronJob("00 30 07 * * 1-7", function () {
   //fn runs every weekday at 7:30am
-  var reservations = function (reservations) {
-    //not sure about this...
-    getReservations(reservations);
-  };
-
+  var reservations = getReservations();
+    console.log("PULLED RESERVATIONS CRON JOB TASK: ", reservations);
 }, function () {
   //runs once job stops
 
@@ -120,24 +118,39 @@ var reservationReminderJob = new cron.CronJob("00 30 07 * * 1-7", function () {
     for (var i = 0; i < reservations.length; i++) {
 
       var today = Date.now(); 
-
-      var textReminders = [];
       var emailReminders = [];
+      var textRemindersBoarding = [];
+      var textRemindersDaycare = [];
+      var phoneReminders = [];
+
+      var timeDifference = reservations[i].checkInDate - today;
 
 
-      if (reservations[i].checkInDate == today && reservations[i].reminder === true) {
-        //how to make sure this checks the day and not the precise time?
 
-        if (reservations[i].reminderMethod === 'email') {
+      if (reservations[i].reminder && timeDifference <= 129600000) { //36 hrs
+
+        var reminderMethod = reservations[i].reminderMethod;
+
+        if (reminderMethod === 'email') {
           emailReminders.push(reservations[i]);
-        } else if (reservations[i].reminderMethod === 'text')
-        //verify this is the correct property...
-        textReminders.push(reservations[i]);
-      };
+        } else if (reminderMethod === 'text') {
 
+            if (reservations[i].service === 'boarding') {
+              textRemindersBoarding.push(reservations[i]);
+            } else if (reservations[i].service === 'daycare') {
+              textRemindersDaycare.push(reservations[i]);            
+            };
 
+        } else if (reminderMethod === 'phone'){
+         phoneReminders.push(reservations[i]);
+        };  
+
+      sms.sendDayCareReminders(textRemindersDaycare);
+      sms.sendBoardingReminders(textRemindersBoarding);
+      emailPhoneReminders(reservations);
     };
-  }; 
+  };
+}; 
 
 
 
