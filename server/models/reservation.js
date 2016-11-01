@@ -13,6 +13,8 @@ var ReservationSchema = new Schema({
   adminApproved: {type: Boolean, default: null},
   checkOutTime: String,
   owner: {type: String, required: true},
+  ownerEmail: String,
+  ownerPhone: String,
   pets: {type: Array, required: true},
   reminder: {type: Boolean, default: true}, 
   reminderMethod: String,
