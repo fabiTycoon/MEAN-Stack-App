@@ -1,24 +1,26 @@
 var nodemailer = require('nodemailer');
+// ---------- NODEMAILER CONFIG ------------
+var emailAccountString = 'npoling@gmail.com';
+var passwordString = process.env.EMAIL_PASSWORD;
+
+var smtpTransport = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: emailAccountString,
+    pass: passwordString //
+  }
+});
+
 
 
 var emailHelpers = function () {
   return {
-    // ---------- NODEMAILER CONFIG ------------
-    var emailAccountString = 'npoling@gmail.com';
-    var passwordString = process.env.EMAIL_PASSWORD;
 
-    var smtpTransport = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: emailAccountString,
-        pass: passwordString //
-      }
-    });
-
+    
 
 
     // ---------- E-MAIL HELPER FNS ----------
-    var sendNewUserEmail = function (email) {
+    sendNewUserEmail: function (email) {
 
       //TO DO - UPDATE PATH TO DYNAMIC VERIFICATION URL
       var mailOptions = {
@@ -37,10 +39,10 @@ var emailHelpers = function () {
         }
         smtpTransport.close();
       });
-    };
+    },
 
 
-    var sendEmail = function (emailConfig) {
+    sendEmail: function (emailConfig) {
       //SENT WHEN ADMIN USER CONFIRMS A RESERVATION
         console.log("SENDING EMAIL FROM MAILER.JS: ", emailConfig);
 
@@ -60,9 +62,9 @@ var emailHelpers = function () {
         }
         smtpTransport.close();
       });
-    };
+    },
 
-    var sendNewUserEmailAdmin = function (user) {
+    sendNewUserEmailAdmin: function (user) {
 
       var emailConfig = {
         toEmail: emailAccountString,
@@ -82,9 +84,9 @@ var emailHelpers = function () {
 
       sendEmail(emailConfig);
 
-    };
+    },
 
-    var sendNewReservationEmailAdmin = function (reservation) {
+    sendNewReservationEmailAdmin: function (reservation) {
 
         console.log("SENDING EMAIL FOR THIS RES: ", reservation);
 
@@ -148,11 +150,9 @@ var emailHelpers = function () {
           };
 
         sendEmail(emailConfig);
-    };
+    }
   };
 };
-
-
 
 module.exports = emailHelpers();
 

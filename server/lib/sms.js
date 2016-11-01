@@ -4,6 +4,10 @@ var token = process.env.TWILIO_AUTH_TOKEN || '';
 var twilioNumber = 'YOUR_TWILIO_NUMBER';
 var client = twilio(accountSid, token);
 
+var smsHelpers = function () {
+  
+};
+
  
 var sendReminder = function (userData) {
   // Send the text message.
