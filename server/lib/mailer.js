@@ -138,8 +138,8 @@ var emailHelpers = function () {
         bodyText += "<br><p><strong>PETS: </strong>" + petString  + "</p>"
         bodyText += "<br><p><strong>REMIND 24HRS IN ADVANCE?: </strong>" + reminderString + "</p>";
         bodyText += "<br><p><strong>PREFERRED CONTACT METHOD: </strong>" + reservation.reminderMethod + "</p>";
-        bodyText += "<br><p><strong>CONTACT PHONE: </strong>" + reservation.reminderMethod + "</p>";
-        bodyText += "<br><p><strong>CONTACT EMAIL: </strong>" + reservation.owner + "</p>";
+        bodyText += "<br><p><strong>CONTACT PHONE: </strong>" + reservation.ownerPhone + "</p>";
+        bodyText += "<br><p><strong>CONTACT EMAIL: </strong>" + reservation.ownerEmail + "</p>";
 
           console.log("SENDING EMAIL: ", recipientEmail, subject, bodyText);
 

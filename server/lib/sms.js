@@ -19,7 +19,7 @@ var smsHelpers = function () {
       for (var i = 0; i < reminderList.length; i++) {
 
         var userData = {};
-        userData.contactPhone = "+" + reminderList[i].contactPhone;  //THIS WILL NEED TO BE ADDED TO THE REMINDER LIST BEFORE THIS FN IS CALLED
+        userData.contactPhone = "+" + reminderList[i].ownerPhone;  
         userData.appointmentDate = reminderList[i].checkInDate; 
         userData.bodyMessage = "This is a reminder that you have a daycare appointment scheduled tomorrow for your ";
         
@@ -38,7 +38,7 @@ var smsHelpers = function () {
       for (var i = 0; i < reminderList.length; i++) {
 
         var userData = {};
-        userData.contactPhone = reminderList[i].contactPhone;  //THIS WILL NEED TO BE ADDED TO THE REMINDER LIST BEFORE THIS FN IS CALLED
+        userData.contactPhone = reminderList[i].ownerPhone;  //THIS WILL NEED TO BE ADDED TO THE REMINDER LIST BEFORE THIS FN IS CALLED
         userData.appointmentDate = reminderList[i].checkInDate; 
         userData.bodyMessage = "This is a reminder that your ";
         
