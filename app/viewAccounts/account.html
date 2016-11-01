@@ -309,9 +309,7 @@
           <!-- PET ITEM VIEW -->
           <div ng-repeat="pet in user.pets" ng-if="accountViewModelState.editingPet === false">
             <div class="account-pets-header">
-              <span ng-if="pet.type === 'dog'" id="account-pets-header-icon"> <!-- SMALL DOG ICON HERE --> </span>
-              <span ng-if="pet.type === 'cat'" id="account-pets-header-icon"> <!-- SMALL CAT ICON HERE --> </span>
-              <h4>{{pet.name}}</h4>
+              <h4>{{pet.name}} &nbsp; <add-dog-icon ng-if="pet.type === 'dog'" class="pet-icon-account"></add-dog-icon> <add-cat-icon ng-if="pet.type === 'cat'" class="pet-icon-account"></add-cat-icon></h4>
               <hr>
             </div>
             <div class="row">
@@ -354,8 +352,8 @@
                   <a ng-click="showEditPetField('food-servings', pet._id);">&nbsp;&nbsp;&nbsp;<i class="material-icons">mode_edit</i></a>
                 </p>
               </div>
-              <div class="col s4" id="account-pet-allergies" ng-if="pet.allergies !== ''">
-                <label for="account-pet-allergies">Allergies:</label>
+              <div class="col s4" id="account-pet-allergies" ng-if="pet.foodAllergies !== ''">
+                <label for="account-pet-allergies">Food &amp; Other Allergies:</label>
                 <p class="account-edit">{{pet.foodAllergies}}
                   <a ng-click="showEditPetField('food-allergies', pet._id);">&nbsp;&nbsp;&nbsp;<i class="material-icons">mode_edit</i></a>
                 </p>
@@ -386,6 +384,12 @@
               </div>
             </div>
 
+            <div class="row" id="age-fields" ng-if="accountViewModelState.editingPet === true">
+              <div class="col s6" id="age-field" ng-if="accountViewModelState.petField === 'age-fields'">
+                <label for="age-field">Age:</label><input type="number" ng-model="petData.age"></input>
+              </div>
+            </div>
+
             <div class="row" id="breed-fields" ng-if="accountViewModelState.editingPet === true">
               <div class="col s6" id="breed-field" ng-if="accountViewModelState.petField === 'breed-fields'">
                 <label for="breed-field">Breed:</label><input type="text" ng-model="petData.breed"></input>
@@ -399,8 +403,14 @@
             </div>
 
             <div class="row" ng-if="accountViewModelState.editingPet === true && accountViewModelState.petField === 'color-fields'">
-              <div class="col s6" id="color-field">
+              <div class="col s10 offset-s1" id="color-field">
                 <label for="color-field">Color:</label><input type="text" pattern="" ng-model="petData.color"></input>
+              </div>
+            </div>
+
+            <div class="row" id="comments-fields" ng-if="accountViewModelState.editingPet === true">
+              <div class="col s6" id="comments-field" ng-if="accountViewModelState.petField === 'comments-fields'">
+                <label for="comments-field">Notes &amp; Comments:</label><textarea rows="4" ng-model="petData.comments"></textarea>
               </div>
             </div>
 

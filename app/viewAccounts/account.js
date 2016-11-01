@@ -166,11 +166,11 @@ angular.module('myApp.viewAccount', ['ngRoute'])
        $scope.accountViewModelState.petField = 'age-fields';
        $scope.petData.fieldToUpdate = 'age';
       } else if (editedPetField === 'food-brand' || editedPetField === 'food-servings' || editedPetField === 'food-allergies') {
-        $scope.displayName = 'EDIT MY PET\'S FOOD INFO:';
+        $scope.displayName = 'EDIT MY PET\'S FOOD & ALLERGY INFO:';
         $scope.accountViewModelState.petField = 'food-fields';
         $scope.petData.fieldToUpdate = 'food';
       } else if (editedPetField === 'comments') {
-        $scope.displayName = 'ADD ADDITIONAL COMMENTS:';
+        $scope.displayName = 'ADD ADDITIONAL COMMENTS FOR THIS PET:';
         $scope.accountViewModelState.petField = 'comments-fields';
         $scope.petData.fieldToUpdate = 'comments';
       };

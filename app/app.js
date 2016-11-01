@@ -49,6 +49,14 @@ config(['$routeProvider', function($routeProvider) {
     $rootScope.user = {};
   };
 
+  var resetPassword = function (user) {
+    return $http.post('/api/users/reset', user);
+  };
+
+  var userStatus = function () {
+    return $http.get('/api/users/status');
+  };
+
   var addReservation = function (reservation) {
       console.log("CALLED RESERVATION FACTORY: ", reservation);
     return $http.post('/api/bookings/new', reservation);
@@ -115,6 +123,8 @@ config(['$routeProvider', function($routeProvider) {
     registrationError: registrationError,
     logIn: logIn,
     logOut: logOut,
+    resetPassword: resetPassword,
+    userStatus: userStatus,
     addPet: addPet,
     editPet: editPet,
     addPetToUser: addPetToUser,

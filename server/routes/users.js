@@ -4,88 +4,7 @@ var passport = require('passport');
 var mongoose = require('mongoose');
 var User = require('../models/users.js');
 var passportLocalMongoose = require('passport-local-mongoose');
-var nodemailer = require('nodemailer');
-
-
-// ---------- NODEMAILER CONFIG ------------
-var emailAccountString = 'npoling@gmail.com';
-var passwordString = process.env.EMAIL_PASSWORD;
-
-var smtpTransport = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: emailAccountString,
-    pass: passwordString //
-  }
-});
-
-// ---------- E-MAIL HELPER FNS ----------
-var sendNewUserEmail = function (email) {
-
-  //TO DO - UPDATE PATH TO DYNAMIC VERIFICATION URL
-  var mailOptions = {
-    from: emailAccountString,
-    to: email,
-    subject: "Welcome to Holliston Meadows!",
-    generateTextFromHTML: true,
-    html: "<h3>WELCOME!</h3<br><p>We're excited to have your pets stay with us!</p><br><p>Please click <a href='' target='_blank'>here</a> to verify your email!</p><br><br><p>&nbsp;&nbsp;&nbsp;Regards,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Holliston Meadows</p>"
-  };
-
-  smtpTransport.sendMail(mailOptions, function(error, res) {
-    if (error) {
-      console.log("FAILED TO SEND NEW USER EMAIL: ", error);
-    } else {
-      console.log("SENT NEW USER EMAIL: ", res);
-    }
-    smtpTransport.close();
-  });
-};
-
-
-var sendEmail = function (emailConfig) {
-  //SENT WHEN ADMIN USER CONFIRMS A RESERVATION
-
-  var mailOptions = {
-    from: emailAccountString,
-    to: emailConfig.toEmail,
-    subject: emailConfig.subjectString,
-    generateTextFromHTML: true,
-    html: emailConfig.bodyHtml  
-  };
-
-  smtpTransport.sendMail(mailOptions, function(error, res) {
-    if (error) {
-      console.log("FAILED TO SEND NEW EMAIL: ", error);
-    } else {
-      console.log("SENT NEW USER EMAIL: ", res);
-    }
-    smtpTransport.close();
-  });
-};
-
-var sendNewUserEmailAdmin = function (user) {
-
-  var emailConfig = {
-    toEmail: emailAccountString,
-    subjectString: 'NEW USER REGISTERED - ' + user.username + " - " + user.last + ", " + user.first,
-    bodyHtml: "<h4>NEW USER: " + user.username +"</h4><br><p><strong>" + user.last + ", " + user.first + "</strong></p><br>"
-  };
-
-  emailConfig.bodyHtml += "<p>A new user has registered on HollistonMeadows.com!<br>Here's their information for your reference:</p>"
-
-  emailConfig.bodyHtml += "<br><p><strong>PHONE: </strong>" + user.phone + "</p>";
-  emailConfig.bodyHtml += "<p><strong>ADDRESS: </strong>" + user.street + "</p>";
-  emailConfig.bodyHtml += "<p><strong>CITY: </strong>" + user.city + "</p>";
-  emailConfig.bodyHtml += "<p><strong>STATE: </strong>" + user.state  + "</p>"
-  emailConfig.bodyHtml += "<p><strong>ZIP: </strong>" + user.zip + "</p>";
-  emailConfig.bodyHtml += "<p><strong>HOSPITAL: </strong>" + user.hospital + "</p>";
-  emailConfig.bodyHtml += "<p><strong>REGISTERED AT: </strong>" + user.created_at + "</p>";
-
-  sendEmail(emailConfig);
-
-};
-
-// ---------- END E-MAIL HELPER FNS ----------
+var email = require('../lib/mailer.js');
 
 
 // ----- HANDLERS FOR CALLS TO API/USERS -----
@@ -131,6 +50,10 @@ router.get('/', function (req, res){
 
   //};
 
+});
+
+router.get('/status', function (req, res){
+  return res.status(200).json({'success': true});
 });
 
 router.get('/getUserByEmail/', function(req, res) {
@@ -189,8 +112,8 @@ router.post('/register', function(req, res) {
       });
     } else {
 
-      sendNewUserEmail(user.email);
-      sendNewUserEmailAdmin(user);
+      email.sendNewUserEmail(user.email);
+      email.sendNewUserEmailAdmin(user);
 
       var returnedUser = {
         _id: user._id,
@@ -293,6 +216,57 @@ router.post('/login', passport.authenticate('local'), function(req, res, next){
     verified: true
   };
   return res.status(200).json({'user': returnedUser, 'isLoggedIn': true});
+});
+
+router.post('/reset', function (req, res) {
+
+  var userEmail = req.body.email;
+  
+  var generatePassword = function () {
+    var charSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!$^&*",
+        charCount = charSet.length,
+        passLength = 8,
+        tempPass = '',
+        randomIndex = 0,
+        i = 0,
+        j = 0;
+
+    var getRandomArbitrary = function (min, max) {
+      return Math.random() * (max - min) + min;
+    };
+
+    while (j <= passLength) {
+      randomIndex = getRandomArbitrary(0, charCount);
+      tempPass += charSet.charAt(randomIndex);
+      j++;
+    };
+    return tempPass;
+  };
+
+  User.findOne({username: userEmail}, function (err, returnedUser) { 
+
+    if (err) {
+      return res.status(500).json({'success': false, 'error': err});
+    } else {
+
+      var userPass = generatePassword();
+      returnedUser.password = userPass;
+      returnedUser.save();
+
+      var temporaryPasswordEmail = {
+        toEmail: returnedUser.username,
+        subjectString: "Your Temporary Password for HollistonMeadows.com",
+        bodyHtml: "<h4>YOUR NEW PASSWORD:</h4><br><br><p>We've temporarily reset your password to the following: "
+      };
+
+      temporaryPasswordEmail.bodyHtml += userPass;
+      temporaryPasswordEmail.bodyHtml += "<br>Please <a href='http://hollistonmeadows.com/#/login'>login</a> and reset your password as soon as possible.</p><br><p> Best regards, <br><br> Holliston Meadows";
+      email.sendEmail(temporaryPasswordEmail);
+        console.log("SENDING EMAIL: ", temporaryPasswordEmail);
+        console.log("SAVED USER PASSWORD: ", tempPass, returnedUser);
+      return res.status(200).json({'success': true, 'user': returnedUser});
+    };
+  });
 });
 
 
@@ -419,7 +393,7 @@ router.post('/addReservation', function(req, res){
       if (err) {
         return res.status(500).json({'success': false, 'error':err});
       } else {
-        sendNewReservationEmail(returnedReservation);
+        email.sendNewReservationEmail(returnedReservation);
         return res.status(200).json({'success': true, 'reservation': returnedReservation});
       };
   });

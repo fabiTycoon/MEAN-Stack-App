@@ -386,7 +386,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         console.log("CONTACT CHECKS: ", contactEmail, contactPhone, contactText);
 
       if (contactEmail === false && contactPhone === false && contactText === false) {
-        $rootScope.registrationError = "Please select a preferred contact method to confrim your reservation";
+        $rootScope.registrationError = "Please select a preferred contact method to confirm your reservation";
         $rootScope.$broadcast('registrationError');
         return; 
       } 
@@ -506,25 +506,22 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
 
     User.addPet(newPet)
       .then(function(res){
-        console.log("ADDED PET: ", res);
-        console.log("PET OBJECT: ", res.data.pet)
         //update local user object
         $rootScope.user.pets = res.data.updatedPets;
         $('#dummy-table-row').removeClass('pet-collection-empty-text');
         //update user object in DB    
         var reqPayload = JSON.stringify($rootScope.user);
-          console.log("PAYLOAD: ", reqPayload);
         User.addPetToUser(reqPayload)
           .then(function(res){
-            console.log("CALLED ADD PET TO USER: ", res);
             clicked = false;
             if (res.data.success === true) {
+              for (var key in $scope.newPet) {
+                $scope.newPet[key] = '';
+              };
               $scope.defaultState(true);
               $scope.reservationTitle = "WHO'S STAYING?";
               $scope.reservationFwdButton = "REVIEW & BOOK";
               $scope.viewModelState.resStep = 2;
-                console.log("YAY UPDATED USER: ", $rootScope.user);
-                console.log("VM STATE: ", $scope.viewModelState);
             } else {
               console.log("ERROR ADDING PET TO USER: ", res.data.error)
               $rootScope.registrationError = "Unable to add pet to user";
@@ -580,6 +577,9 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
               if (res.data.success === true) {
                 $scope.defaultState(true);
                 $scope.viewModelState.finalConfirm = true;
+                for (var key in $scope.newReservation) {
+                  $scope.newReservation[key] = '';
+                };
               } else {
                 $rootScope.registrationError = res.data.error;
                 $rootScope.$broadcast('registrationError');
@@ -643,6 +643,10 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
           $rootScope.loading = false;
           $scope.setDefaultUser();
           $scope.viewModelState.returningUser = true;
+
+          for (var key in $scope.newUser) {
+            $scope.newUser[key] = '';
+          };
 
           $timeout(function(){
             Materialize.toast("<strong>You've succesfully registered!</strong><br>Now let's book a stay!", 4000);
