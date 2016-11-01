@@ -3,6 +3,7 @@ var accountSid = process.env.TWILIO_ACCOUNT_SID || '';
 var token = process.env.TWILIO_AUTH_TOKEN || '';
 var twilioNumber = 'YOUR_TWILIO_NUMBER';
 var client = twilio(accountSid, token);
+//var client = new twilio.RestClient(accountSid, token); //which to use?
 
 var smsHelpers = function () {
   return {
@@ -12,6 +13,14 @@ var smsHelpers = function () {
         to: userData.contactPhone,
         from: twilioNumber,
         body: userData.bodyMessage
+      }, function (err, res) {
+        if (err) {
+          console.log("ERROR: ", err);
+        } else {
+          var masked = userData.contactPhone.substr(0, userData.contactPhone.length - 5);
+          masked += '*****';
+          console.log('Message sent to ' + masked);
+        };
       });
     },
     sendDayCareReminders: function (reminderList) {
@@ -38,7 +47,7 @@ var smsHelpers = function () {
       for (var i = 0; i < reminderList.length; i++) {
 
         var userData = {};
-        userData.contactPhone = reminderList[i].ownerPhone;  //THIS WILL NEED TO BE ADDED TO THE REMINDER LIST BEFORE THIS FN IS CALLED
+        userData.contactPhone = reminderList[i].ownerPhone;  
         userData.appointmentDate = reminderList[i].checkInDate; 
         userData.bodyMessage = "This is a reminder that your ";
         
