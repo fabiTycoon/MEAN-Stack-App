@@ -98,7 +98,7 @@ var emailPhoneReminders = function (reservations) {
    var emailConfig = {
         toEmail: 'info@hollistonmeadows.com',
         subjectString: 'UPCOMING RESERVATIONS - PHONE REMINDER REQUESTED',
-        bodyHtml: '<h3>TODAY\'S REMINDERS:</h3><br><p>The following customers have requested a reminder about their upcoming stay at Holliston Meadows.  Please call these customers as soon as possible and politely remind them of their upcoming appointment:'
+        bodyHtml: '<h3>TODAY\'S REMINDERS:</h3><br><p>The following customers have requested a reminder about their upcoming stay at Holliston Meadows.  Please call these customers as soon as possible and politely remind them of their upcoming appointments:'
       };  
 
       //TO DO: APPEND HTML TABLE OF RESERVATIONS:
