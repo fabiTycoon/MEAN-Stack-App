@@ -550,8 +550,11 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
     reservation.owner = $rootScope.user.email;
     reservation.ownerName = "";
     reservation.ownerName += $rootScope.user.last + ", " + $rootScope.user.first;
+    reservation.ownerPhone = $rootScope.user.phone;
+    reservation.ownerEmail = $rootScope.user.email;
     reservation.existingReservations = $rootScope.user.reservations;
       console.log("RESERVATION ASSIGNMENTS: ", reservation);
+
 
     User.addReservation(reservation)
       .then(function(res){
