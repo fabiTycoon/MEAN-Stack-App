@@ -386,7 +386,7 @@ angular.module('myApp.viewAddUser', ['ngRoute'])
         console.log("CONTACT CHECKS: ", contactEmail, contactPhone, contactText);
 
       if (contactEmail === false && contactPhone === false && contactText === false) {
-        $rootScope.registrationError = "Please select a preferred contact method to confrim your reservation";
+        $rootScope.registrationError = "Please select a preferred contact method to confirm your reservation";
         $rootScope.$broadcast('registrationError');
         return; 
       } 
