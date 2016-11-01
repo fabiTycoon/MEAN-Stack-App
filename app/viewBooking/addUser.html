@@ -438,7 +438,7 @@
                 </div>
 
                 <div class="col s6 m6">
-                  <div ng-if="user.pets.length ===0" class="alt-contact-text">
+                  <div ng-if="user.pets.length === 0" class="alt-contact-text">
                     <span>You currently have no pets saved to your reservation.  Click the '+' button to add a saved pet to your reservation.</span>
                   </div>
                   <br>
@@ -447,7 +447,7 @@
                   <ul class="collection with-header" ng-if="newReservation.pets.length > 0">
                     <li class="collection-header"><h5 class="thin">My Pets Staying</h5></li>
                     <li class="collection-item" ng-repeat="pet in newReservation.pets">
-                    <div>{{pet.name}} <div class="pet-icon-add-dark" ng-if="pet.type === 'dog'"><add-dog-reservation-icon></add-dog-reservation-icon></div><div class="pet-icon-add-dark" ng-if="pet.type === 'cat'"><add-cat-reservation-icon></add-cat-reservation-icon></div>
+                    <div>{{pet.name}} <a class="pet-icon-add-dark" ng-if="pet.type === 'dog'"><add-dog-reservation-icon></add-dog-reservation-icon></a><a class="pet-icon-add-dark" ng-if="pet.type === 'cat'"><add-cat-reservation-icon></add-cat-reservation-icon></a>
 
                     <a href="" class="secondary-content" ng-click="removePetFromReservation(pet.name)">
                     <remove-item-icon></remove-item-icon></a></div></li>
