@@ -1,3 +1,19 @@
+nav .nav-wrapper .main-nav {
+  background-color: #990000; }
+
+div .card-content {
+  background-color: #990000; }
+
+div .card-action {
+  background-color: #990000; }
+
+.page-footer {
+  background-color: #990000; }
+
+/* 
+div .footer-copyright {
+  background-color: $primary-color;
+}; */
 .brand-logo {
   font-family: 'Sanchez', serif; }
 
@@ -118,7 +134,7 @@ label {
 .form-icon svg {
   height: 2.5em;
   width: 2.5em;
-  fill: #c62828 !important; }
+  fill: maroon !important; }
 
 .error-text p {
   color: #E53935 !important; }

@@ -1,5 +1,5 @@
 // THEME COLORS:
-$primary-color: #c62828;
+$primary-color: lighten(#660000, 5% );
 $primary-color-lighten: lighten( $primary-color, 5% );
 
 $secondary-color: #00bfa5;
@@ -11,8 +11,29 @@ $tertiary-color-darken: darken( $tertiary-color, 20% );
 $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 
 
-// THEME FONTS:
 
+
+//THEME COLORS:
+
+nav .nav-wrapper .main-nav {
+  background-color: $primary-color-lighten;
+};
+
+div .card-content{
+  background-color: $primary-color-lighten;
+};
+
+div .card-action{
+  background-color: $primary-color-lighten;
+};
+
+.page-footer {
+  background-color: $primary-color-lighten;
+};
+/* 
+div .footer-copyright {
+  background-color: $primary-color;
+}; */
 
 // NAV & FOOTER COMPONENTS:
 .menu-bar {
