@@ -125,8 +125,6 @@ var reservationReminderJob = new cron.CronJob("00 30 07 * * 1-7", function () {
 
       var timeDifference = reservations[i].checkInDate - today;
 
-
-
       if (reservations[i].reminder && timeDifference <= 129600000) { //36 hrs
 
         var reminderMethod = reservations[i].reminderMethod;
@@ -145,9 +143,11 @@ var reservationReminderJob = new cron.CronJob("00 30 07 * * 1-7", function () {
          phoneReminders.push(reservations[i]);
         };  
 
+        console.log("TEXT RESERVATION REMINDERS: ", textRemindersDaycare, textRemindersBoarding)
+
       sms.sendDayCareReminders(textRemindersDaycare);
       sms.sendBoardingReminders(textRemindersBoarding);
-      emailPhoneReminders(reservations);
+      emailPhoneReminders(phoneReminders);
     };
   };
 }; 

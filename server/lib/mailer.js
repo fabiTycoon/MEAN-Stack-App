@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
 // ---------- NODEMAILER CONFIG ------------
-var emailAccountString = 'npoling@gmail.com';
+var emailAccountString = 'hollistonmeadows.ma@gmail.com';
 var passwordString = process.env.EMAIL_PASSWORD;
 
 var smtpTransport = nodemailer.createTransport({

@@ -1,10 +1,13 @@
+a .btn {
+  background-color: #AABBAA; }
+
 nav .nav-wrapper .main-nav {
   background-color: #990000; }
 
-div .card-content {
+#main-page-cards div .card-content {
   background-color: #990000; }
 
-div .card-action {
+#main-page-cards div .card-action {
   background-color: #990000; }
 
 .page-footer {

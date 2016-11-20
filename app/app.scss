@@ -2,7 +2,7 @@
 $primary-color: lighten(#660000, 5% );
 $primary-color-lighten: lighten( $primary-color, 5% );
 
-$secondary-color: #00bfa5;
+$secondary-color: #AABBAA;
 $secondary-color-darken: darken( $secondary-color, 5% );
 $secondary-color-lighten: lighten( $secondary-color, 5% ); 
 
@@ -15,15 +15,19 @@ $tertiary-color-lighten: lighten( $tertiary-color, 5% );
 
 //THEME COLORS:
 
+a .btn {
+  background-color: $secondary-color;
+};
+
 nav .nav-wrapper .main-nav {
   background-color: $primary-color-lighten;
 };
 
-div .card-content{
+#main-page-cards div .card-content {
   background-color: $primary-color-lighten;
 };
 
-div .card-action{
+#main-page-cards div .card-action {
   background-color: $primary-color-lighten;
 };
 
@@ -327,6 +331,10 @@ video {
 
 #gallery-img {
   width: 200em;
+};
+
+#gallery-imgs-2 {
+
 };
 
 // BOOKING VIEW:
